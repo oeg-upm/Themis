@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tests description</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="languaje" content="English">
+
+    <link rel="stylesheet" href="vocab/themes/blue/style.css" type="text/css" media="print, projection, screen" />
+    <script src="vocab/js/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="vocab/js/jquery.tablesorter.min.js"></script>
+    <script type="text/javascript" src="vocab/js/jquery.stickytableheaders.js"></script>
+    <script type="text/javascript" src="vocab/js/jquery-ui.js"></script>
+    <script type="text/javascript" src="vocab/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="vocab/css/jquery-ui.css"></link>
+    <script type="text/javascript" id="js">
+        $(document).ready(function()
+            {
+                $("#tablesorter-demo").tablesorter();
+                $("#tablesorter-demo").stickyTableHeaders();
+                $('[data-toggle="tooltip"]').tooltip();
+            }
+        );
+    </script>
+
+    <!-- Le styles -->
+    <link href="vocab/css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+        body {
+            padding-top: 60px;
+            padding-bottom: 40px;
+        }
+        .table > tbody > tr > td {
+            vertical-align: middle;
+        }
+
+
+    </style>
+
+
+
+    <!-- Fav and touch icons -->
+</head>
+
+<body>
+<div class="container">
+
+    <!-- Jumbotron -->
+    <div class="jumbotron">
+        <h2>Example of tests and competency questions</h2>
+    </div>
+    <hr>
+
+
+    <div>
+        <p>The following table lists examples of tests that can be derived from the competency questions </p>
+        <table  class="table table-hover table-responsive ">
+            <thead>
+            <tr>
+                <th>Competency questions</th>
+                <th>Test</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Sensor is a type of Device </td>
+                <td rowspan="3">Actuator subclassOf Device</td>
+            </tr>
+            <tr>
+                <td>Actuator is a Device</td>
+            </tr>
+            <tr>
+                <td>Actuator has category Device</td>
+            </tr>
+            <tr>
+                <td>Actuator is a type of system and physical entity</td>
+                <td rowspan="3">Actuator subclassOf System and physical entity</td>
+            </tr>
+            <tr>
+                <td>Actuator is a system and physical entity</td>
+            </tr>
+            <tr>
+                <td>Actuator has category system and physical entity</td>
+            </tr>
+            <tr>
+                <td>A cannot be B</td>
+                <td rowspan="3">A disjointWith B</td>
+            </tr>
+            <tr>
+                <td>A differ from  B</td>
+            </tr>
+            <tr>
+                <td>A is different than B</td>
+            </tr>
+            <tr>
+                <td>A is also known as B</td>
+                <td rowspan="2">A equivalentTo B</td>
+            </tr>
+            <tr>
+                <td>A is equivalent to B</td>
+            </tr>
+            <tr>
+                <td>Birds build nests</td>
+                <td>Bird subclassOf build some Nest</td>
+            </tr>
+            <tr>
+                <td>A nest contains some branches</td>
+                <td>Nest subclassOf contains some Branch</td>
+            </tr>
+            <tr>
+                <td>Herbivore must eat only plants </td>
+                <td>Herbivore subclassOf eats only Plant</td>
+            </tr>
+            <tr>
+                <td>A fruit bowl can contain sweet or acid fruit</td>
+                <td>Fruit subclassOf contains some SweetFruit or AcidFruit</td>
+            </tr>
+            <tr>
+                <td>A spicy pizza has  a topping that is spicy</td>
+                <td>SpicyPizza subclassOf hasTopping  some Topping and Spicy</td>
+            </tr>
+            <tr>
+                <td>A has minimum 1 B</td>
+                <td rowspan="2">Person subclassOf hasName min 1 Name</td>
+            </tr>
+            <tr>
+                <td>A person has at least 1 name</td>
+            </tr>
+            <tr>
+                <td>A person has maximum 1 address</td>
+                <td rowspan="2">Person subclassOf hasAddress max 1 Address</td>
+            </tr>
+            <tr>
+                <td>A person has at most 1 address</td>
+            </tr>
+            <tr>
+                <td>A person has only 1 national identifier</td>
+                <td>Person subclassOf hasIdentifier max 1 Identifier</td>
+            </tr>
+            <tr>
+                <td>There is a partnership between two organizations</td>
+                <td>Organization  subclassOf symmetricProperty(hasPartnership) some  Organization <br></td>
+            </tr>
+            <tr>
+                <td>Themometer is an example of sensor</td>
+                <td>Thermometer type  sensor</td>
+            </tr>
+            <tr>
+                <td>The price, which is a type of unit of measure,  is characterized by a value using currency </td>
+                <td>Price subclassOf  UnitOfMeasure that  isCharacterizedBy some  Currency</td>
+            </tr>
+            <tr>
+                <td>A person performs at least one work and each work has a goal</td>
+                <td>Person subclassof hasWork min  1 Work and  Work subclassof  hasGoal only goal</td>
+            </tr>
+            <tr>
+                <td>Marine mammals are divided into two different types: Carnivora and Sirenia</td>
+                <td>Carnivora subclassOf MarineMammals and Sirenia subclassOf  MarineMammals that disjointWith Carinvora</td>
+            </tr>
+            <tr>
+                <td>There are two different types of marine mammals: Carnivora and Sirenia</td>
+                <td>Carnivora subclassOf MarineMammals and Sirenia subclassOf  MarineMammals that disjointWith Carinvora</td>
+            </tr>
+            <tr>
+                <td>A participates in a&nbsp;&nbsp;conference</td>
+                <td>A&nbsp;&nbsp;subclassOf participatesIn some Conference</td>
+            </tr>
+            <tr>
+                <td>A and B participates in the summer school</td>
+                <td rowspan="2">A and B subclassOf participatesIn some SummerSchool</td>
+            </tr>
+            <tr>
+                <td>A participates with B in the summer school</td>
+            </tr>
+
+            </tbody>
+
+        </table>
+    </div>
+
+    <hr>
+
+    <footer class="footer">
+        <div class="row">
+            <div class="col-md-10">
+                Alba Fernández Izquierdo
+                <br>
+                Contact email: albafernandez@fi.upm.es
+                <br>
+                Built with <a target="_blank" href="http://getbootstrap.com/">Bootstrap</a>
+                Icons from <a target="_blank" href="http://glyphicons.com/">Glyphicons</a>
+                <br>
+                Latest revision Feb, 2019
+                <br><p>&copy; Ontology Engineering Group</p>
+            </div>
+            <div class="col-md-2">
+                <a href="http://www.oeg-upm.net/" target="_blank"><img src="vocab/logo.gif" alt="OEG logo" class="img-rounded" class="img-responsive" /></a>
+            </div>
+        </div>
+    </footer>
+</div>
+
+</body>
+</html>

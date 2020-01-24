@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head >
+    <meta charset="UTF-8">
+    <title>Validate your ontology</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="languaje" content="English">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <!-- Le styles -->
+    <link href="vocab/css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/style-custom.css">
+
+    <style type="text/css">
+
+        .table-wrapper-scroll-y {
+            display: block;
+            max-height: 200px;
+            overflow-y: auto;
+            -ms-overflow-style: -ms-autohiding-scrollbar;
+        }
+
+
+    </style>
+
+</head>
+
+<body>
+
+
+<nav class="navbar navbar-default ">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#"> <img src="images/themis.png" class="img-rounded" class="img-responsive" width="70%" ></a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="index.html">Home</a></li>
+                <li><a href="howto.html">How to use it</a></li>
+                <li><a href="swagger-ui/index.html">API REST</a></li>
+                <li><a href="catalogue.html">Existing tests</a></li>
+                <!--<li><a href="tests-info.html">Supported tests</a></li>-->
+            </ul>
+        </div><!--/.nav-collapse -->
+
+    </div>
+</nav>
+
+
+<div class="container" >
+
+    <!-- Jumbotron -->
+    <div class="jumbotron "  style="background-color:white;">
+        <h2> How to use Themis</h2>
+    </div>
+
+
+    <div class="container ">
+        <ol>
+            <li><strong>Load ontology</strong>. Insert the URI of the ontology you want to validate. You can add more than one ontologies.
+                <div class="text-center">
+                     <img src="images/insertURI.PNG" class="img-rounded" class="img-responsive" width="70%" height="70%">
+                </div>
+            </li>
+            <li>
+                <strong>Load tests</strong>. If you have tests in RDF on the web you can load them using the URI.
+                <div class="text-center">
+                    <img src="images/loadtest.PNG" class="img-rounded" class="img-responsive" width="70%" height="70%">
+                </div>
+            </li>
+
+            <li>
+                <strong>Insert test</strong>. You can also add tests following the syntax shown in the <a href="tests-info.html">list of tests</a>.
+                <div class="text-center">
+                    <img src="images/InsertTest.PNG" class="img-rounded" class="img-responsive" width="70%" height="70%">
+                </div>
+            </li>
+
+            <li>
+                <strong>Check result</strong>. Here you can check the results of the tests. The possible results are: passed, absent relation, conflict and undefined terms. If the result is undefined, then the interface will show which terms are not defined in the ontology.
+                <div class="text-center">
+                    <img src="images/Result.PNG" class="img-rounded" class="img-responsive" width="70%" height="70%">
+                </div>
+            </li>
+
+            <li>
+                <strong>Export tests</strong>. Themis allows you to export the test cases in RDF to be able to reuse and share them.
+                <div class="text-center">
+                    <img src="images/export.PNG" class="img-rounded" class="img-responsive" width="70%" height="70%">
+                </div>
+            </li>
+        </ol>
+    </div>
+
+
+
+
+    <hr>
+    <footer class="footer">
+        <div class="row">
+            <div class="col-md-10">
+                Alba Fernández Izquierdo
+                <br>
+                Contact email: albafernandez@fi.upm.es
+                <br>
+                Built with <a target="_blank" href="http://getbootstrap.com/">Bootstrap</a>
+                Icons from <a target="_blank" href="http://glyphicons.com/">Glyphicons</a>
+                <br>
+                Latest revision Feb, 2019
+                <br><p>&copy; Ontology Engineering Group</p>
+            </div>
+            <div class="col-md-2">
+                <a href="http://www.oeg-upm.net/" target="_blank"><img src="vocab/logo.gif" alt="OEG logo" class="img-rounded" class="img-responsive" /></a>
+            </div>
+        </div>
+    </footer>
+</div> <!-- /container -->
+
+
+</body>
+</html>

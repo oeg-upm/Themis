@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>REST Service for GitHub</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="languaje" content="English">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <!-- Le styles -->
+    <link href="vocab/css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/style-custom.css">
+
+</head>
+
+
+<body>
+
+
+<!-- Static navbar -->
+<nav class="navbar navbar-default navbar-static-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Themis</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li ><a href="index.html">Home</a></li>
+                <li><a href="howto.html">How to use it</a></li>
+                <li class="active"><a href="rest.html">API REST</a></li>
+                <li><a href="catalogue.html">Existing tests</a></li>
+                <!--<li><a href="tests-info.html">Supported tests</a></li>-->
+            </ul>
+        </div><!--/.nav-collapse -->
+
+    </div>
+</nav>
+<div class="container" >
+    <!-- Jumbotron -->
+    <div class="jumbotron " >
+        <h2> Add Themis to your GitHub repository</h2>
+    </div>
+
+
+    <!--<form method="get" action="http://vicinity.iot.linkeddata.es/reqmanagerservice/rest/register/login"> -->
+
+
+
+    <div class="container">
+        <p>You can also add Themis to your GitHub repo by login using your GitHub account.</p>
+        <form method="get" action="http://localhost:8080/rest/register/login">
+            <div class="form-group">
+                <div class="col-md-9">
+                    <input type="text" class="form-control" id="uname" name="uname" placeholder="username/repo">
+                </div>
+                <div class="col-md-3">
+                    <button type="submit" class="btn btn-primary">Add service</button>
+                </div>
+            </div>
+        </form>
+
+        <div class="container text-center" >
+            <h2>Oops! An error has ocurred. Please check  you don't have the system deployed already </h2>
+            <div class=" text-center">
+                <button  class="btn btn-primary mb-2" formaction="https://github.com">Go to GitHub</button>
+
+            </div>
+        </div>
+
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <footer class="footer">
+        <div class="row">
+            <div class="col-md-10">
+                Developed by 	        <a href = "http://oeg-upm.net" target="_blank">Ontology Engineering Group</a>
+                <br>
+                Built with <a target="_blank" href="http://getbootstrap.com/">Bootstrap</a>
+                Icons from <a target="_blank" href="http://glyphicons.com/">Glyphicons</a>
+                <br>
+                Latest revision August, 2018
+                <br><p>&copy; Ontology Engineering Group</p>
+            </div>
+            <div class="col-md-2">
+                <a href="http://www.oeg-upm.net/" target="_blank"><img src="vocab/logo.gif" alt="OEG logo" class="img-rounded" class="img-responsive" /></a>
+            </div>
+        </div>
+    </footer>
+</div>
+</body>
+</div> <!-- /container -->
+</html>

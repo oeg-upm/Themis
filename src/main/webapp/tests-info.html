@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tests description</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="languaje" content="English">
+
+    <link rel="stylesheet" href="vocab/themes/blue/style.css" type="text/css" media="print, projection, screen" />
+    <script src="vocab/js/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="vocab/js/jquery.tablesorter.min.js"></script>
+    <script type="text/javascript" src="vocab/js/jquery.stickytableheaders.js"></script>
+    <script type="text/javascript" src="vocab/js/jquery-ui.js"></script>
+    <script type="text/javascript" src="vocab/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="vocab/css/jquery-ui.css"></link>
+    <script type="text/javascript" id="js">
+        $(document).ready(function()
+            {
+                $("#tablesorter-demo").tablesorter();
+                $("#tablesorter-demo").stickyTableHeaders();
+                $('[data-toggle="tooltip"]').tooltip();
+            }
+        );
+    </script>
+
+    <!-- Le styles -->
+    <link href="vocab/css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+        body {
+            padding-top: 60px;
+            padding-bottom: 40px;
+        }
+    </style>
+
+
+
+    <!-- Fav and touch icons -->
+</head>
+
+<body>
+<div class="container">
+
+    <!-- Jumbotron -->
+    <div class="jumbotron">
+        <h2>Description of the supported tests</h2>
+    </div>
+    <hr>
+
+
+    <div>
+        <p>The following table lists the tests that are supported by Themis organized according to their goal. The table also include additional information such as examples. </p>
+        <table  class="table table-hover table-responsive ">
+            <thead>
+            <tr>
+                <th class="col-md-3 text-center"> Goal of the test </th>
+                <th class="col-md-2 text-center"> Syntax of the test</th>
+                <th class="col-md-2 text-center">Example of test</th>
+                <th class="col-md-3 text-center">Example of competency question</th>
+            </tr></thead>
+            <tbody>
+            <tr>
+                <td> The ontology contains the class</td>
+                <td> [ClassA] <i>type</i> Class</td>
+                <td>Device <i>type</i> Class</td>
+                <td>What is a device?</td>
+            </tr>
+            <tr>
+                <td> There is a subsumption between two classes</td>
+                <td> [ClassA] <i>SubClassOf</i> [ClassA]</td>
+                <td> Sensor <i>SubClassOf</i> Device</td>
+                <td>A device is a type of sensor</td>
+            </tr>
+            <tr>
+                <td> Multiple inheritance of a class</td>
+                <td> [ClassA] <i>SubClassOf</i> [ClassA] <i>and</i> [ClassC]</td>
+                <td> Amphibians <i>SubClassOf</i> WaterLivingAnimals <i>and</i> LandLivingAnimals</td>
+                <td> Amphibians are water-living and land-living animals.</td>
+            </tr>
+            <tr>
+                <td> Disjointness between two classes</td>
+                <td> [ClassA] <i>disjointWith</i> [ClassA]</td>
+                <td> Sensor <i>disjointWith</i> Actuator</td>
+                <td>A sensor cannot be an actuator</td>
+            </tr>
+            <tr>
+                <td> Equivalence between two classes</td>
+                <td> [ClassA] <i>equivalentTo</i> [ClassA]</td>
+                <td> PosionDartFrog <i>equivalentTo</i> PoisonArrowFrog </td>
+                <td>Poison dart frogs are also known as poison-arrow frogs</td>
+            </tr>
+            <tr>
+                <td> Relation between two classes</td>
+                <td> [ClassA] <i>SubClassOf</i> [PropertyP] <i>some</i> [ClassA]</td>
+                <td> Birds <i>SubClassOf</i> build <i>some</i> Nest </td>
+                <td>Birds build nests</td>
+            </tr>
+            <tr>
+                <td> Universal restriction. All values of the property under consideration are members of the specified [ClassA]</td>
+                <td> [ClassA] <i>SubClassOf</i> [PropertyP]  <i>only</i>  [ClassA]</td>
+                <td> Herbivore <i>SubClassOf</i> eat <i>only</i> Plant</td>
+                <td>Herbivore eat only plants</td>
+            </tr>
+            <tr>
+                <td> Union of two classes. The range of [ClassA] contains every individual  which is contained in [ClassA] or [ClassC]</td>
+                <td> [ClassA] <i>SubClassOf</i> [PropertyP]  <i>only</i>  [ClassA] <i>or</i> [ClassC]</td>
+                <td> FruitBowl <i>SubClassOf</i> contains <i>only</i> SweetFruit <i>or</i> NonSweetFruit</td>
+                <td>A fruit bowl must contain sweet fruit or non sweet fruit</td>
+            </tr>
+            <tr>
+                <td> Intersection between two classes. [ClassA] contains those individuals that are members of [ClassA]</td>
+                <td> [ClassA] <i>SubClassOf</i> [PropertyP]  <i>some</i>  [ClassA] <i>and</i> [ClassC]</td>
+                <td> Boy <i>SubClassOf</i> Child <i>and</i> Man </td>
+                <td>A boy is a child and a man</td>
+            </tr>
+            <tr>
+                <td> Minimum cardinality. [ClassA] have at least N semantically distinct values (individuals or data values) for the property</td>
+                <td> [ClassA] <i>SubClassOf</i> [PropertyP]  <i>min</i> [num]  [ClassA]</td>
+                <td> Device <i>SubClassOf</i> hasManufacturer <i>min</i> 1 <i>string</i></td>
+                <td>A device has minimum one manufacturer</td>
+            </tr>
+            <tr>
+                <td> Maximum cardinality. [ClassA] have at most N semantically distinct values (individuals or data values) for the property</td>
+                <td> [ClassA] <i>SubClassOf</i> [PropertyP]  <i>max</i> [num] [ClassA]</td>
+                <td>Device <i>SubClassOf</i> hasManufacturer <i>max</i> 1 Brand </td>
+                <td>A device has maximum one brand</td>
+            </tr>
+            <tr>
+                <td> Cardinality. [ClassA] have exactly N semantically distinct values (individuals or data values) for the property</td>
+                <td> [ClassA] <i>SubClassOf</i> [PropertyP]  <i>exactly</i> [num]  [ClassA]</td>
+                <td>Device <i>SubClassOf</i> hasIdentifier <i>exactly</i> 1 <i>string</i> </td>
+                <td>A device has exactly one identifier</td>
+            </tr>
+            <tr>
+                <td> Symmteric relationship</td>
+                <td> [PropertyA] <i>characteristic symmetricProperty</i></td>
+                <td> hasParntershipWith <i>characteristic symmetricproperty</i></td>
+                <td>There is a partnership between two organizations </td>
+            </tr>
+           <!-- <tr>
+                <td> Symmteric relationship and universal restriction</td>
+                <td> [ClassA] SubClassOf symmetricProperty([PropertyP]) only [ClassA]</td>
+                <td>Partnership SubClassOf symmetricProperty([hasParntershipWith]) only [Organization] </td>
+                <td>A partnership is only applied between two organizations</td>
+            </tr> -->
+            <tr>
+                <td> The ontology contains the individual</td>
+                <td> [IndividualI] <i>type</i> [ClassA]</td>
+                <td>StriatedPardalote <i>type</i> Bird</td>
+                <td>Striated pardalote  is a type of bird</td>
+            </tr>
+            <tr>
+                <td> Subsumption and relation between classes </td>
+                <td> [ClassA] <i>SubClassOf</i> [ClassA] <i>that</i> [PropertyP] <i>some</i> [ClassC]</td>
+                <td>Price <i>SubClassOf</i> UnitOfMeasure <i>that</i> isCharacterizedBy <i>some</i> Currency</td>
+                <td>The price is also characterized by a value using currency, which is a type of unit of measure</td>
+            </tr>
+            <tr>
+                <td> Minimum cardinalityy and relation between classes  </td>
+                <td>[ClassA] <i>SubClassOf</i> [PropertyP] <i>min</i> [num] [ClassA] <i>and</i> [ClassA] <i>SubClassOf</i>[PropertyP] <i>some</i> [ClassC]</td>
+                <td>Device <i>SubClassOf</i> performs  <i>min</i> 1 Function <i>and</i> Function <i>SubClassOf</i> accomplish <i>some</i> Task</td>
+                <td>A device performs one or more functionalities and each function accomplish a particular task</td>
+            </tr>
+            <tr>
+                <td> Minimum cardinaly and  universal restriction  </td>
+                <td>[ClassA] <i>SubClassOf</i> [PropertyP] <i>min</i> [num] [ClassA] <i> and</i> [ClassA] <i>SubClassOf</i> [PropertyP] <i>only</i> [ClassC]</td>
+                <td>Device <i>SubClassOf</i> performs <i>min</i> 1 Function <i>and</i> Function <i>SubClassOf</i> accomplish <i>only</i> Task </td>
+                <td>A device performs one or more functionalities and each function  accomplish only tasks</td>
+            </tr>
+            <tr>
+                <td> Definition of a disjoint set of classes  </td>
+                <td>[ClassA] <i>SubClassOf</i> [ClassA] <i>and</i>  [ClassC] <i>SubClassOf</i> [ClassA] <i>that</i> <i>disjointWith</i> [ClassA]</td>
+                <td> Carnivora <i>SubClassOf</i> MarineMammals <i>and</i> Sirenia <i>SubClassOf</i> MarineMammals <i>that disjointWith</i> Carinvora</td>
+                <td>Marine mammals are divided into two orders: Carnivora and Sirenia</td>
+            </tr>
+            <tr>
+                <td> Participation of several a concept in an event (existential restriction)</td>
+                <td>[ClassA] <i>SubClassOf</i>  [participates]  <i>some</i> [ClassA] 
+                </td>
+                <td> Student <i>SubClassOf</i>  <i>participates</i> <i>some</i> Conference </td>
+                <td>A student can participate in conferences</td>
+            </tr>
+            <tr>
+                <td> Part-whole relationship (universal restriction)</td>
+                <td>[ClassA] <i>SubClassOf</i>  [isPartof]  only [ClassA] 
+                </td>
+                <td> Student <i>SubClassOf</i>  <i>isPartof</i> only Conference </td>
+                <td>A leg can only be part of table</td>
+            </tr>
+            <tr>
+                <td> Part-whole relationship (existential restriction)</td>
+                <td>[ClassA] <i>SubClassOf</i>  <i>isPartof</i>  <i>some</i> [ClassA] 
+                </td>
+                <td> Student <i>SubClassOf</i>  <i>isPartof</i> <i>some</i> Conference </td>
+                <td>A leg is part of table</td>
+            </tr>
+            <tr>
+                <td> Participation of several a concept in an event (universal restriction)</td>
+                <td>[ClassA] <i>SubClassOf</i>  [participates]  <i>only</i> [ClassA] 
+                </td>
+                <td> Student <i>SubClassOf</i>  <i>participates</i> <i>only</i> Conference </td>
+                <td>A student participates only in conferences</td>
+            </tr>
+            <tr>
+                <td> Co-Participation of two concepts in an event</td>
+                <td>[ClassA] <i>and</i> [ClassA] <i>SubClassOf</i>  [participates]  <i>some</i> [ClassC] 
+                </td>
+                <td> Student <i>and</i> Company <i>SubClassOf</i>  <i>participates</i> <i>some</i> Talk </td>
+                <td> A student an a company participates in a talk </td>
+            </tr>
+            </tbody>
+
+        </table>
+    </div>
+
+    <hr>
+
+    <footer class="footer">
+        <div class="row">
+            <div class="col-md-10">
+                Alba Fernández Izquierdo
+                <br>
+                Contact email: albafernandez@fi.upm.es
+                <br>
+                Built with <a target="_blank" href="http://getbootstrap.com/">Bootstrap</a>
+                Icons from <a target="_blank" href="http://glyphicons.com/">Glyphicons</a>
+                <br>
+                Latest revision Feb, 2019
+                <br><p>&copy; Ontology Engineering Group</p>
+            </div>
+            <div class="col-md-2">
+                <a href="http://www.oeg-upm.net/" target="_blank"><img src="vocab/logo.gif" alt="OEG logo" class="img-rounded" class="img-responsive" /></a>
+            </div>
+        </div>
+    </footer>
+
+</div>
+</body>
+</html>

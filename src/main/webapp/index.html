@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head >
+    <meta charset="UTF-8">
+    <title>Validate your ontology</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="languaje" content="English">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <!-- Le styles -->
+    <link href="vocab/css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/style-custom.css">
+
+    <style type="text/css">
+
+        .table-wrapper-scroll-y {
+            display: block;
+            max-height: 200px;
+            overflow-y: auto;
+            -ms-overflow-style: -ms-autohiding-scrollbar;
+        }
+
+
+    </style>
+
+
+</head>
+
+<body>
+
+<!-- Static navbar -->
+<nav class="navbar navbar-default ">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#"> <img src="images/themis.png" class="img-rounded" class="img-responsive" width="70%" ></a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="index.html">Home</a></li>
+                <li><a href="howto.html">How to use it</a></li>
+                <li><a href="swagger-ui/index.html">API REST</a></li>
+                <li><a href="catalogue.html">Existing tests</a></li>
+                <!--<li><a href="tests-info.html">Supported tests</a></li>-->
+            </ul>
+        </div><!--/.nav-collapse -->
+
+    </div>
+</nav>
+
+
+
+
+
+<div class="container" >
+
+    <!-- Jumbotron -->
+    <div class="jumbotron" style="background-color:white;">
+        <h2>Execute tests and verify your ontology!</h2>
+    </div>
+    <div class="row row-offcanvas row-offcanvas-right">
+
+    <div class="container  shadow" id="input">
+        <br/>
+        <p >This tool helps you to validate your ontology model by executing tests. To try it, you need first to load the ontology to be validated and then define and check the tests. The result of each test will appear in the "Test results" section.</p>
+        <div id="accordion" class="checkout">
+            <div class="row " >
+                <div class="panel checkout-step" id = "checkout-load" >
+                    <div> <span class="checkout-step-number" id="num-load">1</span>
+                        <h4 class="checkout-step-title"> <a role="button" data-parent="#accordion" > Load the ontology</a></h4>
+                    </div>
+                    <div class="checkout-step-body">
+                        <p class="text-left"><label> Add the URI of the ontology to be validated: </label></p>
+
+
+                        <div >
+                            <div class="col-md-9"  >
+                                <input  class="form-control" class="ontology" name="ontology" id="ontology" placeholder="http://iot.linkeddata.es/def/core" >
+                               <!-- <div class="container col-md-9"> -->
+                            </div>
+                            <div class="col-md-2 text-right" >
+                                <button id="load"  class="btn btn-primary mb-2 btn-custom" onclick="loadontology()" >Load ontology </button>
+                            </div>
+                        </div>
+
+                        <div class="col-md-10"  id="aux">
+                                <div class="row col-md-12" id="got-list">
+
+                                    <div class="col-sm-7" id="loadonto">
+                                    </div>
+                                    <div class="col-sm-3" id="loadgot">
+                                    </div>
+                                    <div class="col-sm-2" id="deleteonto">
+                                    </div>
+
+
+                                </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <div class="row" >
+                <div class="panel checkout-step" id = "checkout-tests" style="opacity: 0.5">
+                    <div> <span class="checkout-step-number" id="num-tests">2</span>
+                        <h4 class="checkout-step-title"> <a role="button"  data-parent="#accordion"  >Check the tests</a></h4>
+                    </div>
+
+                    <div class="checkout-step-body">
+                        <p class="text-left"><label> You can load a test suite from a URL. </label></p>
+
+                        <div class="col-md-9" >
+                            <input   class="form-control" class="testuri" name="testuri" id="testuri" >
+                        </div>
+                        <div class="col-md-2 text-right" >
+                            <div class="btn-group-vertical">
+                                <button id="loadtest"   disabled="true" class="btn btn-primary mb-3 btn-custom"  onclick="loadTests()">Load test</button>
+                                <!--<button id="addtests"  disabled="true" class="btn btn-primary mb-2"  onclick="add()">Add to test suite</button> -->
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                    <br>
+                    <div class="checkout-step-body">
+                        <p class="text-left"><label> Or you can add the tests directly. To add more than one test separate them by using ";".</label></p>
+                        <p>  <label> The <a href="tests-info.html">following link</a> shows all the supported tests.</label> In <a href="examples.html">this other link</a> you can also find some examples that can be useful to propose tests.</p>
+
+                        <div class="col-md-9" >
+                            <textarea   class="form-control" class="test" name="test" id="test" placeholder="Sensor subclassof Device" rows="2"></textarea>
+                            <!--<a><button type="button" class="btn btn-link" onclick="openTests()"><i><small>See supported tests</small></i> </button></a> -->
+                            <p id="notmatch"></p>
+                        </div>
+                        <div class="col-md-2 text-right" >
+                                <button id="checktests"   disabled="true" class="btn btn-primary mb-2 btn-custom"  onclick="check()">Check</button>
+                            <!--<button id="export"   disabled="true" class="btn btn-primary mb-2 btn-custom-pair"  onclick="exportfile()">Export</button> -->
+                        </div>
+                    </div>
+                    <div class="col-md-12" id="info">
+                        <h4><font color="428bca">Important information</font></h4>
+                        <ul>
+                            <li>The test syntax is <strong>case sensitive</strong> (e.g., Sensor and sensor are detected as different terms)</li>
+                            <li>For generating the tests you have to use the <strong>glossary of terms </strong>(you can change it)</li>
+                            <li>The <strong>test syntax</strong> is available <a href="tests-info.html">here</a>. You should insert the terms between brackets ("e.g., [Class] &rarr; Sensor"), while the italised  terms (e.g., <i>type</i>) are keywords that cannot be changed   </li>
+                            <li>Terms in <font color="red"><b>red</b></font> indicate that they don't exist in the ontology, while the terms in
+                                <font color="#ff7f50"><b>orange</b></font> indicate that the term exist in the ontology but the type (e.g., class or individual) is not the specified in the term</li>
+                        </ul>
+                    </div>
+                </div>
+            </div> <br>
+        </div>
+    </div>
+    <div  id="results" class="col-md-12" >
+        <h2 style="text-align: center">Tests results</h2>
+        <table class="table table-hover table-responsive " name="tableresults" id="table" >
+            <thead>
+            <tr>
+                <th  class="col-md-5">Test</th>
+                <th  class="col-md-2">Result</th>
+                <th  class="col-md-4">Problem</th>
+                <th  class="col-md-1"></th>
+            </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+        <br>
+
+        <div class="col-md-12 text-right" >
+            <div class="btn-group-vertical">
+                <button id="export"   disabled="true" class="btn btn-primary mb-2 btn-custom-pair"  onclick="exportfile()"><span class="glyphicon glyphicon-download" aria-hidden="true"></span>
+                       Export test suite</button>
+
+            </div>
+        </div>
+
+        <br>
+        <br>
+        <br>
+    </div>
+
+
+
+
+    <hr>
+    <footer class="footer">
+        <div class="row">
+            <div class="col-md-10">
+                 Alba Fernández Izquierdo
+                <br>
+                Contact email: albafernandez@fi.upm.es
+                <br>
+                Built with <a target="_blank" href="http://getbootstrap.com/">Bootstrap</a>
+                Icons from <a target="_blank" href="http://glyphicons.com/">Glyphicons</a>
+                <br>
+                Latest revision Jan, 2020
+                <br><p>&copy; Ontology Engineering Group</p>
+            </div>
+            <div class="col-md-2">
+                <a href="http://www.oeg-upm.net/" target="_blank"><img src="vocab/logo.gif" alt="OEG logo" class="img-rounded" class="img-responsive" /></a>
+            </div>
+        </div>
+    </footer>
+</div> <!-- /container -->
+
+
+<script type="text/javascript" src="js/tests-js.js"></script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-138752275-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-138752275-1');
+</script>
+
+
+</body>
+</html>

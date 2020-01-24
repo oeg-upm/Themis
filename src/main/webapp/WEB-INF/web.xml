@@ -1,0 +1,33 @@
+<web-app id="WebApp_ID" version="2.4"
+         xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee
+	http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+  <display-name>ontology validator service</display-name>
+
+  <listener>
+    <listener-class>oeg.albafernandez.tests.controller.ServletContextClass</listener-class>
+  </listener>
+
+  <servlet>
+    <servlet-name>Themis</servlet-name>
+    <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
+
+    <init-param>
+      <param-name>jersey.config.server.provider.packages</param-name>
+      <param-value>oeg.albafernandez.tests.controller, io.swagger.v3.jaxrs2.integration.resources</param-value>
+    </init-param>
+    <init-param>
+      <param-name>jersey.config.server.provider.classnames</param-name>
+      <param-value>org.glassfish.jersey.media.multipart.MultiPartFeature
+      </param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>Themis</servlet-name>
+    <url-pattern>/rest/*</url-pattern>
+  </servlet-mapping>
+
+
+</web-app>

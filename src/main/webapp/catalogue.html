@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head >
+    <meta charset="UTF-8">
+    <title>Validate your ontology</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="languaje" content="English">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <!-- Le styles -->
+    <link href="vocab/css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/style-custom.css">
+
+    <style type="text/css">
+
+        .table-wrapper-scroll-y {
+            display: block;
+            max-height: 200px;
+            overflow-y: auto;
+            -ms-overflow-style: -ms-autohiding-scrollbar;
+        }
+
+
+    </style>
+
+    <script type="text/javascript" id="js">
+        $(document).ready(function()
+            {
+                $("#tablesorter-demo").tablesorter();
+                $("#tablesorter-demo").stickyTableHeaders();
+                $('[data-toggle="tooltip"]').tooltip();
+            }
+        );
+    </script>
+</head>
+
+<body>
+
+
+<nav class="navbar navbar-default ">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#"> <img src="images/themis.png" class="img-rounded" class="img-responsive" width="70%" ></a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="index.html">Home</a></li>
+                <li><a href="howto.html">How to use it</a></li>
+                <li><a href="swagger-ui/index.html">API REST</a></li>
+                <li><a href="catalogue.html">Existing tests</a></li>
+                <!--<li><a href="tests-info.html">Supported tests</a></li>-->
+            </ul>
+        </div><!--/.nav-collapse -->
+
+    </div>
+</nav>
+<div class="container" >
+
+    <!-- Jumbotron -->
+    <div class="jumbotron" style="background-color:white;">
+        <h2> Existing tests</h2>
+        <p class="lead">Here you can find a list of ontologies with their tests that the <a href="http://www.oeg-upm.net">Ontology Engineering Group (OEG)</a> is generating.</a></p>
+    </div>
+
+    <!--<div class="row">
+        <div class="ui-widget">
+            <div class="col-md-3" >
+                <p class="text-right"><label for="tags">Filter by title or domain: </label></p>
+            </div>
+            <div class="col-md-8" >
+                <input class="form-control" id="tags" >
+                <button id="remButt" class="label label-default" onclick="showRows();" style="font-size: 75%; font-weight: bold; line-height: 1; display: none;"><span class="submit glyphicon glyphicon-remove"></span>  Remove filter</button>
+            </div>
+        </div>
+    </div> -->
+
+
+        <table id="tablesorter-demo" class="tablesorter table table-hover table-responsive">
+            <thead>
+            <tr>
+                <th class="col-md-2">Test</th>
+                <th class="col-md-2">Provenance</th>
+                <th class="col-md-2">Domain</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <tr>
+                <td>
+                    <a href = "http://vicinity.iot.linkeddata.es/vicinity/testing/testsuite-wot.ttl" target="_blank">Tests for Ontology model for Web of Things</a>
+                </td>
+                <td><a href = "http://iot.linkeddata.es/def/wot" target="_blank">Ontology model for Web of Things </a> </td>
+
+                <td><span class="label label-primary">iot</span>
+                    <span class="label label-primary">wot</span>
+                </td>
+            </tr>
+            <tr >
+                <td>
+                    <a href = "http://vicinity.iot.linkeddata.es/vicinity/testing/testsuite-core.ttl" target="_blank">Tests for Vicinity core model</a>
+                </td>
+                <td><a href = "http://iot.linkeddata.es/def/core" target="_blank">Vicinity core model </a> </td>
+
+                <td><span class="label label-primary">iot</span>
+                </td>
+            </tr>
+            <tr >
+                <td>
+                    <a href = "http://vicinity.iot.linkeddata.es/vicinity/testing/testsuite-map.ttl" target="_blank">Tests for Vicinity WoT mappings model</a>
+                </td>
+                <td><a href = "http://iot.linkeddata.es/def/wot-mappings" target="_blank">Vicinity WoT mappings model </a> </td>
+
+                <td><span class="label label-primary">iot</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a href = "http://vicinity.iot.linkeddata.es/vicinity/testing/testsuite-saref.ttl" target="_blank">Tests for SAREF ontology</a>
+                </td>
+                <td><a href = "https://w3id.org/saref" target="_blank">SAREF ontology </a> </td>
+
+                <td><span class="label label-primary">iot</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a href = "http://vicinity.iot.linkeddata.es/vicinity/testing/testsuite-ssn.ttl" target="_blank">Tests for SSN ontology</a>
+                </td>
+                <td><a href = "http://www.w3.org/ns/ssn" target="_blank">SSN ontology </a> </td>
+
+                <td><span class="label label-primary">iot</span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+
+
+
+
+
+
+    <hr>
+    <footer class="footer">
+        <div class="row">
+            <div class="col-md-10">
+                 Alba Fernández Izquierdo
+                <br>
+                Contact email: albafernandez@fi.upm.es
+                <br>
+                Built with <a target="_blank" href="http://getbootstrap.com/">Bootstrap</a>
+                Icons from <a target="_blank" href="http://glyphicons.com/">Glyphicons</a>
+                <br>
+                Latest revision Feb, 2019
+                <br><p>&copy; Ontology Engineering Group</p>
+            </div>
+            <div class="col-md-2">
+                <a href="http://www.oeg-upm.net/" target="_blank"><img src="vocab/logo.gif" alt="OEG logo" class="img-rounded" class="img-responsive" /></a>
+            </div>
+        </div>
+    </footer>
+</div> <!-- /container -->
+
+
+<script type="text/javascript" src="js/tests-js.js"></script>
+
+<script>
+    function hideRows(text) {
+        index = 1;
+        tr = document.getElementById('tr'+index);
+        while (tr!=null){
+            valores = document.getElementById('inp'+index).value;
+            if (valores.indexOf(text+'--')==-1){
+                tr.style.display='none';
+            }
+            index++;
+            tr = document.getElementById('tr'+index);
+        }
+        document.getElementById('remButt').style.display='';
+    }
+
+    function showRows() {
+        index = 1;
+        tr = document.getElementById('tr'+index);
+        while (tr!=null){
+            tr.style.display='';
+            index++;
+            tr = document.getElementById('tr'+index);
+        }
+        butt = document.getElementById('remButt').style.display='none';
+    }
+</script>
+</body>
+</html>
