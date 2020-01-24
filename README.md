@@ -1,5 +1,16 @@
-# README #
+# Themis 
 
-Ontology Validator for a network of ontologies. Use case: VICINITY project.
+This repository is a web service that publishes the services of Themis, providing an interface to execute tests on one or more ontologies, and also a REST API to be used by third-party services.
 
-Browser in a webpages which access to the restful api and executes the tests in a collection of ontologies, and print in the website which ones passed the tests and which do not.
+## Inputs
+Themis needs two inputs:
+* *Ontology URI*: the user can add one or more than one ontology, which will be loaded and its glossary of terms automatically generated
+* *Test*: the user can add one or more tests. [Check here the supported tests](http://themis.linkeddata.es/tests-info.html)
+
+
+## Outputs
+Themis will provide the result for each test and each ontology, indicating as well the problem found (if any). Users can also download the test suite as an RDF file.
+
+# Using the Rest API
+In order to use our REST API, check our [online documentation](http://themis.linkeddata.es/swagger-ui/index.html) 
+
