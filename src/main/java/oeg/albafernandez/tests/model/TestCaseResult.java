@@ -1,7 +1,6 @@
 package oeg.albafernandez.tests.model;
 
 import org.semanticweb.owlapi.model.IRI;
-
 import java.util.ArrayList;
 
 

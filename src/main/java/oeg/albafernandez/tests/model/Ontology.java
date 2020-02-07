@@ -1,10 +1,8 @@
 package oeg.albafernandez.tests.model;
 
 import org.apache.log4j.Logger;
-
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.*;
-
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.regex.Pattern;
@@ -28,38 +26,8 @@ public class Ontology {
         this.OWLontology = ontology;
     }
 
-
     public OWLOntologyManager getManager() {
         return manager;
-    }
-
-    public String load_ontologyURL(String ontologyURL) {
-        String response = " ";
-        ontologyURL = ontologyURL.replace("\"","");
-        this.manager = OWLManager.createOWLOntologyManager();
-        if(ontologyURL.endsWith("#") || ontologyURL.endsWith("/") )
-            ontologyURL = ontologyURL.substring(0, ontologyURL.length() - 1);
-        IRI path = IRI.create(ontologyURL.replace("\"",""));
-        logger.info("Analysing ontology with URI: " + ontologyURL);
-        try {
-            OWLOntology ontology = this.manager.loadOntology(path);
-            this.setOntology(ontology);
-        } catch (Exception e) {
-            logger.error("could not load vocabulary. " + e.getMessage());
-            response = null;
-        }
-        this.setProv(path);
-        return response;
-    }
-
-
-    public String getKeyName(){
-        if(prov.getFragment().toString().contains(".")) {
-            return prov.getFragment().toString().split(Pattern.quote("."))[0];
-        }else {
-            return prov.getFragment().toString();
-        }
-
     }
 
     public String getGot() {
@@ -146,5 +114,36 @@ public class Ontology {
         return  hashMapdataProp;
     }
 
+    public String getKeyName(){
+        if(prov.getFragment().toString().contains(".")) {
+            return prov.getFragment().toString().split(Pattern.quote("."))[0];
+        }else {
+            return prov.getFragment().toString();
+        }
+
+    }
+
+    public String load_ontologyURL(String prov) {
+        String response = " ";
+        prov = prov.replace("\"","");
+        this.manager = OWLManager.createOWLOntologyManager();
+        if(prov.endsWith("#") || prov.endsWith("/") )
+            prov = prov.substring(0, prov.length() - 1);
+        IRI path = IRI.create(prov.replace("\"",""));
+        logger.info("Analysing ontology with URI: " + prov);
+        try {
+            OWLOntology ontology = this.manager.loadOntology(path);
+            this.setOntology(ontology);
+            IRI iri = ontology.getOntologyID().getOntologyIRI();
+            if(iri.toString().endsWith("#") || iri.toString().endsWith("/") )
+                this.setProv(IRI.create(iri.toString().substring(0, iri.toString().length() - 1)));
+            else
+                this.setProv(IRI.create(iri.toString()));
+        } catch (Exception e) {
+            logger.error("could not load vocabulary. " + e.getMessage());
+            response = null;
+        }
+        return response;
+    }
 
 }

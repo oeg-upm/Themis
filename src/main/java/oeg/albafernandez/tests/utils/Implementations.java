@@ -301,7 +301,7 @@ public class Implementations {
             hashinput.put(entry.getKey(), entry.getValue());
         }
         testCase.setAssertionsAxioms(hashinput);
-        return null;
+        return testCase;
     }
 
     /*for the generation of symmetry*/

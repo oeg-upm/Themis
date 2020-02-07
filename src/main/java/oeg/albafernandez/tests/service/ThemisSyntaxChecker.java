@@ -1,5 +1,6 @@
 package oeg.albafernandez.tests.service;
 
+import com.google.gson.Gson;
 import oeg.albafernandez.tests.model.Ontology;
 import oeg.albafernandez.tests.utils.GoT;
 import org.json.JSONArray;
@@ -44,7 +45,8 @@ public class ThemisSyntaxChecker {
     }
 
 
-    public String got(String completetest, String term,   String ontology) throws JSONException {
+    public String autocomplete(String completetest, String term,   String ontology) throws JSONException {
+
         if(completetest != null && term != null && ontology != null) {
             JSONArray gotterms = new JSONArray();
             ArrayList<String> keys = new ArrayList<>();
@@ -258,6 +260,28 @@ public class ThemisSyntaxChecker {
             JSONObject linkToReportGoT = new JSONObject();
             linkToReportGoT.put("got", reportText);
             linkToReportGoT.put("key", onto.getKeyName());
+
+            return linkToReportGoT.toString();
+        }else
+            return "";
+    }
+
+    public  String  getPlainGoT(String uri) throws JSONException, OWLOntologyStorageException {
+        if(uri !=null) {
+            Ontology onto = new Ontology();
+            onto.load_ontologyURL(uri.replace("\"", "").trim());
+            HashMap<String, IRI> elements = new HashMap<>();
+            elements.putAll(onto.getClasses());
+            elements.putAll(onto.getObjectProperties());
+            elements.putAll(onto.getDatatypeProperties());
+            elements.putAll(onto.getIndividuals());
+
+            String json = new Gson().toJson(elements);
+
+            JSONObject linkToReportGoT = new JSONObject();
+            linkToReportGoT.put("got", json);
+            linkToReportGoT.put("key", onto.getKeyName());
+
 
             return linkToReportGoT.toString();
         }else

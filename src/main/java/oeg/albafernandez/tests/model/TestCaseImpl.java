@@ -2,7 +2,6 @@ package oeg.albafernandez.tests.model;
 
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLOntology;
-
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
@@ -16,7 +15,6 @@ public class TestCaseImpl {
     private LinkedHashMap<String, String> assertions;
     private LinkedHashMap<String, OWLOntology> assertionsAxioms;
     private LinkedHashMap<String, String> axiomExpectedResultAxioms;
-
     private String preparation;
     private OWLOntology preparationaxioms;
     private ArrayList<String> precondition;

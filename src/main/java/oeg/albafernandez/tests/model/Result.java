@@ -1,7 +1,6 @@
 package oeg.albafernandez.tests.model;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.util.List;
 
 public class Result {

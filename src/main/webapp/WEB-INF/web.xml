@@ -4,9 +4,6 @@
 	http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
   <display-name>ontology validator service</display-name>
 
-  <listener>
-    <listener-class>oeg.albafernandez.tests.controller.ServletContextClass</listener-class>
-  </listener>
 
   <servlet>
     <servlet-name>Themis</servlet-name>
@@ -14,7 +11,7 @@
 
     <init-param>
       <param-name>jersey.config.server.provider.packages</param-name>
-      <param-value>oeg.albafernandez.tests.controller, io.swagger.v3.jaxrs2.integration.resources</param-value>
+      <param-value>oeg.albafernandez.tests, io.swagger.v3.jaxrs2.integration.resources</param-value>
     </init-param>
     <init-param>
       <param-name>jersey.config.server.provider.classnames</param-name>

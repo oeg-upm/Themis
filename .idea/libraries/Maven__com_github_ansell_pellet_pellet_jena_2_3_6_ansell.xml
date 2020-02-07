@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.github.ansell.pellet:pellet-jena:2.3.6-ansell">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/github/ansell/pellet/pellet-jena/2.3.6-ansell/pellet-jena-2.3.6-ansell.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/github/ansell/pellet/pellet-jena/2.3.6-ansell/pellet-jena-2.3.6-ansell-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/github/ansell/pellet/pellet-jena/2.3.6-ansell/pellet-jena-2.3.6-ansell-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

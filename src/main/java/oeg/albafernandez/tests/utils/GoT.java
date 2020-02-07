@@ -1,10 +1,12 @@
 package oeg.albafernandez.tests.utils;
 
+import org.json.JSONArray;
 import org.semanticweb.owlapi.model.IRI;
 
 import java.util.*;
 
 public class GoT {
+
     private String table;
     private String uri;
 
@@ -48,5 +50,6 @@ public class GoT {
         return report;
 
     }
+
 
 }

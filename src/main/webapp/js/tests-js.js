@@ -41,9 +41,9 @@ $( function() {
         .autocomplete({
             minLength: 1,
             source: function( request, response ) {
-                $.getJSON( "/rest/api/gotautocomplete", {
-                    completetest: request.term,
-                    term: extractLast( request.term ),
+                $.getJSON( "/rest/api/autocomplete", {
+                    test: request.term,
+                    lastTerm: extractLast( request.term ),
                     ontology: document.getElementsByName("ontology")[1].value,
                     imports: "true"
                 }, response );
@@ -75,7 +75,7 @@ function syntaxChecker(){
     $.ajax({
         type: 'GET',
         dataType: "json",
-        data: { completetest: test},
+        data: { test: test},
         url: '/rest/api/syntaxChecker',
         success: function (data, textStatus, jqXHR) {
             var result = data;
@@ -87,7 +87,6 @@ function syntaxChecker(){
             }
         },
         error: function (data, textStatus, jqXHR) {
-            alert("Error, check test syntax!");
         }
     });
 
@@ -99,7 +98,6 @@ function sortByLabel(x,y) {
 }
 
 function sortJSON(jsonArray) {
-    alert(jsonArray);
     return jsonArray.sort(sortByLabel);
 }
 
@@ -177,15 +175,17 @@ function check() {
         var $headers = $(table).find("th");
         var $rows = $(table).find("tbody tr").each(function (index) {
             $cells = $(this).find("td.got");
+
             myRows[index] = {};
             $cells.each(function (cellIndex) {
-                myRows[index][$($headers[cellIndex]).html()] = $(this).html();
+                var  header = $($headers[cellIndex]).html();
+                header = header.replace("<span class=\"glyphicon glyphicon-pencil\"></span>","");
+                myRows[index][header] = $(this).html();
             });
         });
 
         myObj[table.id] = myRows;
     });
-
 
     var array = $(this).serializeArray();
     var id = document.getElementsByName("test");
@@ -201,11 +201,18 @@ function check() {
         }
     });
 
+    var data = {
+        got: JSON.stringify(myObj),
+        ontologies:arrayontos,
+        tests: array
+    };
+
     $.ajax({
         type: 'POST',
-        data: {got: JSON.stringify(myObj), tests: JSON.stringify(array), ontologies: JSON.stringify(arrayontos)},
+        data: JSON.stringify(data),
         dataType: "json",
         url: '/rest/api/results',
+        contentType: "application/json",
         success: function (data, textStatus, jqXHR) {
             if (data.length > 0) {
                 $.each(data, function (i, item) {
@@ -462,7 +469,7 @@ function loadontology() {
                 type: 'GET',
                 dataType: "json",
                 data: {uri: JSON.stringify(uri)},
-                url: '/rest/api/getgot',
+                url: '/rest/api/getTableGot',
                 success: function (data, textStatus, jqXHR) {
                     //  var text = "<p   name=\"" + uri + "\"><a href=\"" + uri + "\"><button  type=\"button\" class=\"btn btn-link\" ><small><span class=\"glyphicon glyphicon-ok align-middle\" aria-hidden=\"true\"></span></small></button></a></p>";
                     // $("#loadcheck").append(text);
@@ -500,7 +507,6 @@ function loadontology() {
 
                 },
                 error: function (ts) {
-                    alert("Error. Check the URI");
                     document.getElementById("ontology").value ="";
                     $('#load').html('Load ontology');
                     $('#load').removeAttr("disabled");

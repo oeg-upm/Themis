@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.github.ansell.owlapi:owlapi-tools:3.4.9.2-ansell">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/github/ansell/owlapi/owlapi-tools/3.4.9.2-ansell/owlapi-tools-3.4.9.2-ansell.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/github/ansell/owlapi/owlapi-tools/3.4.9.2-ansell/owlapi-tools-3.4.9.2-ansell-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/github/ansell/owlapi/owlapi-tools/3.4.9.2-ansell/owlapi-tools-3.4.9.2-ansell-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

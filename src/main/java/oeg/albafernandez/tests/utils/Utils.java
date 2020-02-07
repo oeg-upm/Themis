@@ -25,7 +25,6 @@ public class Utils {
         Pattern p = Pattern.compile("\\<(.*?)\\>"); // VERIFICAR ESTO
         Matcher m = p.matcher(query);
         while(m.find()){
-            System.out.println(m.group());
             if(ontology.containsEntityInSignature(IRI.create(m.group().toString().replace(
                     "<","").replace(">",""))))
                 return  "true";

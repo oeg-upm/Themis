@@ -1,9 +1,7 @@
 package oeg.albafernandez.tests.service;
 
-import com.sun.org.apache.xpath.internal.SourceTree;
 import de.derivo.sparqldlapi.exceptions.QueryParserException;
 import oeg.albafernandez.tests.model.Ontology;
-import oeg.albafernandez.tests.model.TestCaseDesign;
 import oeg.albafernandez.tests.model.TestCaseImpl;
 import oeg.albafernandez.tests.model.TestCaseResult;
 import org.json.JSONArray;
@@ -17,16 +15,17 @@ import java.io.IOException;
 import java.util.*;
 
 public class ThemisResultsGenerator {
+    ThemisSyntaxChecker syntaxChecker = new ThemisSyntaxChecker();
 
     public  String  getResults(  String table, List<String>  tests,  List<String> ontologies) throws JSONException, OWLOntologyStorageException, IOException, OWLOntologyCreationException, QueryParserException {
 
-        if(table!= null && tests!=null && ontologies != null) {
+        if(tests!=null && ontologies != null) {
             JSONArray results = new JSONArray();
             //execute each test in each ontology
             for (String test : tests) {
                 //preprocess table of got
                 test = test.trim().replaceAll(" +", " ").replace("\\n", "").replace("\"","");
-                ThemisImplementationService impl = new ThemisImplementationService();
+                ThemisImplementer impl = new ThemisImplementer();
                 // process test design to store it as a TestCaseDesign
                 impl.processTestCaseDesign(test);
                 // generate the implementation of the TestCaseDesign
@@ -39,11 +38,15 @@ public class ThemisResultsGenerator {
                         Ontology ontology = new Ontology();
                         ontology.load_ontologyURL(ontologyURI);
                         //get the right term in got to execute the test on the given ontology
-                        HashMap<String, IRI> got = getTermInGot( table,  ontology);
+                        HashMap<String, IRI> got = new HashMap<>();
+                        if(table == null  || table.isEmpty()){
+                            got = syntaxChecker.createGot(ontology);
+                        }else
+                            got = getTermInGot( table,  ontology);
                         /*Results of the test*/
-                        ThemisExecutionService exec = new ThemisExecutionService();
+                        ThemisExecuter exec = new ThemisExecuter();
                         TestCaseResult testsuiteResult = exec.executeTest(testsuiteImpl, ontology, got);
-                        resultsAsJson = storeResults(testsuiteResult, ontology);
+                        resultsAsJson = storeResults(testsuiteResult, ontology, resultsAsJson);
                     }
                     resultsAggregated.put("Results", resultsAsJson);
                     results.put(resultsAggregated);
@@ -74,9 +77,8 @@ public class ThemisResultsGenerator {
     }
 
 
-    public  JSONArray  storeResults(TestCaseResult testsuiteResult, Ontology ontology) throws JSONException {
+    public  JSONArray  storeResults(TestCaseResult testsuiteResult, Ontology ontology, JSONArray ontologyarray) throws JSONException {
         JSONObject testsResults = new JSONObject();
-        JSONArray ontologyarray = new JSONArray();
         if (testsuiteResult.getTestResult().equals("passed")) {
             // the ontology passed the test
             testsResults.put("Ontology", ontology.getProv().toString());
