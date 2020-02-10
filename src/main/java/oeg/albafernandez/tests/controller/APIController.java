@@ -13,7 +13,6 @@ import oeg.albafernandez.tests.service.*;
 import org.apache.log4j.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.simple.parser.ParseException;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyStorageException;
 
@@ -42,7 +41,7 @@ public class APIController {
     public Response removeOntology(@Context HttpServletRequest req,  @QueryParam("uri") String ontologyURL){
         if(ontologyURL !=null) {
             Ontology ontology = new Ontology();
-            ontology.load_ontologyURL(ontologyURL.toString().replace("\"", ""));
+            ontology.loadOntologyURL(ontologyURL.toString().replace("\"", ""));
             JSONObject obj = new JSONObject();
             try {
                 obj.put("url", ontology.getOntology().getOntologyID().getOntologyIRI().toString());
@@ -55,23 +54,11 @@ public class APIController {
             session.setAttribute("ontologies", ontologies);
             return Response
                     .status(200)
-                    .header("Access-Control-Allow-Origin", "*")
-                    .header("Access-Control-Allow-Credentials", "true")
-                    .header("Access-Control-Allow-Headers",
-                            "origin, content-type, accept, authorization")
-                    .header("Access-Control-Allow-Methods",
-                            "GET, POST, PUT, DELETE, OPTIONS, HEAD")
                     .entity(obj.toString())
                     .build();
         }else
             return Response
                     .status(200)
-                    .header("Access-Control-Allow-Origin", "*")
-                    .header("Access-Control-Allow-Credentials", "true")
-                    .header("Access-Control-Allow-Headers",
-                            "origin, content-type, accept, authorization")
-                    .header("Access-Control-Allow-Methods",
-                            "GET, POST, PUT, DELETE, OPTIONS, HEAD")
                     .entity("")
                     .build();
     }
@@ -80,6 +67,7 @@ public class APIController {
 
     @POST
     @Path("results")
+    @Consumes({ MediaType.APPLICATION_JSON})
     @Operation(summary = "Execute tests", description = "Execute a set of tests on an ontology", method = "POST",
             responses = {
                     @ApiResponse( responseCode  = "200", description  = "Tests successfully executed",  content = @Content(mediaType = "application/json")),
@@ -88,9 +76,6 @@ public class APIController {
             })
 
     public Response getResults(Result results){
-        //@Schema(description = "Glossary of terms as a table in the form: KEY;URI", example = "{\"ontology\":[{\"Term\":\"Sensor\",\"URI\":\"http://iot.linkeddata.es/def/core#Sensor\"}]}") @FormParam("got") String got,
-        //                 @Schema(description = "List of tests to be executed", example = "[\"Sensor type Class\", \"Sensor subclassOf Device\"]") @FormParam("tests") List<String> tests,
-        //               @Schema(description = "List of ontologies to be analysed",example = "[\"http://iot.linkeddata.es/def/core#\", \"http://iot.linkeddata.es/def/wot#\"]") @FormParam("ontologies")  List<String> ontologies) throws JSONException, OWLOntologyStorageException, IOException, OWLOntologyCreationException, QueryParserException {
         List<String> ontologies = results.getOntologies();
         List<String> tests = results.getTests();
         String got = results.getGot();
@@ -124,7 +109,7 @@ public class APIController {
     @Produces({ MediaType.APPLICATION_JSON})
     @Hidden
     /*MEthod to export the test suite in an TTL file*/
-    public Response getdownload(@QueryParam("test") final String tests) throws JSONException, OWLOntologyStorageException{
+    public Response downloadTestSuite(@QueryParam("test") final String tests) throws JSONException, OWLOntologyStorageException{
         if(tests != null) {
             String[] testsList = tests.replace("\"", "").replace("[", "").replace("]", "").split(",");
 
@@ -184,7 +169,7 @@ public class APIController {
                     @ApiResponse( responseCode  = "200", description  = "Syntax checker successfully executed",  content = @Content(mediaType = "application/json")),
                     @ApiResponse( responseCode = "500", description = "Internal error. Check inputs",  content = @Content(mediaType = "application/json")),
             })
-    public Response syntaxChecker(@QueryParam("test") @Parameter(description = "Test", example = "Sensor type Class") String test) throws JSONException, ParseException {
+    public Response checkSyntax(@QueryParam("test") @Parameter(description = "Test", example = "Sensor type Class") String test) throws JSONException {
         return Response
                 .status(200)
                 .entity(syntaxChecker.syntaxChecker(test))

@@ -15,11 +15,14 @@ import java.io.IOException;
 import java.util.*;
 
 public class ThemisResultsGenerator {
+
     ThemisSyntaxChecker syntaxChecker = new ThemisSyntaxChecker();
+
+    static final String ONTOLOGY = "Ontology";
+    static final String RESULT = "Result";
 
     public  String  getResults(  String table, List<String>  tests,  List<String> ontologies) throws JSONException, OWLOntologyStorageException, IOException, OWLOntologyCreationException, QueryParserException {
 
-        if(tests!=null && ontologies != null) {
             JSONArray results = new JSONArray();
             //execute each test in each ontology
             for (String test : tests) {
@@ -30,17 +33,17 @@ public class ThemisResultsGenerator {
                 impl.processTestCaseDesign(test);
                 // generate the implementation of the TestCaseDesign
                 TestCaseImpl testsuiteImpl = impl.createTestImplementation();
-                if (testsuiteImpl.getPrecondition().size() != 0 && test != "") {
+                if (!testsuiteImpl.getPreconditionList().isEmpty() && test != "") {
                     JSONObject resultsAggregated = new JSONObject();
                     resultsAggregated.put("Test", test);
                     JSONArray resultsAsJson = new JSONArray();
                     for (String ontologyURI : ontologies) {
                         Ontology ontology = new Ontology();
-                        ontology.load_ontologyURL(ontologyURI);
+                        ontology.loadOntologyURL(ontologyURI);
                         //get the right term in got to execute the test on the given ontology
-                        HashMap<String, IRI> got = new HashMap<>();
+                        HashMap<String, IRI> got;
                         if(table == null  || table.isEmpty()){
-                            got = syntaxChecker.createGot(ontology);
+                            got = (HashMap<String, IRI>) syntaxChecker.createGot(ontology);
                         }else
                             got = getTermInGot( table,  ontology);
                         /*Results of the test*/
@@ -55,8 +58,7 @@ public class ThemisResultsGenerator {
                 }
             }
             return results.toString();
-        }else
-            return "";
+
     }
 
     public  HashMap<String, IRI>  getTermInGot(String table, Ontology ontology) throws JSONException {
@@ -81,27 +83,27 @@ public class ThemisResultsGenerator {
         JSONObject testsResults = new JSONObject();
         if (testsuiteResult.getTestResult().equals("passed")) {
             // the ontology passed the test
-            testsResults.put("Ontology", ontology.getProv().toString());
-            testsResults.put("Result", "passed");
+            testsResults.put(ONTOLOGY, ontology.getProv().toString());
+            testsResults.put(RESULT, "passed");
             ontologyarray.put(testsResults);
         } else if (testsuiteResult.getTestResult().equals("undefined")) { // the terms needed to executeTest the tests are not defined inthe ontology
-            testsResults.put("Ontology", ontology.getProv().toString());
-            testsResults.put("Result", "undefined");
-            testsResults.put("Undefined", testsuiteResult.getUndefinedTerms());
+            testsResults.put(ONTOLOGY, ontology.getProv().toString());
+            testsResults.put(RESULT, "undefined");
+            testsResults.put("Undefined", testsuiteResult.getUndefinedTermsList());
             ontologyarray.put(testsResults);
 
         } else if (testsuiteResult.getTestResult().equals("incorrect")) { // the terms needed to executeTest the tests are not defined inthe ontology
-            testsResults.put("Ontology", ontology.getProv().toString());
-            testsResults.put("Result", "incorrect");
-            testsResults.put("Incorrect", testsuiteResult.getIncorrectTerms());
+            testsResults.put(ONTOLOGY, ontology.getProv().toString());
+            testsResults.put(RESULT, "incorrect");
+            testsResults.put("Incorrect", testsuiteResult.getIncorrectTermsList());
             ontologyarray.put(testsResults);
         }else if (testsuiteResult.getTestResult().equals("absent")) { // the ontology does not pass the test
-            testsResults.put("Ontology", ontology.getProv().toString());
-            testsResults.put("Result", "absent");
+            testsResults.put(ONTOLOGY, ontology.getProv().toString());
+            testsResults.put(RESULT, "absent");
             ontologyarray.put(testsResults);
         } else { // the ontology does not pass the test
-            testsResults.put("Ontology", ontology.getProv().toString());
-            testsResults.put("Result", "notpassed");
+            testsResults.put(ONTOLOGY, ontology.getProv().toString());
+            testsResults.put(RESULT, "notpassed");
             ontologyarray.put(testsResults);
         }
         return ontologyarray;

@@ -5,25 +5,26 @@ import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.*;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 
 public class Ontology {
 
-    final static Logger logger = Logger.getLogger(Ontology.class);
+    static  final Logger logger = Logger.getLogger(Ontology.class);
 
-    private OWLOntology OWLontology;
+    private OWLOntology owlOntology;
     private OWLOntologyManager manager;
     private IRI prov;
     private String key;
     private String got;
 
     public OWLOntology getOntology() {
-        return OWLontology;
+        return owlOntology;
     }
 
     public void setOntology(OWLOntology ontology) {
-        this.OWLontology = ontology;
+        this.owlOntology = ontology;
     }
 
     public OWLOntologyManager getManager() {
@@ -54,36 +55,36 @@ public class Ontology {
         this.key = key;
     }
 
-    public HashMap<String, IRI> getClasses(){
-        HashMap<String, IRI> hashMapClasses = new HashMap<String, IRI>();
-        Iterator<OWLClass> iter = OWLontology.getClassesInSignature(true).iterator();
+    public Map<String, IRI> getClasses(){
+        HashMap<String, IRI> hashMapClasses = new HashMap<>();
+        Iterator<OWLClass> iter = owlOntology.getClassesInSignature(true).iterator();
         while(iter.hasNext()){
             OWLClass nextClass=iter.next();
 
-            if(!hashMapClasses.containsKey(nextClass.getIRI().getFragment().toString()))
-                hashMapClasses.put(nextClass.getIRI().getFragment().toString(),nextClass.getIRI());
+            if(!hashMapClasses.containsKey(nextClass.getIRI().getFragment()))
+                hashMapClasses.put(nextClass.getIRI().getFragment(),nextClass.getIRI());
             else{
-                String[] uri = nextClass.getIRI().getNamespace().toString().split("/");
-                hashMapClasses.put(uri[uri.length-1]+nextClass.getIRI().getFragment().toString(),nextClass.getIRI());
+                String[] uri = nextClass.getIRI().getNamespace().split("/");
+                hashMapClasses.put(uri[uri.length-1]+nextClass.getIRI().getFragment(),nextClass.getIRI());
             }
         }
         return  hashMapClasses;
 
     }
 
-    public HashMap<String, IRI> getIndividuals(){
-        HashMap<String, IRI> hashMapIndividuals = new HashMap<String, IRI>();
-        Iterator<OWLNamedIndividual> iter = OWLontology.getIndividualsInSignature(true).iterator();
+    public Map<String, IRI> getIndividuals(){
+        HashMap<String, IRI> hashMapIndividuals = new HashMap<>();
+        Iterator<OWLNamedIndividual> iter = owlOntology.getIndividualsInSignature(true).iterator();
         while(iter.hasNext()){
             OWLNamedIndividual nextIndividual=iter.next();
             if(!nextIndividual.getIRI().toString().endsWith("/") && !nextIndividual.getIRI().toString().endsWith("#")) { //si es solo una uri
-                 if(!hashMapIndividuals.containsKey(nextIndividual.getIRI().getFragment().toString())) {
+                 if(!hashMapIndividuals.containsKey(nextIndividual.getIRI().getFragment())) {
 
-                    hashMapIndividuals.put(nextIndividual.getIRI().getFragment().toString(), nextIndividual.getIRI());
+                    hashMapIndividuals.put(nextIndividual.getIRI().getFragment(), nextIndividual.getIRI());
                 }
                  else{
-                     String[] uri = nextIndividual.getIRI().getNamespace().toString().split("/");
-                     hashMapIndividuals.put(uri[uri.length-1]+nextIndividual.getIRI().getFragment().toString(),nextIndividual.getIRI());
+                     String[] uri = nextIndividual.getIRI().getNamespace().split("/");
+                     hashMapIndividuals.put(uri[uri.length-1]+nextIndividual.getIRI().getFragment(),nextIndividual.getIRI());
                  }
             }
 
@@ -92,38 +93,38 @@ public class Ontology {
 
     }
 
-    public HashMap<String, IRI> getObjectProperties(){
-        HashMap<String, IRI> hashMapProp = new HashMap<String, IRI>();
-        Iterator<OWLObjectProperty> iter = OWLontology.getObjectPropertiesInSignature(true).iterator();
+    public Map<String, IRI> getObjectProperties(){
+        HashMap<String, IRI> hashMapProp = new HashMap<>();
+        Iterator<OWLObjectProperty> iter = owlOntology.getObjectPropertiesInSignature(true).iterator();
 
         while(iter.hasNext()){
             OWLObjectProperty nextProp=iter.next();
-            hashMapProp.put(nextProp.getIRI().getFragment().toString(),nextProp.getIRI());
+            hashMapProp.put(nextProp.getIRI().getFragment(),nextProp.getIRI());
         }
         return  hashMapProp;
     }
 
-    public HashMap<String, IRI> getDatatypeProperties(){
-        HashMap<String, IRI> hashMapdataProp = new HashMap<String, IRI>();
-        Iterator<OWLDataProperty> iter = OWLontology.getDataPropertiesInSignature(true).iterator();
+    public Map<String, IRI> getDatatypeProperties(){
+        HashMap<String, IRI> hashMapdataProp = new HashMap<>();
+        Iterator<OWLDataProperty> iter = owlOntology.getDataPropertiesInSignature(true).iterator();
 
         while(iter.hasNext()){
             OWLDataProperty nextProp=iter.next();
-            hashMapdataProp.put(nextProp.getIRI().getFragment().toString(),nextProp.getIRI());
+            hashMapdataProp.put(nextProp.getIRI().getFragment(),nextProp.getIRI());
         }
         return  hashMapdataProp;
     }
 
     public String getKeyName(){
-        if(prov.getFragment().toString().contains(".")) {
-            return prov.getFragment().toString().split(Pattern.quote("."))[0];
+        if(prov.getFragment().contains(".")) {
+            return prov.getFragment().split(Pattern.quote("."))[0];
         }else {
-            return prov.getFragment().toString();
+            return prov.getFragment();
         }
 
     }
 
-    public String load_ontologyURL(String prov) {
+    public String loadOntologyURL(String prov) {
         String response = " ";
         prov = prov.replace("\"","");
         this.manager = OWLManager.createOWLOntologyManager();

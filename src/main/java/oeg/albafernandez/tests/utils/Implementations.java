@@ -1,18 +1,12 @@
 package oeg.albafernandez.tests.utils;
 
-import oeg.albafernandez.tests.model.TestCaseDesign;
 import oeg.albafernandez.tests.model.TestCaseImpl;
-import org.apache.log4j.Logger;
-import org.coode.owlapi.turtle.TurtleOntologyFormat;
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.*;
 import org.semanticweb.owlapi.vocab.OWL2Datatype;
 
-import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -39,7 +33,7 @@ public class Implementations {
         precond.add("Class(<"+classA+">)");
         precond.add("Property(<"+P+">)");
         precond.add("Individual(<"+ind1+">)");
-        testCase.getPrecondition().addAll(precond);
+        testCase.getPreconditionList().addAll(precond);
 
         String base = "";
         OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
@@ -62,7 +56,7 @@ public class Implementations {
         manager.applyChanges(manager.addAxiom(ont, axiomInd1));
         manager.applyChanges(manager.addAxiom(ont, axiomInd2));
         manager.applyChanges(manager.addAxiom(ont,  dataFactory.getOWLDifferentIndividualsAxiom(individual1, individual2)));
-        testCase.setPreparationaxioms(manager.getOntology(IRI.create(base)));
+        testCase.setPreparationAxioms(manager.getOntology(IRI.create(base)));
         manager.removeOntology(ont);
 
         /*Assertions*/
@@ -126,7 +120,7 @@ public class Implementations {
         ArrayList<String> precond = new ArrayList<>();
         precond.add("Class(<"+classA+">)");
         precond.add("Property(<"+R+">)");
-        testCase.getPrecondition().addAll(precond);
+        testCase.getPreconditionList().addAll(precond);
 
         /*Axioms to be added*/
 
@@ -246,7 +240,7 @@ public class Implementations {
         ArrayList<String> precond = new ArrayList<>();
         precond.add("Individual(<"+indA+">)");
         precond.add("Class(<"+classB+">)");
-        testCase.getPrecondition().addAll(precond);
+        testCase.getPreconditionList().addAll(precond);
 
         String base = "";
         OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
@@ -267,7 +261,7 @@ public class Implementations {
         manager.applyChanges(manager.addAxiom(ont, axiomClass));
         manager.applyChanges(manager.addAxiom(ont, axiomClass2));
         manager.applyChanges(manager.addAxiom(ont, equivalentClassesAxiom));
-        testCase.setPreparationaxioms(manager.getOntology(IRI.create(base)));
+        testCase.setPreparationAxioms(manager.getOntology(IRI.create(base)));
         manager.removeOntology(ont);
 
         /*Assertions*/
@@ -322,7 +316,7 @@ public class Implementations {
         /*Preconditions*/
         ArrayList<String> precond = new ArrayList<>();
         precond.add("Property(<"+R+">)\n");
-        testCase.getPrecondition().addAll(precond);
+        testCase.getPreconditionList().addAll(precond);
 
         /*Axioms to be added*/
         String ind1= "individual001";
@@ -364,7 +358,7 @@ public class Implementations {
         manager.applyChanges(manager.addAxiom(ont,  differentIndividualsAxiom2));
         manager.applyChanges(manager.addAxiom(ont,  owlClassAssertionAxiom2));
         manager.applyChanges(manager.addAxiom(ont,  owlClassAssertionAxiom3));
-        testCase.setPreparationaxioms(manager.getOntology(IRI.create(base)));
+        testCase.setPreparationAxioms(manager.getOntology(IRI.create(base)));
         manager.removeOntology(ont);
 
         OWLOntology ont1 = null;
@@ -443,7 +437,7 @@ public class Implementations {
         precond.add("Class(<"+classA+">)\n");
         precond.add("Property(<"+R+">)\n");
         precond.add("Class(<"+classB+">)\n");
-        testCase.getPrecondition().addAll(precond);
+        testCase.getPreconditionList().addAll(precond);
 
         /*Axioms to be added*/
 
@@ -488,7 +482,7 @@ public class Implementations {
         manager.applyChanges(manager.addAxiom(ont,  owlClassAssertionAxiom2));
         manager.applyChanges(manager.addAxiom(ont,  owlClassAssertionAxiom3));
 
-        testCase.setPreparationaxioms(manager.getOntology(IRI.create(base)));
+        testCase.setPreparationAxioms(manager.getOntology(IRI.create(base)));
         manager.removeOntology(ont);
 
         OWLOntology ont1 = null;
@@ -551,7 +545,7 @@ public class Implementations {
         ArrayList<String> precond = new ArrayList<>();
         precond.add("Class(<"+classA+">)");
         precond.add("Property(<"+propertyA+">)");
-        testCase.getPrecondition().addAll(precond);
+        testCase.getPreconditionList().addAll(precond);
 
         /*Axioms to be added*/
         String base = "";
@@ -571,7 +565,7 @@ public class Implementations {
         manager.applyChanges(manager.addAxiom(ont, axiomClass));
         manager.applyChanges(manager.addAxiom(ont, axiomClass2));
         manager.applyChanges(manager.addAxiom(ont, equivalentClassesAxiom));
-        testCase.setPreparationaxioms(manager.getOntology(IRI.create(base)));
+        testCase.setPreparationAxioms(manager.getOntology(IRI.create(base)));
         manager.removeOntology(ont);
 
         /*Assertions*/
@@ -670,7 +664,7 @@ public class Implementations {
         ArrayList<String> precond = new ArrayList<>();
         precond.add("Class(<"+classA+">)");
         precond.add("Property(<"+propertyA+">)");
-        testCase.getPrecondition().addAll(precond);
+        testCase.getPreconditionList().addAll(precond);
 
         /*Axioms to be added*/
         String base = "";
@@ -690,7 +684,7 @@ public class Implementations {
         manager.applyChanges(manager.addAxiom(ont, axiomClass));
         manager.applyChanges(manager.addAxiom(ont, axiomClass2));
         manager.applyChanges(manager.addAxiom(ont, equivalentClassesAxiom));
-        testCase.setPreparationaxioms(manager.getOntology(IRI.create(base)));
+        testCase.setPreparationAxioms(manager.getOntology(IRI.create(base)));
         manager.removeOntology(ont);
 
         OWLOntology ont1 = null;
@@ -773,7 +767,7 @@ public class Implementations {
         /*Preconditions*/
         ArrayList<String> precond = new ArrayList<>();
         precond.add("Property(<"+propertyA+">)");
-        testCase.getPrecondition().addAll(precond);
+        testCase.getPreconditionList().addAll(precond);
 
         /*Axioms to be added*/
         String base = "";
@@ -793,7 +787,7 @@ public class Implementations {
         manager.applyChanges(manager.addAxiom(ont, axiomDatatype));
         manager.applyChanges(manager.addAxiom(ont, axiomDatatype2));
         manager.applyChanges(manager.addAxiom(ont, dataFactory.getOWLDeclarationAxiom(ind1)));
-        testCase.setPreparationaxioms(manager.getOntology(IRI.create(base)));
+        testCase.setPreparationAxioms(manager.getOntology(IRI.create(base)));
         manager.removeOntology(ont);
 
         /*
@@ -877,7 +871,7 @@ public class Implementations {
         precond.add("Class(<"+classA.replaceAll(" ","")+">)");
         precond.add("Class(<"+classB.replaceAll(" ","")+">)");
         precond.add("Class(<"+classC.replaceAll(" ","")+">)");
-        testCase.getPrecondition().addAll(precond);
+        testCase.getPreconditionList().addAll(precond);
 
         /*Axioms to be added*/
         String base = "";
@@ -914,7 +908,7 @@ public class Implementations {
         manager.applyChanges(manager.addAxiom(ont, axiomClass5));
         manager.applyChanges(manager.addAxiom(ont, axiomClass6));
         manager.applyChanges(manager.addAxiom(ont, equivalentClassesAxiom3));
-        testCase.setPreparationaxioms(manager.getOntology(IRI.create(base)));
+        testCase.setPreparationAxioms(manager.getOntology(IRI.create(base)));
         manager.removeOntology(ont);
 
         OWLOntology ont1 = null;
@@ -1057,7 +1051,7 @@ public class Implementations {
         ArrayList<String> precond = new ArrayList<>();
         precond.add("Class(<"+classA.replaceAll(" ","")+">)");
         precond.add("Class(<"+classB.replaceAll(" ","")+">)");
-        testCase.getPrecondition().addAll(precond);
+        testCase.getPreconditionList().addAll(precond);
 
         /*Axioms to be added*/
         String base = "";
@@ -1092,7 +1086,7 @@ public class Implementations {
             manager.applyChanges(manager.addAxiom(ont, axiomClass4));
             manager.applyChanges(manager.addAxiom(ont, equivalentClassesAxiom));
             manager.applyChanges(manager.addAxiom(ont, equivalentClassesAxiom2));
-            testCase.setPreparationaxioms(manager.getOntology(IRI.create(base)));
+            testCase.setPreparationAxioms(manager.getOntology(IRI.create(base)));
             manager.removeOntology(ont);
 
             /*Assertions*/
@@ -1184,7 +1178,7 @@ public class Implementations {
             manager.applyChanges(manager.addAxiom(ont, axiomClass));
             manager.applyChanges(manager.addAxiom(ont, axiomClass1));
             manager.applyChanges(manager.addAxiom(ont, equivalentClassesAxiom2));
-            testCase.setPreparationaxioms(manager.getOntology(IRI.create(base)));
+            testCase.setPreparationAxioms(manager.getOntology(IRI.create(base)));
             manager.removeOntology(ont);
 
             OWLOntology ont1 = null;
@@ -1260,7 +1254,7 @@ public class Implementations {
         precond.add("Class(<"+classA+">)");
         precond.add("Property(<"+R+">)");
         precond.add("Class(<"+classB+">)");
-        testCase.getPrecondition().addAll(precond);
+        testCase.getPreconditionList().addAll(precond);
 
         String ind1= "individua001";
         String ind2 = "individua002";
@@ -1301,7 +1295,7 @@ public class Implementations {
         manager.applyChanges(manager.addAxiom(ont, classAssertionAxiom));
         manager.applyChanges(manager.addAxiom(ont, axiomInd2));
         manager.applyChanges(manager.addAxiom(ont, classAssertionAxiom2));
-        testCase.setPreparationaxioms(manager.getOntology(IRI.create(base)));
+        testCase.setPreparationAxioms(manager.getOntology(IRI.create(base)));
         manager.removeOntology(ont);
 
         /*Assertions*/
@@ -1391,7 +1385,7 @@ public class Implementations {
         precond.add("Class(<"+classA+">)");
         precond.add("Property(<"+R+">)");
         precond.add("Class(<"+classB+">)");
-        testCase.getPrecondition().addAll(precond);
+        testCase.getPreconditionList().addAll(precond);
 
         String ind1= "individua001";
         String ind2 = "individua002";
@@ -1430,7 +1424,7 @@ public class Implementations {
         manager.applyChanges(manager.addAxiom(ont, classAssertionAxiom));
         manager.applyChanges(manager.addAxiom(ont, axiomInd2));
         manager.applyChanges(manager.addAxiom(ont, classAssertionAxiom2));
-        testCase.setPreparationaxioms(manager.getOntology(IRI.create(base)));
+        testCase.setPreparationAxioms(manager.getOntology(IRI.create(base)));
         manager.removeOntology(ont);
         /*Assertions */
         OWLOntology ont1 = null;
@@ -1520,7 +1514,7 @@ public class Implementations {
         ArrayList<String> precond = new ArrayList<>();
         precond.add("Class(<"+classA+">)");
         precond.add("Property(<"+R+">)");
-        testCase.getPrecondition().addAll(precond);
+        testCase.getPreconditionList().addAll(precond);
 
         /*Preparation*/
         /*Axioms to be added*/
@@ -1553,7 +1547,7 @@ public class Implementations {
         manager.applyChanges(manager.addAxiom(ont, subClassOfAxiomAA1));
         manager.applyChanges(manager.addAxiom(ont, dataFactory.getOWLDeclarationAxiom(indOWL1)));
         manager.applyChanges(manager.addAxiom(ont, assertionAxiom));
-        testCase.setPreparationaxioms(manager.getOntology(IRI.create(base)));
+        testCase.setPreparationAxioms(manager.getOntology(IRI.create(base)));
         manager.removeOntology(ont);
 
         /*Axioms to be added*/
@@ -1627,7 +1621,7 @@ public class Implementations {
         ArrayList<String> precond = new ArrayList<>();
         precond.add("Class(<"+classA+">)");
         precond.add("Property(<"+R+">)");
-        testCase.getPrecondition().addAll(precond);
+        testCase.getPreconditionList().addAll(precond);
 
         /*Preparation*/
         /*Axioms to be added*/
@@ -1662,7 +1656,7 @@ public class Implementations {
         manager.applyChanges(manager.addAxiom(ont, axiomDatatype2));
         manager.applyChanges(manager.addAxiom(ont, dataFactory.getOWLDeclarationAxiom(indOWL1)));
         manager.applyChanges(manager.addAxiom(ont, assertionAxiom));
-        testCase.setPreparationaxioms(manager.getOntology(IRI.create(base)));
+        testCase.setPreparationAxioms(manager.getOntology(IRI.create(base)));
         manager.removeOntology(ont);
 
         /*Axioms to be added*/
@@ -1779,7 +1773,7 @@ public class Implementations {
         precond.add("Class(<"+classA+">)");
         precond.add("Property(<"+R+">)");
         precond.add("Class(<"+classB+">)");
-        testCase.getPrecondition().addAll(precond);
+        testCase.getPreconditionList().addAll(precond);
 
         /*Axioms to be added*/
 
@@ -1801,7 +1795,7 @@ public class Implementations {
 
         OWLSubClassOfAxiom axiomsubclass1= dataFactory.getOWLSubClassOfAxiom(classOWLA1, classOWLA);
         manager.applyChanges(manager.addAxiom(ont, axiomsubclass1));
-        testCase.setPreparationaxioms(manager.getOntology(IRI.create(base)));
+        testCase.setPreparationAxioms(manager.getOntology(IRI.create(base)));
         manager.removeOntology(ont);
         /*Assertions*/
         /*Assertions 1 */
@@ -1918,7 +1912,7 @@ public class Implementations {
         precond.add("Class(<"+classB+">)\n");
         precond.add("Class(<"+classC+">)\n");
 
-        testCase.getPrecondition().addAll(precond);
+        testCase.getPreconditionList().addAll(precond);
 
         /*Axioms to be added*/
         /*Preparation*/
@@ -1949,7 +1943,7 @@ public class Implementations {
         manager.applyChanges(manager.addAxiom(ont, axiomClass3));
         manager.applyChanges(manager.addAxiom(ont, equivalentClassesAxiom2));
 
-        testCase.setPreparationaxioms(manager.getOntology(IRI.create(base)));
+        testCase.setPreparationAxioms(manager.getOntology(IRI.create(base)));
         manager.removeOntology(ont);
 
         /*Assertions*/
@@ -2141,7 +2135,7 @@ public class Implementations {
         precond.add("Class(<"+classB+">)");
         precond.add("Class(<"+classC+">)");
         precond.add("Property(<"+R+">)");
-        testCase.getPrecondition().addAll(precond);
+        testCase.getPreconditionList().addAll(precond);
 
         /*Axioms to be added*/
         /*Preconditions*/
@@ -2181,7 +2175,7 @@ public class Implementations {
         manager.applyChanges(manager.addAxiom(ont, equivalentClassesAxiom2));
         manager.applyChanges(manager.addAxiom(ont, equivalentClassesAxiom3));
         manager.applyChanges(manager.addAxiom(ont, equivalentClassesAxiom4));
-        testCase.setPreparationaxioms(manager.getOntology(IRI.create(base)));
+        testCase.setPreparationAxioms(manager.getOntology(IRI.create(base)));
         manager.removeOntology(ont);
         /*Assertions*/
         OWLOntology ont1 = null;
@@ -2279,7 +2273,7 @@ public class Implementations {
         precond.add("Class(<"+classB+">)");
         precond.add("Class(<"+classC+">)");
         precond.add("Property(<"+R+">)");
-        testCase.getPrecondition().addAll(precond);
+        testCase.getPreconditionList().addAll(precond);
 
         /*Axioms to be added*/
         /*Preconditions*/
@@ -2313,7 +2307,7 @@ public class Implementations {
         manager.applyChanges(manager.addAxiom(ont, subClassOfAxiom));
         manager.applyChanges(manager.addAxiom(ont, equivalentClassesAxiom));
         manager.applyChanges(manager.addAxiom(ont, equivalentClassesAxiom2));
-        testCase.setPreparationaxioms(manager.getOntology(IRI.create(base)));
+        testCase.setPreparationAxioms(manager.getOntology(IRI.create(base)));
         manager.removeOntology(ont);
 
         OWLOntology ont1 = null;
@@ -2446,7 +2440,7 @@ public class Implementations {
         precond.add("Class(<"+classA+">)");
         precond.add("Property(<"+R+">)");
         precond.add("Class(<"+classB+">)");
-        testCase.getPrecondition().addAll(precond);
+        testCase.getPreconditionList().addAll(precond);
 
         String classA1withouturi = classA1.split("(#|\\/)")[classA1.split("(#|\\/)").length-1];
         String classBwithouturi = classB.split("(#|\\/)")[noClassB.split("(#|\\/)").length-1];
@@ -2487,7 +2481,7 @@ public class Implementations {
         manager.applyChanges(manager.addAxiom(ont, classAssertionAxiom));
         manager.applyChanges(manager.addAxiom(ont, axiomInd2));
         manager.applyChanges(manager.addAxiom(ont, classAssertionAxiom2));
-        testCase.setPreparationaxioms(manager.getOntology(IRI.create(base)));
+        testCase.setPreparationAxioms(manager.getOntology(IRI.create(base)));
         manager.removeOntology(ont);
 
         /*Assertions*/
@@ -2621,7 +2615,7 @@ public class Implementations {
         precond.add("Class(<"+classA+">)");
         precond.add("Property(<"+R+">)");
         precond.add("Class(<"+classB+">)");
-        testCase.getPrecondition().addAll(precond);
+        testCase.getPreconditionList().addAll(precond);
 
         String classA1withouturi = classA1.split("(#|\\/)")[classA1.split("(#|\\/)").length-1];
         String classBwithouturi = classB.split("(#|\\/)")[noClassB.split("(#|\\/)").length-1];
@@ -2661,7 +2655,7 @@ public class Implementations {
         manager.applyChanges(manager.addAxiom(ont, classAssertionAxiom));
         manager.applyChanges(manager.addAxiom(ont, axiomInd2));
         manager.applyChanges(manager.addAxiom(ont, classAssertionAxiom2));
-        testCase.setPreparationaxioms(manager.getOntology(IRI.create(base)));
+        testCase.setPreparationAxioms(manager.getOntology(IRI.create(base)));
         manager.removeOntology(ont);
 
         /*Assertions*/
@@ -2798,7 +2792,7 @@ public class Implementations {
             precond.add("Class(<" + classA + ">)");
             precond.add("Class(<" + classC + ">)");
             precond.add("Class(<" + classB + ">)");
-            testCase.getPrecondition().addAll(precond);
+            testCase.getPreconditionList().addAll(precond);
 
             /*Axioms to be added*/
 
@@ -2841,7 +2835,7 @@ public class Implementations {
             manager.applyChanges(manager.addAxiom(ont, equivalentClassesAxiom2));
             manager.applyChanges(manager.addAxiom(ont, equivalentClassesAxiom3));
             manager.applyChanges(manager.addAxiom(ont, axiomclass6));
-            testCase.setPreparationaxioms(manager.getOntology(IRI.create(base)));
+            testCase.setPreparationAxioms(manager.getOntology(IRI.create(base)));
             manager.removeOntology(ont);
 
             OWLOntology ont1 = null;
@@ -3023,7 +3017,7 @@ public class Implementations {
         precond.add("Class(<"+classA+">)");
         precond.add("Property(<"+R+">)");
         precond.add("Class(<"+classB+">)");
-        testCase.getPrecondition().addAll(precond);
+        testCase.getPreconditionList().addAll(precond);
 
         /*Axioms to be added */
         /*Preparation*/
@@ -3077,7 +3071,7 @@ public class Implementations {
         manager.applyChanges(manager.addAxiom(ont, classAssertionAxiom3));
         manager.applyChanges(manager.addAxiom(ont, axiomInd5));
         manager.applyChanges(manager.addAxiom(ont, classAssertionAxiom4));
-        testCase.setPreparationaxioms(manager.getOntology(IRI.create(base)));
+        testCase.setPreparationAxioms(manager.getOntology(IRI.create(base)));
         manager.removeOntology(ont);
 
         /*Assertions*/
@@ -3225,7 +3219,7 @@ public class Implementations {
         precond.add("Class(<"+classA+">)");
         precond.add("Property(<"+R+">)");
         precond.add("Class(<"+classB+">)");
-        testCase.getPrecondition().addAll(precond);
+        testCase.getPreconditionList().addAll(precond);
 
         /*Axioms to be added*/
         /*Preparation*/
@@ -3279,7 +3273,7 @@ public class Implementations {
         manager.applyChanges(manager.addAxiom(ont, classAssertionAxiom3));
         manager.applyChanges(manager.addAxiom(ont, axiomInd5));
         manager.applyChanges(manager.addAxiom(ont, classAssertionAxiom4));
-        testCase.setPreparationaxioms(manager.getOntology(IRI.create(base)));
+        testCase.setPreparationAxioms(manager.getOntology(IRI.create(base)));
         manager.removeOntology(ont);
 
         /*Assertions*/
@@ -3433,7 +3427,7 @@ public class Implementations {
         precond.add("Class(<"+classB+">)");
         precond.add("Property(<"+R+">)");
         precond.add("Class(<"+classC+">)");
-        testCase.getPrecondition().addAll(precond);
+        testCase.getPreconditionList().addAll(precond);
 
         /*Axioms to be added*/
         /*Preparation*/
@@ -3467,7 +3461,7 @@ public class Implementations {
         manager.applyChanges(manager.addAxiom(ont, equivalentClassesAxiom));
         manager.applyChanges(manager.addAxiom(ont, equivalentClassesAxiom2));
         manager.applyChanges(manager.addAxiom(ont, axiomClass7));
-        testCase.setPreparationaxioms(manager.getOntology(IRI.create(base)));
+        testCase.setPreparationAxioms(manager.getOntology(IRI.create(base)));
         manager.removeOntology(ont);
 
         /************SUBCLASS TEST***************/
@@ -3624,7 +3618,7 @@ public class Implementations {
         precond.add("Property(<"+R2+">)");
         precond.add("Class(<"+classB+">)");
         precond.add("Class(<"+classC+">)");
-        testCase.getPrecondition().addAll(precond);
+        testCase.getPreconditionList().addAll(precond);
 
         /*Axioms to be added*/
 
@@ -3663,7 +3657,7 @@ public class Implementations {
         manager.applyChanges(manager.addAxiom(ont, equivalentClassesAxiom));
         manager.applyChanges(manager.addAxiom(ont, classAssertionAxiom2));
         manager.applyChanges(manager.addAxiom(ont, classAssertionAxiom3));
-        testCase.setPreparationaxioms(manager.getOntology(IRI.create(base)));
+        testCase.setPreparationAxioms(manager.getOntology(IRI.create(base)));
         manager.removeOntology(ont);
         /*String preparation =  "\n                       \t"+classA+" rdf:type owl:Class.\n "+
                 "                       \t"+classA1+" rdfs:subClassOf "+classA+".\n "+
@@ -3854,7 +3848,7 @@ public class Implementations {
     }
 
     /*for class definition*/
-     public static TestCaseImpl classDefinitionTest(String purpose, TestCaseImpl testCase){
+     public static TestCaseImpl classDefinitionTest(String purpose, TestCaseImpl testCase) throws OWLOntologyCreationException {
 
         Pattern p = Pattern.compile("(.*) type class",Pattern.CASE_INSENSITIVE);
         Matcher m = p.matcher(purpose);
@@ -3867,7 +3861,7 @@ public class Implementations {
         /*Preconditions*/
         ArrayList<String> precond = new ArrayList<>();
         precond.add("Class(<"+classA+">)");
-        testCase.getPrecondition().addAll(precond);
+        testCase.getPreconditionList().addAll(precond);
         /*There are no axioms to be added*/
         LinkedHashMap<String, OWLOntology> hashinput = new LinkedHashMap();
         LinkedHashMap<String, String> hashoutput = new LinkedHashMap();
@@ -3882,11 +3876,14 @@ public class Implementations {
             hashinput.put(entry.getKey(), entry.getValue());
         }
         testCase.setAssertionsAxioms(hashinput);
+        String base = "";
+        OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
+        testCase.setPreparationAxioms(manager.createOntology(IRI.create(base)));
         return testCase;
     }
 
     /*for property definition*/
-     public static TestCaseImpl propertyDefinitionTest(String purpose, TestCaseImpl testCase){
+     public static TestCaseImpl propertyDefinitionTest(String purpose, TestCaseImpl testCase) throws OWLOntologyCreationException {
 
         Pattern p = Pattern.compile("(.*) type property",Pattern.CASE_INSENSITIVE);
         Matcher m = p.matcher(purpose);
@@ -3898,7 +3895,7 @@ public class Implementations {
         /*Preconditions*/
         ArrayList<String> precond = new ArrayList<>();
         precond.add("Property(<"+propertyA+">)");
-        testCase.getPrecondition().addAll(precond);
+        testCase.getPreconditionList().addAll(precond);
         /*There are no axioms to be added*/
         LinkedHashMap<String, OWLOntology> hashinput = new LinkedHashMap();
         LinkedHashMap<String, String> hashoutput = new LinkedHashMap();
@@ -3913,6 +3910,9 @@ public class Implementations {
             hashinput.put(entry.getKey(), entry.getValue());
         }
         testCase.setAssertionsAxioms(hashinput);
+        String base = "";
+        OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
+        testCase.setPreparationAxioms(manager.createOntology(IRI.create(base)));
         return testCase;
     }
 
@@ -3939,7 +3939,7 @@ public class Implementations {
         precond.add("Property(<"+R+">)");
         precond.add("Class(<"+classB+">)");
         precond.add("Class(<"+classC+">)");
-        testCase.getPrecondition().addAll(precond);
+        testCase.getPreconditionList().addAll(precond);
 
         /*Axioms to be added */
         /*Preparation*/
@@ -3982,7 +3982,7 @@ public class Implementations {
         manager.applyChanges(manager.addAxiom(ont, classAssertionAxiom));
         manager.applyChanges(manager.addAxiom(ont, axiomInd2));
         manager.applyChanges(manager.addAxiom(ont, classAssertionAxiom2));
-        testCase.setPreparationaxioms(manager.getOntology(IRI.create(base)));
+        testCase.setPreparationAxioms(manager.getOntology(IRI.create(base)));
         manager.removeOntology(ont);
 
         /*Assertions*/
@@ -4208,7 +4208,7 @@ public class Implementations {
         precond.add("Property(<"+R+">)");
         precond.add("Class(<"+classB+">)");
         precond.add("Class(<"+classC+">)");
-        testCase.getPrecondition().addAll(precond);
+        testCase.getPreconditionList().addAll(precond);
 
 
         /*Axioms to be added*/
@@ -4252,7 +4252,7 @@ public class Implementations {
         manager.applyChanges(manager.addAxiom(ont, classAssertionAxiom));
         manager.applyChanges(manager.addAxiom(ont, axiomInd2));
         manager.applyChanges(manager.addAxiom(ont, classAssertionAxiom2));
-        testCase.setPreparationaxioms(manager.getOntology(IRI.create(base)));
+        testCase.setPreparationAxioms(manager.getOntology(IRI.create(base)));
         manager.removeOntology(ont);
 
         /*Assertions*/

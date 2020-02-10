@@ -18,7 +18,6 @@ package oeg.albafernandez.tests.utils;
 
 /**
  * Class for defining the constants
- * @author mpoveda, dgarijo, albafernandez
  */
 public class TextConstants {
 
@@ -125,40 +124,6 @@ public class TextConstants {
                 " <br>   ";
     }
 
-    public static final String endbody = "  <footer class=\"footer\">\n" +
-            "      <div class=\"row\">\n" +
-            "        <div class=\"col-md-10\">\n" +
-            "    \t\t    Developed by \t        <a href = \"http://oeg-upm.net\" target=\"_blank\">Ontology Engineering Group</a>\n" +
-            "\t           <br>\n" +
-            "          \tBuilt with <a target=\"_blank\" href=\"http://getbootstrap.com/\">Bootstrap</a>\n" +
-            "          \tIcons from <a target=\"_blank\" href=\"http://glyphicons.com/\">Glyphicons</a>\n" +
-            " \t          <br>\n" +
-            "\t           Latest revision October, 2018\n" +
-            "            <br><p>&copy; got.Ontology Engineering Group</p>\n" +
-            "        </div>\n" +
-            "        <div class=\"col-md-2\">\n" +
-            "    \t\t  <a href=\"http://www.oeg-upm.net/\" target=\"_blank\"><img src=\"vocab/logo.gif\" alt=\"OEG logo\" class=\"img-rounded\" class=\"img-responsive\" /></a>\n" +
-            "        </div>\n" +
-            "      </div>\n" +
-            "      </footer>\n" +
-            "    </div> <!-- /container -->\n" +
-            "</body>\n";
-
-    public static final String endhtml =
-            "</html>";
-
-    public static final String definedTerms ="      <div>\n" +
-            "        <h3>Defined terms</h3>  \n" +
-            "      </div>\n";
-
-    public static final String headclasses = "      <div>\n" +
-            //"        <h4>Classes</h4>  \n" +
-            "      </div>\n" +
-            "      <div id=\"got \" class=\"table-wrapper-scroll-y\">\n" +
-            "      <table    class = \"got\"  name=\"tablegot\" id=\"core\" class=\"table  table-responsive table-bordered \">\n" +
-            "      <thead>\n" +
-            "       <tr class = \"got table-secondary\" ><th class=\"col-md-4\">Term </th><th class=\"col-md-5\">URI</th></tr></thead>\n" +
-            "      <tbody>\n";
 
 
     public static String headclasseswithkey(String key ){
@@ -175,122 +140,11 @@ public class TextConstants {
 
 
 
-
-
-    public static final String headclassesimported = "      <div>\n" +
-            "        <h4>Imported Classes</h4>  \n" +
-            "      </div>\n" +
-            "      <div>\n" +
-            "      <table  class=\"table table-hover table-responsive \">\n" +
-            "      <thead>\n" +
-            "       <tr><th class=\"col-md-2\">Term </th><th class=\"col-md-2\">URI</th></tr></thead>\n" +
-            "      <tbody>\n";
-
     public static final String endTables="      </tbody>\n" +
             "\n" +
             "    </table>\n"+
             "      </div>\n";
 
-    public static final String headobjprop= "    <div>\n" +
-            "      <h4>Object Properties</h4>  \n" +
-            "    </div>\n" +
-            "    <div>\n" +
-            "    <table class=\"table table-hover table-responsive\">\n" +
-            "    <thead>\n" +
-            "     <tr><th class=\" col-md-2\">Term </th><th class=\"col-md-2\">URI</th></tr></thead>\n" +
-            "    <tbody>";
-    public static final String headobjpropimported= "    <div>\n" +
-            "      <h4>Imported Object Properties</h4>  \n" +
-            "    </div>\n" +
-            "    <div>\n" +
-            "    <table class=\"table table-hover table-responsive\">\n" +
-            "    <thead>\n" +
-            "     <tr><th class=\"col-md-2\">Term </th><th class=\"col-md-2\">URI</th></tr></thead>\n" +
-            "    <tbody>";
 
-    public static final String headdataprop= "    <div>\n" +
-            "      <h4>Datatype Properties</h4>  \n" +
-            "    </div>\n" +
-            "    <div>\n" +
-            "    <table  class=\"table table-hover table-responsive\">\n" +
-            "    <thead>\n" +
-            "     <tr><th class=\"col-md-2\">Term </th><th class=\"col-md-2\">URI</th></tr></thead>\n" +
-            "    <tbody> ";
-    public static final String headdatapropimported= "    <div>\n" +
-            "      <h4>Imported Datatype Properties</h4>  \n" +
-            "    </div>\n" +
-            "    <div>\n" +
-            "    <table  class=\"table table-hover table-responsive\">\n" +
-            "    <thead>\n" +
-            "     <tr><th class=\"col-md-2\">Term </th><th class=\"col-md-2\">URI</th></tr></thead>\n" +
-            "    <tbody> ";
-
-    public static final String headindividuals= "    <div>\n" +
-            "      <h4>Individuals</h4>  \n" +
-            "    </div>\n" +
-            "    <div>\n" +
-            "    <table  class=\"table table-hover table-responsive\">\n" +
-            "    <thead>\n" +
-            "     <tr><th class=\"col-md-2\">Term </th><th class=\"col-md-2\">URI</th></tr></thead>\n" +
-            "    <tbody> ";
-
-    public static final String headimportedindividuals= "    <div>\n" +
-            "      <h4>ImportedIndividuals</h4>  \n" +
-            "    </div>\n" +
-            "    <div>\n" +
-            "    <table  class=\"table table-hover table-responsive\">\n" +
-            "    <thead>\n" +
-            "     <tr><th class=\"col-md-2\">Term </th><th class=\"col-md-2\">URI</th></tr></thead>\n" +
-            "    <tbody> ";
-
-    public static final String importedTerms = "    <div>\n" +
-            "      <h3>Imported terms</h3>  \n" +
-            "    </div>\n";
-
-    public static  final String buttonGot = "<button id=\"submitgot\" class=\"label label-default\" " +
-            "name=\"storegot\" value=\" Save changes \"  style=\"font-size: 75%; font-weight: bold; line-height: 1; \"></button>";
-
-    public static final String scriptGot = "<script>\n" +
-          "function editoGoT(uri) {\n" +
-            "        $('#updategot').html(\"<div class=\\\"loader\\\">\\n\" +\n" +
-            "            \"                        <span></span>\\n\" +\n" +
-            "            \"                        <span></span>\\n\" +\n" +
-            "            \"                        <span></span>\\n\" +\n" +
-            "            \"                    </div>\");\n" +
-            "        $('#updategot').attr(\"disabled\", true);"+
-            "        var table = document.getElementById(\"got\");\n" +
-            "var obj = {};\n" +
-            "obj.uri = uri;\n" +
-
-
-            "var myRows = [];\n" +
-            "var $headers = $(\"th\");\n" +
-            "var $rows = $(\"tbody tr\").each(function(index) {\n" +
-            "  $cells = $(this).find(\"td\");\n" +
-            "  myRows[index] = {};\n" +
-            "  $cells.each(function(cellIndex) {\n" +
-            "    myRows[index][$($headers[cellIndex]).html()] = $(this).html();\n" +
-            "  });    \n" +
-            "});\n" +
-            "var myObj = {};\n" +
-            "myObj.myrows = myRows;\n" +
-            "obj.table = JSON.stringify(myRows);\n" +
-            "        $.ajax({\n" +
-            "            type: 'POST',\n" +
-            "            dataType: \"json\",\n" +
-            "            contentType: \"application/json\"," +
-            "            data: JSON.stringify(obj),\n" +
-            "            url: 'http://localhost:8080/rest/tests/editgot',\n" +
-            "            success: function (data, textStatus, jqXHR) {\n" +
-            "\n" +
-            "                $('#updategot').html('Save changes');\n" +
-            "                $('#updategot').removeAttr(\"disabled\");"+
-            "\n" +
-            "            },\n" +
-            "            error: function (ts) {\n" +
-            "            }\n" +
-            "        });\n" +
-            "    }"+
-            "</script>";
 
 }

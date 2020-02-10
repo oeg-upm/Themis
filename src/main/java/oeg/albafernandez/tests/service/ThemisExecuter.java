@@ -6,6 +6,7 @@ import de.derivo.sparqldlapi.QueryEngine;
 import de.derivo.sparqldlapi.QueryResult;
 import oeg.albafernandez.tests.utils.Utils;
 import org.apache.log4j.Logger;
+import org.json.Test;
 import org.semanticweb.HermiT.Configuration;
 import org.semanticweb.owlapi.model.*;
 import org.semanticweb.owlapi.reasoner.*;
@@ -17,10 +18,16 @@ import oeg.albafernandez.tests.model.*;
 * Class to executeTest the tests on an ontology
 * */
 public class ThemisExecuter {
-    final static Logger logger = Logger.getLogger(ThemisExecuter.class);
+
+    static final Logger logger = Logger.getLogger(ThemisExecuter.class);
+
+    static final String NOT_PASSED = "not passed";
+    static final String CONSISTENT = "consistent";
+    static final String INCONSISTENT = "inconsistent";
+    static final String FALSE = "false";
 
     /*Here we check the ontology consistency regarding at model-level*/
-    public  String tboxTest(String query, IRI key, OWLOntologyManager manager, OWLOntology ontology) {
+    public  String executeTboxTest(String query, IRI key, OWLOntologyManager manager, OWLOntology ontology) {
 
         StructuralReasonerFactory factory = new StructuralReasonerFactory();
         /*init reasoner*/
@@ -33,7 +40,6 @@ public class ThemisExecuter {
         try {
             queryOWLAPI = Query.create(query); // create the query
         } catch (Exception e) {
-            e.printStackTrace();
             logger.error("Check SPARQL-DL syntax: " + e.getMessage() + " ID: " + key);
         }
 
@@ -42,24 +48,21 @@ public class ThemisExecuter {
 
         try {
             result = engine.execute(queryOWLAPI); // execute query
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "false";
-        }
-
-        if (queryOWLAPI.isAsk()) { // check result
+            // check result
             if (result.ask()) {
                 return "true";
             } else {
-                return "false";
+                return FALSE;
             }
-        } else
-            return "false";
+        } catch (Exception e) {
+            logger.error("Error while executing test: " + e.getMessage() );
+            return FALSE;
+        }
+
     }
 
     /*Here we check the ontology consistency regarding at instance-level*/
-    public  String aboxTest(Set<OWLAxiom> textAxioms, Ontology ontology, String type) throws OWLOntologyStorageException, OWLOntologyCreationException {
+    public  String executeAboxTest(Set<OWLAxiom> textAxioms, Ontology ontology, String type) {
         //add changes to the ontology
         ontology = addChanges(textAxioms, ontology);
         //executeTest the reasoner to check the ontolgy status
@@ -72,61 +75,72 @@ public class ThemisExecuter {
     }
 
     /*Method to add changes to the ontology */
-    public  Ontology addChanges(Set<OWLAxiom> axioms, Ontology ontology) throws OWLOntologyStorageException, OWLOntologyCreationException {
+    public  Ontology addChanges(Set<OWLAxiom> axioms, Ontology ontology)  {
 
         // We will create several things, so we save an instance of the data factory
         OWLDataFactory dataFactory = ontology.getManager().getOWLDataFactory();
 
         for (OWLAxiom axiom : axioms) {
-            AddAxiom addAxiom;
+            AddAxiom addAxiom = null;
             if(axiom.isAnnotationAxiom()){ //Sometimes the object properties are translated as annotated axioms incorrectly and they have to be changed.
                 OWLAnnotationAssertionAxiom annotationAssertionAxiom = (OWLAnnotationAssertionAxiom)axiom;
-                OWLNamedIndividual ind1 = dataFactory.getOWLNamedIndividual(IRI.create(annotationAssertionAxiom.getSubject().toString()));
-                OWLNamedIndividual ind2 = dataFactory.getOWLNamedIndividual(IRI.create(annotationAssertionAxiom.getValue().toString()));
+                OWLNamedIndividual instanceSubject = dataFactory.getOWLNamedIndividual(IRI.create(annotationAssertionAxiom.getSubject().toString()));
+                OWLNamedIndividual instanceObject = dataFactory.getOWLNamedIndividual(IRI.create(annotationAssertionAxiom.getValue().toString()));
+                IRI axiomAsAnnotationAssertion  = IRI.create(annotationAssertionAxiom.getProperty().toString().replace(">","").replace("<",""));
 
-                if(ontology.getOntology().containsObjectPropertyInSignature(IRI.create(annotationAssertionAxiom.getProperty().toString().replace(">","").replace("<","")),true)){
-                    OWLObjectProperty prop = dataFactory.getOWLObjectProperty(IRI.create(annotationAssertionAxiom.getProperty().toString().replace(">","").replace("<","")));
-                    OWLObjectPropertyAssertionAxiom owlObjectPropertyAssertionAxiom = dataFactory.getOWLObjectPropertyAssertionAxiom(
-                            prop, ind1,ind2);
-                    if(!ontology.getOntology().getAxioms().contains(axiom)) {
-                        addAxiom = new AddAxiom(ontology.getOntology(), owlObjectPropertyAssertionAxiom);
-                        ontology.getManager().applyChange(addAxiom);
-                    }
+                if(ontology.getOntology().containsObjectPropertyInSignature(axiomAsAnnotationAssertion, true)){
+                    ontology = addAnnotationChange(dataFactory,   annotationAssertionAxiom,  instanceSubject,  instanceObject,  ontology);
                 }else{
-                    OWLDataProperty prop = dataFactory.getOWLDataProperty(IRI.create(annotationAssertionAxiom.getProperty().toString().replace(">","").replace("<","")));
-                    OWLDataPropertyAssertionAxiom owlDataPropertyAssertionAxiom = null;
-                    if(annotationAssertionAxiom.getValue().toString().contains("string")){
-                        int i = 1;
-                        owlDataPropertyAssertionAxiom = dataFactory.getOWLDataPropertyAssertionAxiom(
-                                prop, ind1,i);
-                    }else if(annotationAssertionAxiom.getValue().toString().contains("int") || annotationAssertionAxiom.getValue().toString().contains("float")){
-                        owlDataPropertyAssertionAxiom = dataFactory.getOWLDataPropertyAssertionAxiom(
-                                prop, ind1,"value");
-                    }else{
-                        float i = (float)1.0;
-                        owlDataPropertyAssertionAxiom = dataFactory.getOWLDataPropertyAssertionAxiom(
-                                prop, ind1,i);
-                    }
-
-                    if(!ontology.getOntology().getAxioms().contains(axiom)) {
-                        addAxiom = new AddAxiom(ontology.getOntology(), owlDataPropertyAssertionAxiom);
-                        ontology.getManager().applyChange(addAxiom);
-                    }
+                    ontology = addDataPropertyChange(dataFactory,   annotationAssertionAxiom,  instanceSubject,  ontology);
                 }
-
             }else {
-                if(!ontology.getOntology().getAxioms().contains(axiom)){
-                    addAxiom = new AddAxiom(ontology.getOntology(), axiom);
-                    ontology.getManager().applyChange(addAxiom);
-                }
+                addAxiomToOntology( ontology,  axiom, addAxiom);
             }
 
         }
         return ontology;
     }
 
+    public Ontology addAxiomToOntology(Ontology ontology, OWLAxiom axiom, AddAxiom addAxiom){
+        if(!ontology.getOntology().getAxioms().contains(axiom)){
+            addAxiom = new AddAxiom(ontology.getOntology(), axiom);
+            ontology.getManager().applyChange(addAxiom);
+        }
+        return ontology;
+    }
+
+    public Ontology addAnnotationChange( OWLDataFactory dataFactory,  OWLAnnotationAssertionAxiom annotationAssertionAxiom, OWLNamedIndividual ind1, OWLNamedIndividual ind2, Ontology ontology){
+        AddAxiom addAxiom = null;
+        OWLObjectProperty prop = dataFactory.getOWLObjectProperty(IRI.create(annotationAssertionAxiom.getProperty().toString().replace(">","").replace("<","")));
+        OWLObjectPropertyAssertionAxiom owlObjectPropertyAssertionAxiom = dataFactory.getOWLObjectPropertyAssertionAxiom(
+                prop, ind1,ind2);
+        addAxiomToOntology( ontology,  owlObjectPropertyAssertionAxiom, addAxiom);
+        return ontology;
+    }
+
+    public Ontology addDataPropertyChange (OWLDataFactory dataFactory, OWLAnnotationAssertionAxiom annotationAssertionAxiom, OWLNamedIndividual ind1,Ontology ontology){
+        AddAxiom addAxiom = null;
+        OWLDataProperty prop = dataFactory.getOWLDataProperty(IRI.create(annotationAssertionAxiom.getProperty().toString().replace(">","").replace("<","")));
+        OWLDataPropertyAssertionAxiom owlDataPropertyAssertionAxiom = null;
+        if(annotationAssertionAxiom.getValue().toString().contains("string")){
+            int i = 1;
+            owlDataPropertyAssertionAxiom = dataFactory.getOWLDataPropertyAssertionAxiom(
+                    prop, ind1,i);
+        }else if(annotationAssertionAxiom.getValue().toString().contains("int") || annotationAssertionAxiom.getValue().toString().contains("float")){
+            owlDataPropertyAssertionAxiom = dataFactory.getOWLDataPropertyAssertionAxiom(
+                    prop, ind1,"value");
+        }else{
+            float i = (float)1.0;
+            owlDataPropertyAssertionAxiom = dataFactory.getOWLDataPropertyAssertionAxiom(
+                    prop, ind1,i);
+        }
+
+        addAxiomToOntology( ontology,  owlDataPropertyAssertionAxiom, addAxiom);
+
+        return ontology;
+    }
     /*Method to add changes to the ontology */
-    public  String executeReasoner(Set<OWLAxiom> axioms, Ontology ontology) throws OWLOntologyStorageException, OWLOntologyCreationException {
+    public  String executeReasoner(Set<OWLAxiom> axioms, Ontology ontology) {
 
         PelletReasoner reasoner = null;
         Configuration configuration = new Configuration();
@@ -140,7 +154,7 @@ public class ThemisExecuter {
         }
         String result = "";
         if(!reasoner.isConsistent()) {
-            result = "inconsistent";
+            result = INCONSISTENT;
         }else if(reasoner.getUnsatisfiableClasses().getSize()>1) {
             int flag = 0;
             // check if the unsatisfiable classes are because of the test
@@ -151,98 +165,99 @@ public class ThemisExecuter {
                 }
             }
             if(flag==0)
-                result = "consistent";
+                result = CONSISTENT;
         }else {
-            result = "consistent";
+            result = CONSISTENT;
         }
 
         return result;
     }
 
     /*This method executeTest the ABox and Tbox tests. The errors are printed in a report*/
-    public TestCaseResult executeTest(TestCaseImpl tc, Ontology ontology, HashMap<String, IRI> got) throws OWLOntologyStorageException, OWLOntologyCreationException {
-        ArrayList<String> undefinedTerms = new ArrayList<String>();
-        ArrayList<String> incorrectTerms = new ArrayList<String>();
-        String realResult;
+    public TestCaseResult executeTest(TestCaseImpl tc, Ontology ontology, Map<String, IRI> got) throws OWLOntologyStorageException, OWLOntologyCreationException {
+
+        String realResultForPrecondition;
+        String realResultForPreparation;
+        String realResultForAssertion;
         TestCaseResult tr = new TestCaseResult();
-        ArrayList<String> resultsforabsence= new ArrayList<>();
+        ArrayList<String> resultsForAbsence= new ArrayList<>();
         tr.setRelatedTestImpl(tc.getUri());
         tr.setOntologyURI(ontology.getOntology().getOntologyID().getOntologyIRI());
         int absent = 0;
-        if(tc.getPreconditionQuery()!=null){ //map the test terms with ontology terms and add the axioms to the ontology. If the addition results in a consistent ontology the preconditions are passed
-            for(String prec: tc.getPreconditionQuery()) { // execute precondition query
-                String precondWithURI = Utils.mapImplementationTerms(prec, got); // all  mappings received by the webapp
-                realResult = tboxTest(precondWithURI, tc.getUri(), ontology.getManager(), ontology.getOntology());
+         //map the test terms with ontology terms and add the axioms to the ontology. If the addition results in a consistent ontology the preconditions are passed
+        for(String prec: tc.getPreconditionQueryList()) { // execute precondition query
+            String precondWithURI = Utils.mapImplementationTerms(prec, (HashMap<String, IRI>) got); // all  mappings received by the webapp
+            realResultForPrecondition = executeTboxTest(precondWithURI, tc.getUri(), ontology.getManager(), ontology.getOntology());
 
-                if(realResult.equals("false")){ // si los  terminos no existen hay dos opciones: 1) que no exista, 2) que sea de otro tipo
-                    if(Utils.termsInOntology(precondWithURI, ontology.getOntology()).equals("false")){
-                        undefinedTerms.add( Utils.getPrecTerm(prec).replace(">","").replace("<",""));
-                    }else{
-                        incorrectTerms.add( Utils.getPrecTerm(prec).replace(">","").replace("<",""));
-                    }
-                }
-
+            if(realResultForPrecondition.equals(FALSE)){ // si los  terminos no existen hay dos opciones: 1) que no exista, 2) que sea de otro tipo
+               tr = checkPresenceOfTermsInTest(ontology, prec,  precondWithURI,  tr );
             }
-            tr.setUndefinedTerms(undefinedTerms);
-            tr.setIncorrectTerms(incorrectTerms);
-            if (undefinedTerms.size()==0 &&  incorrectTerms.size()==0 ) {
-                if (tc.getPreparationaxioms() != null) {
-                    // test preparation
-                    Set<OWLAxiom> prepWithURI = Utils.mapImplementationTerms(tc.getPreparationaxioms(), got);
-                    realResult = aboxTest(prepWithURI, ontology, "preparation");
-                    if(realResult.equals("error")){
-                        return null;
-                    }
-                    else if (!realResult.toLowerCase().contains("consistent")) {
-                        resultsforabsence.add("inconsistent");
-                        tr.setTestResult("not passed");
-                        removePreparationAxioms(prepWithURI, ontology);
-                    } else {
-                        //add assertions to the ontology, after mapping the test terms with ontology terms. Check if the real result is the same as the expected result
-                        for (Map.Entry<String, OWLOntology> entry : tc.getAssertionsAxioms().entrySet()) {
-                            Set<OWLAxiom> assertionWithURI = Utils.mapImplementationTerms(entry.getValue(), got);
-                            realResult = aboxTest(assertionWithURI, ontology, "assertion");
-                            if(realResult.toLowerCase().equals("consistent")){
-                                resultsforabsence.add("consistent");
-                            }else{
-                                resultsforabsence.add("inconsistent");
-                            }
-                            if(tc.getType().equals("existential") && entry.getKey().equals("Assertion 2") && realResult.equals("inconsistent")) {
-                                absent=1; // caso excepcional
-                            }else if (!realResult.toLowerCase().equals("consistent") && !realResult.toLowerCase().equals(tc.getAxiomExpectedResultAxioms().get(entry.getKey()))) {
-                                tr.setTestResult("not passed");
-                            }else if(realResult.toLowerCase().equals("consistent") && !realResult.toLowerCase().equals(tc.getAxiomExpectedResultAxioms().get(entry.getKey()))){
-                                absent=1;
-                            }
-                        }
 
-                        removePreparationAxioms(prepWithURI, ontology);
+            if (tr.getUndefinedTermsList().isEmpty() &&  tr.getIncorrectTermsList().isEmpty() ) {
+                // test preparation
+                Set<OWLAxiom> prepWithURI = Utils.mapImplementationTerms(tc.getPreparationAxioms(), (HashMap<String, IRI>) got);
+                realResultForPreparation = executeAboxTest(prepWithURI, ontology, "preparation");
+                if (!realResultForPreparation.equalsIgnoreCase(CONSISTENT)) {
+                    resultsForAbsence.add(INCONSISTENT);
+                    tr.setTestResult(NOT_PASSED);
+                    removePreparationAxioms(prepWithURI, ontology);
+                } else {
+                    //add assertions to the ontology, after mapping the test terms with ontology terms. Check if the real result is the same as the expected result
+                    for (Map.Entry<String, OWLOntology> entry : tc.getAssertionsAxioms().entrySet()) {
+                        Set<OWLAxiom> assertionWithURI = Utils.mapImplementationTerms(entry.getValue(), (HashMap<String, IRI>) got);
+                        realResultForAssertion = executeAboxTest(assertionWithURI, ontology, "assertion");
+                        if(realResultForAssertion.equalsIgnoreCase(CONSISTENT)){
+                            resultsForAbsence.add(CONSISTENT);
+                        }else{
+                            resultsForAbsence.add(INCONSISTENT);
+                        }
+                        if(tc.getType().equals("existential") && entry.getKey().equals("Assertion 2") && realResultForAssertion.equals(INCONSISTENT)) {
+                            absent=1; // caso excepcional
+                        }else if (!realResultForAssertion.equalsIgnoreCase(CONSISTENT) && !realResultForAssertion.equalsIgnoreCase(tc.getAxiomExpectedResultAxioms().get(entry.getKey()))) {
+                            tr.setTestResult(NOT_PASSED);
+                        }else if(realResultForAssertion.equalsIgnoreCase(CONSISTENT) && !realResultForAssertion.equalsIgnoreCase(tc.getAxiomExpectedResultAxioms().get(entry.getKey()))){
+                            absent=1;
+                        }
                     }
+
+                    removePreparationAxioms(prepWithURI, ontology);
                 }
-            } else if(undefinedTerms.size()> 0) {
-                resultsforabsence.add("undefined");
+
+            } else if(!tr.getUndefinedTermsList().isEmpty()) {
+                resultsForAbsence.add("undefined");
                 tr.setTestResult("undefined");
-            }else{
+            } else{
                 tr.setTestResult("incorrect");
             }
-        }else{
-            resultsforabsence.add("undefined");
-            tr.setTestResult("undefined");
         }
 
-        tr = checkAbsence ( resultsforabsence,  absent,  tr );
+        tr = checkAbsence ( resultsForAbsence,  absent,  tr );
+        return tr;
+    }
+
+
+    public TestCaseResult checkPresenceOfTermsInTest(Ontology ontology, String prec, String precondWithURI, TestCaseResult tr){
+        ArrayList<String> undefinedTerms = new ArrayList<>();
+        ArrayList<String> incorrectTerms = new ArrayList<>();
+        if(Utils.termsInOntology(precondWithURI, ontology.getOntology()).equals(FALSE)){
+            undefinedTerms.add( Utils.getPrecTerm(prec).replace(">","").replace("<",""));
+        }else{
+            incorrectTerms.add( Utils.getPrecTerm(prec).replace(">","").replace("<",""));
+        }
+        tr.setUndefinedTermsList(undefinedTerms);
+        tr.setIncorrectTermsList(incorrectTerms);
         return tr;
     }
 
     // check if the result is an absence
-    public TestCaseResult checkAbsence ( ArrayList<String> resultsforabsence, int absent, TestCaseResult tr ){
+    public TestCaseResult checkAbsence( List<String> resultsforabsence, int absent, TestCaseResult tr ){
         int flag = 0;
         for(String result: resultsforabsence){
-            if(!result.equals("consistent")){
+            if(!result.equals(CONSISTENT)){
                 flag++;
             }
         }
-        if(flag==0 && resultsforabsence.size()>0 || !tr.getTestResult().equals("not passed") && absent == 1 ){
+        if(flag==0 && !resultsforabsence.isEmpty() || !tr.getTestResult().equals(NOT_PASSED) && absent == 1 ){
             tr.setTestResult("absent");
         }
 

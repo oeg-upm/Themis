@@ -188,11 +188,8 @@ function check() {
     });
 
     var array = $(this).serializeArray();
-    var id = document.getElementsByName("test");
-    id.forEach(function (item) {
-        if(item.value!="")
-            array.push(item.value);
-    });
+    var tests = document.getElementsByName("test")[0].value.split(";");
+
     var arrayontos = [];
     var idontos = document.getElementsByName("ontology");
     idontos.forEach(function (item) {
@@ -204,7 +201,7 @@ function check() {
     var data = {
         got: JSON.stringify(myObj),
         ontologies:arrayontos,
-        tests: array
+        tests: tests
     };
 
     $.ajax({

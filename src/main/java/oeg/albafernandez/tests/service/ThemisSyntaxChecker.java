@@ -3,10 +3,10 @@ package oeg.albafernandez.tests.service;
 import com.google.gson.Gson;
 import oeg.albafernandez.tests.model.Ontology;
 import oeg.albafernandez.tests.utils.GoT;
+import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.simple.parser.ParseException;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLOntologyStorageException;
 
@@ -15,8 +15,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ThemisSyntaxChecker {
+    static final Logger logger = Logger.getLogger(ThemisImplementer.class);
 
-    public String syntaxChecker(String completetest) throws JSONException, ParseException {
+    public String syntaxChecker(String completetest) throws JSONException {
         String testClean=completetest;
         if (completetest.contains(";")) {
             testClean=completetest.split(";")[1].replaceAll("\n", "").trim();
@@ -57,9 +58,8 @@ public class ThemisSyntaxChecker {
                 testClean=completetest.split(";")[1].replaceAll("\n", "").trim();
             }
 
-            //TODO : LIMPIAR
             term = term.trim().replaceAll("\n", "");
-            Pattern p = Pattern.compile("^.*" + term.toString().toLowerCase() + ".*");
+            Pattern p = Pattern.compile("^.*" + term.toLowerCase() + ".*");
             Pattern test0 = Pattern.compile("^[^\\s]+");
             Pattern test1 = Pattern.compile("^[^\\s]+\\s*$");
             Pattern test11 = Pattern.compile("^[^\\s]+\\s+" + term.toLowerCase() + "[^\\s]*$");
@@ -147,7 +147,6 @@ public class ThemisSyntaxChecker {
                 values.add("max 1");
                 values.add("exactly 1");
                 values.add("value");
-                //values.add(";");
                 values.add("that");
             } else if (m7.matches()) {
                 values.add("some");
@@ -168,12 +167,12 @@ public class ThemisSyntaxChecker {
             }
 
             if (m6.matches() || completetest.equals("") || m2.matches() || m3.matches() || m0.matches() || m5.matches() || m9.matches() || m111.matches() || m13.matches() || m15.matches() || m16.matches() || m18.matches() || m20.matches() || m22.matches() || m23.matches() || m27.matches() || m28.matches() || m30.matches() || m31.matches()) {
-                Ontology OWLontology = new Ontology();
-                OWLontology.load_ontologyURL(ontology);
-                HashMap<String, IRI> got = createGot(OWLontology);
+                Ontology owlOntology = new Ontology();
+                owlOntology.loadOntologyURL(ontology);
+                HashMap<String, IRI> got = (HashMap<String, IRI>) createGot(owlOntology);
 
                 for (Map.Entry<String, IRI> entry : got.entrySet()) {
-                    Matcher m = p.matcher(entry.getKey().toString().toLowerCase());
+                    Matcher m = p.matcher(entry.getKey().toLowerCase());
                     if (m.matches() && !keys.contains(entry.getKey())) {
                         JSONObject obj = new JSONObject();
                         obj.put("label", entry.getKey().trim());
@@ -201,7 +200,7 @@ public class ThemisSyntaxChecker {
     }
 
     public JSONArray sort(JSONArray gotterms) throws JSONException {
-        List<JSONObject> jsonValues = new ArrayList<JSONObject>();
+        List<JSONObject> jsonValues = new ArrayList<>();
         for (int i = 0; i < gotterms.length(); i++) {
             jsonValues.add(gotterms.getJSONObject(i));
         }
@@ -220,12 +219,10 @@ public class ThemisSyntaxChecker {
                     valB = (String) b.get(KEY_NAME);
                 }
                 catch (JSONException e) {
-                    //do something
+                   logger.error(e.getMessage());
                 }
-
                 return valA.compareTo(valB);
-                //if you want to change the sort order, simply use the following:
-                //return -valA.compareTo(valB);
+
             }
         });
 
@@ -235,7 +232,7 @@ public class ThemisSyntaxChecker {
         return sortedJsonArray;
     }
 
-    public HashMap createGot(Ontology ontology){
+    public Map createGot(Ontology ontology){
         HashMap<String, IRI> got = new HashMap<>();
         got.putAll(ontology.getClasses());
         got.putAll(ontology.getDatatypeProperties());
@@ -248,7 +245,7 @@ public class ThemisSyntaxChecker {
     public  String  getGoT(String uri) throws JSONException, OWLOntologyStorageException {
         if(uri !=null) {
             Ontology onto = new Ontology();
-            onto.load_ontologyURL(uri.replace("\"", "").trim());
+            onto.loadOntologyURL(uri.replace("\"", "").trim());
             HashMap<String, IRI> elements = new HashMap<>();
             elements.putAll(onto.getClasses());
             elements.putAll(onto.getObjectProperties());
@@ -269,7 +266,7 @@ public class ThemisSyntaxChecker {
     public  String  getPlainGoT(String uri) throws JSONException, OWLOntologyStorageException {
         if(uri !=null) {
             Ontology onto = new Ontology();
-            onto.load_ontologyURL(uri.replace("\"", "").trim());
+            onto.loadOntologyURL(uri.replace("\"", "").trim());
             HashMap<String, IRI> elements = new HashMap<>();
             elements.putAll(onto.getClasses());
             elements.putAll(onto.getObjectProperties());

@@ -7,7 +7,6 @@ import org.apache.log4j.Logger;
 import org.coode.owlapi.turtle.TurtleOntologyFormat;
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.*;
-import java.io.IOException;
 import java.io.OutputStream;
 import java.util.*;
 
@@ -17,119 +16,118 @@ import static oeg.albafernandez.tests.utils.Implementations.*;
 /*This class implements the test case based on the test design. */
 public class ThemisImplementer {
 
-    private TestCaseDesign tc;
-    private TestCaseImpl testCase;
+    static final Logger logger = Logger.getLogger(ThemisImplementer.class);
+    static final String VERIF =  "http://w3id.org/def/vtc#";
+    static final String DESCRIPTION = "http://purl.org/dc/terms/description";
 
-    public TestCaseDesign getTc() {
-        return tc;
+    private TestCaseDesign testCaseDesign;
+    private TestCaseImpl testCaseImpl;
+
+    public TestCaseDesign getTestCaseDesign() {
+        return testCaseDesign;
     }
 
-    public void setTc(TestCaseDesign tc) {
-        this.tc = tc;
+    public void setTestCaseDesign(TestCaseDesign testCaseDesign) {
+        this.testCaseDesign = testCaseDesign;
     }
 
-
-    public TestCaseImpl getTestCase() {
-        return testCase;
+    public TestCaseImpl getTestCaseImpl() {
+        return testCaseImpl;
     }
 
-    public void setTestCase(TestCaseImpl testCase) {
-        this.testCase = testCase;
+    public void setTestCaseImpl(TestCaseImpl testCaseImpl) {
+        this.testCaseImpl = testCaseImpl;
     }
-
-    final static Logger logger = Logger.getLogger(ThemisImplementer.class);
-
-    private ArrayList<TestCaseImpl> testimpl = new ArrayList<TestCaseImpl>();
 
     /*Generate a TestCaseDesign object from the purpose given by the users*/
-    public  TestCaseDesign processTestCaseDesign(String purpose) throws OWLOntologyStorageException {
+    public  void processTestCaseDesign(String purpose)  {
         OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
         String base = "http://www.semanticweb.org/untitled-ontology-53#";
-        String verif = "http://w3id.org/def/vtc#";
-        OWLOntology ont = null;
+        OWLOntology ontology = null;
         try {
-            ont = manager.createOntology(IRI.create(base));
+            ontology = manager.createOntology(IRI.create(base));
         } catch (OWLOntologyCreationException e) {
-            ont = null;
+            ontology = null;
         }
-        TestCaseDesign tc = new TestCaseDesign();
-        tc.setPurpose(purpose);  // create a test design only with the purpose (test expression)
+        testCaseDesign = new TestCaseDesign();
+        testCaseDesign.setPurpose(purpose);  // create a test design only with the purpose (test expression)
 
         OWLDataFactory dataFactory = manager.getOWLDataFactory();
 
-        OWLClass verifTestDesignClass = dataFactory.getOWLClass(IRI.create(verif + "TestCaseDesign"));
+        OWLClass verifTestDesignClass = dataFactory.getOWLClass(IRI.create(VERIF + "TestCaseDesign"));
 
         OWLIndividual subject = dataFactory.getOWLNamedIndividual(IRI.create(base + "testDesign"));
         OWLClassAssertionAxiom classAssertion = dataFactory.getOWLClassAssertionAxiom(verifTestDesignClass, subject);
-        manager.addAxiom(ont, classAssertion);
+        manager.addAxiom(ontology, classAssertion);
 
-        OWLDataProperty desiredBehaviour = dataFactory.getOWLDataProperty(IRI.create(verif + "desiredBehaviour"));
-        OWLAxiom axiomprecondition = dataFactory.getOWLDataPropertyAssertionAxiom(desiredBehaviour, subject, tc.getPurpose());
-        manager.addAxiom(ont, axiomprecondition);
+        OWLDataProperty desiredBehaviour = dataFactory.getOWLDataProperty(IRI.create(VERIF + "desiredBehaviour"));
+        OWLAxiom axiomPrecondition = dataFactory.getOWLDataPropertyAssertionAxiom(desiredBehaviour, subject, testCaseDesign.getPurpose());
+        manager.addAxiom(ontology, axiomPrecondition);
 
-        this.setTc(tc);
-        return tc;
     }
 
     /*Load a set of tests provided in a file */
-    public ArrayList<String> loadTestCaseDesign(String filename) throws IOException, OWLOntologyCreationException {
+    public List<String> loadTestCaseDesign(String filename) throws  OWLOntologyCreationException {
 
         OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
         OWLOntology ontology= manager.loadOntology(IRI.create(filename.replace("\"","")));
-        ArrayList<String> testsuite = new ArrayList<String>();
+        ArrayList<String> testSuite = new ArrayList<>();
         for (OWLIndividual cls: ontology.getIndividualsInSignature()) {
-            String purpose = "";
-            String source = "";
-            String description = "";
-            TestCaseDesign tc = new TestCaseDesign();
-            tc.setUri(IRI.create(cls.toString().replace("<","").replace(">","")));
+            testCaseDesign = new TestCaseDesign();
+            testCaseDesign.setUri(IRI.create(cls.toString().replace("<","").replace(">","")));
             for (OWLAnnotationAssertionAxiom op : ontology.getAxioms(AxiomType.ANNOTATION_ASSERTION)) {
-                if (cls.toString().replace(">","").replace("<","").equals(op.getSubject().toString().replace("<","").replace(">",""))) {
-                    if (op.getProperty().toString().contains("http://w3id.org/def/vtc#desiredBehaviour")) {
-                        purpose = op.getValue().toString().replace("\"","");
-                        // purposes.add(purpose);
-                        tc.setPurpose(purpose);
-                    } else if (op.getProperty().toString().contains("http://purl.org/dc/terms/identifier")) {
-                        source = op.getValue().toString().replace("\"","");
-                        tc.setSource(source);
-                    } else if (op.getProperty().toString().contains("http://purl.org/dc/terms/description")) {
-                        description = op.getValue().toString().replace("\"","");
-                        tc.setDescription(description);
-                    }
-                }
+                loadAnnotationInTestCaseDesign(op , cls);
             }
             for (OWLDataPropertyAssertionAxiom dp : ontology.getAxioms(AxiomType.DATA_PROPERTY_ASSERTION)) {
-                if (cls.toString().replace(">","").replace("<","").equals(dp.getSubject().toString().replace("<","").replace(">",""))) {
-                    if (dp.getProperty().toString().contains("http://w3id.org/def/vtc#desiredBehaviour")) {
-                        purpose = dp.getObject().toString().replace("\"","");
-                        // purposes.add(purpose);
-                        tc.setPurpose(purpose);
-                    } else if (dp.getProperty().toString().contains("http://purl.org/dc/terms/identifier")) {
-                        source = dp.getObject().toString().replace("\"","");
-                        tc.setSource(source);
-                    } else if (dp.getProperty().toString().contains("http://purl.org/dc/terms/description")) {
-                        description = dp.getObject().toString().replace("\"","");
-                        tc.setDescription(description);
-                    }
-                }
+                loadDatatypePropertyInTestCaseDesign( dp ,  cls);
             }
-            testsuite.add(tc.getPurpose());
+            testSuite.add(testCaseDesign.getPurpose());
         }
-        return testsuite;
+        return testSuite;
+    }
+
+    public void loadAnnotationInTestCaseDesign(OWLAnnotationAssertionAxiom op , OWLIndividual cls){
+        if (cls.toString().replace(">","").replace("<","").equals(op.getSubject().toString().replace("<","").replace(">",""))) {
+            if (op.getProperty().toString().contains("http://w3id.org/def/vtc#desiredBehaviour")) {
+                String purpose = op.getValue().toString().replace("\"","");
+                testCaseDesign.setPurpose(purpose);
+            } else if (op.getProperty().toString().contains("http://purl.org/dc/terms/identifier")) {
+                String source = op.getValue().toString().replace("\"","");
+                testCaseDesign.setSource(source);
+            } else if (op.getProperty().toString().contains(DESCRIPTION)) {
+                String description = op.getValue().toString().replace("\"","");
+                testCaseDesign.setDescription(description);
+            }
+        }
+    }
+
+    public void loadDatatypePropertyInTestCaseDesign(OWLDataPropertyAssertionAxiom dp , OWLIndividual cls){
+        if (cls.toString().replace(">","").replace("<","").equals(dp.getSubject().toString().replace("<","").replace(">",""))) {
+            if (dp.getProperty().toString().contains("http://w3id.org/def/vtc#desiredBehaviour")) {
+                String purpose = dp.getObject().toString().replace("\"","");
+                testCaseDesign.setPurpose(purpose);
+            } else if (dp.getProperty().toString().contains("http://purl.org/dc/terms/identifier")) {
+                String source = dp.getObject().toString().replace("\"","");
+                testCaseDesign.setSource(source);
+            } else if (dp.getProperty().toString().contains(DESCRIPTION)) {
+                String description = dp.getObject().toString().replace("\"","");
+                testCaseDesign.setDescription(description);
+            }
+        }
     }
 
     /*Store the  test design*/
     public static OutputStream storeTestCaseDesign(List<String> tests, OutputStream outputStream) throws OWLOntologyStorageException {
         OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
         String base = "";
-        String verif = "http://w3id.org/def/vtc#";
-        OWLOntology ont = null;
+        OWLOntology ontology = null;
         try {
-            ont = manager.createOntology(IRI.create(base));
+            ontology = manager.createOntology(IRI.create(base));
         } catch (OWLOntologyCreationException e) {
-            ont = null;
+            ontology = null;
         }
         int i=1;
+
         for(String purpose:tests) {
 
             TestCaseDesign tc = new TestCaseDesign();
@@ -137,99 +135,98 @@ public class ThemisImplementer {
 
             OWLDataFactory dataFactory = manager.getOWLDataFactory();
 
-            OWLClass verifTestDesignClass = dataFactory.getOWLClass(IRI.create(verif + "TestCaseDesign"));
+            OWLClass verifTestDesignClass = dataFactory.getOWLClass(IRI.create(VERIF + "TestCaseDesign"));
 
             OWLIndividual subject = dataFactory.getOWLNamedIndividual(IRI.create(base + "Test"+i));
             OWLClassAssertionAxiom classAssertion = dataFactory.getOWLClassAssertionAxiom(verifTestDesignClass, subject);
-            manager.addAxiom(ont, classAssertion);
+            manager.addAxiom(ontology, classAssertion);
 
-            OWLDataProperty desiredBehaviour = dataFactory.getOWLDataProperty(IRI.create(verif + "desiredBehaviour"));
-            OWLAxiom axiomprecondition = dataFactory.getOWLDataPropertyAssertionAxiom(desiredBehaviour, subject, tc.getPurpose());
-            manager.addAxiom(ont, axiomprecondition);
+            OWLDataProperty desiredBehaviour = dataFactory.getOWLDataProperty(IRI.create(VERIF + "desiredBehaviour"));
+            OWLAxiom axiomPrecondition = dataFactory.getOWLDataPropertyAssertionAxiom(desiredBehaviour, subject, tc.getPurpose());
+            manager.addAxiom(ontology, axiomPrecondition);
             i++;
         }
 
         TurtleOntologyFormat turtleFormat = new TurtleOntologyFormat();
         turtleFormat.setDefaultPrefix(base);
-        manager.saveOntology(ont, turtleFormat, outputStream);
+        manager.saveOntology(ontology, turtleFormat, outputStream);
         return outputStream;
     }
 
     //select the type of test to be implemented
-    public void mapExpressionTemplates(String purpose){
-        purpose.replaceAll("  "," ");
-        String purposecloned= purpose.toLowerCase().replace("  "," ");
+    public void mapExpressionTemplates(String purpose) throws OWLOntologyCreationException {
+        purpose= purpose.replace("  "," ");
 
-        if(purposecloned.matches("[^\\s]+ subclassof [^\\s]+ only [^\\s]+ or [^\\s]+")){
-            this.setTestCase(unionTest(purpose.replace(","," "),"union", testCase));
-        }else if(purposecloned.matches("[^\\s]+ domain [^\\s]+")){
-            this.setTestCase(domainTest(purpose.replace(","," "), testCase));
-        }else if(purposecloned.matches("[^\\s]+ range (xsd:string|xsd:float|xsd:integer|string|float|integer|owl:rational|rational|boolean|xsd:boolean|anyuri|xsd:anyuri)")){
-            this.setTestCase(rangeTestDP(purpose.replace(","," "), testCase));
-        }else if(purposecloned.matches("[^\\s]+ range [^\\s]+")){
-            this.setTestCase(rangeTest(purpose.replace(","," "), testCase));
-        }else if(purposecloned.matches("[^\\s]+ subclassof [^\\s]+ some [^\\s]+ and [^\\s]+")){
-            this.setTestCase(intersectionTest(purpose.replace(","," "),"union", testCase));
-        }else if(purposecloned.matches("[^\\s]+ subclassof [^\\s]+ value [^\\s]+")){
-            this.setTestCase(individualValue(purpose.replace(","," "),testCase));
-        }else if(purposecloned.matches("[^\\s]+ subclassof [^\\s]+ and [^\\s]+ subclassof [^\\s]+ that disjointwith [^\\s]+")){
-            this.setTestCase(subclassDisjointTest(purpose, testCase));
-        }else if(purposecloned.matches("[^\\s]+ equivalentto [^\\s]+")){
-            this.setTestCase(subClassTest(purpose, "equivalence",testCase));
-        }else if(purposecloned.matches("[^\\s]+ disjointwith [^\\s]+")){
-            this.setTestCase( subClassTest(purpose, "disjoint",testCase));
-        }else if(purposecloned.matches("[^\\s]+ subclassof [^\\s]+ min (\\d+) [^\\s]+ and [^\\s]+ subclassof [^\\s]+ some [^\\s]+")){
-            this.setTestCase(cardinalityOPTest(purpose,"min",testCase));
-        }else if(purposecloned.matches("[^\\s]+ subclassof [^\\s]+ (max|min|exactly) (\\d+) \\([^\\s]+ and [^\\s]+\\)")){
-            this.setTestCase(intersectionCardTest(purpose,"max",testCase));
-        }else if(purposecloned.matches("[^\\s]+ subclassof [^\\s]+ that [^\\s]+ some [^\\s]+")){
-            this.setTestCase(subClassOPTest(purpose,testCase));
-        }else if(purposecloned.matches("[^\\s]+ characteristic symmetricproperty")){
-            this.setTestCase(symmetryTest(purpose, testCase));
-        }else if(purposecloned.matches("[^\\s]+ subclassof symmetricproperty\\([^\\s]+\\) (some|only) [^\\s]+") || purposecloned.matches("[^\\s]+ subclassOf <coparticipatesWith> (some|only) [^\\s]+")){
-            this.setTestCase(symmetryWithDomainRangeTest(purpose, testCase));
-        }else if(purposecloned.matches("[^\\s]+ subclassof (hasparticipant|isparticipantin|haslocation|islocationof|hasrole|isroleof) some [^\\s]+")){
-            this.setTestCase(participantODPTestExistential(purpose, testCase));
-        }else if(purposecloned.matches("[^\\s]+ subclassof (hasparticipant|isparticipantin|haslocation|islocationof|hasrole|isroleof) only [^\\s]+")){
-            this.setTestCase(participantODPTestUniversal(purpose, testCase));
-        }else if(purposecloned.matches("[^\\s]+ subclassof (hascoparticipant|iscoparticipantin|cooparticipates) some [^\\s]+")){
-            this.setTestCase(coParticipantODPTestExistential(purpose, testCase));
-        }else if(purposecloned.matches("[^\\s]+ and [^\\s]+ subclassof (hascoparticipant|iscoparticipantin|cooparticipates) only [^\\s]+")){
-            this.setTestCase(coParticipantODPTestUniversal(purpose, testCase));
-        }else if(purposecloned.matches("[^\\s]+ subclassof [^\\s]+ some (xsd:string|xsd:float|xsd:integer|string|float|integer|owl:rational|rational|boolean|xsd:boolean|anyuri|xsd:anyuri)")){
-            this.setTestCase(existentialRangeDP(purpose.replace("\\","\\\""),testCase));
-        }else if(purposecloned.matches("[^\\s]+ subclassof [^\\s]+ only (xsd:string|xsd:float|xsd:integer|string|float|integer|owl:rational|rational|boolean|xsd:boolean|anyuri|xsd:anyuri)")){
-            this.setTestCase(universalRangeDP(purpose.replace("\\","\\\""),testCase));
-        }else if(purposecloned.matches("[^\\s]+ subclassof (\\w*)(?!hasparticipant | ?!isparticipantin | ?!haslocation| ?!islocationof | ?!hasrole| ?!isroleof) some [^\\s]+")){
-            this.setTestCase(existentialRange(purpose, testCase));
-        }else if(purposecloned.matches("[^\\s]+ subclassof (\\w*)(?!hasparticipant | ?!isparticipantin | ?!haslocation| ?!islocationof | ?!hasrole| ?!isroleof) only [^\\s]+")){
-            this.setTestCase(universalRange(purpose, testCase));
-        }else if(purposecloned.matches("[^\\s]+ subclassof [^\\s]+ min (\\d+) (xsd:string|xsd:float|xsd:integer|string|float|integer|owl:rational|rational|boolean|xsd:boolean|anyuri|xsd:anyuri)")){
-            this.setTestCase(cardinalityDP(purpose, "min",testCase));
-        }else if(purposecloned.matches("[^\\s]+ subclassof [^\\s]+ max (\\d+) (xsd:string|xsd:float|xsd:integer|string|float|integer|owl:rational|rational|boolean|xsd:boolean|anyuri|xsd:anyuri)")){
-            this.setTestCase(cardinalityDP(purpose, "max",testCase));
-        }else if(purposecloned.matches("[^\\s]+ subclassof [^\\s]+ exactly (\\d+) (xsd:string|xsd:float|xsd:integer|string|float|integer|owl:rational|rational|boolean|xsd:boolean|anyuri|xsd:anyuri)")){
-            this.setTestCase(cardinalityDP(purpose, "exactly",testCase));
-        }else if(purposecloned.matches("[^\\s]+ subclassof [^\\s]+ min (\\d+) [^\\s]+")){
-            this.setTestCase(cardinality(purpose, "min",testCase));
-        }else if(purposecloned.matches("[^\\s]+ subclassof [^\\s]+ max (\\d+) [^\\s]+")){
-            this.setTestCase(cardinality(purpose, "max",testCase));
-        }else if(purposecloned.matches("[^\\s]+ subclassof [^\\s]+ exactly (\\d+) [^\\s]+")){
-            this.setTestCase(cardinality(purpose, "exactly",testCase));
-        }else if(purposecloned.matches("[^\\s]+ type class")) {
-            this.setTestCase(classDefinitionTest(purpose, testCase));
-        }else if(purposecloned.matches("[^\\s]+ type property")) {
-            this.setTestCase(propertyDefinitionTest(purpose, testCase));
-        }else if(purposecloned.matches("[^\\s]+ type [^\\s]+")){
-            this.setTestCase(typeTest(purpose, testCase));
-        }else if(purposecloned.matches("[^\\s]+ subclassof (ispartof|partof) some [^\\s]+")){
-            this.setTestCase(partWholeTestExistential(purpose,testCase));
-        }else if(purposecloned.matches("[^\\s]+ subclassof (ispartof|partof) only [^\\s]+")){
-            this.setTestCase(partWholeTestUniversal(purpose,testCase));
-        }else if(purposecloned.matches("[^\\s]+ subclassof [^\\s]+ and [^\\s]+")){
-            this.setTestCase(multipleSubClassTest(purpose,testCase));
-        }else if(purposecloned.matches("[^\\s]+ subclassof [^\\s]+")){
-            this.setTestCase(subClassTest(purpose, "strict subclass",testCase));
+        if(purpose.matches("(?i)[^\\s]+ subclassof [^\\s]+ only [^\\s]+ or [^\\s]+")){
+            this.setTestCaseImpl(unionTest(purpose.replace(","," "),"union", testCaseImpl));
+        }else if(purpose.matches("(?i)[^\\s]+ domain [^\\s]+")){
+            this.setTestCaseImpl(domainTest(purpose.replace(","," "), testCaseImpl));
+        }else if(purpose.matches("(?i)[^\\s]+ range (xsd:string|xsd:float|xsd:integer|string|float|integer|owl:rational|rational|boolean|xsd:boolean|anyuri|xsd:anyuri)")){
+            this.setTestCaseImpl(rangeTestDP(purpose.replace(","," "), testCaseImpl));
+        }else if(purpose.matches("(?i)[^\\s]+ range [^\\s]+")){
+            this.setTestCaseImpl(rangeTest(purpose.replace(","," "), testCaseImpl));
+        }else if(purpose.matches("(?i)[^\\s]+ subclassof [^\\s]+ some [^\\s]+ and [^\\s]+")){
+            this.setTestCaseImpl(intersectionTest(purpose.replace(","," "),"union", testCaseImpl));
+        }else if(purpose.matches("(?i)[^\\s]+ subclassof [^\\s]+ value [^\\s]+")){
+            this.setTestCaseImpl(individualValue(purpose.replace(","," "), testCaseImpl));
+        }else if(purpose.matches("(?i)[^\\s]+ subclassof [^\\s]+ and [^\\s]+ subclassof [^\\s]+ that disjointwith [^\\s]+")){
+            this.setTestCaseImpl(subclassDisjointTest(purpose, testCaseImpl));
+        }else if(purpose.matches("(?i)[^\\s]+ equivalentto [^\\s]+")){
+            this.setTestCaseImpl(subClassTest(purpose, "equivalence", testCaseImpl));
+        }else if(purpose.matches("(?i)[^\\s]+ disjointwith [^\\s]+")){
+            this.setTestCaseImpl( subClassTest(purpose, "disjoint", testCaseImpl));
+        }else if(purpose.matches("(?i)[^\\s]+ subclassof [^\\s]+ min (\\d+) [^\\s]+ and [^\\s]+ subclassof [^\\s]+ some [^\\s]+")){
+            this.setTestCaseImpl(cardinalityOPTest(purpose,"min", testCaseImpl));
+        }else if(purpose.matches("(?i)[^\\s]+ subclassof [^\\s]+ (max|min|exactly) (\\d+) \\([^\\s]+ and [^\\s]+\\)")){
+            this.setTestCaseImpl(intersectionCardTest(purpose,"max", testCaseImpl));
+        }else if(purpose.matches("(?i)[^\\s]+ subclassof [^\\s]+ that [^\\s]+ some [^\\s]+")){
+            this.setTestCaseImpl(subClassOPTest(purpose, testCaseImpl));
+        }else if(purpose.matches("(?i)[^\\s]+ characteristic symmetricproperty")){
+            this.setTestCaseImpl(symmetryTest(purpose, testCaseImpl));
+        }else if(purpose.matches("(?i)[^\\s]+ subclassof symmetricproperty\\([^\\s]+\\) (some|only) [^\\s]+") || purpose.matches("[^\\s]+ subclassOf <coparticipatesWith> (some|only) [^\\s]+")){
+            this.setTestCaseImpl(symmetryWithDomainRangeTest(purpose, testCaseImpl));
+        }else if(purpose.matches("(?i)[^\\s]+ subclassof (hasparticipant|isparticipantin|haslocation|islocationof|hasrole|isroleof) some [^\\s]+")){
+            this.setTestCaseImpl(participantODPTestExistential(purpose, testCaseImpl));
+        }else if(purpose.matches("(?i)[^\\s]+ subclassof (hasparticipant|isparticipantin|haslocation|islocationof|hasrole|isroleof) only [^\\s]+")){
+            this.setTestCaseImpl(participantODPTestUniversal(purpose, testCaseImpl));
+        }else if(purpose.matches("(?i)[^\\s]+ subclassof (hascoparticipant|iscoparticipantin|cooparticipates) some [^\\s]+")){
+            this.setTestCaseImpl(coParticipantODPTestExistential(purpose, testCaseImpl));
+        }else if(purpose.matches("(?i)[^\\s]+ and [^\\s]+ subclassof (hascoparticipant|iscoparticipantin|cooparticipates) only [^\\s]+")){
+            this.setTestCaseImpl(coParticipantODPTestUniversal(purpose, testCaseImpl));
+        }else if(purpose.matches("(?i)[^\\s]+ subclassof [^\\s]+ some (xsd:string|xsd:float|xsd:integer|string|float|integer|owl:rational|rational|boolean|xsd:boolean|anyuri|xsd:anyuri)")){
+            this.setTestCaseImpl(existentialRangeDP(purpose.replace("\\","\\\""), testCaseImpl));
+        }else if(purpose.matches("(?i)[^\\s]+ subclassof [^\\s]+ only (xsd:string|xsd:float|xsd:integer|string|float|integer|owl:rational|rational|boolean|xsd:boolean|anyuri|xsd:anyuri)")){
+            this.setTestCaseImpl(universalRangeDP(purpose.replace("\\","\\\""), testCaseImpl));
+        }else if(purpose.matches("(?i)[^\\s]+ subclassof (\\w*)(?!hasparticipant | ?!isparticipantin | ?!haslocation| ?!islocationof | ?!hasrole| ?!isroleof) some [^\\s]+")){
+            this.setTestCaseImpl(existentialRange(purpose, testCaseImpl));
+        }else if(purpose.matches("(?i)[^\\s]+ subclassof (\\w*)(?!hasparticipant | ?!isparticipantin | ?!haslocation| ?!islocationof | ?!hasrole| ?!isroleof) only [^\\s]+")){
+            this.setTestCaseImpl(universalRange(purpose, testCaseImpl));
+        }else if(purpose.matches("(?i)[^\\s]+ subclassof [^\\s]+ min (\\d+) (xsd:string|xsd:float|xsd:integer|string|float|integer|owl:rational|rational|boolean|xsd:boolean|anyuri|xsd:anyuri)")){
+            this.setTestCaseImpl(cardinalityDP(purpose, "min", testCaseImpl));
+        }else if(purpose.matches("(?i)[^\\s]+ subclassof [^\\s]+ max (\\d+) (xsd:string|xsd:float|xsd:integer|string|float|integer|owl:rational|rational|boolean|xsd:boolean|anyuri|xsd:anyuri)")){
+            this.setTestCaseImpl(cardinalityDP(purpose, "max", testCaseImpl));
+        }else if(purpose.matches("(?i)[^\\s]+ subclassof [^\\s]+ exactly (\\d+) (xsd:string|xsd:float|xsd:integer|string|float|integer|owl:rational|rational|boolean|xsd:boolean|anyuri|xsd:anyuri)")){
+            this.setTestCaseImpl(cardinalityDP(purpose, "exactly", testCaseImpl));
+        }else if(purpose.matches("(?i)[^\\s]+ subclassof [^\\s]+ min (\\d+) [^\\s]+")){
+            this.setTestCaseImpl(cardinality(purpose, "min", testCaseImpl));
+        }else if(purpose.matches("(?i)[^\\s]+ subclassof [^\\s]+ max (\\d+) [^\\s]+")){
+            this.setTestCaseImpl(cardinality(purpose, "max", testCaseImpl));
+        }else if(purpose.matches("(?i)[^\\s]+ subclassof [^\\s]+ exactly (\\d+) [^\\s]+")){
+            this.setTestCaseImpl(cardinality(purpose, "exactly", testCaseImpl));
+        }else if(purpose.matches("(?i)[^\\s]+ type class")) {
+            this.setTestCaseImpl(classDefinitionTest(purpose, testCaseImpl));
+        }else if(purpose.matches("(?i)[^\\s]+ type property")) {
+            this.setTestCaseImpl(propertyDefinitionTest(purpose, testCaseImpl));
+        }else if(purpose.matches("(?i)[^\\s]+ type [^\\s]+")){
+            this.setTestCaseImpl(typeTest(purpose, testCaseImpl));
+        }else if(purpose.matches("(?i)[^\\s]+ subclassof (ispartof|partof) some [^\\s]+")){
+            this.setTestCaseImpl(partWholeTestExistential(purpose, testCaseImpl));
+        }else if(purpose.matches("(?i)[^\\s]+ subclassof (ispartof|partof) only [^\\s]+")){
+            this.setTestCaseImpl(partWholeTestUniversal(purpose, testCaseImpl));
+        }else if(purpose.matches("(?i)[^\\s]+ subclassof [^\\s]+ and [^\\s]+")){
+            this.setTestCaseImpl(multipleSubClassTest(purpose, testCaseImpl));
+        }else if(purpose.matches("(?i)[^\\s]+ subclassof [^\\s]+")){
+            this.setTestCaseImpl(subClassTest(purpose, "strict subclass", testCaseImpl));
         }
         else{
             logger.error("NOT MATCH FOUND IN " +purpose+": ");
@@ -239,110 +236,126 @@ public class ThemisImplementer {
     //create the RDF of the implementation, which will be executed on the ontology
     public TestCaseImpl  createTestImplementation() {
 
-        this.setTestCase(new TestCaseImpl());
+        this.setTestCaseImpl(new TestCaseImpl());
         OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
         String base = "http://www.semanticweb.org/untitled-ontology-53#";
-        String verif = "http://w3id.org/def/vtc#";
-        OWLOntology ont = null;
+        OWLOntology ontology = null;
         try {
-            ont = manager.createOntology(IRI.create(base));
+            ontology = manager.createOntology(IRI.create(base));
         } catch (OWLOntologyCreationException e) {
-            ont = null;
+            ontology = null;
         }
         OWLDataFactory dataFactory = manager.getOWLDataFactory();
 
-        OWLClass verifTestImplClass = dataFactory.getOWLClass(IRI.create(verif + "TestCaseImplementation"));
-        OWLClass verifTestPrepClass = dataFactory.getOWLClass(IRI.create(verif + "TestPreparation"));
-        OWLClass verifTestAssertionClass = dataFactory.getOWLClass(IRI.create(verif + "TestAssertion"));
+        OWLClass verifTestImplClass = dataFactory.getOWLClass(IRI.create(VERIF + "TestCaseImplementation"));
+        OWLClass verifTestPrepClass = dataFactory.getOWLClass(IRI.create(VERIF + "TestPreparation"));
+        OWLClass verifTestAssertionClass = dataFactory.getOWLClass(IRI.create(VERIF + "TestAssertion"));
 
-        /*Create individual of type testimplementation*/
+        /*Create individual of type test implementation*/
         OWLIndividual subject = dataFactory.getOWLNamedIndividual(IRI.create(base + "testImplementation"));
         OWLClassAssertionAxiom classAssertion = dataFactory.getOWLClassAssertionAxiom(verifTestImplClass, subject);
-        manager.addAxiom(ont, classAssertion);
+        manager.addAxiom(ontology, classAssertion);
         /*Add related test design*/
-        OWLObjectProperty relatedToDesign = dataFactory.getOWLObjectProperty(IRI.create(verif + "relatedToDesign"));
-        OWLIndividual design = dataFactory.getOWLNamedIndividual(IRI.create(base));
-        OWLAxiom relatedToDesignAssertion = dataFactory.getOWLObjectPropertyAssertionAxiom(relatedToDesign, subject, design);
-        manager.addAxiom(ont, relatedToDesignAssertion);
+        OWLObjectProperty relatedToDesign = dataFactory.getOWLObjectProperty(IRI.create(VERIF + "relatedToDesign"));
+        OWLIndividual testDesign = dataFactory.getOWLNamedIndividual(IRI.create(base));
+        OWLAxiom assertionToAddTestDesignRelated = dataFactory.getOWLObjectPropertyAssertionAxiom(relatedToDesign, subject, testDesign);
+        manager.addAxiom(ontology, assertionToAddTestDesignRelated);
+        /*Create content of the test*/
         /*Add precondition*/
-        mapExpressionTemplates(tc.getPurpose());
-        String preconditionquery = "";
-        ArrayList<String> precondarray=new ArrayList<>();
-        for(String query: this.testCase.getPrecondition()){
-            preconditionquery="";
-            preconditionquery+=  "ASK{";
-            preconditionquery += query;
-            preconditionquery+="}";
-            precondarray.add(preconditionquery);
-        }
+        ontology =  addPrecondition(dataFactory, ontology, manager, subject);
+        /*Add test preparation*/
+        ontology = addPreparation(dataFactory, ontology, manager, base, verifTestPrepClass,  subject);
+        /*Create assertion individual*/
+        addAssertions(dataFactory, ontology, manager, base, verifTestAssertionClass);
 
-        this.testCase.setPreconditionQuery(precondarray);
-
-        if(this.testCase.getPreparation()!=null) {
-            OWLDataProperty preconditionProp = dataFactory.getOWLDataProperty(IRI.create(verif + "precondition"));
-            for(String prec: this.testCase.getPrecondition()) {
-                OWLAxiom axiomprecondition = dataFactory.getOWLDataPropertyAssertionAxiom(preconditionProp, subject, prec);
-                manager.addAxiom(ont, axiomprecondition);
-            }
-
-            /*Add test preparation*/
-            OWLObjectProperty preparationProperty = dataFactory.getOWLObjectProperty(IRI.create(verif + "hasPreparation"));
-            OWLIndividual preparation = dataFactory.getOWLNamedIndividual(IRI.create(base + "preparation1"));
-            OWLAxiom preparationAssertion = dataFactory.getOWLObjectPropertyAssertionAxiom(preparationProperty, subject, preparation);
-            manager.addAxiom(ont, preparationAssertion);
-            /*Add assertions*/
-            if (this.testCase.getAssertions().size() > 1) {
-                OWLObjectProperty assertionProperty = dataFactory.getOWLObjectProperty(IRI.create(verif + "hasAssertion"));
-                for (int j = 1; j <= this.testCase.getAssertions().size(); j++) {
-                    OWLIndividual assertion = dataFactory.getOWLNamedIndividual(IRI.create(base + "assertion" + j));
-                    OWLAxiom assertionAssertion = dataFactory.getOWLObjectPropertyAssertionAxiom(assertionProperty, subject, assertion);
-                    manager.addAxiom(ont, assertionAssertion);
-                }
-            }
-
-            /*Create preparation individual*/
-            OWLIndividual preparation1 = dataFactory.getOWLNamedIndividual(IRI.create(base + "preparation1"));
-            OWLClassAssertionAxiom classAssertion2 = dataFactory.getOWLClassAssertionAxiom(verifTestPrepClass, preparation1);
-            manager.addAxiom(ont, classAssertion2);
-            /*Add description*/
-            OWLDataProperty descrProp = dataFactory.getOWLDataProperty(IRI.create("http://purl.org/dc/terms/description"));
-            OWLAxiom descrAssertion = dataFactory.getOWLDataPropertyAssertionAxiom(descrProp, preparation1, "");
-            manager.addAxiom(ont, descrAssertion);
-            /*add preparation*/
-            OWLDataProperty axiomsProp = dataFactory.getOWLDataProperty(IRI.create(verif + "testAxioms"));
-            OWLAxiom axiomsAssertion = dataFactory.getOWLDataPropertyAssertionAxiom(axiomsProp, preparation1, this.testCase.getPreparation());
-            manager.addAxiom(ont, axiomsAssertion);
-
-            /*Create assertion individual*/
-            String result = "";
-            int i = 1;
-            for (Map.Entry<String, String> entry : this.testCase.getAssertions().entrySet()) {
-                OWLIndividual assertion1 = dataFactory.getOWLNamedIndividual(IRI.create(base + "assertion" + i));
-                OWLClassAssertionAxiom classAssertion3 = dataFactory.getOWLClassAssertionAxiom(verifTestAssertionClass, assertion1);
-                manager.addAxiom(ont, classAssertion3);
-                /*add description*/
-                OWLAxiom descrAssertion2 = dataFactory.getOWLDataPropertyAssertionAxiom(descrProp, assertion1, "");
-                manager.addAxiom(ont, descrAssertion2);
-                /*add test axioms*/
-                OWLAxiom axiomsAssertion2 = dataFactory.getOWLDataPropertyAssertionAxiom(axiomsProp, assertion1, entry.getKey());
-                manager.addAxiom(ont, axiomsAssertion2);
-                OWLIndividual assresult = null;
-                if (this.testCase.getAxiomExpectedResult().get(entry.getKey()).equals("unsatisfiable"))
-                    assresult = dataFactory.getOWLNamedIndividual(IRI.create(verif + "Unsatisfiable"));
-                else if (this.testCase.getAxiomExpectedResult().get(entry.getKey()).equals("inconsistent"))
-                    assresult = dataFactory.getOWLNamedIndividual(IRI.create(verif + "Inconsistent"));
-                else
-                    assresult = dataFactory.getOWLNamedIndividual(IRI.create(verif + "Consistent"));
-
-                OWLObjectProperty assertionResultProperty = dataFactory.getOWLObjectProperty(IRI.create(verif + "hasAssertionResult"));
-                OWLAxiom assertionResultAssertion = dataFactory.getOWLObjectPropertyAssertionAxiom(assertionResultProperty, assertion1, assresult);
-                manager.addAxiom(ont, assertionResultAssertion);
-                i++;
-            }
-        }
-
-        return this.testCase;
+        return this.testCaseImpl;
     }
 
+    public OWLOntology addPrecondition(OWLDataFactory dataFactory, OWLOntology ontology, OWLOntologyManager manager, OWLIndividual subject ){
+        try {
+            mapExpressionTemplates(testCaseDesign.getPurpose());
+        } catch (OWLOntologyCreationException e) {
+            logger.error(e.getMessage());
+        }
+        ArrayList<String> precondarray=new ArrayList<>();
+        StringBuilder bld = new StringBuilder();
+        for(String query: this.testCaseImpl.getPreconditionList()){
+            bld.append( "ASK{");
+            bld.append(query);
+            bld.append("}");
+            precondarray.add(bld.toString());
+        }
+
+        this.testCaseImpl.setPreconditionQueryList(precondarray);
+
+        OWLDataProperty preconditionProp = dataFactory.getOWLDataProperty(IRI.create(VERIF + "precondition"));
+        for(String prec: this.testCaseImpl.getPreconditionList()) {
+            OWLAxiom axiomprecondition = dataFactory.getOWLDataPropertyAssertionAxiom(preconditionProp, subject, prec);
+            manager.addAxiom(ontology, axiomprecondition);
+        }
+        return ontology;
+
+    }
+
+    public OWLOntology addPreparation(OWLDataFactory dataFactory, OWLOntology ontology, OWLOntologyManager manager, String base, OWLClass verifTestPrepClass,  OWLIndividual subject){
+        OWLObjectProperty preparationProperty = dataFactory.getOWLObjectProperty(IRI.create(VERIF + "hasPreparation"));
+        OWLIndividual preparation = dataFactory.getOWLNamedIndividual(IRI.create(base + "preparation1"));
+        OWLAxiom preparationAssertion = dataFactory.getOWLObjectPropertyAssertionAxiom(preparationProperty, subject, preparation);
+        manager.addAxiom(ontology, preparationAssertion);
+        /*Add assertions*/
+        if (this.testCaseImpl.getAssertions().size() > 1) {
+            OWLObjectProperty assertionProperty = dataFactory.getOWLObjectProperty(IRI.create(VERIF + "hasAssertion"));
+            for (int j = 1; j <= this.testCaseImpl.getAssertions().size(); j++) {
+                OWLIndividual assertion = dataFactory.getOWLNamedIndividual(IRI.create(base + "assertion" + j));
+                OWLAxiom assertionAssertion = dataFactory.getOWLObjectPropertyAssertionAxiom(assertionProperty, subject, assertion);
+                manager.addAxiom(ontology, assertionAssertion);
+            }
+        }
+
+        /*Create preparation individual*/
+        OWLIndividual preparation1 = dataFactory.getOWLNamedIndividual(IRI.create(base + "preparation1"));
+        OWLClassAssertionAxiom classAssertion2 = dataFactory.getOWLClassAssertionAxiom(verifTestPrepClass, preparation1);
+        manager.addAxiom(ontology, classAssertion2);
+        /*Add description*/
+        OWLDataProperty descriptionProperty = dataFactory.getOWLDataProperty(IRI.create(DESCRIPTION));
+        OWLAxiom descriptionAssertion = dataFactory.getOWLDataPropertyAssertionAxiom(descriptionProperty, preparation1, "");
+        manager.addAxiom(ontology, descriptionAssertion);
+        /*add preparation*/
+        OWLDataProperty axiomsProp = dataFactory.getOWLDataProperty(IRI.create(VERIF + "testAxioms"));
+        OWLAxiom axiomsAssertion = dataFactory.getOWLDataPropertyAssertionAxiom(axiomsProp, preparation1, this.testCaseImpl.getPreparation());
+        manager.addAxiom(ontology, axiomsAssertion);
+        return ontology;
+    }
+
+    public OWLOntology addAssertions(OWLDataFactory dataFactory, OWLOntology ontology, OWLOntologyManager manager, String base, OWLClass verifTestAssertionClass ){
+        int i = 1;
+        for (Map.Entry<String, String> entry : this.testCaseImpl.getAssertions().entrySet()) {
+            OWLIndividual assertion = dataFactory.getOWLNamedIndividual(IRI.create(base + "assertion" + i));
+            OWLClassAssertionAxiom classAssertion3 = dataFactory.getOWLClassAssertionAxiom(verifTestAssertionClass, assertion);
+            manager.addAxiom(ontology, classAssertion3);
+            /*add description*/
+            OWLDataProperty descriptionProperty = dataFactory.getOWLDataProperty(IRI.create(DESCRIPTION));
+            OWLAxiom descriptionAssertion = dataFactory.getOWLDataPropertyAssertionAxiom(descriptionProperty, assertion, "");
+            manager.addAxiom(ontology, descriptionAssertion);
+            /*add test axioms*/
+            OWLDataProperty axiomsProp = dataFactory.getOWLDataProperty(IRI.create(VERIF + "testAxioms"));
+            OWLAxiom axiomsAssertion2 = dataFactory.getOWLDataPropertyAssertionAxiom(axiomsProp, assertion, entry.getKey());
+            manager.addAxiom(ontology, axiomsAssertion2);
+            OWLIndividual assertionResult = null;
+            if (this.testCaseImpl.getAxiomExpectedResult().get(entry.getKey()).equals("unsatisfiable"))
+                assertionResult = dataFactory.getOWLNamedIndividual(IRI.create(VERIF + "Unsatisfiable"));
+            else if (this.testCaseImpl.getAxiomExpectedResult().get(entry.getKey()).equals("inconsistent"))
+                assertionResult = dataFactory.getOWLNamedIndividual(IRI.create(VERIF + "Inconsistent"));
+            else
+                assertionResult = dataFactory.getOWLNamedIndividual(IRI.create(VERIF + "Consistent"));
+
+            OWLObjectProperty assertionResultProperty = dataFactory.getOWLObjectProperty(IRI.create(VERIF + "hasAssertionResult"));
+            OWLAxiom assertionResultAssertion = dataFactory.getOWLObjectPropertyAssertionAxiom(assertionResultProperty, assertion, assertionResult);
+            manager.addAxiom(ontology, assertionResultAssertion);
+            i++;
+        }
+        return ontology;
+
+    }
 
 }

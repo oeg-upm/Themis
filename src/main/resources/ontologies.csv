@@ -1,6 +1,0 @@
-Ontology URI;Ontology repository;Ontology key
-http://iot.linkeddata.es/def/wot/ontology.ttl;;wot
-http://iot.linkeddata.es/def/core/ontology.ttl;;core
-http://iot.linkeddata.es/def/wot-mappings/ontology.ttl;;map
-http://iot.linkeddata.es/def/adapters/ontology.ttl;;adapters
-http://iot.linkeddata.es/def/datatypes/ontology.ttl;;datatypes

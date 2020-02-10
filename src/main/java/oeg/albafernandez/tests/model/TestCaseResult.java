@@ -2,6 +2,7 @@ package oeg.albafernandez.tests.model;
 
 import org.semanticweb.owlapi.model.IRI;
 import java.util.ArrayList;
+import java.util.List;
 
 
 /*
@@ -11,12 +12,13 @@ public class TestCaseResult {
     private IRI relatedTestImpl;
     private String testResult;
     private IRI ontologyURI;
-    private ArrayList<String> undefinedTerms;
-    private ArrayList<String> incorrectTerms;
+    private List<String> undefinedTermsList;
+    private List<String> incorrectTermsList;
 
     public TestCaseResult() {
         testResult = "";
-        undefinedTerms = new ArrayList<String>();
+        undefinedTermsList = new ArrayList<>();
+        incorrectTermsList = new ArrayList<>();
     }
 
     public IRI getRelatedTestImpl() {
@@ -43,19 +45,19 @@ public class TestCaseResult {
         this.ontologyURI = ontologyURI;
     }
 
-    public ArrayList<String> getUndefinedTerms() {
-        return undefinedTerms;
+    public List<String> getUndefinedTermsList() {
+        return undefinedTermsList;
     }
 
-    public void setUndefinedTerms(ArrayList<String> undefinedTerms) {
-        this.undefinedTerms = undefinedTerms;
+    public void setUndefinedTermsList(List<String> undefinedTermsList) {
+        this.undefinedTermsList = undefinedTermsList;
     }
 
-    public ArrayList<String> getIncorrectTerms() {
-        return incorrectTerms;
+    public List<String> getIncorrectTermsList() {
+        return incorrectTermsList;
     }
 
-    public void setIncorrectTerms(ArrayList<String> incorrectTerms) {
-        this.incorrectTerms = incorrectTerms;
+    public void setIncorrectTermsList(List<String> incorrectTermsList) {
+        this.incorrectTermsList = incorrectTermsList;
     }
 }

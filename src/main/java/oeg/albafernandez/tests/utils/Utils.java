@@ -9,11 +9,18 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Utils {
-    final static Logger logger = Logger.getLogger(Utils.class);
+
+    static final Logger logger = Logger.getLogger(Utils.class);
+    static final String PATTERN = "\\<(.*?)\\>";
+
+
+    private Utils() {
+        throw new IllegalStateException("Utility class");
+    }
 
     public static String getPrecTerm(String query){
 
-        Pattern p = Pattern.compile("\\<(.*?)\\>");
+        Pattern p = Pattern.compile(PATTERN);
         Matcher m = p.matcher(query);
         while(m.find()){
             return  m.group();
@@ -22,7 +29,7 @@ public class Utils {
     }
 
     public static String termsInOntology(String query, OWLOntology ontology){
-        Pattern p = Pattern.compile("\\<(.*?)\\>"); // VERIFICAR ESTO
+        Pattern p = Pattern.compile(PATTERN); // VERIFICAR ESTO
         Matcher m = p.matcher(query);
         while(m.find()){
             if(ontology.containsEntityInSignature(IRI.create(m.group().toString().replace(
@@ -33,16 +40,14 @@ public class Utils {
     }
 
     public static String mapImplementationTerms(String  query, HashMap<String, IRI> allvalues) {
-            Pattern p = Pattern.compile("\\<(.*?)\\>");
+            Pattern p = Pattern.compile(PATTERN);
             Matcher m = p.matcher(query);
             String querym = query;
             while (m.find()) {
                 try {
-                    int flag = 0;
                     for (Map.Entry<String, IRI> entry : allvalues.entrySet()) {
                         if (entry.getKey().toLowerCase().equals(m.group().toLowerCase().replace("<", "").replace(">", ""))) {
                             querym = querym.replace("<" + entry.getKey() + ">", "<" + entry.getValue() + ">");
-                            flag++;
                         }
                     }
                     querym = querym.replace("<string>", "<http://www.w3.org/2001/XMLSchema#string>");
@@ -61,18 +66,15 @@ public class Utils {
 
         for(OWLAxiom axiom: queries.getAxioms()) {
 
-            Pattern p = Pattern.compile("\\<(.*?)\\>");
+            Pattern p = Pattern.compile(PATTERN);
             String query = axiom.toString();
             Matcher m = p.matcher(query);
             while (m.find()) {
                 try {
-                    int flag = 0;
                     for (Map.Entry<String, IRI> entry : allvalues.entrySet()) {
                         if (entry.getKey().equals(m.group().replace("<", "").replace(">", ""))) {
                             queries.getOWLOntologyManager().applyChanges(renamer.changeIRI(IRI.create(entry.getKey()), entry.getValue()));
-                            flag++;
                         }
-
                     }
                     queries.getOWLOntologyManager().applyChanges(renamer.changeIRI(IRI.create("string"), IRI.create("http://www.w3.org/2001/XMLSchema#string")));
 
