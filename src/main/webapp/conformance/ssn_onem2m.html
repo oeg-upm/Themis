@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head >
+    <meta charset="UTF-8">
+    <title>Validate your ontology</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="languaje" content="English">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <!-- Le styles -->
+    <link href="../vocab/css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../css/style-custom.css">
+
+    <style type="text/css">
+
+        .table-wrapper-scroll-y {
+            display: block;
+            max-height: 200px;
+            overflow-y: auto;
+            -ms-overflow-style: -ms-autohiding-scrollbar;
+        }
+
+        ul.nav-pills {
+            top: 250px;
+            position: fixed;
+        }
+
+    </style>
+
+    <script type="text/javascript" id="js">
+        $(document).ready(function(){
+            $("#filter").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#tablesorter-demo tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+
+
+
+    </script>
+</head>
+
+<body data-spy="scroll" data-target="#myScrollspy">
+
+
+<nav class="navbar navbar-default "  id="catalogue">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#"> <img src="../images/themis.png" class="img-rounded" class="img-responsive" width="70%" ></a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../howto.html">How to use it</a></li>
+                <li><a href="../../../../target/swagger-ui/META-INF/resources/webjars/swagger-ui/3.17.0/index.html">API REST</a></li>
+                <li><a href="../catalogue.html">Catalogue</a></li>
+                <!--<li><a href="tests-info.html">Supported tests</a></li>-->
+            </ul>
+        </div><!--/.nav-collapse -->
+
+    </div>
+</nav>
+<div class="container" >
+
+    <!-- Jumbotron -->
+    <div class="jumbotron" style="background-color:white;">
+        <h2> Ontology conformance</h2>
+        <p class="lead">Conformance results between SSN requirements and the oneM2M ontology.</a></p>
+        <p>There are four possible results for each requirement:
+        <ul>
+            <li><span class="glyphicon glyphicon-ok" style="color:rgb(0, 255, 0)"></span>: The requirements is passed by the ontology</li>
+            <li><span class="label label-default">Undefined</span>: There are terms in the requirements that are not defined in the ontology</li>
+            <li><span class="glyphicon glyphicon-warning-sign" style ="color:rgb(239, 127, 26)"></span>: The are relations and restrictions in the requirements that are  absent in the ontology</li>
+            <li><span class="glyphicon glyphicon-remove" style ="color:rgb(255, 0, 0)"></span>: There is a conflict between the requirement and the ontology</li>
+        </ul>
+
+        </p>
+    </div>
+    <hr>
+
+    <nav class="col-sm-3" id="myScrollspy" >
+        <ul class="nav nav-pills nav-stacked">
+            <li class="active" class="nav nav-pills nav-stacked"><a href="#reqs">Shared requirements</a></li>
+            <li class="nav nav-pills nav-stacked"><a href="#terms">Shared terms</a></li>
+            <li class="nav nav-pills nav-stacked"><a href="#metrics">Metrics</a></li>
+            <li class="nav nav-pills nav-stacked"><a href="#catalogue"><span class="glyphicon glyphicon-chevron-up
+" aria-hidden="true"></span>
+                Go top</a></li>
+
+        </ul>
+    </nav>
+
+
+    <div class = "col-sm-9">
+        <div id="reqs">
+            <h3>Shared requirements</h3>
+            <p>The following table lists the SSN ontology requirements and whether the oneM2M ontology satisfies them.</p>
+            <input id="filter" type="text" placeholder="Search..">
+
+            <table id="tablesorter-demo" class="tablesorter table table-hover table-responsive">
+                <thead>
+                <tr >
+                    <th class="col-md-1">Identifier</th>
+                    <th class="col-md-2">Category</th>
+                    <th class="col-md-4">Competency Question</th>
+                    <th class="col-md-1">Result</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr id="ssn1">
+                    <td class="tg-031e">ssn1</td>
+                    <td class="tg-031e"><span class="label label-primary">Procedure</span> </td>
+                    <td class="tg-031e">A procedure has an output</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined</span>
+                </td>
+                </tr>
+                <tr id="ssn2">
+                    <td class="tg-031e">ssn2</td>
+                    <td class="tg-031e"><span class="label label-primary">Platform</span> </td>
+                    <td class="tg-031e">Platform has a deployment</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined</span>
+                </td>
+                </tr>
+                <tr id="ssn3">
+                    <td class="tg-031e">ssn3</td>
+                    <td class="tg-031e"><span class="label label-primary">Platform</span> <span class="label label-primary">System</span> </td>
+                    <td class="tg-031e">A platform is deployed by some system</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined</span>
+                </td>
+                </tr>
+                <tr id="ssn4">
+                    <td class="tg-031e">ssn4</td>
+                    <td class="tg-031e"><span class="label label-primary">Observable property</span> </td>
+                    <td class="tg-031e">An observable property is a type of property</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined</span>
+                </td>
+                </tr>
+                <tr id="ssn5">
+                    <td class="tg-031e">ssn5</td>
+                    <td class="tg-031e"><span class="label label-primary">Sensor</span> <span class="label label-primary">Stimulus</span> </td>
+                    <td class="tg-031e">Sensor detects an stimulus</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined</span>
+                </td>
+                </tr>
+                <tr id="ssn6">
+                    <td class="tg-031e">ssn6</td>
+                    <td class="tg-031e"><span class="label label-primary">Actuator</span> </td>
+                    <td class="tg-031e">An actuator mades only actuations</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined</span>
+
+                <tr id="ssn7">
+                    <td class="tg-031e">ssn7</td>
+                    <td class="tg-031e"><span class="label label-primary">Sampling</span> <span class="label label-primary">FoI</span> </td>
+                    <td class="tg-031e">A sampling has one feature of interest</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined</span>
+                </td>
+                </tr>
+                <tr id="ssn8">
+                    <td class="tg-031e">ssn8</td>
+                    <td class="tg-031e"><span class="label label-primary">Sampling</span> <span class="label label-primary">Sample</span> </td>
+                    <td class="tg-031e">A sampling is linked to at least one sample</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined</span>
+                </td>
+                </tr>
+                <tr id="ssn9">
+                    <td class="tg-031e">ssn9</td>
+                    <td class="tg-031e"><span class="label label-primary">Property</span> <span class="label label-primary">FoI</span> </td>
+                    <td class="tg-031e">A property is a property of a feature of interest</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined</span>
+                </td>
+                </tr>
+                <tr id="ssn10">
+                    <td class="tg-031e">ssn10</td>
+                    <td class="tg-031e"><span class="label label-primary">Procedure</span> <span class="label label-primary">System</span> </td>
+                    <td class="tg-031e">A procedure is implemented by a system</td>
+                    <td class="tg-031e">
+                    <span class="label label-default">Undefined</span>
+                </td>
+                </tr>
+                <tr id="ssn11">
+                    <td class="tg-031e">ssn11</td>
+                    <td class="tg-031e"><span class="label label-primary">Procedure</span> </td>
+                    <td class="tg-031e">A procedure has an input</td>
+                    <td class="tg-031e">
+                    <span class="label label-default">Undefined</span>
+                </td>
+                </tr>
+                <tr id="ssn12">
+                    <td class="tg-031e">ssn12</td>
+                    <td class="tg-031e"><span class="label label-primary">Platform</span> <span class="label label-primary">Deployment</span> </td>
+                    <td class="tg-031e">A deplopyment is deployed in a platform</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined</span></td>
+                </tr>
+                <tr id="ssn13">
+                    <td class="tg-031e">ssn13</td>
+                    <td class="tg-031e"><span class="label label-primary">Procedure</span> <span class="label label-primary">System</span> </td>
+                    <td class="tg-031e">A system implements a procedure</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined</span></td>
+
+                </tr>
+                <tr id="ssn14">
+                    <td class="tg-031e">ssn14</td>
+                    <td class="tg-031e"><span class="label label-primary">System</span> </td>
+                    <td class="tg-031e">A system can have subsystems</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined</span></td>
+
+                </tr>
+                <tr id="ssn15">
+                    <td class="tg-031e">ssn15</td>
+                    <td class="tg-031e"><span class="label label-primary">Property</span> </td>
+                    <td class="tg-031e">What is a property?</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined</span>
+                </tr>
+                <tr id="ssn16">
+                    <td class="tg-031e">ssn16</td>
+                    <td class="tg-031e"><span class="label label-primary">FoI</span>  </td>
+                    <td class="tg-031e">What is feature of interest?</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined</span></td>
+                </tr>
+                <tr id="ssn17">
+                    <td class="tg-031e">ssn17</td>
+                    <td class="tg-031e"> <span class="label label-primary">System</span> </td>
+                    <td class="tg-031e">What is a system?</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined</span></td>
+                </tr>
+                <tr id="ssn18">
+                    <td class="tg-031e">ssn18</td>
+                    <td class="tg-031e"><span class="label label-primary">Deployment</span> </td>
+                    <td class="tg-031e">What is a deployment?</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined</span></td>
+                </tr>
+                <tr id="ssn19">
+                    <td class="tg-031e">ssn19</td>
+                    <td class="tg-031e"><span class="label label-primary">Observation</span> <span class="label label-primary">Stimulus</span> </td>
+                    <td class="tg-031e">The observation is originated by  exactly one stimulus</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined</span></td>
+                </tr>
+                <tr id="ssn20">
+                    <td class="tg-031e">ssn20</td>
+                    <td class="tg-031e"><span class="label label-primary">Observation</span> <span class="label label-primary">Results</span> </td>
+                    <td class="tg-031e">An observation has only  results</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined</span></td>
+
+                </tr>
+                <tr id="ssn21">
+                    <td class="tg-031e">ssn21</td>
+                    <td class="tg-031e"><span class="label label-primary">Stimulus</span> </td>
+                    <td class="tg-031e">What is a stimulus?</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined</span></td>
+
+                </tr>
+                <tr id="ssn22">
+                    <td class="tg-031e">ssn22</td>
+                    <td class="tg-031e"><span class="label label-primary">Observable property</span> <span class="label label-primary">Sensor</span> </td>
+                    <td class="tg-031e">An observable property is observed by only sensors</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined</span></td>
+                </tr>
+                <tr id="ssn23">
+                    <td class="tg-031e">ssn23</td>
+                    <td class="tg-031e"><span class="label label-primary">Observation</span> <span class="label label-primary">Stimulus</span> </td>
+                    <td class="tg-031e">An observation is originated by a stimulus</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined</span>
+                </td>
+                </tr>
+                <tr id="ssn24">
+                    <td class="tg-031e">ssn24</td>
+                    <td class="tg-031e"><span class="label label-primary">Observation</span> <span class="label label-primary">FoI</span> </td>
+                    <td class="tg-031e">An observation is related only to one feature of interest</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined</span></td>
+                </tr>
+                <tr id="ssn25">
+                    <td class="tg-031e">ssn25</td>
+                    <td class="tg-031e"><span class="label label-primary">Deployment</span> <span class="label label-primary">Property</span> </td>
+                    <td class="tg-031e">Deployment is associated to a property</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined</span></td>
+                </tr>
+                <tr id="ssn26">
+                    <td class="tg-031e">ssn26</td>
+                    <td class="tg-031e"><span class="label label-primary">Actuation</span> <span class="label label-primary">Results</span> </td>
+                    <td class="tg-031e">An actuation has a result</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined</span></td>
+                </tr>
+                <tr id="ssn27">
+                    <td class="tg-031e">ssn31</td>
+                    <td class="tg-031e"><span class="label label-primary">Sample</span> <span class="label label-primary">Results</span>  <span class="label label-primary">FoI</span>  </td>
+                    <td class="tg-031e">A sample is a type of feature of interest and result</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined</span></td>
+
+                </tr>
+                <tr id="ssn28">
+                    <td class="tg-031e">ssn28</td>
+                    <td class="tg-031e"><span class="label label-primary">Stimulus</span> <span class="label label-primary">Property</span> </td>
+                    <td class="tg-031e">The stimulus is proxy for a property</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined</span></td>
+
+                </tr>
+                <tr id="ssn29">
+                    <td class="tg-031e">ssn29</td>
+                    <td class="tg-031e"><span class="label label-primary">Procedure</span>   </td>
+                    <td class="tg-031e">What is a procedure?</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined</span></td>
+
+                </tr>
+                <tr id="ssn30">
+                    <td class="tg-031e">ssn30</td>
+                    <td class="tg-031e"><span class="label label-primary">Sensor</span> <span class="label label-primary">Observable property</span>   </td>
+                    <td class="tg-031e">A sensor observes only observable properties</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined</span></td>
+                </tr>
+                <tr id="ssn31">
+                    <td class="tg-031e">ssn31</td>
+                    <td class="tg-031e"><span class="label label-primary">Actuator</span> </td>
+                    <td class="tg-031e">
+                        What is an actuator?</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined</span>
+                </td>
+                </tr>
+                <tr id="ssn32">
+                    <td class="tg-031e">ssn32</td>
+                    <td class="tg-031e"><span class="label label-primary">Sensor</span>   </td>
+                    <td class="tg-031e">
+                       What is a sensor?</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined</span>
+                </td>
+                </tr>
+                <tr id="ssn33">
+                    <td class="tg-031e">ssn33</td>
+                    <td class="tg-031e"><span class="label label-primary">Sensor</span> <span class="label label-primary">System</span>   </td>
+                    <td class="tg-031e">A sensor is a type of system</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined</span></td>
+
+                </tr>
+                <tr id="ssn34">
+                    <td class="tg-031e">ssn34</td>
+                    <td class="tg-031e"><span class="label label-primary">Sampling</span> <span class="label label-primary">Results</span>   </td>
+                    <td class="tg-031e">A sampling has a result</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined</span></td>
+
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+        <hr>
+        <div  id="terms">
+            <h3>Shared terms</h3>
+            <p>The following table lists the terms that are defined in the SSN and in the oneM2M ontology.</p>
+            <table id="tablesorter2" class="tablesorter table table-hover table-responsive">
+                <thead>
+                <tr >
+                    <th class="col-md-6">Term in SSN</th>
+                    <th class="col-md-6">Term in oneM2M</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+        <hr>
+        <div  id="metrics">
+            <h3>Metrics</h3>
+
+            <p>The following table summarises the metrics related to the conformance between the SSN requirements and the oneM2M ontology</p>
+
+            <table  class="tablesorter table table-hover table-responsive">
+                <thead>
+                <tr>
+                    <th class="tg-g7sd">Metric</th>
+                    <th class="tg-g7sd">Result</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td class="tg-lboi">Percentage of covered requirement</td>
+                    <td class="tg-lboi">0%</td>
+                </tr>
+                <tr>
+                    <td class="tg-lboi">Percentage of requirements with terms that are undefined in the oneM2M ontology</td>
+                    <td class="tg-lboi">100%</td>
+                </tr>
+                <tr>
+                    <td class="tg-0pky">Percantge of requirements that lead to conflict between the SSN and the oneM2M ontology</td>
+                    <td class="tg-0pky">0%</td>
+                </tr>
+
+                </tbody>
+            </table>
+
+
+
+
+        </div>
+    </div>
+
+    <hr>
+    <footer class="footer">
+        <div class="row">
+            <div class="col-md-10">
+                Alba Fernández Izquierdo
+                <br>
+                Contact email: albafernandez@fi.upm.es
+                <br>
+                Built with <a target="_blank" href="http://getbootstrap.com/">Bootstrap</a>
+                Icons from <a target="_blank" href="http://glyphicons.com/">Glyphicons</a>
+                <br>
+                Latest revision March, 2020
+                <br><p>&copy; Ontology Engineering Group</p>
+            </div>
+            <div class="col-md-2">
+                <a href="http://www.oeg-upm.net/" target="_blank"><img src="../vocab/logo.gif" alt="OEG logo" class="img-rounded" class="img-responsive" /></a>
+            </div>
+        </div>
+    </footer>
+</div> <!-- /container -->
+
+
+<script type="text/javascript" src="../js/tests-js.js"></script>
+
+
+</body>
+</html>

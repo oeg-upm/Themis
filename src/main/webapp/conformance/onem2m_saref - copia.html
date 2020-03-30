@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head >
+    <meta charset="UTF-8">
+    <title>Validate your ontology</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="languaje" content="English">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <!-- Le styles -->
+    <link href="../vocab/css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../css/style-custom.css">
+
+ 
+
+    <script type="text/javascript" id="js">
+        $(document).ready(function(){
+            $("#filter").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#tablesorter-demo tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+
+
+
+    </script>
+
+</head>
+
+<body>
+
+
+
+<div class="container " >
+
+<div class="head">
+<h2>Verification Test Case ontology Test Suite</h2>
+</div>
+<dt>Ontology name:</dt> <dd>0.1</dd>
+<dt>Ontology version:</dt> <dd>0.1</dd>
+<dt>Test suite version:</dt> <dd>0.1</dd>
+
+<hr>
+    <div class = "col-sm-9">
+      <table class="table table-striped table-bordered">
+ 
+  <tbody>
+    <tr>
+      <th scope="row">ID</th>
+      <td>Mark</td>
+     
+    </tr>
+    <tr>
+      <th scope="row">Requirement</th>
+      <td>Jacob</td>
+     
+    </tr>
+    <tr>
+      <th scope="row">Provenance</th>
+      <td>Larry</td>
+      
+    </tr>
+    <tr>
+      <th scope="row">Test Purpose</th>
+      <td>Larry</td>
+
+    </tr>
+  </tbody>
+</table>
+    </div>
+
+    <hr>
+    <footer class="footer">
+        <div class="row">
+            <div class="col-md-10">
+                Contact email: albafernandez@fi.upm.es
+                <br>
+                Built with <a target="_blank" href="http://getbootstrap.com/">Bootstrap</a>
+                Icons from <a target="_blank" href="http://glyphicons.com/">Glyphicons</a>
+                <br>
+                Latest revision March, 2020
+                <br><p>&copy; Ontology Engineering Group</p>
+            </div>
+            <div class="col-md-2">
+                <a href="http://www.oeg-upm.net/" target="_blank"><img src="../vocab/logo.gif" alt="OEG logo" class="img-rounded" class="img-responsive" /></a>
+            </div>
+        </div>
+    </footer>
+</div> <!-- /container -->
+
+
+<script type="text/javascript" src="../js/tests-js.js"></script>
+
+
+</body>
+</html>

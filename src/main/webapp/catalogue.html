@@ -17,7 +17,7 @@
 
     <!-- Le styles -->
     <link href="vocab/css/bootstrap.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="css/style-custom.css">
+    <link rel="stylesheet" type="text/css" href="vocab/css/style-custom.css">
 
     <style type="text/css">
 
@@ -30,6 +30,7 @@
 
 
     </style>
+
 
     <script type="text/javascript" id="js">
         $(document).ready(function()
@@ -58,10 +59,16 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="index.html">Home</a></li>
+                <li><a href="index.html">Home</a></li>
+<<<<<<< HEAD
+                <li><a href="howto.html">How to use Themis</a></li>
+                <li><a href="swagger-ui/index.html">API REST</a></li>
+                <li  class="active"><a href="catalogue.html">Catalogue</a></li>
+=======
                 <li><a href="howto.html">How to use it</a></li>
                 <li><a href="swagger-ui/index.html">API REST</a></li>
-                <li><a href="catalogue.html">Existing tests</a></li>
+                <li class="active"><a href="catalogue.html">Existing tests</a></li>
+>>>>>>> 64330502b0a4f1639bf6380322f76054b34a2be2
                 <!--<li><a href="tests-info.html">Supported tests</a></li>-->
             </ul>
         </div><!--/.nav-collapse -->
@@ -72,8 +79,7 @@
 
     <!-- Jumbotron -->
     <div class="jumbotron" style="background-color:white;">
-        <h2> Existing tests</h2>
-        <p class="lead">Here you can find a list of ontologies with their tests that the <a href="http://www.oeg-upm.net">Ontology Engineering Group (OEG)</a> is generating.</a></p>
+        <h2> Catalogue</h2>
     </div>
 
     <!--<div class="row">
@@ -88,69 +94,127 @@
         </div>
     </div> -->
 
-
+       <h3>Tests</h3>
+        <p>Here you can find a list of ontologies with the tests that the <a href="http://www.oeg-upm.net">Ontology Engineering Group (OEG)</a> is generating.</a></p>
         <table id="tablesorter-demo" class="tablesorter table table-hover table-responsive">
             <thead>
             <tr>
-                <th class="col-md-2">Test</th>
-                <th class="col-md-2">Provenance</th>
-                <th class="col-md-2">Domain</th>
+                <th class="col-md-2">Ontology</th>
+                <th class="col-md-1">Category</th>
+                <th class="col-md-1">Tests</th>
+                <th class="col-md-2">Tests Results</th>
+                <th class="col-md-2">Conformance with other ontologies</th>
             </tr>
             </thead>
             <tbody>
 
             <tr>
-                <td>
-                    <a href = "http://vicinity.iot.linkeddata.es/vicinity/testing/testsuite-wot.ttl" target="_blank">Tests for Ontology model for Web of Things</a>
-                </td>
-                <td><a href = "http://iot.linkeddata.es/def/wot" target="_blank">Ontology model for Web of Things </a> </td>
 
-                <td><span class="label label-primary">iot</span>
-                    <span class="label label-primary">wot</span>
+                <td><a href = "http://iot.linkeddata.es/def/wot" target="_blank">VICINITY Ontology model for Web of Things </a> </td>
+                <td><span class="label label-primary">IoT</span>
+                    <span class="label label-primary">WoT</span>
                 </td>
+                <td>
+                    <a href = "http://vicinity.iot.linkeddata.es/vicinity/testing/testsuite-wot.ttl" target="_blank">Tests</a>
+                </td>
+                <td> <a href = "testing/wot_results.html" target="_blank">Testing results</a></td>
+                <td></td>
             </tr>
             <tr >
-                <td>
-                    <a href = "http://vicinity.iot.linkeddata.es/vicinity/testing/testsuite-core.ttl" target="_blank">Tests for Vicinity core model</a>
-                </td>
+
                 <td><a href = "http://iot.linkeddata.es/def/core" target="_blank">Vicinity core model </a> </td>
-
-                <td><span class="label label-primary">iot</span>
+                <td><span class="label label-primary">IoT</span>
                 </td>
-            </tr>
-            <tr >
                 <td>
-                    <a href = "http://vicinity.iot.linkeddata.es/vicinity/testing/testsuite-map.ttl" target="_blank">Tests for Vicinity WoT mappings model</a>
+                    <a href = "http://vicinity.iot.linkeddata.es/vicinity/testing/testsuite-core.ttl" target="_blank">Tests</a>
                 </td>
-                <td><a href = "http://iot.linkeddata.es/def/wot-mappings" target="_blank">Vicinity WoT mappings model </a> </td>
-
-                <td><span class="label label-primary">iot</span>
-                </td>
+                <td> <a href = "testing/core_results.html" target="_blank">Testing results</a></td>
+                <td></td>
             </tr>
             <tr>
-                <td>
-                    <a href = "http://vicinity.iot.linkeddata.es/vicinity/testing/testsuite-saref.ttl" target="_blank">Tests for SAREF ontology</a>
-                </td>
+
                 <td><a href = "https://w3id.org/saref" target="_blank">SAREF ontology </a> </td>
-
-                <td><span class="label label-primary">iot</span>
+                <td><span class="label label-primary">IoT</span>
+                    <span class="label label-primary">smart appliances</span>
+                </td>
+                <td>
+                    <a href = "http://vicinity.iot.linkeddata.es/vicinity/testing/testsuite-saref.ttl" target="_blank">Tests</a>
+                </td>
+                <td> <a href = "testing/saref_results.html" target="_blank">Testing results</a></td>
+                <td>
+                    <a href = "conformance/ssn_saref.html" target="_blank">SSN</a> <br>
+                    <a href = "conformance/onem2m_saref.html" target="_blank">oneM2M</a>
                 </td>
             </tr>
             <tr>
-                <td>
-                    <a href = "http://vicinity.iot.linkeddata.es/vicinity/testing/testsuite-ssn.ttl" target="_blank">Tests for SSN ontology</a>
-                </td>
-                <td><a href = "http://www.w3.org/ns/ssn" target="_blank">SSN ontology </a> </td>
 
-                <td><span class="label label-primary">iot</span>
+                <td><a href = "http://www.w3.org/ns/ssn" target="_blank">SSN ontology </a> </td>
+                <td><span class="label label-primary">IoT</span>
                 </td>
+                <td>
+                    <a href = "http://vicinity.iot.linkeddata.es/vicinity/testing/testsuite-ssn.ttl" target="_blank">Tests</a>
+                </td>
+                <td> <a href = "testing/ssn_results.html" target="_blank">Testing results</a></td>
+
+                <td>
+                    <a href = "conformance/saref_ssn.html" target="_blank">SAREF</a><br>
+                    <a href = "conformance/onem2m_ssn.html" target="_blank">oneM2M</a>
+                </td>
+            </tr>
+            <tr>
+                <td><a href = "https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl" target="_blank">oneM2M ontology</a> </td>
+                <td><span class="label label-primary">IoT</span>
+                </td>
+                <td>
+                    <a href = "http://vicinity.iot.linkeddata.es/vicinity/testing/testsuite-onem2m.ttl" target="_blank">Tests</a>
+                </td>
+                <td> <a href = "testing/onem2m_results.html" target="_blank">Testing results</a></td>
+                <td>
+                    <a href = "conformance/saref_onem2m.html" target="_blank">SAREF</a><br>
+                    <a href = "conformance/ssn_onem2m.html" target="_blank">SSN</a>
+                </td>
+            </tr>
+            <tr>
+                <td><a href = "https://w3id.org/def/openadr#" target="_blank">OpenADR</a> </td>
+                <td><span class="label label-primary">Energy</span>
+                    <span class="label label-primary">demand-response</span>
+                </td>
+                <td>
+                    <a href = "https://raw.githubusercontent.com/albaizq/OpenADRontology/master/tests/testsuite-openadr.ttl" target="_blank">Tests</a>
+                </td>
+
+                <td> <a href = "testing/oadr_results.html" target="_blank">Testing results</a></td>
+
+                <td></td>
             </tr>
             </tbody>
         </table>
 
+       <h3>Conformance</h3>
+       <p>Here you can find conformance analysis for different domains</p>
 
 
+    <table id="tablesorter-demo2" class="tablesorter table table-hover table-responsive">
+        <thead>
+        <tr>
+            <th class="col-md-2">Domain</th>
+            <th class="col-md-2">Ontologies included in the analysis</th>
+        </tr>
+        </thead>
+        <tbody>
 
+        <tr>
+
+            <td>  <a href = "conformance/iot.html" target="_blank">IoT</a></td>
+            <td>
+                <a href = "https://saref.etsi.org/saref/latest/saref.ttl" target="_blank">SAREF</a> <br>
+                <a href = "https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl" target="_blank">oneM2M ontology</a> <br>
+                <a href = "http://www.w3.org/ns/ssn" target="_blank">SSN ontology </a>
+            </td>
+        </tr>
+
+        </tbody>
+    </table>
 
 
 
@@ -165,7 +229,7 @@
                 Built with <a target="_blank" href="http://getbootstrap.com/">Bootstrap</a>
                 Icons from <a target="_blank" href="http://glyphicons.com/">Glyphicons</a>
                 <br>
-                Latest revision Feb, 2019
+                Latest revision March, 2020
                 <br><p>&copy; Ontology Engineering Group</p>
             </div>
             <div class="col-md-2">

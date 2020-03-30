@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head >
+    <meta charset="UTF-8">
+    <title>Validate your ontology</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="languaje" content="English">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <!-- Le styles -->
+    <link href="../vocab/css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../css/style-custom.css">
+
+    <style type="text/css">
+
+        .table-wrapper-scroll-y {
+            display: block;
+            max-height: 200px;
+            overflow-y: auto;
+            -ms-overflow-style: -ms-autohiding-scrollbar;
+        }
+
+        ul.nav-pills {
+            top: 250px;
+            position: fixed;
+        }
+
+    </style>
+
+    <script type="text/javascript" id="js">
+        $(document).ready(function(){
+            $("#filter").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#tablesorter-demo tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+
+
+
+    </script>
+</head>
+
+<body data-spy="scroll" data-target="#myScrollspy">
+
+
+<nav class="navbar navbar-default "  id="catalogue">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#"> <img src="../images/themis.png" class="img-rounded" class="img-responsive" width="70%" ></a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../howto.html">How to use it</a></li>
+                <li><a href="../../../../target/swagger-ui/META-INF/resources/webjars/swagger-ui/3.17.0/index.html">API REST</a></li>
+                <li><a href="../catalogue.html">Catalogue</a></li>
+                <!--<li><a href="tests-info.html">Supported tests</a></li>-->
+            </ul>
+        </div><!--/.nav-collapse -->
+
+    </div>
+</nav>
+<div class="container" >
+
+    <!-- Jumbotron -->
+    <div class="jumbotron" style="background-color:white;">
+        <h2> Ontology testing</h2>
+        <p class="lead">Testing results for the OpenADR ontology.</a></p>
+    </div>
+    <hr>
+
+    <nav class="col-sm-3" id="myScrollspy" >
+        <ul class="nav nav-pills nav-stacked">
+            <li class="active" class="nav nav-pills nav-stacked"><a href="#reqs">Requirements</a></li>
+            <li class="nav nav-pills nav-stacked"><a href="#metrics">Metrics</a></li>
+            <li class="nav nav-pills nav-stacked"><a href="#catalogue"><span class="glyphicon glyphicon-chevron-up
+" aria-hidden="true"></span>
+                Go top</a></li>
+
+        </ul>
+    </nav>
+
+
+    <div class = "col-sm-9">
+        <div id="reqs">
+            <h3>Requirements</h3>
+            <p>The following table lists the OpenADR ontology requirements and the OpenADR ontology satisfies them.</p>
+            <p>There are four possible results for each requirement:
+            <ul>
+                <li><span class="glyphicon glyphicon-ok" style="color:rgb(0, 255, 0)"></span>: The requirements is passed by the ontology</li>
+                <li><span class="label label-default">Undefined</span>: There are terms in the requirements that are not defined in the ontology</li>
+                <li><span class="glyphicon glyphicon-warning-sign" style ="color:rgb(239, 127, 26)"></span>: The are relations and restrictions in the requirements that are  absent in the ontology</li>
+                <li><span class="glyphicon glyphicon-remove" style ="color:rgb(255, 0, 0)"></span>: There is a conflict between the requirement and the ontology</li>
+            </ul>
+
+            </p>
+            <input id="filter" type="text" placeholder="Search..">
+
+            <table id="tablesorter-demo" class="tablesorter table table-hover table-responsive">
+                <thead>
+                <tr><th class="col-md-2">Identifier </th>
+                    <th class="col-md-2">Category</th>
+                    <th class="col-md-2">Competency Question</th>
+                    <th class="col-md-2">Result</th>
+
+                </tr></thead>
+                <tbody>
+                <tr>
+                    <td class="tg-031e">oadr1</td>
+                    <td class="tg-031e"><span class="label label-primary">Event</span></td>
+                    <td class="tg-031e">Events are generated by the VTN</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr>
+                    <td class="tg-031e">oadr2</td>
+                    <td class="tg-031e"><span class="label label-primary">Device</span></td>
+                    <td class="tg-031e">Events are sent to targets</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr>
+                    <td class="tg-031e">oadr3</td>
+                    <td class="tg-031e"><span class="label label-primary">Target</span></td>
+                    <td class="tg-031e">A target includes a resource and its VEN</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr>
+                    <td class="tg-031e">oadr4</td>
+                    <td class="tg-031e"><span class="label label-primary">Device</span></td>
+                    <td class="tg-031e">Some events require a response</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr>
+                    <td class="tg-031e">oadr5</td>
+                    <td class="tg-031e"><span class="label label-primary">Opt</span></td>
+                    <td class="tg-031e">A response is required, the VEN acknowledges its opt-in or out-out disposition</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr>
+                    <td class="tg-031e">oadr6</td>
+                    <td class="tg-031e"><span class="label label-primary">Event</span></td>
+                    <td class="tg-031e">Events are included in the distribute event</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr>
+                    <td class="tg-031e">oadr7</td>
+                    <td class="tg-031e"><span class="label label-primary">Event</span></td>
+                    <td class="tg-031e">Distribute events includes zero or more events</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr>
+                    <td class="tg-031e">oadr8</td>
+                    <td class="tg-031e"><span class="label label-primary">Event</span></td>
+                    <td class="tg-031e">An event includes the following attributes: modificationNumber, modificationDateTime, modificationReason, priority, marketContext, createdDateTime, eventStatus, testEvent, comment</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr>
+                    <td class="tg-031e">oadr9</td>
+                    <td class="tg-031e"><span class="label label-primary">Event</span></td>
+                    <td class="tg-031e">A active period defines the start time and duration of the event</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr>
+                    <td class="tg-031e">oadr10</td>
+                    <td class="tg-031e"><span class="label label-primary">Event</span></td>
+                    <td class="tg-031e">The event also defines a randomization time window</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr>
+                    <td class="tg-031e">oadr11</td>
+                    <td class="tg-031e"><span class="label label-primary">Event</span></td>
+                    <td class="tg-031e">An event includes a signal</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr>
+                    <td class="tg-031e">oadr12</td>
+                    <td class="tg-031e"><span class="label label-primary">Event</span></td>
+                    <td class="tg-031e">An event also defines a ramp up and recovery period</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr>
+                    <td class="tg-031e">oadr13</td>
+                    <td class="tg-031e"><span class="label label-primary">Event</span></td>
+                    <td class="tg-031e">Events may contain multiple event signals</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr>
+                    <td class="tg-031e">oadr14</td>
+                    <td class="tg-031e"><span class="label label-primary">Event</span></td>
+                    <td class="tg-031e">Event signals may contain target elements</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr>
+                    <td class="tg-031e">oadr15</td>
+                    <td class="tg-031e"><span class="label label-primary">VEN</span></td>
+                    <td class="tg-031e">A VEN is a communication endpoint that represents one or more logical resources</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr>
+                    <td class="tg-031e">oadr16</td>
+                    <td class="tg-031e"><span class="label label-primary">Signal</span></td>
+                    <td class="tg-031e">There are different types of signals</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr>
+                    <td class="tg-031e">oadr17</td>
+                    <td class="tg-031e"><span class="label label-primary">Report</span></td>
+                    <td class="tg-031e">There are three two types of reports: metada and data report</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr>
+                    <td class="tg-031e">oadr18</td>
+                    <td class="tg-031e"><span class="label label-primary">Report</span></td>
+                    <td class="tg-031e">The data report can be of type history report and  telemetry report</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr>
+                    <td class="tg-031e">oadr19</td>
+                    <td class="tg-031e"><span class="label label-primary">Report</span></td>
+                    <td class="tg-031e">A report includes the following atributes: id and duration</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr>
+                    <td class="tg-031e">oadr20</td>
+                    <td class="tg-031e"><span class="label label-primary">Report</span></td>
+                    <td class="tg-031e">A report defines a sampling rate</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr>
+                    <td class="tg-031e">oadr21</td>
+                    <td class="tg-031e"><span class="label label-primary">Sampling</span></td>
+                    <td class="tg-031e">A sampling rate has a minimum and maximum period</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr>
+                    <td class="tg-031e">oadr22</td>
+                    <td class="tg-031e"><span class="label label-primary">Sampling</span></td>
+                    <td class="tg-031e">A sampling rate has an attribute to determine whether or not data is sampled as it changes</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr>
+                    <td class="tg-031e">oadr23</td>
+                    <td class="tg-031e"><span class="label label-primary">Opt</span></td>
+                    <td class="tg-031e">The type of schedules that a VEN is allowed to issue: optIn, optOut, or both</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr>
+                    <td class="tg-031e">oadr24</td>
+                    <td class="tg-031e"><span class="label label-primary">Signal</span></td>
+                    <td class="tg-031e">Each signal element contains a signalType such as level or price</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr>
+                    <td class="tg-031e">oadr25</td>
+                    <td class="tg-031e"><span class="label label-primary">Signal</span></td>
+                    <td class="tg-031e">Each signal has a set of intervals</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr>
+                    <td class="tg-031e">oadr26</td>
+                    <td class="tg-031e"><span class="label label-primary">Signal</span></td>
+                    <td class="tg-031e">Each signal has the following attributes: name, type and item base</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr>
+                    <td class="tg-031e">oadr27</td>
+                    <td class="tg-031e"><span class="label label-primary">VTN</span></td>
+                    <td class="tg-031e">Each VTN has a period of temporary availability for a specific set of targets</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr>
+                    <td class="tg-031e">oadr28</td>
+                    <td class="tg-031e"><span class="label label-primary">VTN</span></td>
+                    <td class="tg-031e">Each VTN has a period of temporary unavailability for a specific set of targets</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr>
+                    <td class="tg-031e">oadr29</td>
+                    <td class="tg-031e"><span class="label label-primary">Asset</span></td>
+                    <td class="tg-031e">Assets are physical entities</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr>
+                    <td class="tg-031e">oadr30</td>
+                    <td class="tg-031e"><span class="label label-primary">Asset</span></td>
+                    <td class="tg-031e">An asset comprise a resource</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr>
+                    <td class="tg-031e">oadr31</td>
+                    <td class="tg-031e"><span class="label label-primary">Resource</span></td>
+                    <td class="tg-031e">An resource may be managet by the VEN</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr>
+                    <td class="tg-031e">oadr32</td>
+                    <td class="tg-031e"><span class="label label-primary">Resource</span></td>
+                    <td class="tg-031e">There may be one or more resources behind a VEN</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr>
+                    <td class="tg-031e">oadr33</td>
+                    <td class="tg-031e"><span class="label label-primary">Signal</span></td>
+                    <td class="tg-031e">Each signal, event and report has a market context</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr>
+                    <td class="tg-031e">oadr34</td>
+                    <td class="tg-031e"><span class="label label-primary">Event</span></td>
+                    <td class="tg-031e">An event can have more than one event descriptros</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr>
+                    <td class="tg-031e">oadr35</td>
+                    <td class="tg-031e"><span class="label label-primary">Report</span></td>
+                    <td class="tg-031e">A report can have more than one report descriptors</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr>
+                    <td class="tg-031e">oadr36</td>
+                    <td class="tg-031e"><span class="label label-primary">Signal</span></td>
+                    <td class="tg-031e">A signal  can have more than one interval</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr>
+                    <td class="tg-031e">oadr37</td>
+                    <td class="tg-031e"><span class="label label-primary">Signal</span></td>
+                    <td class="tg-031e">Each interval in a signal is related to a typical value</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                </tbody></table>
+
+        </div>
+
+        <hr>
+        <div  id="metrics">
+            <h3>Metrics</h3>
+
+            <p>The following table summarises the metrics related to the OpenADR ontology</p>
+
+            <table  class="tablesorter table table-hover table-responsive">
+                <thead>
+                <tr>
+                    <th class="tg-g7sd">Metric</th>
+                    <th class="tg-g7sd">Result</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td class="tg-lboi">Percentage of covered requirement</td>
+                    <td class="tg-lboi">100%</td>
+                </tr>
+                <tr>
+                    <td class="tg-lboi">Percentage of requirements with terms that are undefined in the  ontology</td>
+                    <td class="tg-lboi">0%</td>
+                </tr>
+                <tr>
+                    <td class="tg-0pky">Percentage of requirements that lead to conflict </td>
+                    <td class="tg-0pky">0%</td>
+                </tr>
+                <tr>
+                    <td class="tg-0pky">Percentage of tested terms</td>
+                    <td class="tg-0pky">44.18%</td>
+                </tr>
+                </tbody>
+            </table>
+
+
+
+
+        </div>
+    </div>
+
+    <hr>
+    <footer class="footer">
+        <div class="row">
+            <div class="col-md-10">
+                Alba Fernández Izquierdo
+                <br>
+                Contact email: albafernandez@fi.upm.es
+                <br>
+                Built with <a target="_blank" href="http://getbootstrap.com/">Bootstrap</a>
+                Icons from <a target="_blank" href="http://glyphicons.com/">Glyphicons</a>
+                <br>
+                Latest revision March, 2020
+                <br><p>&copy; Ontology Engineering Group</p>
+            </div>
+            <div class="col-md-2">
+                <a href="http://www.oeg-upm.net/" target="_blank"><img src="../vocab/logo.gif" alt="OEG logo" class="img-rounded" class="img-responsive" /></a>
+            </div>
+        </div>
+    </footer>
+</div> <!-- /container -->
+
+
+<script type="text/javascript" src="../js/tests-js.js"></script>
+
+
+</body>
+</html>

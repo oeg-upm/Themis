@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head >
+    <meta charset="UTF-8">
+    <title>Validate your ontology</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="languaje" content="English">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <!-- Le styles -->
+    <link href="../vocab/css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../css/style-custom.css">
+
+    <style type="text/css">
+
+        .table-wrapper-scroll-y {
+            display: block;
+            max-height: 200px;
+            overflow-y: auto;
+            -ms-overflow-style: -ms-autohiding-scrollbar;
+        }
+
+        ul.nav-pills {
+            top: 250px;
+            position: fixed;
+        }
+
+    </style>
+
+    <script type="text/javascript" id="js">
+        $(document).ready(function(){
+            $("#filter").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#tablesorter-demo tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+
+
+
+    </script>
+</head>
+
+<body data-spy="scroll" data-target="#myScrollspy">
+
+
+<nav class="navbar navbar-default "  id="catalogue">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#"> <img src="../images/themis.png" class="img-rounded" class="img-responsive" width="70%" ></a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../howto.html">How to use it</a></li>
+                <li><a href="../../../../target/swagger-ui/META-INF/resources/webjars/swagger-ui/3.17.0/index.html">API REST</a></li>
+                <li><a href="../catalogue.html">Catalogue</a></li>
+                <!--<li><a href="tests-info.html">Supported tests</a></li>-->
+            </ul>
+        </div><!--/.nav-collapse -->
+
+    </div>
+</nav>
+<div class="container" >
+
+    <!-- Jumbotron -->
+    <div class="jumbotron" style="background-color:white;">
+        <h2> Ontology conformance</h2>
+        <p class="lead">Conformance results between SAREF requirements and the SSN ontology.</a></p>
+    </div>
+    <hr>
+
+    <nav class="col-sm-3" id="myScrollspy" >
+        <ul class="nav nav-pills nav-stacked">
+            <li class="active" class="nav nav-pills nav-stacked"><a href="#reqs">Shared requirements</a></li>
+            <li class="nav nav-pills nav-stacked"><a href="#terms">Shared terms</a></li>
+            <li class="nav nav-pills nav-stacked"><a href="#metrics">Metrics</a></li>
+            <li class="nav nav-pills nav-stacked"><a href="#catalogue"><span class="glyphicon glyphicon-chevron-up
+" aria-hidden="true"></span>
+                Go top</a></li>
+
+        </ul>
+    </nav>
+
+
+    <div class = "col-sm-9">
+        <div id="reqs">
+            <h3>Shared requirements</h3>
+            <p>The following table lists the SAREF ontology requirements and whether the SSN ontology satisfies them.</p>
+            <p>There are four possible results for each requirement:
+            <ul>
+                <li><span class="glyphicon glyphicon-ok" style="color:rgb(0, 255, 0)"></span>: The requirements is passed by the ontology</li>
+                <li><span class="label label-default">Undefined</span>: There are terms in the requirements that are not defined in the ontology</li>
+                <li><span class="glyphicon glyphicon-warning-sign" style ="color:rgb(239, 127, 26)"></span>: The are relations and restrictions in the requirements that are  absent in the ontology</li>
+                <li><span class="glyphicon glyphicon-remove" style ="color:rgb(255, 0, 0)"></span>: There is a conflict between the requirement and the ontology</li>
+            </ul>
+
+            </p>
+            <input id="filter" type="text" placeholder="Search..">
+
+
+            <table id="tablesorter" class="tablesorter table table-hover table-responsive">
+                <thead>
+                <tr >
+                    <th class="col-md-1">Identifier</th>
+                    <th class="col-md-2">Category</th>
+                    <th class="col-md-4">Competency Question</th>
+                    <th class="col-md-1">Result</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr id="saref1">
+                    <td class="tg-031e">saref1</td>
+                    <td class="tg-031e"><span class="label label-primary">Device</span></td>
+                    <td class="tg-031e">What is a device?</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined terms</span></td>
+                    </td>
+                </tr>
+                <tr id="saref2">
+                    <td class="tg-031e">saref2</td>
+                    <td class="tg-031e"><span class="label label-primary">Device</span>  <span class="label label-primary">Function</span></td>
+                    <td class="tg-031e">A device performs one or more functions</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined terms</span></td>
+                </tr>
+                <tr id="saref3">
+                    <td class="tg-031e">saref3</td>
+                    <td class="tg-031e"><span class="label label-primary">Device</span></td>
+                    <td class="tg-031e">Examples of devices are a light switch, a temperature sensor, an energy meter, a washing machine</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined terms</span></td>
+                </tr>
+                <tr id="saref4">
+                    <td class="tg-031e">saref4</td>
+                    <td class="tg-031e"><span class="label label-primary">Device</span></td>
+                    <td class="tg-031e">A device shall have a model property</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined terms</span></td>
+                    </td>
+                </tr>
+                <tr id="saref5">
+                    <td class="tg-031e">saref5</td>
+                    <td class="tg-031e"><span class="label label-primary">Device</span></td>
+                    <td class="tg-031e">A device shall have a model property</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined terms</span></td>
+                </tr>
+                <tr id="saref6">
+                    <td class="tg-031e">saref6</td>
+                    <td class="tg-031e"><span class="label label-primary">Device</span></td>
+                    <td class="tg-031e">A device can optionally have a description</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined terms</span></td>
+                    </td>
+                </tr>
+                <tr id="saref8">
+                    <td class="tg-031e">saref8</td>
+                    <td class="tg-031e"><span class="label label-primary">Building</span></td>
+                    <td class="tg-031e">A building space contains devices or building objects</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined terms</span></td>
+                </tr>
+                <tr id="saref9">
+                    <td class="tg-031e">saref9</td>
+                    <td class="tg-031e"><span class="label label-primary">Building</span></td>
+                    <td class="tg-031e">Building objects are objects in the building that can be controlled by devices, such as doors or windows</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined terms</span></td>
+                </tr>
+                <tr id="saref10">
+                    <td class="tg-031e">saref10</td>
+                    <td class="tg-031e"><span class="label label-primary">Building</span></td>
+                    <td class="tg-031e">A building object can be opened or closed by an actuator</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined terms</span></td>
+                </tr>
+                <tr id="saref11">
+                    <td class="tg-031e">saref11</td>
+                    <td class="tg-031e"><span class="label label-primary">Building</span></td>
+                    <td class="tg-031e">A building space is a geographical point characterized by a certain altitude, latitude and longitude</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined terms</span></td>
+                </tr>
+                <tr id="saref12">
+                    <td class="tg-031e">saref12</td>
+                    <td class="tg-031e"><span class="label label-primary">Device</span></td>
+                    <td class="tg-031e">The devices can be classified into categories: FunctionRelated, EneryRelated and BuildingRelated</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined terms</span></td>
+                </tr>
+                <tr id="saref13">
+                    <td class="tg-031e">saref13</td>
+                    <td class="tg-031e"><span class="label label-primary">Function</span></td>
+                    <td class="tg-031e">The FunctionRelated category can be specialized into: Actuator, Applicance, HVAC, Lighting, Meter, MicroRenewable, Multimedia, Network, Sensor</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined terms</span></td>
+                </tr>
+                <tr id="saref15">
+                    <td class="tg-031e">saref15</td>
+                    <td class="tg-031e"><span class="label label-primary">Device</span></td>
+                    <td class="tg-031e">The devices can belong to several categories</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined terms</span></td>
+                </tr>
+                <tr id="saref16">
+                    <td class="tg-031e">saref16</td>
+                    <td class="tg-031e"><span class="label label-primary">Device</span>  <span class="label label-primary">Commodity</span></td>
+                    <td class="tg-031e">A device can be used for the purpose of offering a commodity</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined terms</span></td>
+                </tr>
+                <tr id="saref17">
+                    <td class="tg-031e">saref17</td>
+                    <td class="tg-031e"><span class="label label-primary">Commodity</span></td>
+                    <td class="tg-031e">Water or gas are examples of commodities</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined terms</span></td>
+                </tr>
+                <tr id="saref18">
+                    <td class="tg-031e">saref18</td>
+                    <td class="tg-031e"><span class="label label-primary">Device</span>  <span class="label label-primary">Sensing</span></td>
+                    <td class="tg-031e">A device can be used for the purpose of sensing</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined terms</span></td>
+                </tr>
+                <tr id="saref19">
+                    <td class="tg-031e">saref19</td>
+                    <td class="tg-031e"><span class="label label-primary">Device</span>  <span class="label label-primary">Property</span></td>
+                    <td class="tg-031e">A device can be used for measuring a property</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined terms</span></td>
+                </tr>
+                <tr id="saref20">
+                    <td class="tg-031e">saref20</td>
+                    <td class="tg-031e"><span class="label label-primary">Device</span>  <span class="label label-primary">Property</span></td>
+                    <td class="tg-031e">A device can be used for notifying a property</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined terms</span></td>
+                </tr>
+                <tr id="saref21">
+                    <td class="tg-031e">saref21</td>
+                    <td class="tg-031e"><span class="label label-primary">Property</span></td>
+                    <td class="tg-031e">Examples of properties are temperature, energy or smoke</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined terms</span></td>
+                </tr>
+                <tr id="saref22">
+                    <td class="tg-031e">saref22</td>
+                    <td class="tg-031e"><span class="label label-primary">Device</span>  <span class="label label-primary">Function</span></td>
+                    <td class="tg-031e">A device can be used for the purpose of controlling a building object, such as a door or a window</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined terms</span></td>
+                </tr>
+                <tr id="saref23">
+                    <td class="tg-031e">saref23</td>
+                    <td class="tg-031e"><span class="label label-primary">Device</span></td>
+                    <td class="tg-031e">A device may consists of other devices</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined terms</span></td>
+                </tr>
+                <tr id="saref24">
+                    <td class="tg-031e">saref24</td>
+                    <td class="tg-031e"><span class="label label-primary">Device</span></td>
+                    <td class="tg-031e">A device may consists of other devices</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined terms</span></td>
+                </tr>
+                <tr id="saref25">
+                    <td class="tg-031e">saref25</td>
+                    <td class="tg-031e"><span class="label label-primary">Device</span>  <span class="label label-primary">Function</span></td>
+                    <td class="tg-031e">A sensor performs a sensing function</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined terms</span></td>
+                </tr>
+                <tr id="saref26">
+                    <td class="tg-031e">saref26</td>
+                    <td class="tg-031e"><span class="label label-primary">Device</span></td>
+                    <td class="tg-031e">A temperature sensor is a device that has category sensor</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined terms</span></td>
+                </tr>
+                <tr id="saref27">
+                    <td class="tg-031e">saref27</td>
+                    <td class="tg-031e"><span class="label label-primary">Device</span></td>
+                    <td class="tg-031e">A temperature sensor consists of a sensor</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined terms</span></td>
+                </tr>
+                <tr id="saref28">
+                    <td class="tg-031e">saref28</td>
+                    <td class="tg-031e"><span class="label label-primary">Device</span></td>
+                    <td class="tg-031e">A temperature senso performs the sensing function and is used for the purpose of sensing temperature</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined terms</span></td>
+                </tr>
+                <tr id="saref29">
+                    <td class="tg-031e">saref29</td>
+                    <td class="tg-031e"><span class="label label-primary">Device</span></td>
+                    <td class="tg-031e">A washing machine is a device that has category Appliance and Load</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined terms</span></td>
+                </tr>
+                <tr id="saref30">
+                    <td class="tg-031e">saref30</td>
+                    <td class="tg-031e"><span class="label label-primary">Device</span>  <span class="label label-primary">Function</span> </td>
+                    <td class="tg-031e">A washing machine accomplishes the task of washing</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined terms</span></td>
+                </tr>
+                <tr id="saref31">
+                    <td class="tg-031e">saref31</td>
+                    <td class="tg-031e"><span class="label label-primary">Device</span>  <span class="label label-primary">Function</span> </td>
+                    <td class="tg-031e">A washing machine performs an actuating start/pause function</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined terms</span></td>
+                </tr>
+                <tr id="saref32">
+                    <td class="tg-031e">saref32</td>
+                    <td class="tg-031e"><span class="label label-primary">Device</span> </td>
+                    <td class="tg-031e">A smoke sensor is a device that has category Sensor</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined terms</span></td>
+                </tr>
+                <tr id="saref33">
+                    <td class="tg-031e">saref33</td>
+                    <td class="tg-031e"><span class="label label-primary">Device</span> </td>
+                    <td class="tg-031e">A smoke sensor is a device that consists of a sensor&nbsp;</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined terms</span></td>
+                </tr>
+                <tr id="saref34">
+                    <td class="tg-031e">saref34</td>
+                    <td class="tg-031e"><span class="label label-primary">Device</span>  <span class="label label-primary">Function</span></td>
+                    <td class="tg-031e">A smoke sensor performs a sensing and event function</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined terms</span></td>
+                </tr>
+                <tr id="saref35">
+                    <td class="tg-031e">saref35</td>
+                    <td class="tg-031e"><span class="label label-primary">Device</span></td>
+                    <td class="tg-031e">A smoke sensor is used for the purpose of sensing smoke</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined terms</span></td>
+                </tr>
+                <tr id="saref36">
+                    <td class="tg-031e">saref36</td>
+                    <td class="tg-031e"><span class="label label-primary">Device</span></td>
+                    <td class="tg-031e">A switch is a device that has category Actuator</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined terms</span></td>
+                </tr>
+                <tr id="saref37">
+                    <td class="tg-031e">saref37</td>
+                    <td class="tg-031e"><span class="label label-primary">Device</span> </td>
+                    <td class="tg-031e">A door switch is a device that consists of a switch</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined terms</span></td>
+                </tr>
+                <tr id="saref38">
+                    <td class="tg-031e">saref38</td>
+                    <td class="tg-031e"><span class="label label-primary">Device</span>  <span class="label label-primary">Function</span></td>
+                    <td class="tg-031e">A door switch performs the open/close function</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined terms</span></td>
+                </tr>
+                <tr id="saref39">
+                    <td class="tg-031e">saref39</td>
+                    <td class="tg-031e"><span class="label label-primary">Device</span>  <span class="label label-primary">Function</span></td>
+                    <td class="tg-031e">A door switch is used for the purpose of controlling doors</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined terms</span></td>
+                </tr>
+
+                <tr id="saref40">
+                    <td class="tg-031e">saref40</td>
+                    <td class="tg-031e"><span class="label label-primary">Device</span></td>
+                    <td class="tg-031e">A dimmer lamp is a device that has category Lighting and Actuator</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined terms</span></td>
+                </tr>
+                <tr id="saref41">
+                    <td class="tg-031e">saref41</td>
+                    <td class="tg-031e"><span class="label label-primary">Device</span>  <span class="label label-primary">Function</span></td>
+                    <td class="tg-031e">A dimmer lamp performs an actuating level control</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined terms</span></td>
+                </tr>
+                <tr id="saref42">
+                    <td class="tg-031e">saref42</td>
+                    <td class="tg-031e"><span class="label label-primary">Device</span>  <span class="label label-primary">Function</span></td>
+                    <td class="tg-031e">A dimmer lamp performs an actuating level control</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined terms</span></td>
+                </tr>
+                <tr id="saref43">
+                    <td class="tg-031e">saref43</td>
+                    <td class="tg-031e"><span class="label label-primary">Device</span>  <span class="label label-primary">Function</span></td>
+                    <td class="tg-031e">A meter is a functionRelated device</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined terms</span></td>
+                </tr>
+                <tr id="saref44">
+                    <td class="tg-031e">saref44</td>
+                    <td class="tg-031e"><span class="label label-primary">Device</span>  <span class="label label-primary">Function</span></td>
+                    <td class="tg-031e">A meter performs a metering function</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined terms</span></td>
+                </tr>
+                <tr id="saref45">
+                    <td class="tg-031e">saref45</td>
+                    <td class="tg-031e"><span class="label label-primary">Device</span></td>
+                    <td class="tg-031e">An energy meter is a device that has category Meter</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined terms</span></td>
+                </tr>
+                <tr id="saref46">
+                    <td class="tg-031e">saref46</td>
+                    <td class="tg-031e"><span class="label label-primary">Device</span></td>
+                    <td class="tg-031e">An energy meter is a device that consists of a meter</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined terms</span></td>
+                </tr>
+                <tr id="saref47">
+                    <td class="tg-031e">saref47</td>
+                    <td class="tg-031e"><span class="label label-primary">Device</span></td>
+                    <td class="tg-031e">An energy meter is a device that has category Meter</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined terms</span></td>
+                </tr>
+                <tr id="saref48">
+                    <td class="tg-031e">saref48</td>
+                    <td class="tg-031e"><span class="label label-primary">Function</span></td>
+                    <td class="tg-031e">A function represents the functionality necessary to accomplish the task for which a device is designed</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined terms</span></td>
+                    </td>
+                </tr>
+                <tr id="saref49">
+                    <td class="tg-031e">saref49</td>
+                    <td class="tg-031e"><span class="label label-primary">Function</span></td>
+                    <td class="tg-031e">Examples of functions are the the actuating, sensing, metering or event functions</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined terms</span></td>
+                </tr>
+                <tr id="saref50">
+                    <td class="tg-031e">saref50</td>
+                    <td class="tg-031e"><span class="label label-primary">Function</span></td>
+                    <td class="tg-031e">An actuating function can be specialized into on/off, open/close, start/stop or level control functions</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined terms</span></td>
+                </tr>
+                <tr id="saref51">
+                    <td class="tg-031e">saref51</td>
+                    <td class="tg-031e"><span class="label label-primary">Function</span></td>
+                    <td class="tg-031e">A function can belong to a function category</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined terms</span></td>
+                </tr>
+                <tr id="saref52">
+                    <td class="tg-031e">saref52</td>
+                    <td class="tg-031e"><span class="label label-primary">Function</span>  <span class="label label-primary">Command</span></td>
+                    <td class="tg-031e">A function shall have at least one command associated to it</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined terms</span></td>
+                </tr>
+                <tr id="saref53">
+                    <td class="tg-031e">saref53</td>
+                    <td class="tg-031e"><span class="label label-primary">Command</span></td>
+                    <td class="tg-031e">The commands can be: on, off, open, toggle, close, startm pause, step up, step down, set level, get and notify</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined terms</span></td>
+                </tr>
+                <tr id="saref54">
+                    <td class="tg-031e">saref54</td>
+                    <td class="tg-031e"><span class="label label-primary">Device</span></td>
+                    <td class="tg-031e">A device can be found in a correponding state</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined terms</span></td>
+                </tr>
+                <tr id="saref55">
+                    <td class="tg-031e">saref55</td>
+                    <td class="tg-031e"><span class="label label-primary">Command</span></td>
+                    <td class="tg-031e">A command can act upon a state to represent that the consequence of a command can be a change of state of the device</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined terms</span></td>
+                </tr>
+                <tr id="saref56">
+                    <td class="tg-031e">saref56</td>
+                    <td class="tg-031e"><span class="label label-primary">Device</span>  <span class="label label-primary">Service</span></td>
+                    <td class="tg-031e">A device offers a service</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined terms</span></td>
+                </tr>
+                <tr id="saref57">
+                    <td class="tg-031e">saref57</td>
+                    <td class="tg-031e"><span class="label label-primary">Service</span></td>
+                    <td class="tg-031e">A service is a representation of a function to a network that makes this function discoverable, registerable and remotely controllable by other devices in the network</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined terms</span></td>
+                </tr>
+                <tr id="saref58">
+                    <td class="tg-031e">saref58</td>
+                    <td class="tg-031e"><span class="label label-primary">Service</span>  <span class="label label-primary">Function</span></td>
+                    <td class="tg-031e">A service shall represent at least one function</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined terms</span></td>
+                </tr>
+                <tr id="saref59">
+                    <td class="tg-031e">saref59</td>
+                    <td class="tg-031e"><span class="label label-primary">Service</span>  <span class="label label-primary">Device</span></td>
+                    <td class="tg-031e">A service is offered by at least one device that wants (a certain set of) its function(s) to be discoverable, registerable and remotely controllable by other devices in the network</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined terms</span></td>
+                </tr>
+                <tr id="saref60">
+                    <td class="tg-031e">saref60</td>
+                    <td class="tg-031e"><span class="label label-primary">Device</span>  <span class="label label-primary">Service</span></td>
+                    <td class="tg-031e">Multiple devices can offer the same service</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined terms</span></td>
+                </tr>
+                <tr id="saref61">
+                    <td class="tg-031e">saref61</td>
+                    <td class="tg-031e"><span class="label label-primary">Device</span>  <span class="label label-primary">Service</span></td>
+                    <td class="tg-031e">A service shall specify the device that is offering the service</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined terms</span></td>
+                </tr>
+                <tr id="saref62">
+                    <td class="tg-031e">saref62</td>
+                    <td class="tg-031e"><span class="label label-primary">Device</span>  <span class="label label-primary">Profile</span></td>
+                    <td class="tg-031e">A device can be characterized by a profile.</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined terms</span></td>
+                </tr>
+                <tr id="saref63">
+                    <td class="tg-031e">saref63</td>
+                    <td class="tg-031e"><span class="label label-primary">Device</span>  <span class="label label-primary">Profile</span></td>
+                    <td class="tg-031e">A device can be characterized by a profile.</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined terms</span></td>
+                </tr>
+                <tr id="saref64">
+                    <td class="tg-031e">saref64</td>
+                    <td class="tg-031e"><span class="label label-primary">Device</span>  <span class="label label-primary">Profile</span></td>
+                    <td class="tg-031e">The profile allows to describe the energy or power production and consumption of a certain device.</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined terms</span></td>
+                </tr>
+                <tr id="saref65">
+                    <td class="tg-031e">saref65</td>
+                    <td class="tg-031e"><span class="label label-primary">Profile</span></td>
+                    <td class="tg-031e">The profile production and consumption can be calculated over a time span</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined terms</span></td>
+                </tr>
+                <tr id="saref66">
+                    <td class="tg-031e">saref66</td>
+                    <td class="tg-031e"><span class="label label-primary">Profile</span></td>
+                    <td class="tg-031e">The profile production and consumption can be associated to some costs</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined terms</span></td>
+                </tr>
+                <tr id="saref67">
+                    <td class="tg-031e">saref67</td>
+                    <td class="tg-031e"><span class="label label-primary">Property</span></td>
+                    <td class="tg-031e">The power is characterized by a certain value that is measured in a certain unit of measure</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined terms</span></td>
+                </tr>
+                <tr id="saref68">
+                    <td class="tg-031e">saref68</td>
+                    <td class="tg-031e"><span class="label label-primary">Property</span></td>
+                    <td class="tg-031e">The power is characterized by a certain value that is measured in a certain unit of measure</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined terms</span></td>
+                </tr>
+                <tr id="saref69">
+                    <td class="tg-031e">saref69</td>
+                    <td class="tg-031e"><span class="label label-primary">Price</span></td>
+                    <td class="tg-031e">The price is also characterized by a value using currency, which is a type of unit of measure</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined terms</span></td>
+                </tr>
+                <tr id="saref70">
+                    <td class="tg-031e">saref70</td>
+                    <td class="tg-031e"><span class="label label-primary">Time</span> </td>
+                    <td class="tg-031e">The time can be specified in terms of instants or intervals</td>
+                    <td class="tg-031e"><span class="label label-default">Undefined terms</span></td>
+                </tr>
+
+                </tbody>
+            </table>
+
+        </div>
+        <hr>
+        <div  id="terms">
+            <h3>Shared terms</h3>
+            <p>The following table lists the terms that are defined in the SAREF and in the SSN ontology.</p>
+            <table id="tablesorter2" class="tablesorter table table-hover table-responsive">
+                <thead>
+                <tr >
+                    <th class="col-md-6">Term in SAREF</th>
+                    <th class="col-md-6">Term in SSN</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td class="tg-cly1">saref:Actuator</td>
+                    <td class="tg-cly1">ssn:Actuator</td>
+                </tr>
+                <tr>
+                    <td class="tg-cly1">saref:Property</td>
+                    <td class="tg-cly1">ssn:Property</td>
+                </tr>
+                <tr>
+                    <td class="tg-cly1">saref:Sensor</td>
+                    <td class="tg-cly1">ssn:Sensor</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <hr>
+        <div  id="metrics">
+            <h3>Metrics</h3>
+
+            <p>The following table summarises the metrics related to the conformance between the SAREF requirements and the SSN ontology</p>
+
+            <table  class="tablesorter table table-hover table-responsive">
+                <thead>
+                <tr>
+                    <th class="tg-g7sd">Metric</th>
+                    <th class="tg-g7sd">Result</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td class="tg-lboi">Percentage of covered requirement</td>
+                    <td class="tg-lboi">0%</td>
+                </tr>
+                <tr>
+                    <td class="tg-lboi">Percentage of requirements with terms that are undefined in the SSN ontology</td>
+                    <td class="tg-lboi">100%</td>
+                </tr>
+                <tr>
+                    <td class="tg-0pky">Percantge of requirements that lead to conflict between the SAREF and the SSN ontology</td>
+                    <td class="tg-0pky">0%</td>
+                </tr>
+
+                </tbody>
+            </table>
+
+
+
+
+        </div>
+    </div>
+
+    <hr>
+    <footer class="footer">
+        <div class="row">
+            <div class="col-md-10">
+                Alba Fernández Izquierdo
+                <br>
+                Contact email: albafernandez@fi.upm.es
+                <br>
+                Built with <a target="_blank" href="http://getbootstrap.com/">Bootstrap</a>
+                Icons from <a target="_blank" href="http://glyphicons.com/">Glyphicons</a>
+                <br>
+                Latest revision March, 2020
+                <br><p>&copy; Ontology Engineering Group</p>
+            </div>
+            <div class="col-md-2">
+                <a href="http://www.oeg-upm.net/" target="_blank"><img src="../vocab/logo.gif" alt="OEG logo" class="img-rounded" class="img-responsive" /></a>
+            </div>
+        </div>
+    </footer>
+</div> <!-- /container -->
+
+
+<script type="text/javascript" src="../js/tests-js.js"></script>
+
+<script>
+    function hideRows(text) {
+        index = 1;
+        tr = document.getElementById('tr'+index);
+        while (tr!=null){
+            valores = document.getElementById('inp'+index).value;
+            if (valores.indexOf(text+'--')==-1){
+                tr.style.display='none';
+            }
+            index++;
+            tr = document.getElementById('tr'+index);
+        }
+        document.getElementById('remButt').style.display='';
+    }
+
+    function showRows() {
+        index = 1;
+        tr = document.getElementById('tr'+index);
+        while (tr!=null){
+            tr.style.display='';
+            index++;
+            tr = document.getElementById('tr'+index);
+        }
+        butt = document.getElementById('remButt').style.display='none';
+    }
+</script>
+</body>
+</html>

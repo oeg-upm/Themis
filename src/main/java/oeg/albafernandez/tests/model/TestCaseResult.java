@@ -6,19 +6,18 @@ import java.util.List;
 
 
 /*
-* Class to define the results of each test
-* */
+ * Class to define the results of each test
+ * */
 public class TestCaseResult {
     private IRI relatedTestImpl;
     private String testResult;
     private IRI ontologyURI;
-    private List<String> undefinedTermsList;
-    private List<String> incorrectTermsList;
+    private List<String> undefinedTerms;
+    private List<String> incorrectTerms;
 
     public TestCaseResult() {
         testResult = "";
-        undefinedTermsList = new ArrayList<>();
-        incorrectTermsList = new ArrayList<>();
+        undefinedTerms = new ArrayList<>();
     }
 
     public IRI getRelatedTestImpl() {
@@ -45,19 +44,19 @@ public class TestCaseResult {
         this.ontologyURI = ontologyURI;
     }
 
-    public List<String> getUndefinedTermsList() {
-        return undefinedTermsList;
+    public List<String> getUndefinedTerms() {
+        return undefinedTerms;
     }
 
-    public void setUndefinedTermsList(List<String> undefinedTermsList) {
-        this.undefinedTermsList = undefinedTermsList;
+    public void setUndefinedTerms(List<String> undefinedTerms) {
+        this.undefinedTerms = undefinedTerms;
     }
 
-    public List<String> getIncorrectTermsList() {
-        return incorrectTermsList;
+    public List<String> getIncorrectTerms() {
+        return incorrectTerms;
     }
 
-    public void setIncorrectTermsList(List<String> incorrectTermsList) {
-        this.incorrectTermsList = incorrectTermsList;
+    public void setIncorrectTerms(List<String> incorrectTerms) {
+        this.incorrectTerms = incorrectTerms;
     }
 }

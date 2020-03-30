@@ -22,6 +22,19 @@ $( function() {
     function extractLast( term ) {
         return split( term ).pop();
     }
+    function checkURI( term ) {
+        if(term[1] != null)
+            return term[1].value;
+        else
+            return "";
+    }
+
+    function checkFile( term ) {
+        if(term[0] != null)
+            return term[0].value.replace(/><\/http.*:>/g,'\/>');
+        else
+            return "";
+    }
 
 
     $( "#test" )
@@ -41,12 +54,22 @@ $( function() {
         .autocomplete({
             minLength: 1,
             source: function( request, response ) {
-                $.getJSON( "/rest/api/autocomplete", {
-                    test: request.term,
-                    lastTerm: extractLast( request.term ),
-                    ontology: document.getElementsByName("ontology")[1].value,
-                    imports: "true"
-                }, response );
+
+                $.ajax({
+                    type: "POST",
+                    url:"/rest/api/autocompleteFromUriFile",
+                    contentType: "application/json",
+                    data: JSON.stringify({
+                        test: request.term,
+                        lastTerm: extractLast( request.term ),
+                        ontologyUri: checkURI(document.getElementsByName("ontology")),
+                        code: checkFile(document.getElementsByName("ontologycode")),
+                        imports: "true"
+                    }),
+                    success: response,
+                    dataType: 'json'
+                });
+
             },
             focus: function() {
                 // prevent value inserted on focus
@@ -121,7 +144,7 @@ function removeCheck(id) {
     $('#notmatch').html('');
     $('#'+id).remove();
     if($('#storedtests').html().trim().length == 0) {
-        $('#checksuite').attr("disabled", true);
+        $('#checksuite').attr("disabled", true)
 
     }
 }
@@ -190,17 +213,28 @@ function check() {
     var array = $(this).serializeArray();
     var tests = document.getElementsByName("test")[0].value.split(";");
 
-    var arrayontos = [];
+    var arrayontosId = [];
     var idontos = document.getElementsByName("ontology");
     idontos.forEach(function (item) {
         if(item.value!="") {
-            arrayontos.push(item.value);
+            arrayontosId.push(item.value);
+        }
+    });
+
+    var arrayontosCode = [];
+    var arrayontosCodeTextArea = document.getElementsByName("ontologycode");
+    arrayontosCodeTextArea.forEach(function (item) {
+        if(item.value!="") {
+            var value =item.value;
+            var ontologyCode = value.replace(/><\/http.*:>/g,'\/>');
+            arrayontosCode.push(ontologyCode);
         }
     });
 
     var data = {
         got: JSON.stringify(myObj),
-        ontologies:arrayontos,
+        ontologies:arrayontosId,
+        ontologiesCode:arrayontosCode,
         tests: tests
     };
 
@@ -442,7 +476,7 @@ function rowSave(but) {  //Inicia la edición de una fila
     $row.find('td:nth-child(4)').css("display","none");
 }
 
-function loadontology() {
+function loadontologyFromURI() {
     var array = $(this).serializeArray();
     var id = document.getElementsByName("ontology");
     id.forEach(function (item) {
@@ -463,10 +497,10 @@ function loadontology() {
         var exists = document.getElementsByName(uri);
         if(uri!="" && exists.length ==0) {
             $.ajax({
-                type: 'GET',
+                type: 'POST',
                 dataType: "json",
-                data: {uri: JSON.stringify(uri)},
-                url: '/rest/api/getTableGot',
+                data: JSON.stringify(uri),
+                url: '/rest/api/gotAsTableFromURI',
                 success: function (data, textStatus, jqXHR) {
                     //  var text = "<p   name=\"" + uri + "\"><a href=\"" + uri + "\"><button  type=\"button\" class=\"btn btn-link\" ><small><span class=\"glyphicon glyphicon-ok align-middle\" aria-hidden=\"true\"></span></small></button></a></p>";
                     // $("#loadcheck").append(text);
@@ -528,6 +562,94 @@ function loadontology() {
 }
 
 
+
+function loadontologyFromFile(){
+    var array = $(this).serializeArray();
+    var id = document.getElementsByName("ontologyfile");
+    id.forEach(function (item) {
+        var test = document.getElementsByName(item.value);
+        if(item.value!="" && test.length == 0 ) {
+            array.push(item.value);
+
+        }
+    });
+
+
+    array.forEach(function (ontologyfile) {
+        $('#loadfile').html("<div class=\"loader\">\n" +
+            "                        <span></span>\n" +
+            "                        <span></span>\n" +
+            "                        <span></span>\n" +
+            "                    </div>");
+        $('#loadfile').attr("disabled", true);
+        var exists = document.getElementsByName(ontologyfile);
+        var ontologyCode = ontologyfile.replace(/><\/http.*:>/g,'\/>');
+        if(ontologyfile!="" && exists.length ==0) {
+            $.ajax({
+                type: 'POST',
+                dataType: "json",
+                data: ontologyCode,
+                url: '/rest/api/gotAsTableFromFile',
+                success: function (data, textStatus, jqXHR) {
+
+                    //  var text = "<p   name=\"" + uri + "\"><a href=\"" + uri + "\"><button  type=\"button\" class=\"btn btn-link\" ><small><span class=\"glyphicon glyphicon-ok align-middle\" aria-hidden=\"true\"></span></small></button></a></p>";
+                    // $("#loadcheck").append(text);
+                    var text = "<p   name=\"" + data.uri + "\"><button  data-toggle=\"collapse\" name=\"ontologyfile\" type=\"button\" class=\"btn btn-link\" value='" + data.uri + "'><small><span class=\"glyphicon glyphicon-ok align-middle\" aria-hidden=\"true\"></span> " + data.uri + "</small></button></p>";
+
+
+                    text+="<div  name=\"" + data.uri + "\" ><textarea  style=\"display:none;\" name = \"ontologycode\" id=\""+data.key+"\">"+ontologyfile.replace("/><\/https:>/g",'\/>')+"</textarea></div>";
+
+                    $("#loadonto").append(text);
+
+                    var text = "<p   class= \"collapse-title\" name=\"" + data.uri + "\"><a><button data-toggle=\"collapse\" type=\"button\" data-target=\"#" + data.key + "collapse\" aria-expanded=\"false\"  aria-controls=\"" + data.key + "collapse\" class=\"btn btn-link\" id=\"" + data.uri + "\" onclick='hover(this)' '><span title=\"See got \" class=\"glyphicon glyphicon-chevron-down align-middle\" aria-hidden=\"true\"></span><small> See the glossary of terms</small> </button></a></p>";
+                    $("#loadgot").append(text);
+
+                    var text2 = "           <div  name=\"" + data.uri + "\" style = \"background-color: gainsboro\" class=\"collapse col-md-12\" id=\"" + data.key + "collapse\">\n" +
+                        "                            <div class=\"card card-body\">\n" + data.got +
+
+                        "                            </div>\n" +
+                        "                        </div>";
+
+
+                    $("#aux").append(text2);
+
+                    var text = "<p   name=\"" + data.uri + "\"><a><button type=\"button\" class=\"btn btn-link\" onclick=\"removeGot('" + data.uri + "')\" ><small><span title=\"Remove ontology\" class=\"glyphicon glyphicon-remove align-middle\" aria-hidden=\"true\"></span> Remove</small> </button></a></p>";
+                    $("#deleteonto").append(text);
+
+
+                    document.getElementById("ontologyfile").value ="";
+                    $('#loadfile').html('Load ontology from file');
+                    $('#loadfile').removeAttr("disabled");
+                    $('#checktests').removeAttr("disabled");
+                    $('#export').removeAttr("disabled");
+                    $('#loadtest').removeAttr("disabled");
+                    var testsch = document.getElementById("checkout-tests");
+                    testsch.style.opacity=1;
+
+
+                },
+                error: function (ts) {
+                    document.getElementById("ontologyfile").value ="";
+                    $('#loadfile').html('Load ontology from file');
+                    $('#loadfile').removeAttr("disabled");
+                    $('#checktests').removeAttr("disabled");
+                    $('#export').removeAttr("disabled");
+                    $('#loadtest').removeAttr("disabled");
+                    var testsch = document.getElementById("checkout-tests");
+                    testsch.style.opacity=1;
+                }
+            });
+
+
+
+
+        }
+
+
+
+    });
+}
+
 function openTests() {
     window.open('tests-info.html', '_blank');
 }
@@ -554,8 +676,8 @@ function loadTests() {
         $('#checktests').attr("disabled", true);
         $('#export').attr("disabled", true);
         $.ajax({
-            type: 'GET',
-            data: {testuri: JSON.stringify(id.value)},
+            type: 'POST',
+            data: JSON.stringify(id.value),
             dataType: "json",
             url: '/rest/api/loadTests',
             success: function (data, textStatus, jqXHR) {
@@ -564,10 +686,57 @@ function loadTests() {
                     $.each(data, function (i, item) {
                         tests += item.Test + ";\n";
                     });
-                    document.getElementById('test').innerHTML = '';
-                    document.getElementById('test').innerHTML = tests;
+                    $('#test').val('');
+                    $('#test').val(tests);
                     $('#loadtest').html('Load test');
                     $('#loadtest').removeAttr("disabled");
+                    $('#checktests').removeAttr("disabled");
+                    $('#export').removeAttr("disabled");
+                } else {
+
+                    $('#notmatch').html("This is not a test expression");
+
+                }
+
+            },
+            error: function (ts) {
+
+            }
+        });
+    }
+}
+
+function loadTestsFromFile() {
+
+    var id = document.getElementById("testfile");
+    if(id.value!= null && id.value!="") {
+        $('#loadtestfile').html("<div class=\"loader\">\n" +
+            "                        <span></span>\n" +
+            "                        <span></span>\n" +
+            "                        <span></span>\n" +
+            "                    </div>");
+
+        $('#loadtestfile').attr("disabled", true);
+        $('#checktests').attr("disabled", true);
+        $('#export').attr("disabled", true);
+        var ontologyCode = id.value.replace(/><\/http.*:>/g,'\/>');
+        $.ajax({
+            type: 'POST',
+            data: ontologyCode.replace('/#/g',''),
+            dataType: "json",
+            url: '/rest/api/loadTestsFromFile',
+            success: function (data, textStatus, jqXHR) {
+                if (data.length > 0) {
+                    var tests = "";
+                    $.each(data, function (i, item) {
+                        tests += item.Test + ";\n";
+                    });
+                    document.getElementById('testfile').innerHTML = '';
+                    $('#test').val('');
+                    $('#test').val(tests);
+
+                    $('#loadtestfile').html('Load tests from file');
+                    $('#loadtestfile').removeAttr("disabled");
                     $('#checktests').removeAttr("disabled");
                     $('#export').removeAttr("disabled");
                 } else {
@@ -591,6 +760,7 @@ function  removeOntology(btn) {
 
 }
 
+
 function exportfile(){
     var array = $(this).serializeArray();
     var id = document.getElementsByName("testintable");
@@ -603,5 +773,16 @@ function exportfile(){
 
     window.location="/rest/api/export?test="+array;
 
+}
+
+function showRows() {
+    index = 1;
+    tr = document.getElementById('tr'+index);
+    while (tr!=null){
+        tr.style.display='';
+        index++;
+        tr = document.getElementById('tr'+index);
+    }
+    butt = document.getElementById('remButt').style.display='none';
 }
 

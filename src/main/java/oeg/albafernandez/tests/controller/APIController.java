@@ -5,8 +5,10 @@ import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import oeg.albafernandez.tests.model.AutocompleteResource;
 import oeg.albafernandez.tests.model.Ontology;
 import oeg.albafernandez.tests.model.Result;
 import oeg.albafernandez.tests.service.*;
@@ -77,15 +79,21 @@ public class APIController {
 
     public Response getResults(Result results){
         List<String> ontologies = results.getOntologies();
+        List<String> ontologiesCode = results.getOntologiesCode();
         List<String> tests = results.getTests();
         String got = results.getGot();
+        logger.info("New ontologies added from API: "+ ontologies);
         logger.info("New ontologies added from API: "+ ontologies);
         logger.info("New tests added from API: " + tests);
         ThemisResultsGenerator executionService = new ThemisResultsGenerator();
         int status;
         String result = "";
+        System.out.println("---------List of tests ---------------");
+        System.out.println(tests);
+        System.out.println("--------------------------------------");
+
         try {
-            result = executionService.getResults(got, tests, ontologies);
+            result = executionService.getResults(got, tests, ontologies, ontologiesCode);
             if (result.isEmpty()) {
                 status = 204;
             } else {
@@ -97,7 +105,6 @@ public class APIController {
         }
 
         return  Response.status(status)
-                .header("Access-Control-Allow-Origin", "*")
                 .entity(result)
                 .build();
     }
@@ -149,13 +156,53 @@ public class APIController {
     /*Method to autocomplete the test*/
     public Response autocomplete(@QueryParam("test") @Parameter(description = "Test", example = "Sensor type ") String test,
                                  @QueryParam("lastTerm") @Parameter(description = "Last term of the test", example = " ") String lastTerm,
+                                 @QueryParam("ontologyfile") @Parameter(description = "Ontology file", example = " ") String filename,
                                  @QueryParam("ontology") @Parameter(description = "URI of the ontology", example = "http://iot.linkeddata.es/def/core#") String ontologyURI) throws JSONException {
         if(lastTerm == null)
             lastTerm = " ";
 
         return Response
                 .status(200)
-                .entity(syntaxChecker.autocomplete(test, lastTerm, ontologyURI))
+                .entity(syntaxChecker.autocomplete(test, lastTerm, ontologyURI, filename))
+                .build();
+
+    }
+
+
+    @POST
+    @Path("/autocompleteFromUriFile")
+    @Operation(summary = "Autocomplete", description = "Autocomplete based on the syntax of the tests", method = "POST",
+            responses = {
+                    @ApiResponse( responseCode  = "200", description  = "Autocomplete successfully executed",  content = @Content(mediaType = "application/json")),
+                    @ApiResponse( responseCode = "500", description = "Internal error. Check inputs",  content = @Content(mediaType = "application/json")),
+            })
+
+    @Consumes({ MediaType.APPLICATION_JSON})
+    @Produces({ MediaType.APPLICATION_JSON})
+    /*Method to autocomplete the test*/
+    public Response autocompleteUriFile(AutocompleteResource autocompleteResource) throws JSONException {
+        String lastTerm;
+        if(autocompleteResource.getLastTerm() == null)
+            lastTerm = " ";
+        else
+            lastTerm = autocompleteResource.getLastTerm();
+        String test = autocompleteResource.getTest();
+
+        String ontologyURI;
+        if(autocompleteResource.getOntologyUri() == null)
+            ontologyURI = "";
+        else
+            ontologyURI = autocompleteResource.getOntologyUri();
+
+        String ontologyFile;
+        if(autocompleteResource.getCode() == null)
+            ontologyFile = "";
+        else
+            ontologyFile = autocompleteResource.getCode().replace("</http:>","").replace("</https:>","");
+
+        return Response
+                .status(200)
+                .entity(syntaxChecker.autocomplete(test, lastTerm, ontologyURI, ontologyFile))
                 .build();
 
     }
@@ -178,8 +225,8 @@ public class APIController {
 
 
 
-    @GET
-    @Path("/getTableGot")
+    @POST
+    @Path("/gotAsTableFromFile")
     @Operation(summary = "Glossary of terms", description = "Get glossary of terms of the ontology as an HTML table", method = "POST",
             responses = {
                     @ApiResponse( responseCode  = "200", description  = "Glossary successfully retrieved",  content = @Content(mediaType = "application/json")),
@@ -187,16 +234,39 @@ public class APIController {
             })
     @Produces({ MediaType.APPLICATION_JSON})
     /*Method to get the got of each ontology*/
-    public  Response  getGoTAsTable(@QueryParam("uri") @Parameter(description = "URI of the ontology", example = "http://iot.linkeddata.es/def/core#") String URI) throws JSONException, OWLOntologyStorageException {
+    public  Response  getGoTAsTableFile(     @Schema(description = "Code of the ontology associated to the glossary of term to be extracted",required = true)
+                                                         String filename) throws JSONException, OWLOntologyStorageException {
+
+        String got=syntaxChecker.getGoTFromFilename(filename);
         return Response
                 .status(200)
-                .entity(syntaxChecker.getGoT(URI))
+                .entity(got)
+                .build();
+
+    }
+
+    @POST
+    @Path("/gotAsTableFromURI")
+    @Operation(summary = "Glossary of terms", description = "Get glossary of terms of the ontology as an HTML table", method = "POST",
+            responses = {
+                    @ApiResponse( responseCode  = "200", description  = "Glossary successfully retrieved",  content = @Content(mediaType = "application/json")),
+                    @ApiResponse( responseCode = "500", description = "Internal error. Check inputs",  content = @Content(mediaType = "application/json")),
+            })
+    @Produces({ MediaType.APPLICATION_JSON})
+    /*Method to get the got of each ontology*/
+    public  Response  getGoTAsTable(@Schema(description = "URI of the ontology associated to the glossary of term to be extracted",required = true)
+                                                String URI) throws JSONException, OWLOntologyStorageException {
+
+        String got=syntaxChecker.getGoTFromURI(URI);
+        return Response
+                .status(200)
+                .entity(got)
                 .build();
     }
 
 
-    @GET
-    @Path("/getPlainGot")
+    @POST
+    @Path("/plainGot")
     @Operation(summary = "Glossary of terms", description = "Get glossary of terms of the ontology", method = "POST",
             responses = {
                     @ApiResponse( responseCode  = "200", description  = "Glossary successfully retrieved",  content = @Content(mediaType = "application/json")),
@@ -204,26 +274,48 @@ public class APIController {
             })
     @Produces({ MediaType.APPLICATION_JSON})
     /*Method to get the got of each ontology*/
-    public  Response  getPlainGoT(@QueryParam("uri") @Parameter(description = "URI of the ontology", example = "http://iot.linkeddata.es/def/core#") String URI) throws JSONException, OWLOntologyStorageException {
+    public  Response  getPlainGoT(@QueryParam("uri") @Parameter(description = "URI of the ontology", example = "http://iot.linkeddata.es/def/core#") String URI,
+                                  @QueryParam("filename") @Parameter(description = "Ontology file", example = "") String filename
+                                ) throws JSONException, OWLOntologyStorageException {
+        String got;
+        if (URI == null || URI.equals(""))
+            got = syntaxChecker.getPlainGoTFromURI(URI);
+        else
+            got = syntaxChecker.getGoTFromFilename(filename);
+
         return Response
                 .status(200)
-                .entity(syntaxChecker.getPlainGoT(URI))
+                .entity(got)
                 .build();
     }
 
 
-    @GET
+    @POST
     @Path("/loadTests")
     @Produces({ MediaType.APPLICATION_JSON})
     @Hidden
     /*Method to load the RDF test design of a given URI*/
-    public Response loadTests(@QueryParam("testuri") String uri) throws OWLOntologyStorageException, IOException, OWLOntologyCreationException, JSONException {
+    public Response loadTests(String uri) throws OWLOntologyStorageException, IOException, OWLOntologyCreationException, JSONException {
         ThemisFileManager themisFileManagement = new ThemisFileManager();
         return Response
                 .status(200)
-                .entity(themisFileManagement.loadTests(uri))
+                .entity(themisFileManagement.loadTests(uri,""))
                 .build();
     }
+
+    @POST
+    @Path("/loadTestsFromFile")
+    @Produces({ MediaType.APPLICATION_JSON})
+    @Hidden
+    /*Method to load the RDF test design of a given URI*/
+    public Response loadTestsFile(String file) throws OWLOntologyStorageException, IOException, OWLOntologyCreationException, JSONException {
+        ThemisFileManager themisFileManagement = new ThemisFileManager();
+        return Response
+                .status(200)
+                .entity(themisFileManagement.loadTests("",file))
+                .build();
+    }
+
 
     @GET
     @Path("/renewsession")

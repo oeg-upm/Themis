@@ -36,6 +36,8 @@ public class ThemisSyntaxChecker {
         patterns.add(Pattern.compile("^[^\\s]+\\s+(equivalentto)\\s+[^\\s]+$"));
         patterns.add(Pattern.compile("^[^\\s]+\\s+(subclassof)\\s+[^\\s]+\\s+only\\s*[^\\s]+\\s+(or)\\s+[^\\s]+$"));
         patterns.add(Pattern.compile("^[^\\s]+\\s+(domain|range)\\s+[^\\s]+$"));
+        patterns.add(Pattern.compile("^[^\\s]+\\s+[^\\s]+\\s+[^\\s]+$"));
+
         for (Pattern patternInd: patterns) {
             Matcher matcher = patternInd.matcher(testClean.toLowerCase().trim());
             if (matcher.matches()) {
@@ -46,7 +48,7 @@ public class ThemisSyntaxChecker {
     }
 
 
-    public String autocomplete(String completetest, String term,   String ontology) throws JSONException {
+    public String autocomplete(String completetest, String term,   String ontology, String filename) throws JSONException {
 
         if(completetest != null && term != null && ontology != null) {
             JSONArray gotterms = new JSONArray();
@@ -166,10 +168,41 @@ public class ThemisSyntaxChecker {
                 values.add(";");
             }
 
-            if (m6.matches() || completetest.equals("") || m2.matches() || m3.matches() || m0.matches() || m5.matches() || m9.matches() || m111.matches() || m13.matches() || m15.matches() || m16.matches() || m18.matches() || m20.matches() || m22.matches() || m23.matches() || m27.matches() || m28.matches() || m30.matches() || m31.matches()) {
+            if ( m1.matches() || m11.matches()) {
                 Ontology owlOntology = new Ontology();
-                owlOntology.loadOntologyURL(ontology);
-                HashMap<String, IRI> got = (HashMap<String, IRI>) createGot(owlOntology);
+                if(!ontology.equals(""))
+                    owlOntology.loadOntologyURL(ontology);
+                else
+                    owlOntology.loadOntologyfile(filename);
+
+                HashMap<String, IRI> got;
+
+                got = (HashMap<String, IRI>) createGotOnlyProperties(owlOntology);
+
+
+                for (Map.Entry<String, IRI> entry : got.entrySet()) {
+                    Matcher m = p.matcher(entry.getKey().toLowerCase());
+                    if (m.matches() && !keys.contains(entry.getKey())) {
+                        JSONObject obj = new JSONObject();
+                        obj.put("label", entry.getKey().trim());
+                        obj.put("value", entry.getKey().trim());
+                        gotterms.put(obj);
+                        keys.add(entry.getKey());
+                    }
+                }
+            }
+
+            if ( m6.matches() || completetest.equals("") || m2.matches() || m3.matches() || m0.matches() || m5.matches() || m9.matches() || m111.matches() || m13.matches() || m15.matches() || m16.matches() || m18.matches() || m20.matches() || m22.matches() || m23.matches() || m27.matches() || m28.matches() || m30.matches() || m31.matches()) {
+                Ontology owlOntology = new Ontology();
+                if(!ontology.equals(""))
+                    owlOntology.loadOntologyURL(ontology);
+                else
+                    owlOntology.loadOntologyfile(filename);
+
+                HashMap<String, IRI> got;
+
+                got = (HashMap<String, IRI>) createGot(owlOntology);
+
 
                 for (Map.Entry<String, IRI> entry : got.entrySet()) {
                     Matcher m = p.matcher(entry.getKey().toLowerCase());
@@ -240,12 +273,15 @@ public class ThemisSyntaxChecker {
         got.putAll(ontology.getIndividuals());
         return got;
     }
+    public Map createGotOnlyProperties(Ontology ontology){
+        HashMap<String, IRI> got = new HashMap<>();
+        got.putAll(ontology.getDatatypeProperties());
+        got.putAll(ontology.getObjectProperties());
+        return got;
+    }
 
+    public  String  getGoT(Ontology onto) throws JSONException, OWLOntologyStorageException {
 
-    public  String  getGoT(String uri) throws JSONException, OWLOntologyStorageException {
-        if(uri !=null) {
-            Ontology onto = new Ontology();
-            onto.loadOntologyURL(uri.replace("\"", "").trim());
             HashMap<String, IRI> elements = new HashMap<>();
             elements.putAll(onto.getClasses());
             elements.putAll(onto.getObjectProperties());
@@ -257,16 +293,25 @@ public class ThemisSyntaxChecker {
             JSONObject linkToReportGoT = new JSONObject();
             linkToReportGoT.put("got", reportText);
             linkToReportGoT.put("key", onto.getKeyName());
+            linkToReportGoT.put("uri", onto.getProv());
 
-            return linkToReportGoT.toString();
-        }else
-            return "";
+        return linkToReportGoT.toString();
     }
 
-    public  String  getPlainGoT(String uri) throws JSONException, OWLOntologyStorageException {
-        if(uri !=null) {
+    public  String  getGoTFromURI(String uri) throws JSONException, OWLOntologyStorageException {
             Ontology onto = new Ontology();
             onto.loadOntologyURL(uri.replace("\"", "").trim());
+            return getGoT(onto);
+
+    }
+    public  String  getGoTFromFilename(String ontologycode) throws JSONException, OWLOntologyStorageException {
+            Ontology onto = new Ontology();
+            onto.loadOntologyfile(ontologycode);
+            return getGoT(onto);
+    }
+
+    public  String  getPlainGoT(Ontology onto) throws JSONException, OWLOntologyStorageException {
+
             HashMap<String, IRI> elements = new HashMap<>();
             elements.putAll(onto.getClasses());
             elements.putAll(onto.getObjectProperties());
@@ -281,7 +326,21 @@ public class ThemisSyntaxChecker {
 
 
             return linkToReportGoT.toString();
-        }else
-            return "";
+
     }
+    public  String  getPlainGoTFromURI(String uri) throws JSONException, OWLOntologyStorageException {
+
+            Ontology onto = new Ontology();
+            onto.loadOntologyURL(uri.replace("\"", "").trim());
+           return getPlainGoT(onto);
+    }
+    public  String  getPlainGoTFromFile(String filename) throws JSONException, OWLOntologyStorageException {
+            Ontology onto = new Ontology();
+            onto.loadOntologyfile(filename);
+            return getPlainGoT(onto);
+
+
+    }
+
+
 }

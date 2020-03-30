@@ -2,7 +2,14 @@ package oeg.albafernandez.tests.model;
 
 import org.apache.log4j.Logger;
 import org.semanticweb.owlapi.apibinding.OWLManager;
+import org.semanticweb.owlapi.io.OWLOntologyDocumentSource;
+import org.semanticweb.owlapi.io.StringDocumentSource;
 import org.semanticweb.owlapi.model.*;
+
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.InputStream;
+import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -146,5 +153,29 @@ public class Ontology {
         }
         return response;
     }
+
+
+    public String loadOntologyfile(String filename) {
+        String response = " ";
+        this.manager = OWLManager.createOWLOntologyManager();
+
+        logger.info("Analysing ontology from file: " + prov);
+        OWLOntologyDocumentSource docs = new StringDocumentSource(filename);
+        try {
+            OWLOntology ontology = this.manager.loadOntologyFromOntologyDocument(docs);
+            this.setOntology(ontology);
+            IRI iri = ontology.getOntologyID().getOntologyIRI();
+            if(iri.toString().endsWith("#") || iri.toString().endsWith("/") )
+                this.setProv(IRI.create(iri.toString().substring(0, iri.toString().length() - 1)));
+            else
+                this.setProv(IRI.create(iri.toString()));
+        } catch (Exception e) {
+            logger.error("could not load vocabulary. " + e.getMessage());
+            response = null;
+        }
+        return response;
+    }
+
+
 
 }

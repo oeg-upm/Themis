@@ -11,19 +11,22 @@ import java.util.ArrayList;
 
 public class ThemisFileManager {
 
-    public String loadTests(String testUri) throws OWLOntologyStorageException, IOException, OWLOntologyCreationException, JSONException {
-        ArrayList<String> testsuiteDesign = new ArrayList<>();
-        ThemisImplementer impl = new ThemisImplementer();
-        testsuiteDesign.addAll(impl.loadTestCaseDesign(testUri));
-        JSONArray tests = new JSONArray();
-        for (String test : testsuiteDesign) {
-            JSONObject obj = new JSONObject();
-            obj.put("Test", test);
-            tests.put(obj);
-        }
-
-        return tests.toString();
-
+    public String loadTests(String testuri, String testfile) throws OWLOntologyStorageException, IOException, OWLOntologyCreationException, JSONException {
+        if(testuri!=null) {
+            ArrayList<String> testsuiteDesign = new ArrayList<>();
+            ThemisImplementer impl = new ThemisImplementer();
+            testsuiteDesign.addAll(impl.loadTestCaseDesign(testuri, testfile));
+            JSONArray tests = new JSONArray();
+            for (String test : testsuiteDesign) {
+                JSONObject obj = new JSONObject();
+                obj.put("Test", test.replace("^^xsd:string",""));
+                tests.put(obj);
+            }
+            return tests.toString();
+        }else
+            return null;
     }
+
+
 
 }

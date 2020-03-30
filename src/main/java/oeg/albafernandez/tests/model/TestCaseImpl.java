@@ -9,8 +9,8 @@ import java.util.Map;
 
 
 /*
-* Class to define the implmenetation of the tests
-* */
+ * Class to define the implmenetation of the tests
+ * */
 
 public class TestCaseImpl {
     private Map<String, String> axiomExpectedResult;
@@ -18,9 +18,9 @@ public class TestCaseImpl {
     private Map<String, OWLOntology> assertionsAxioms;
     private Map<String, String> axiomExpectedResultAxioms;
     private String preparation;
-    private OWLOntology preparationAxioms;
-    private List<String> preconditionList;
-    private List<String> preconditionQueryList;
+    private OWLOntology preparationaxioms;
+    private List<String> precondition;
+    private List<String> preconditionQuery;
     private IRI relatedTestDesign;
     private IRI uri;
     private String type;
@@ -32,7 +32,7 @@ public class TestCaseImpl {
         this.axiomExpectedResult = new LinkedHashMap<>();
         this.axiomExpectedResult = new LinkedHashMap<>();
         this.assertions = new LinkedHashMap<>();
-        this.preconditionList = new ArrayList<>();
+        this.precondition = new ArrayList<>();
         this.preparation ="";
     }
 
@@ -53,12 +53,12 @@ public class TestCaseImpl {
         this.axiomExpectedResultAxioms = axiomExpectedResultAxioms;
     }
 
-    public OWLOntology getPreparationAxioms() {
-        return preparationAxioms;
+    public OWLOntology getPreparationaxioms() {
+        return preparationaxioms;
     }
 
-    public void setPreparationAxioms(OWLOntology preparationAxioms) {
-        this.preparationAxioms = preparationAxioms;
+    public void setPreparationaxioms(OWLOntology preparationaxioms) {
+        this.preparationaxioms = preparationaxioms;
     }
 
     public Map<String, String> getAxiomExpectedResult() {
@@ -85,20 +85,20 @@ public class TestCaseImpl {
         this.preparation = preparation;
     }
 
-    public List<String> getPreconditionList() {
-        return preconditionList;
+    public List<String> getPrecondition() {
+        return precondition;
     }
 
-    public void setPreconditionList(List<String> preconditionList) {
-        this.preconditionList = preconditionList;
+    public void setPrecondition(List<String> precondition) {
+        this.precondition = precondition;
     }
 
-    public List<String> getPreconditionQueryList() {
-        return preconditionQueryList;
+    public List<String> getPreconditionQuery() {
+        return preconditionQuery;
     }
 
-    public void setPreconditionQueryList(List<String> preconditionQueryList) {
-        this.preconditionQueryList = preconditionQueryList;
+    public void setPreconditionQuery(List<String> preconditionQuery) {
+        this.preconditionQuery = preconditionQuery;
     }
 
     public IRI getRelatedTestDesign() {

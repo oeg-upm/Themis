@@ -17,7 +17,7 @@
 
     <!-- Le styles -->
     <link href="vocab/css/bootstrap.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="css/style-custom.css">
+    <link rel="stylesheet" type="text/css" href="vocab/css/style-custom.css">
 
     <style type="text/css">
 
@@ -51,9 +51,9 @@
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li class="active"><a href="index.html">Home</a></li>
-                <li><a href="howto.html">How to use it</a></li>
+                <li><a href="howto.html">How to use Themis</a></li>
                 <li><a href="swagger-ui/index.html">API REST</a></li>
-                <li><a href="catalogue.html">Existing tests</a></li>
+                <li><a href="catalogue.html">Catalogue</a></li>
                 <!--<li><a href="tests-info.html">Supported tests</a></li>-->
             </ul>
         </div><!--/.nav-collapse -->
@@ -92,7 +92,18 @@
                                <!-- <div class="container col-md-9"> -->
                             </div>
                             <div class="col-md-2 text-right" >
-                                <button id="load"  class="btn btn-primary mb-2 btn-custom" onclick="loadontology()" >Load ontology </button>
+                                <button id="load"  class="btn btn-primary mb-3 btn-custom" onclick="loadontologyFromURI()" >Load from URI </button>
+
+                            </div>
+
+                            <br>
+                            <p class="text-left"><label> Add the code of the ontology to be validated: </label></p>
+
+                            <div class="col-md-9"  >
+                                <textarea  id="ontologyfile" name = "ontologyfile" rows="4" cols="116"> </textarea>
+                            </div>
+                            <div class="col-md-2 text-right" >
+                                <button id="loadfile" name="loadfile"  class="btn btn-primary mb-3 btn-custom" onclick="loadontologyFromFile()" >Load  from file </button>
                             </div>
                         </div>
 
@@ -127,9 +138,17 @@
                         </div>
                         <div class="col-md-2 text-right" >
                             <div class="btn-group-vertical">
-                                <button id="loadtest"   disabled="true" class="btn btn-primary mb-3 btn-custom"  onclick="loadTests()">Load test</button>
+                                <button id="loadtest"   disabled="true" class="btn btn-primary mb-3 btn-custom"  onclick="loadTests()">Load from URI</button>
                                 <!--<button id="addtests"  disabled="true" class="btn btn-primary mb-2"  onclick="add()">Add to test suite</button> -->
                             </div>
+                        </div>
+                        <p class="text-left"><label> Or you can copy the test suite code, if the test suite uses the <a href="https://w3id.org/def/vtc#">VTC</a> ontology. </label></p>
+
+                        <div class="col-md-9"  >
+                            <textarea  id="testfile" name = "testfile" rows="4" cols="116"> </textarea>
+                        </div>
+                        <div class="col-md-2 text-right" >
+                            <button id="loadtestfile" name="loadtestfile"  class="btn btn-primary mb-3 btn-custom" onclick="loadTestsFromFile()" >Load from file </button>
                         </div>
                     </div>
                     <br>
@@ -157,6 +176,7 @@
                             <li>The <strong>test syntax</strong> is available <a href="tests-info.html">here</a>. You should insert the terms between brackets ("e.g., [Class] &rarr; Sensor"), while the italised  terms (e.g., <i>type</i>) are keywords that cannot be changed   </li>
                             <li>Terms in <font color="red"><b>red</b></font> indicate that they don't exist in the ontology, while the terms in
                                 <font color="#ff7f50"><b>orange</b></font> indicate that the term exist in the ontology but the type (e.g., class or individual) is not the specified in the term</li>
+                            <li>The <span class = "label label-warning">Absent relation</span> result does not indicate that the test is not passed, but that something may be missing</li>
                         </ul>
                     </div>
                 </div>
@@ -207,7 +227,7 @@
                 Built with <a target="_blank" href="http://getbootstrap.com/">Bootstrap</a>
                 Icons from <a target="_blank" href="http://glyphicons.com/">Glyphicons</a>
                 <br>
-                Latest revision Jan, 2020
+                Latest revision March, 2020
                 <br><p>&copy; Ontology Engineering Group</p>
             </div>
             <div class="col-md-2">

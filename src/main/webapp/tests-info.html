@@ -56,6 +56,7 @@
                 <th class="col-md-2 text-center"> Syntax of the test</th>
                 <th class="col-md-2 text-center">Example of test</th>
                 <th class="col-md-3 text-center">Example of competency question</th>
+
             </tr></thead>
             <tbody>
             <tr>
@@ -63,6 +64,7 @@
                 <td> [ClassA] <i>type</i> Class</td>
                 <td>Device <i>type</i> Class</td>
                 <td>What is a device?</td>
+
             </tr>
             <tr>
                 <td> There is a subsumption between two classes</td>
@@ -71,13 +73,13 @@
                 <td>A device is a type of sensor</td>
             </tr>
             <tr>
-                <td> Multiple inheritance of a class</td>
+                <td> Multiple inheritance of a class. A class can have more than one parent</td>
                 <td> [ClassA] <i>SubClassOf</i> [ClassA] <i>and</i> [ClassC]</td>
                 <td> Amphibians <i>SubClassOf</i> WaterLivingAnimals <i>and</i> LandLivingAnimals</td>
                 <td> Amphibians are water-living and land-living animals.</td>
             </tr>
             <tr>
-                <td> Disjointness between two classes</td>
+                <td> Disjointness between two classes. An element cannot be an instance of both classes</td>
                 <td> [ClassA] <i>disjointWith</i> [ClassA]</td>
                 <td> Sensor <i>disjointWith</i> Actuator</td>
                 <td>A sensor cannot be an actuator</td>
@@ -87,6 +89,18 @@
                 <td> [ClassA] <i>equivalentTo</i> [ClassA]</td>
                 <td> PosionDartFrog <i>equivalentTo</i> PoisonArrowFrog </td>
                 <td>Poison dart frogs are also known as poison-arrow frogs</td>
+            </tr>
+            <tr>
+                <td> Property has a domain</td>
+                <td> [PropertyP] <i>domain</i> [ClassA]</td>
+                <td> <i>containsFruit</i> domain <i>FruitBowl</i></td>
+                <td> The property containsFruit can only be associated to FruitBowl</td>
+            </tr>
+            <tr>
+                <td> Property has a range</td>
+                <td> [PropertyP] <i>range</i> [ClassB]</td>
+                <td> <i>containsFruit</i> range <i>Fruit</i></td>
+                <td>The property containsFruit can only contain fruit  </td>
             </tr>
             <tr>
                 <td> Relation between two classes</td>
@@ -115,7 +129,7 @@
             <tr>
                 <td> Minimum cardinality. [ClassA] have at least N semantically distinct values (individuals or data values) for the property</td>
                 <td> [ClassA] <i>SubClassOf</i> [PropertyP]  <i>min</i> [num]  [ClassA]</td>
-                <td> Device <i>SubClassOf</i> hasManufacturer <i>min</i> 1 <i>string</i></td>
+                <td> Device <i>SubClassOf</i> hasManufacturer <i>min</i> 1 <i>Manufacturer</i></td>
                 <td>A device has minimum one manufacturer</td>
             </tr>
             <tr>
@@ -147,6 +161,12 @@
                 <td> [IndividualI] <i>type</i> [ClassA]</td>
                 <td>StriatedPardalote <i>type</i> Bird</td>
                 <td>Striated pardalote  is a type of bird</td>
+            </tr>
+            <tr>
+                <td> Two individuals of two classes can be related by a property </td>
+                <td> [ClassA] [PropertyP]  [ClassB]</td>
+                <td>Price isMeasuredIn  Units</td>
+                <td>Any price is measured in units</td>
             </tr>
             <tr>
                 <td> Subsumption and relation between classes </td>
@@ -224,7 +244,7 @@
                 Built with <a target="_blank" href="http://getbootstrap.com/">Bootstrap</a>
                 Icons from <a target="_blank" href="http://glyphicons.com/">Glyphicons</a>
                 <br>
-                Latest revision Feb, 2019
+                Latest revision March, 2020
                 <br><p>&copy; Ontology Engineering Group</p>
             </div>
             <div class="col-md-2">

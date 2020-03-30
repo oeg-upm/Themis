@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head >
+    <meta charset="UTF-8">
+    <title>Validate your ontology</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="languaje" content="English">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <!-- Le styles -->
+    <link href="../vocab/css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../css/style-custom.css">
+
+    <style type="text/css">
+
+        .table-wrapper-scroll-y {
+            display: block;
+            max-height: 200px;
+            overflow-y: auto;
+            -ms-overflow-style: -ms-autohiding-scrollbar;
+        }
+
+        ul.nav-pills {
+            top: 250px;
+            position: fixed;
+        }
+
+    </style>
+
+    <script type="text/javascript" id="js">
+        $(document).ready(function(){
+            $("#filter").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#tablesorter-demo tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+
+
+
+    </script>
+</head>
+
+<body data-spy="scroll" data-target="#myScrollspy">
+
+
+<nav class="navbar navbar-default "  id="catalogue">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#"> <img src="../images/themis.png" class="img-rounded" class="img-responsive" width="70%" ></a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../howto.html">How to use it</a></li>
+                <li><a href="../../../../target/swagger-ui/META-INF/resources/webjars/swagger-ui/3.17.0/index.html">API REST</a></li>
+                <li><a href="../catalogue.html">Catalogue</a></li>
+                <!--<li><a href="tests-info.html">Supported tests</a></li>-->
+            </ul>
+        </div><!--/.nav-collapse -->
+
+    </div>
+</nav>
+<div class="container" >
+
+    <!-- Jumbotron -->
+    <div class="jumbotron" style="background-color:white;">
+        <h2> Ontology testing</h2>
+        <p class="lead">Testing results for the VICINITY core ontology.</a></p>
+    </div>
+    <hr>
+
+    <nav class="col-sm-3" id="myScrollspy" >
+        <ul class="nav nav-pills nav-stacked">
+            <li class="active" class="nav nav-pills nav-stacked"><a href="#reqs">Requirements</a></li>
+            <li class="nav nav-pills nav-stacked"><a href="#metrics">Metrics</a></li>
+            <li class="nav nav-pills nav-stacked"><a href="#catalogue"><span class="glyphicon glyphicon-chevron-up
+" aria-hidden="true"></span>
+                Go top</a></li>
+
+        </ul>
+    </nav>
+
+
+    <div class = "col-sm-9">
+        <div id="reqs">
+            <h3>Requirements</h3>
+            <p>The following table lists the VICINITY core ontology requirements and the VICINITY core ontology satisfies them.</p>
+            <p>There are four possible results for each requirement:
+            <ul>
+                <li><span class="glyphicon glyphicon-ok" style="color:rgb(0, 255, 0)"></span>: The requirements is passed by the ontology</li>
+                <li><span class="label label-default">Undefined</span>: There are terms in the requirements that are not defined in the ontology</li>
+                <li><span class="glyphicon glyphicon-warning-sign" style ="color:rgb(239, 127, 26)"></span>: The are relations and restrictions in the requirements that are  absent in the ontology</li>
+                <li><span class="glyphicon glyphicon-remove" style ="color:rgb(255, 0, 0)"></span>: There is a conflict between the requirement and the ontology</li>
+            </ul>
+
+            </p>
+            <input id="filter" type="text" placeholder="Search..">
+
+            <table id="tablesorter" class="tablesorter table table-hover table-responsive">
+                <thead>
+                <tr>
+                    <th class="col-md-2">Identifier </th>
+                    <th class="col-md-2">Category </th>
+                    <th class="col-md-4">Competency Question</th>
+                    <th class="col-md-2">Result</th></tr></thead>
+                <tbody>
+                <tr id="platform1">
+                    <td class="tg-031e">platform1</td>
+                    <td class="tg-031e"><span class="label label-primary">Organization</span></td>
+                    <td class="tg-031e">What is an organization?</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr id="platform2">
+                    <td class="tg-031e">platform2</td>
+                    <td class="tg-031e"><span class="label label-primary">Device</span></td>
+                    <td class="tg-031e">What is an IoT device?</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr id="platform4">
+                    <td class="tg-031e">platform4</td>
+                    <td class="tg-031e"><span class="label label-primary">Partnership</span></td>
+                    <td class="tg-031e">What attributes has a partnership?</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr id="platform8">
+                    <td class="tg-031e">platform8</td>
+                    <td class="tg-031e"><span class="label label-primary">Partnership</span></td>
+                    <td class="tg-031e">Which are the relationships a partnership is involved in?</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr id="platform9">
+                    <td class="tg-031e">platform9</td>
+                    <td class="tg-031e"><span class="label label-primary">Partnership</span></td>
+                    <td class="tg-031e">How many organizations can have a partnership?</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr id="platform11">
+                    <td class="tg-031e">platform11</td>
+                    <td class="tg-031e"><span class="label label-primary">Organization</span>
+                        <span class="label label-primary">Device</span>
+                    </td>
+                    <td class="tg-031e">What is the relation between organization and devices?</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr id="platform21">
+                    <td class="tg-031e">platform21</td>
+                    <td class="tg-031e"> <span class="label label-primary">Device</span></td>
+                    <td class="tg-031e">Who is the owner of a given device?</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr id="platform22">
+                    <td class="tg-031e">platform22</td>
+                    <td class="tg-031e"> <span class="label label-primary">Device</span></td>
+                    <td class="tg-031e">A device has a unique identifier</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr id="platform23">
+                    <td class="tg-031e">platform23</td>
+                    <td class="tg-031e"> <span class="label label-primary">Device</span></td>
+                    <td class="tg-031e">Which attributes can have a device?</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr id="platform33">
+                    <td class="tg-031e">platform33</td>
+                    <td class="tg-031e"> <span class="label label-primary">Device</span></td>
+                    <td class="tg-031e">What is a device profile?</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr id="platform35">
+                    <td class="tg-031e">platform35</td>
+                    <td class="tg-031e"> <span class="label label-primary">Device</span></td>
+                    <td class="tg-031e">A device can have a status</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr id="platform37">
+                    <td class="tg-031e">platform37</td>
+                    <td class="tg-031e"> <span class="label label-primary">Device</span></td>
+                    <td class="tg-031e">A device can have a location</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr id="platform41">
+                    <td class="tg-031e">platform41</td>
+                    <td class="tg-031e"> <span class="label label-primary">Device</span></td>
+                    <td class="tg-031e">A device can have a location</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr id="platform42">
+                    <td class="tg-031e">platform42</td>
+                    <td class="tg-031e"> <span class="label label-primary">Device</span></td>
+                    <td class="tg-031e">Which are the social relationships a device can be involved in?</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr id="platform43">
+                    <td class="tg-031e">platform43</td>
+                    <td class="tg-031e"> <span class="label label-primary">Owner</span></td>
+                    <td class="tg-031e">Which roles are involved in a ownership relationship?</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr id="platform44">
+                    <td class="tg-031e">platform44</td>
+                    <td class="tg-031e"> <span class="label label-primary">User</span></td>
+                    <td class="tg-031e">What is a user?</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr id="platform46">
+                    <td class="tg-031e">platform46</td>
+                    <td class="tg-031e"> <span class="label label-primary">Service</span></td>
+                    <td class="tg-031e">Who is a service provider?</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr id="platform52">
+                    <td class="tg-031e">platform52</td>
+                    <td class="tg-031e"> <span class="label label-primary">Service</span></td>
+                    <td class="tg-031e">What are the parameters that has a service?</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr id="platform79">
+                    <td class="tg-031e">platform79</td>
+                    <td class="tg-031e"><span class="label label-primary">Device</span></td>
+                    <td class="tg-031e">What is an IoT device agent?</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr id="platform80">
+                    <td class="tg-031e">platform80</td>
+                    <td class="tg-031e"><span class="label label-primary">Device</span></td>
+                    <td class="tg-031e">Which devices are there?</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr id="platform81">
+                    <td class="tg-031e">platform81</td>
+                    <td class="tg-031e"><span class="label label-primary">Device</span></td>
+                    <td class="tg-031e">What are the devices of a given agent or organization?</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr id="platform82">
+                    <td class="tg-031e">platform82</td>
+                    <td class="tg-031e"><span class="label label-primary">Device</span></td>
+                    <td class="tg-031e">Which devices can I see?</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr id="platform83">
+                    <td class="tg-031e">platform83</td>
+                    <td class="tg-031e"><span class="label label-primary">Service</span></td>
+                    <td class="tg-031e">Which services can I see?</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr id="platform85">
+                    <td class="tg-031e">platform85</td>
+                    <td class="tg-031e"><span class="label label-primary">Device</span></td>
+                    <td class="tg-031e">What are the devices of a specific partner?</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr id="platform87">
+                    <td class="tg-031e">platform87</td>
+                    <td class="tg-031e"><span class="label label-primary">Device</span></td>
+                    <td class="tg-031e">Which is the profile of a given device?</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr id="platform88">
+                    <td class="tg-031e">platform88</td>
+                    <td class="tg-031e"><span class="label label-primary">Device</span></td>
+                    <td class="tg-031e">A device profile indicates the device name</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr id="platform89">
+                    <td class="tg-031e">platform89</td>
+                    <td class="tg-031e"><span class="label label-primary">Device</span></td>
+                    <td class="tg-031e">A device profile indicates the device avatar</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr id="platform90">
+                    <td class="tg-031e">platform90</td>
+                    <td class="tg-031e"><span class="label label-primary">Device</span></td>
+                    <td class="tg-031e">A device profile indicates the type of device, e.g: sensor or actuator</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr id="platform91">
+                    <td class="tg-031e">platform91</td>
+                    <td class="tg-031e"><span class="label label-primary">Device</span></td>
+                    <td class="tg-031e">A device profile indicates the device vendor</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr id="platform92">
+                    <td class="tg-031e">platform92</td>
+                    <td class="tg-031e"><span class="label label-primary">Device</span></td>
+                    <td class="tg-031e">A device profile indicates the device serial number</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr id="platform94">
+                    <td class="tg-031e">platform94</td>
+                    <td class="tg-031e"><span class="label label-primary">Device</span></td>
+                    <td class="tg-031e">A device profile indicates the device owner</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr id="platform95">
+                    <td class="tg-031e">platform95</td>
+                    <td class="tg-031e"><span class="label label-primary">Service</span></td>
+                    <td class="tg-031e">A service profile indicates the service name</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr id="platform96">
+                    <td class="tg-031e">platform96</td>
+                    <td class="tg-031e"><span class="label label-primary">Service</span></td>
+                    <td class="tg-031e">A service profile indicates the service avatar</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr id="platform97">
+                    <td class="tg-031e">platform97</td>
+                    <td class="tg-031e"><span class="label label-primary">Service</span></td>
+                    <td class="tg-031e">A service profile indicates the service owner</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr id="platform98">
+                    <td class="tg-031e">platform98</td>
+                    <td class="tg-031e"><span class="label label-primary">Service</span></td>
+                    <td class="tg-031e">A service profile indicates the service provider</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr id="platform99">
+                    <td class="tg-031e">platform99</td>
+                    <td class="tg-031e"><span class="label label-primary">Service</span></td>
+                    <td class="tg-031e">A service profile indicates the service description (in text)</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr id="platform101">
+                    <td class="tg-031e">platform101</td>
+                    <td class="tg-031e"><span class="label label-primary">Organizations</span></td>
+                    <td class="tg-031e">A partnership is established between organizations</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr id="platform102">
+                    <td class="tg-031e">platform102</td>
+                    <td class="tg-031e"><span class="label label-primary">Organizations</span></td>
+                    <td class="tg-031e">A partnership is established between only 2 organizations</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr id="platform103">
+                    <td class="tg-031e">platform103</td>
+                    <td class="tg-031e"><span class="label label-primary">Partnerships</span></td>
+                    <td class="tg-031e">A neighbourhood is the group of partnerships you have</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr id="platform104">
+                    <td class="tg-031e">platform104</td>
+                    <td class="tg-031e"><span class="label label-primary">Organization</span></td>
+                    <td class="tg-031e">An organization has users</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr id="platform105">
+                    <td class="tg-031e">platform105</td>
+                    <td class="tg-031e"><span class="label label-primary">Organization</span></td>
+                    <td class="tg-031e">One of the users of an organization is the manager</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr id="platform106">
+                    <td class="tg-031e">platform106</td>
+                    <td class="tg-031e"><span class="label label-primary">Organization</span></td>
+                    <td class="tg-031e">Users has to belong to one organization</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr id="platform107">
+                    <td class="tg-031e">platform107</td>
+                    <td class="tg-031e"><span class="label label-primary">Organization</span></td>
+                    <td class="tg-031e">All organizations have the same roles in a partnership</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr id="platform108">
+                    <td class="tg-031e">platform108</td>
+                    <td class="tg-031e"><span class="label label-primary">Users</span></td>
+                    <td class="tg-031e">Users can have different roles in the organization</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+
+                </tr>
+                <tr id="platform112">
+                    <td class="tg-031e">platform112</td>
+                    <td class="tg-031e"><span class="label label-primary">Building</span></td>
+                    <td class="tg-031e">What is a building?</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr id="platform113">
+                    <td class="tg-031e">platform113</td>
+                    <td class="tg-031e"><span class="label label-primary">Device</span></td>
+                    <td class="tg-031e">Which devices measure temperature?</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr id="platform155">
+                    <td class="tg-031e">platform155</td>
+                    <td class="tg-031e"><span class="label label-primary">Thing</span></td>
+                    <td class="tg-031e">Each thing is described by WoT Thing Descriptions</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                <tr id="platform156">
+                    <td class="tg-031e">platform156</td>
+                    <td class="tg-031e"><span class="label label-primary">Thing</span></td>
+                    <td class="tg-031e">Each thing is described by WoT Thing Descriptions.</td>
+                    <td class="tg-031e"><span class="glyphicon glyphicon-ok" style ="color:rgb(0, 255, 0)"></span></td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+        <hr>
+        <div  id="metrics">
+            <h3>Metrics</h3>
+
+            <p>The following table summarises the metrics related the VICINITY core ontology</p>
+
+            <table  class="tablesorter table table-hover table-responsive">
+                <thead>
+                <tr>
+                    <th class="tg-g7sd">Metric</th>
+                    <th class="tg-g7sd">Result</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td class="tg-lboi">Percentage of covered requirement</td>
+                    <td class="tg-lboi">100%</td>
+                </tr>
+                <tr>
+                    <td class="tg-lboi">Percentage of requirements with terms that are undefined in the  ontology</td>
+                    <td class="tg-lboi">0%</td>
+                </tr>
+                <tr>
+                    <td class="tg-0pky">Percentage of requirements that lead to conflict </td>
+                    <td class="tg-0pky">0%</td>
+                </tr>
+                <tr>
+                    <td class="tg-0pky">Percentage of tested terms</td>
+                    <td class="tg-0pky">14.61%</td>
+                </tr>
+                </tbody>
+            </table>
+
+
+
+
+        </div>
+    </div>
+
+    <hr>
+    <footer class="footer">
+        <div class="row">
+            <div class="col-md-10">
+                Alba Fernández Izquierdo
+                <br>
+                Contact email: albafernandez@fi.upm.es
+                <br>
+                Built with <a target="_blank" href="http://getbootstrap.com/">Bootstrap</a>
+                Icons from <a target="_blank" href="http://glyphicons.com/">Glyphicons</a>
+                <br>
+                Latest revision March, 2020
+                <br><p>&copy; Ontology Engineering Group</p>
+            </div>
+            <div class="col-md-2">
+                <a href="http://www.oeg-upm.net/" target="_blank"><img src="../vocab/logo.gif" alt="OEG logo" class="img-rounded" class="img-responsive" /></a>
+            </div>
+        </div>
+    </footer>
+</div> <!-- /container -->
+
+
+<script type="text/javascript" src="../js/tests-js.js"></script>
+
+
+</body>
+</html>
