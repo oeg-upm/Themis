@@ -68,11 +68,12 @@ public class Ontology {
         while(iter.hasNext()){
             OWLClass nextClass=iter.next();
 
-            if(!hashMapClasses.containsKey(nextClass.getIRI().getFragment()))
+            if(!hashMapClasses.containsKey(nextClass.getIRI().getFragment()) &&
+                    !nextClass.getIRI().getFragment().equalsIgnoreCase("Class") && !nextClass.getIRI().getFragment().equalsIgnoreCase("Property"))
                 hashMapClasses.put(nextClass.getIRI().getFragment(),nextClass.getIRI());
             else{
                 String[] uri = nextClass.getIRI().getNamespace().split("/");
-                hashMapClasses.put(uri[uri.length-1]+nextClass.getIRI().getFragment(),nextClass.getIRI());
+                hashMapClasses.put(uri[uri.length-1]+":"+nextClass.getIRI().getFragment(),nextClass.getIRI());
             }
         }
         return  hashMapClasses;

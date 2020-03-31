@@ -54,7 +54,28 @@ $( function() {
         .autocomplete({
             minLength: 1,
             source: function( request, response ) {
+                var tables =document.getElementsByName('tablegot');
 
+                var myObj ={};
+                tables.forEach(function(table) {
+
+                    var tableid= table.id;
+                    //loops through rows
+                    var myRows = [];
+                    var $headers = $(table).find("th");
+                    var $rows = $(table).find("tbody tr").each(function (index) {
+                        $cells = $(this).find("td.got");
+
+                        myRows[index] = {};
+                        $cells.each(function (cellIndex) {
+                            var  header = $($headers[cellIndex]).html();
+                            header = header.replace("<span class=\"glyphicon glyphicon-pencil\"></span>","");
+                            myRows[index][header] = $(this).html();
+                        });
+                    });
+
+                    myObj[table.id] = myRows;
+                });
                 $.ajax({
                     type: "POST",
                     url:"/rest/api/autocompleteFromUriFile",
@@ -64,7 +85,6 @@ $( function() {
                         lastTerm: extractLast( request.term ),
                         ontologyUri: checkURI(document.getElementsByName("ontology")),
                         code: checkFile(document.getElementsByName("ontologycode")),
-                        imports: "true"
                     }),
                     success: response,
                     dataType: 'json'
@@ -265,7 +285,8 @@ function check() {
                                 var test = item.Test;
 
                                 $.each(result.Undefined, function (j, undefined) {
-                                    test = test.replace(undefined, "<span style=\"color:red;\">"+undefined+"</span>");
+                                    let re = new RegExp(`\\b${undefined}\\b`, 'gi');
+                                    test = test.replace(re, "<span style=\"color:red;\">"+""+undefined+"</span>");
                                 });
 
                                 cell1.innerHTML = "<p name=\"testintable\">" + test + "</p>";
@@ -276,7 +297,9 @@ function check() {
                             }else if(result.Result == 'Incorrect'){
                                 var test = item.Test;
                                 $.each(result.Incorrect, function (j, incorrect) {
-                                    test = test.replace(incorrect, "<span style=\"color:#ff7f50;\">" + incorrect + "</span>");
+                                    let re = new RegExp(`\\b${incorrect}\\b`, 'gi');
+
+                                    test = test.replace(re, "<span style=\"color:#ff7f50;\">" + " "+incorrect + "</span>");
                                 });
                                 cell1.innerHTML = "<p name=\"testintable\">" + test + "</p>";
 
@@ -331,7 +354,8 @@ function check() {
                             } else if (result.Result == 'undefined') {
                                 var test = item.Test;
                                 $.each(result.Undefined, function (j, undefined) {
-                                    test = test.replace(undefined, "<span style=\"color:red;\">"+undefined+"</span>");
+                                    let re = new RegExp(`\\b${undefined}\\b`, 'gi');
+                                    test = test.replace(re, "<span style=\"color:red;\">"+undefined+"</span>");
                                 });
                                 cell1.innerHTML = "<p name=\"testintable\">" + test + "</p>";
                                 cell2.innerHTML = "<span class=\"label label-default \" data-toggle=\"tooltip\" title=\"The ontology did not pass the test\">Undefined terms</span>";
@@ -766,7 +790,7 @@ function exportfile(){
 
     id.forEach(function (item) {
         if(item.value!="") {
-            array.push(item.innerHTML);
+            array.push(item.innerText.replace(/<span style.\"color:red;>\"/g,"").replace(/<\/span>/g,"").replace(/\^\^xsd:string/g,""));
         }
     });
 

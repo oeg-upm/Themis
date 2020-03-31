@@ -95,7 +95,9 @@ public class APIController {
             result = executionService.getResults(got, tests, ontologies, ontologiesCode);
             if(results.getFormat()!= null && results.getFormat().equalsIgnoreCase("html")){
                 output = Converter.jsonToHtml(result);
-            }else{
+            }else if(results.getFormat()!= null && results.getFormat().equalsIgnoreCase("junit")){
+                output = Converter.jsonToJUnitXML(result);
+            } else{
                 output= result.toString();
             }
 

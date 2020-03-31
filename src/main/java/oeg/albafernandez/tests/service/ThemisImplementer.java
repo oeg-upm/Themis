@@ -235,7 +235,7 @@ public class ThemisImplementer {
             this.setTestCase(multipleSubClassTest(purpose,testCase));
         }else if(purposecloned.matches("[^\\s]+ subclassof [^\\s]+")){
             this.setTestCase(subClassTest(purpose, "strict subclass",testCase));
-        }else if(purposecloned.matches("[^\\s]+ [^\\s]+ (xsd:string|xsd:float|xsd:integer|rdfs:literal|xsd:datetime|xsd:datetimestamp|string|float|integer|datetime|owl:rational|rational|boolean|xsd:boolean|anyuri|xsd:anyuri)")){
+        }else if(purposecloned.matches("[^\\s]+ [^\\s]+ (xsd:string|xsd:float|xsd:integer|rdfs:literal|xsd:datetime|xsd:datetimestamp|string|float|integer|datetime|owl:rational|rational|boolean|xsd:boolean|anyuri|xsd:anyuri|literal|xsd:literal)")){
             this.setTestCase(domainRangeTestDP(purpose, testCase));
         } else if(purposecloned.matches("[^\\s]+ [^\\s]+ [^\\s]+")){
             this.setTestCase(domainRangeTest(purpose, testCase));
