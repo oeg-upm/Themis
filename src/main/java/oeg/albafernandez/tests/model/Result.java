@@ -8,11 +8,11 @@ public class Result {
     private String got;
     @Schema(description = "List of ontologies URIs to be analysed",example = "[\"http://iot.linkeddata.es/def/core\"]",required = false)
     private List<String> ontologies;
-    @Schema(description = "List of ontologies code to be analysed",required = false)
+    @Schema(description = "List of ontologies code to be analysed", example="[]",required = false)
     private List<String> ontologiesCode;
     @Schema(description = "List of tests to be executed", example = "[\"Sensor type Class\", \"Sensor subclassOf Device\"]")
     private List<String> tests;
-    @Schema(description = "Format of the results. Supported formats: JSON, HTML and JUnit ", defaultValue = "json")
+    @Schema(description = "Format of the results. Supported formats: JSON, HTML and JUnit ", defaultValue = "json", example="json")
     private String format;
 
     public String getFormat() {

@@ -12,7 +12,9 @@ import oeg.albafernandez.tests.model.AutocompleteResource;
 import oeg.albafernandez.tests.model.Ontology;
 import oeg.albafernandez.tests.model.Result;
 import oeg.albafernandez.tests.service.*;
+import oeg.albafernandez.tests.utils.Converter;
 import org.apache.log4j.Logger;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
@@ -87,14 +89,17 @@ public class APIController {
         logger.info("New tests added from API: " + tests);
         ThemisResultsGenerator executionService = new ThemisResultsGenerator();
         int status;
-        String result = "";
-        System.out.println("---------List of tests ---------------");
-        System.out.println(tests);
-        System.out.println("--------------------------------------");
-
+        JSONArray result = new JSONArray();
+        String output = "";
         try {
             result = executionService.getResults(got, tests, ontologies, ontologiesCode);
-            if (result.isEmpty()) {
+            if(results.getFormat()!= null && results.getFormat().equalsIgnoreCase("html")){
+                output = Converter.jsonToHtml(result);
+            }else{
+                output= result.toString();
+            }
+
+            if (output.isEmpty()) {
                 status = 204;
             } else {
                 status = 200;
@@ -105,7 +110,7 @@ public class APIController {
         }
 
         return  Response.status(status)
-                .entity(result)
+                .entity(output)
                 .build();
     }
 

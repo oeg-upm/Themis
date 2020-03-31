@@ -250,7 +250,6 @@ function check() {
                     var table = document.getElementById("table");
                     if(item.Results.length <= 1 && table != null){
                         $.each(item.Results, function (i, result) {
-
                             var table = document.getElementById("table");
                             var row = table.insertRow(1);
                             var cell1 = row.insertCell(0);
@@ -258,11 +257,11 @@ function check() {
                             var cell3 = row.insertCell(2);
                             var cell4 = row.insertCell(3);
                             cell4.innerHTML = "<button type=\"button\" class=\"btn btn-default\" onclick=\"removeOntology(this)\" title=\"Remove test\"> <span class=\"submit glyphicon glyphicon-remove-sign\"    style =\"color:rgb(255, 0, 0)\"></span> </button>";
-                            if (result.Result == 'passed') {
+                            if (result.Result == 'Passed') {
                                 cell1.innerHTML = "<p name=\"testintable\">" + item.Test + "</p>";
                                 cell2.innerHTML = "<span class=\"label label-success\" data-toggle=\"tooltip\" title=\"The ontology passed the test\">Passed</span>";
                                 cell3.innerHTML = "<p>None</p>";
-                            } else if (result.Result == 'undefined') {
+                            } else if (result.Result == 'Undefined') {
                                 var test = item.Test;
 
                                 $.each(result.Undefined, function (j, undefined) {
@@ -274,7 +273,7 @@ function check() {
                                 cell2.innerHTML = "<span class=\"label label-default \" data-toggle=\"tooltip\" title=\"The ontology did not pass the test\">Undefined terms</span>";
                                 cell3.innerHTML = "<p>The terms in the test are not correctly defined in the ontology</p>";
 
-                            }else if(result.Result == 'incorrect'){
+                            }else if(result.Result == 'Incorrect'){
                                 var test = item.Test;
                                 $.each(result.Incorrect, function (j, incorrect) {
                                     test = test.replace(incorrect, "<span style=\"color:#ff7f50;\">" + incorrect + "</span>");
@@ -283,7 +282,7 @@ function check() {
 
                                 cell2.innerHTML = "<span class=\"label label-default \" data-toggle=\"tooltip\" title=\"The ontology did not pass the test\">Undefined terms</span>";
                                 cell3.innerHTML = "<p>The terms in the test are not correctly defined in the ontology</p>";
-                            } else if (result.Result == 'absent') {
+                            } else if (result.Result == 'Absent') {
                                 cell1.innerHTML = "<p name=\"testintable\">" + item.Test + "</p>";
 
                                 cell2.innerHTML = "<span class=\"label label-warning\" data-toggle=\"tooltip\" title=\"The ontology did not pass the test\">Absent relation</span>";
