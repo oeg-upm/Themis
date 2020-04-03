@@ -19,6 +19,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyStorageException;
+import org.semarglproject.rdf.ParseException;
+import org.xml.sax.SAXException;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -83,6 +85,48 @@ public class APIController {
         List<String> ontologies = results.getOntologies();
         List<String> ontologiesCode = results.getOntologiesCode();
         List<String> tests = results.getTests();
+        String testfile = results.getTestfile();
+        String documentationHTML = results.getDocumentationFile();
+        ThemisFileManager themisFileManagement = new ThemisFileManager();
+
+        if(testfile!=null && !testfile.isEmpty()){
+            try {
+                if(tests== null){
+                    tests = new ArrayList<>();
+                }
+                tests.addAll(themisFileManagement.loadCodeTests(testfile));
+            } catch (OWLOntologyStorageException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (OWLOntologyCreationException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+        if(documentationHTML!=null && !documentationHTML.isEmpty()){
+            try {
+                if(tests== null){
+                    tests = new ArrayList<>();
+                }
+                tests.addAll(themisFileManagement.parseRDFa(documentationHTML));
+            } catch (SAXException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            } catch (OWLOntologyStorageException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (OWLOntologyCreationException e) {
+                e.printStackTrace();
+            }
+        }
         String got = results.getGot();
         logger.info("New ontologies added from API: "+ ontologies);
         logger.info("New ontologies added from API: "+ ontologies);

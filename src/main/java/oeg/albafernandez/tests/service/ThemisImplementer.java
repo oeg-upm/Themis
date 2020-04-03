@@ -77,7 +77,6 @@ public class ThemisImplementer {
             ontology = manager.loadOntology(IRI.create(filename.replace("\"", "")));
         }
         if(!filecontent.equals("")){
-            System.out.println(filecontent);
             OWLOntologyDocumentSource docs = new StringDocumentSource(filecontent);
             ontology = manager.loadOntologyFromOntologyDocument(docs);
 
@@ -93,7 +92,7 @@ public class ThemisImplementer {
                 if (cls.toString().replace(">","").replace("<","").equals(op.getSubject().toString().replace("<","").replace(">",""))) {
                     if (op.getProperty().toString().contains("http://w3id.org/def/vtc#desiredBehaviour")) {
                         purpose = op.getValue().toString().replace("\"","");
-                        tc.setPurpose(purpose);
+                        tc.setPurpose(purpose.replace("^^xsd:string",""));
                     } else if (op.getProperty().toString().contains("http://purl.org/dc/terms/identifier")) {
                         source = op.getValue().toString().replace("\"","");
                         tc.setSource(source);
