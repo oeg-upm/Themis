@@ -14,7 +14,7 @@ Themis will provide the result for each test and each ontology, indicating as we
 # Using the Rest API
 In order to use our REST API, check our [online documentation](http://themis.linkeddata.es/swagger-ui/index.html) 
 
-## Using the JAR 
+# Using the JAR 
 Command:  java-jar themis.jar [-p file path | -t test file content | -r RDF test file | -l list of tests] [-o ontology file] [-g glossary of terms]  [-f format of the results]
 
 ## Inputs
