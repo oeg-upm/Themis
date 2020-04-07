@@ -15,10 +15,10 @@ Themis will provide the result for each test and each ontology, indicating as we
 In order to use our REST API, check our [online documentation](http://themis.linkeddata.es/swagger-ui/index.html) 
 
 # Using the JAR 
-Command:  java-jar themis.jar -t test file  -o ontology file [-g glossary of terms]  [-f format of the results]
+Command:  java-jar themis.jar -t test file  -o ontology file [-g glossary of terms]  [-r format of the results]
 
 #### Example
- java -jar themis.jar -t testsuite.ttl -f rdf -o ontology.ttl -f junit
+ java -jar themis.jar -t testsuite.ttl -o ontology.ttl -r junit
 
 ## Inputs
 The command can receive the following inputs:
