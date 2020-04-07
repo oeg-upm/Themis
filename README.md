@@ -17,6 +17,9 @@ In order to use our REST API, check our [online documentation](http://themis.lin
 # Using the JAR 
 Command:  java-jar themis.jar [-p file path | -t test file content | -r RDF test file | -l list of tests] [-o ontology file] [-g glossary of terms]  [-f format of the results]
 
+#### Example
+ java -jar themis.jar -r testsuite.ttl -o ontology.ttl -f junit
+
 ## Inputs
 The command can receive the following inputs:
 * *Ontology file*: the user can add one or more than one ontology, which will be loaded and its glossary of terms automatically generated
