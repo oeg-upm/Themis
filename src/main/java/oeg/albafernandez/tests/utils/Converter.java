@@ -12,9 +12,9 @@ public class Converter {
      String headerTable="<table style=\"width: 100%\" vocab=\"https://w3id.org/def/vtc#\">\n" +
              "     <thead>\n" +
              "          <tr>\n" +
+             "               <th>Ontology</th>\n" +
              "               <th>Test</th>\n" +
              "               <th>Result</th>\n" +
-             "               <th>Ontology</th>\n" +
              "          </tr>\n" +
              "      </thead>";
      String endTable="</table>\n";
@@ -42,12 +42,9 @@ public class Converter {
                  }
              }
              startBody+=" <tr vocab=\"https://w3id.org/def/vtc#\" typeof=\"TestCaseResult\">\n" +
-                     "               <td property=\"isRelatedToDesign\" typeof=\"TestCaseDesign\"><span property=\"desiredBehaviour\">"+test+"</span></td>               \n" +
-                     "\n" +
                      "              <td> <span property=\"hasExecution\" typeof=\"Execution\"><a property=\"isExecutedOn\" href=\""+ontology+"\">"+ontology+"</a><span property=\"hasTestResult\" content=\""+result+"\"></span> </span></td>\n" +
-                     "\n" +
+                     "               <td property=\"isRelatedToDesign\" typeof=\"TestCaseDesign\"><span property=\"desiredBehaviour\">"+test+"</span></td>               \n" +
                      "              <td> "+result+" </td>\n" +
-                     "            \n" +
                      "          </tr>";
          } catch (JSONException e) {
              e.printStackTrace();

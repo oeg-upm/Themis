@@ -52,7 +52,6 @@ public class ThemisFileManager {
             ThemisImplementer impl = new ThemisImplementer();
             testsuiteDesign.addAll(impl.loadTestCaseDesign("", testfile));
             return  testsuiteDesign;
-
     }
 
     public  List<String> parseRDFa(String html) throws SAXException, IOException, ParseException, OWLOntologyCreationException, OWLOntologyStorageException, JSONException {
