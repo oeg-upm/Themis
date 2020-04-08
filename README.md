@@ -20,6 +20,7 @@ Command:  `java-jar themis.jar -t test file  -o ontology file [-g glossary of te
 #### Example
  `java -jar themis.jar -t testsuite.ttl -o ontology.ttl -r junit`
 
+
 ## Inputs
 The command can receive the following inputs:
 * *Ontology file*: the user can add one ontology in a file, which will be loaded and its glossary of terms automatically generated
