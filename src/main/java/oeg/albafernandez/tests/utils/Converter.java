@@ -82,12 +82,15 @@ public class Converter {
                         if(obj.getJSONObject(0).has("Ontology")){
                             ontology = obj.getJSONObject(0).getString("Ontology");
                         }
-                        if(!result.equalsIgnoreCase("passed")){
+                        if(result.equalsIgnoreCase("conflict")){
                             String msg="";
                             failures++;
-                            if(result.equalsIgnoreCase("conflict")){
-                                msg="There is an inconsistency between the ontology and the requirement associated to the test\n";
-                            }else if(result.equalsIgnoreCase("Absent")){
+                            msg="There is an inconsistency between the ontology and the requirement associated to the test\n";
+                            testcases+="\t\t\t<failure message=c"+msg+" with URI "+ontology+"\">" +
+                                    "</failure>\n";
+                        }else if(result.equalsIgnoreCase("Absent") || result.equalsIgnoreCase("Incorrect") || result.equalsIgnoreCase("Undefined")){
+                            String msg="";
+                            if(result.equalsIgnoreCase("Absent")){
                                 msg="A restriction included in the test may be missing in the ontology";
                             }else if(result.equalsIgnoreCase("Undefined")){
                                 if(obj.getJSONObject(0).has("Undefined")){
@@ -100,9 +103,12 @@ public class Converter {
                                 }else
                                     msg="There are tests in the test that are not defined as in the ontology";
                             }
-                            testcases+="\t\t\t<failure message="+msg+" with URI "+ontology+">" +
-                                    "</failure>\n";
+                            testcases+="\t\t\t<error message=\""+msg+" with URI "+ontology+"\">" +
+                                    "</error>\n";
+
                         }
+
+
                         testcases+="\t\t</testcase>\n";
                     }
 
