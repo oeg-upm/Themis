@@ -166,7 +166,7 @@ public class ThemisImplementer {
             this.setTestCase(unionTest(purpose.replace(","," "),"union", testCase));
         }else if(purposecloned.matches("[^\\s]+ domain [^\\s]+")){
             this.setTestCase(domainTest(purpose.replace(","," "), testCase));
-        }else if(purposecloned.matches("[^\\s]+ range (xsd:string|xsd:float|xsd:integer|string|float|integer|owl:rational|rational|boolean|xsd:boolean|anyuri|xsd:anyuri|datetime|xsd:datetime|datetimestamp|xsd:datetimestamp)")){
+        }else if(purposecloned.matches("[^\\s]+ range (xsd:string|xsd:float|xsd:integer|string|float|integer|owl:rational|rational|boolean|xsd:boolean|anyuri|xsd:anyuri|datetime|xsd:datetime|datetimestamp|xsd:datetimestamp|xsd:double|double|xsd:long|long)")){
             this.setTestCase(rangeTestDP(purpose.replace(","," "), testCase));
         }else if(purposecloned.matches("[^\\s]+ range (rdfs:literal|literal)")){
             this.setTestCase(rangeTestDPLiteral(purpose.replace(","," "), testCase));
@@ -200,19 +200,19 @@ public class ThemisImplementer {
             this.setTestCase(coParticipantODPTestExistential(purpose, testCase));
         }else if(purposecloned.matches("[^\\s]+ and [^\\s]+ subclassof (hascoparticipant|iscoparticipantin|cooparticipates) only [^\\s]+")){
             this.setTestCase(coParticipantODPTestUniversal(purpose, testCase));
-        }else if(purposecloned.matches("[^\\s]+ subclassof [^\\s]+ some (xsd:string|xsd:float|xsd:integer|string|float|integer|owl:rational|rational|boolean|xsd:boolean|anyuri|xsd:anyuri|datetime|xsd:datetime|datetimestamp|xsd:datetimestamp)")){
+        }else if(purposecloned.matches("[^\\s]+ subclassof [^\\s]+ some (xsd:string|xsd:float|xsd:integer|string|float|integer|owl:rational|rational|boolean|xsd:boolean|anyuri|xsd:anyuri|datetime|xsd:datetime|datetimestamp|xsd:datetimestamp|xsd:double|double|xsd:long|long)")){
             this.setTestCase(existentialRangeDP(purpose.replace("\\","\\\""),testCase));
-        }else if(purposecloned.matches("[^\\s]+ subclassof [^\\s]+ only (xsd:string|xsd:float|xsd:integer|string|float|integer|owl:rational|rational|boolean|xsd:boolean|anyuri|xsd:anyuri|datetime|xsd:datetime|datetimestamp|xsd:datetimestamp)")){
+        }else if(purposecloned.matches("[^\\s]+ subclassof [^\\s]+ only (xsd:string|xsd:float|xsd:integer|string|float|integer|owl:rational|rational|boolean|xsd:boolean|anyuri|xsd:anyuri|datetime|xsd:datetime|datetimestamp|xsd:datetimestamp|xsd:double|double|xsd:long|long)")){
             this.setTestCase(universalRangeDP(purpose.replace("\\","\\\""),testCase));
         }else if(purposecloned.matches("[^\\s]+ subclassof (\\w*)(?!hasparticipant | ?!isparticipantin | ?!haslocation| ?!islocationof | ?!hasrole| ?!isroleof) some [^\\s]+")){
             this.setTestCase(existentialRange(purpose, testCase));
         }else if(purposecloned.matches("[^\\s]+ subclassof (\\w*)(?!hasparticipant | ?!isparticipantin | ?!haslocation| ?!islocationof | ?!hasrole| ?!isroleof) only [^\\s]+")){
             this.setTestCase(universalRange(purpose, testCase));
-        }else if(purposecloned.matches("[^\\s]+ subclassof [^\\s]+ min (\\d+) (xsd:string|xsd:float|xsd:integer|string|float|integer|owl:rational|rational|boolean|xsd:boolean|anyuri|xsd:anyuri|datetime|xsd:datetime|datetimestamp|xsd:datetimestamp)")){
+        }else if(purposecloned.matches("[^\\s]+ subclassof [^\\s]+ min (\\d+) (xsd:string|xsd:float|xsd:integer|string|float|integer|owl:rational|rational|boolean|xsd:boolean|anyuri|xsd:anyuri|datetime|xsd:datetime|datetimestamp|xsd:datetimestamp|xsd:double|double|xsd:long|long)")){
             this.setTestCase(cardinalityDP(purpose, "min",testCase));
-        }else if(purposecloned.matches("[^\\s]+ subclassof [^\\s]+ max (\\d+) (xsd:string|xsd:float|xsd:integer|string|float|integer|owl:rational|rational|boolean|xsd:boolean|anyuri|xsd:anyuri|datetime|xsd:datetime|datetimestamp|xsd:datetimestamp)")){
+        }else if(purposecloned.matches("[^\\s]+ subclassof [^\\s]+ max (\\d+) (xsd:string|xsd:float|xsd:integer|string|float|integer|owl:rational|rational|boolean|xsd:boolean|anyuri|xsd:anyuri|datetime|xsd:datetime|datetimestamp|xsd:datetimestamp|xsd:double|double|xsd:long|long)")){
             this.setTestCase(cardinalityDP(purpose, "max",testCase));
-        }else if(purposecloned.matches("[^\\s]+ subclassof [^\\s]+ exactly (\\d+) (xsd:string|xsd:float|xsd:integer|string|float|integer|owl:rational|rational|boolean|xsd:boolean|anyuri|xsd:anyuri|datetime|xsd:datetime|datetimestamp|xsd:datetimestamp)")){
+        }else if(purposecloned.matches("[^\\s]+ subclassof [^\\s]+ exactly (\\d+) (xsd:string|xsd:float|xsd:integer|string|float|integer|owl:rational|rational|boolean|xsd:boolean|anyuri|xsd:anyuri|datetime|xsd:datetime|datetimestamp|xsd:datetimestamp|xsd:double|double|xsd:long|long)")){
             this.setTestCase(cardinalityDP(purpose, "exactly",testCase));
         }else if(purposecloned.matches("[^\\s]+ subclassof [^\\s]+ min (\\d+) [^\\s]+")){
             this.setTestCase(cardinality(purpose, "min",testCase));
@@ -234,7 +234,7 @@ public class ThemisImplementer {
             this.setTestCase(multipleSubClassTest(purpose,testCase));
         }else if(purposecloned.matches("[^\\s]+ subclassof [^\\s]+")){
             this.setTestCase(subClassTest(purpose, "strict subclass",testCase));
-        }else if(purposecloned.matches("[^\\s]+ [^\\s]+ (xsd:string|xsd:float|xsd:integer|rdfs:literal|xsd:datetime|xsd:datetimestamp|string|float|integer|datetime|owl:rational|rational|boolean|xsd:boolean|anyuri|xsd:anyuri|literal|xsd:literal)")){
+        }else if(purposecloned.matches("[^\\s]+ [^\\s]+ (xsd:string|xsd:float|xsd:integer|rdfs:literal|xsd:datetime|xsd:datetimestamp|string|float|integer|datetime|owl:rational|rational|boolean|xsd:boolean|anyuri|xsd:anyuri|literal|xsd:literal|xsd:double|double|xsd:long|long)")){
             this.setTestCase(domainRangeTestDP(purpose, testCase));
         } else if(purposecloned.matches("[^\\s]+ [^\\s]+ [^\\s]+")){
             this.setTestCase(domainRangeTest(purpose, testCase));

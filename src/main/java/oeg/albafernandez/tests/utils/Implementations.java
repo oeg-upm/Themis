@@ -104,7 +104,7 @@ public class Implementations {
 
    /*cardinality for DP*/
    public static TestCaseImpl cardinalityDP(String purpose, String type, TestCaseImpl testCase){
-      Pattern p1 = Pattern.compile("(.*) subclassof (.*) (min|max|exactly) (\\d+) (xsd:string|xsd:float|xsd:integer|string|float|integer|owl:rational|rational|boolean|xsd:boolean|anyuri|xsd:anyuri)", Pattern.CASE_INSENSITIVE);
+      Pattern p1 = Pattern.compile("(.*) subclassof (.*) (min|max|exactly) (\\d+) (xsd:string|xsd:float|xsd:integer|string|float|integer|owl:rational|rational|boolean|xsd:boolean|anyuri|xsd:anyuri|xsd:double|double|xsd:long|long)", Pattern.CASE_INSENSITIVE);
       Matcher m = p1.matcher(purpose);
 
       /*Generation of classes*/
@@ -116,7 +116,7 @@ public class Implementations {
 
       String datatype = "";
       datatype = m.group(5).toString();
-      if( datatype.equals("string") || datatype.equals("integer") ||  datatype.equals("float") || datatype.equals("boolean") || datatype.equals("anyuri"))
+      if( datatype.equals("string") || datatype.equals("integer") || datatype.equals("double")  || datatype.equals("long") ||  datatype.equals("float") || datatype.equals("boolean") || datatype.equals("anyuri"))
          datatype = "<http://www.w3.org/2001/XMLSchema#"+datatype+">";
       else if(datatype.equals("rational")){
          datatype = "<http://www.w3.org/2002/07/owl#"+datatype+">";
@@ -763,7 +763,7 @@ public class Implementations {
    /*for range dp*/
    /*Meter datetime*/
    public static TestCaseImpl rangeTestDP(String purpose, TestCaseImpl testCase){
-      Pattern p = Pattern.compile("(.*) range (xsd:string|xsd:float|xsd:integer|string|float|integer|owl:rational|rational|boolean|xsd:boolean|anyuri|xsd:anyuri|datetime|xsd:datetime|datetimestamp|xsd:datetimestamp|literal|rdfs:literal)",Pattern.CASE_INSENSITIVE);
+      Pattern p = Pattern.compile("(.*) range (xsd:string|xsd:float|xsd:integer|string|float|integer|owl:rational|rational|boolean|xsd:boolean|anyuri|xsd:anyuri|datetime|xsd:datetime|datetimestamp|xsd:datetimestamp|literal|rdfs:literal|xsd:double|double|xsd:long|long)",Pattern.CASE_INSENSITIVE);
       Matcher m = p.matcher(purpose);
 
       /*Generation of classes*/
@@ -1606,7 +1606,7 @@ public class Implementations {
 
    /*for range (strict) universal restriction DP*/
    public static TestCaseImpl existentialRangeDP(String purpose, TestCaseImpl testCase){
-      Pattern p = Pattern.compile("(.*) subclassof (.*) some (xsd:string|xsd:float|xsd:integer|string|float|integer|owl:rational|rational|boolean|xsd:boolean|anyuri|xsd:anyuri|datetime|xsd:datetime|datetimestamp|xsd:datetimestamp|literal|rdfs:literal)", Pattern.CASE_INSENSITIVE);
+      Pattern p = Pattern.compile("(.*) subclassof (.*) some (xsd:string|xsd:float|xsd:integer|string|float|integer|owl:rational|rational|boolean|xsd:boolean|anyuri|xsd:anyuri|datetime|xsd:datetime|datetimestamp|xsd:datetimestamp|literal|rdfs:literal|xsd:double|double|xsd:long|long)", Pattern.CASE_INSENSITIVE);
       Matcher m = p.matcher(purpose);
 
       /*Generation of classes*/
@@ -1713,7 +1713,7 @@ public class Implementations {
          }
       }
 
-      Pattern p = Pattern.compile("(.*) subclassof (.*) only (xsd:string|xsd:float|xsd:integer|string|float|integer|owl:rational|rational|boolean|xsd:boolean|anyuri|xsd:anyuri|datetime|xsd:datetime|datetimestamp|xsd:datetimestamp|literal|rdfs:literal)", Pattern.CASE_INSENSITIVE);
+      Pattern p = Pattern.compile("(.*) subclassof (.*) only (xsd:string|xsd:float|xsd:integer|string|float|integer|owl:rational|rational|boolean|xsd:boolean|anyuri|xsd:anyuri|datetime|xsd:datetime|datetimestamp|xsd:datetimestamp|literal|rdfs:literal|xsd:double|double|xsd:long|long)", Pattern.CASE_INSENSITIVE);
       Matcher m = p.matcher(purpose);
 
       /*Generation of classes*/
@@ -1722,7 +1722,7 @@ public class Implementations {
       String classA1 = classA+"1";
       String R = m.group(2).toString();
       String datatype = "";
-      datatype = m.group(3).toString().replaceAll("\\(","").replaceAll("\\)","");;
+      datatype = m.group(3).toString().replaceAll("\\(","").replaceAll("\\)","").toLowerCase();;
       String nodatatype =  "No"+datatype.split("(#|\\/)")[datatype.split("(#|\\/)").length-1];
 
       /*Preconditions*/
@@ -1840,13 +1840,71 @@ public class Implementations {
 
       manager.removeOntology(ont2);
 
+
+      OWLOntology ont3 = null;
+      try {
+         ont3 = manager.createOntology(IRI.create(base));
+      } catch (OWLOntologyCreationException e) {
+         ont3 = null;
+      }
+
+      OWLNamedIndividual indOWL5 = dataFactory.getOWLNamedIndividual(IRI.create("ind5"));
+      OWLDeclarationAxiom axiomIndClassA = dataFactory.getOWLDeclarationAxiom(indOWL5);
+      OWLClassAssertionAxiom indAClassAAssertionAxiom = dataFactory.getOWLClassAssertionAxiom(classOWLA, indOWL5);
+
+      OWLDataPropertyAssertionAxiom dataPropertyAssertionAxiom;
+      if(datatype.contains("string") || datatype.contains("literal") || datatype.contains("rational")  ) {
+         dataPropertyAssertionAxiom = dataFactory.getOWLDataPropertyAssertionAxiom(prop, indOWL5, "Example text");
+      }else if(datatype.contains("boolean")) {
+         OWLLiteral dataLiteral = dataFactory.getOWLLiteral("true",
+                 OWL2Datatype.XSD_BOOLEAN);
+         dataPropertyAssertionAxiom = dataFactory.getOWLDataPropertyAssertionAxiom(prop, indOWL5, dataLiteral);
+      }else if(datatype.contains("integer") || datatype.contains("long")){
+         OWLLiteral dataLiteral = dataFactory.getOWLLiteral("1",
+                 OWL2Datatype.XSD_INTEGER);
+         dataPropertyAssertionAxiom = dataFactory.getOWLDataPropertyAssertionAxiom(prop, indOWL5, dataLiteral);
+      }else if(datatype.contains("float") || datatype.contains("double") ){
+         OWLLiteral dataLiteral = dataFactory.getOWLLiteral("1.0",
+                 OWL2Datatype.XSD_FLOAT);
+         dataPropertyAssertionAxiom = dataFactory.getOWLDataPropertyAssertionAxiom(prop, indOWL5, dataLiteral);
+      }else if(datatype.contains("uri")){
+         OWLLiteral dataLiteral = dataFactory.getOWLLiteral("http://example.org/ns#",
+                 OWL2Datatype.XSD_ANY_URI);
+         dataPropertyAssertionAxiom = dataFactory.getOWLDataPropertyAssertionAxiom(prop, indOWL5, dataLiteral);
+      }else if(datatype.contains("datetime")){
+         OWLLiteral dataLiteral = dataFactory.getOWLLiteral("2001-10-26T21:32:52.12679",
+                 OWL2Datatype.XSD_DATE_TIME);
+         dataPropertyAssertionAxiom = dataFactory.getOWLDataPropertyAssertionAxiom(prop, indOWL5, dataLiteral);
+      } else if(datatype.contains("datetimestamp")){
+         OWLLiteral dataLiteral = dataFactory.getOWLLiteral("2001-10-26T21:32:52.12679",
+                 OWL2Datatype.XSD_DATE_TIME_STAMP);
+         dataPropertyAssertionAxiom = dataFactory.getOWLDataPropertyAssertionAxiom(prop, indOWL5, dataLiteral);
+      } else{
+         dataPropertyAssertionAxiom = dataFactory.getOWLDataPropertyAssertionAxiom(prop, indOWL5, "Example text");
+
+      }
+
+
+
+      manager.applyChanges(manager.addAxiom(ont3, axiomIndClassA));
+      manager.applyChanges(manager.addAxiom(ont3, indAClassAAssertionAxiom));
+      manager.applyChanges(manager.addAxiom(ont3, dataPropertyAssertionAxiom));
+
+      OWLOntology assertion3 = manager.getOntology(IRI.create(base));
+
+      String expectedoutputassertion3 = "consistent";
+
+      manager.removeOntology(ont3);
+
       LinkedHashMap<String, OWLOntology> hashinput = new LinkedHashMap();
       hashinput.put("Assertion 1", assertion1);
       hashinput.put("Assertion 2", assertion2);
+      hashinput.put("Assertion 3", assertion3);
 
       LinkedHashMap<String, String> hashoutput = new LinkedHashMap();
       hashoutput.put("Assertion 1",expectedoutputassertion1);
       hashoutput.put("Assertion 2",expectedoutputassertion2);
+      hashoutput.put("Assertion 3",expectedoutputassertion3);
 
       for (Map.Entry<String, String> entry : testCase.getAxiomExpectedResultAxioms().entrySet()) {
          hashoutput.put(entry.getKey(), entry.getValue());
@@ -4670,7 +4728,7 @@ public class Implementations {
    }
 
    public static TestCaseImpl domainRangeTestDP(String purpose, TestCaseImpl testCase){
-      Pattern p = Pattern.compile("(.*) (.*) (xsd:string|xsd:float|xsd:integer|rdfs:literal|xsd:datetime|xsd:datetimestamp|string|float|integer|datetime|owl:rational|rational|boolean|xsd:boolean|anyuri|xsd:anyuri|literal|rdfs:literal)",Pattern.CASE_INSENSITIVE);
+      Pattern p = Pattern.compile("(.*) (.*) (xsd:string|xsd:float|xsd:integer|rdfs:literal|xsd:datetime|xsd:datetimestamp|string|float|integer|datetime|owl:rational|rational|boolean|xsd:boolean|anyuri|xsd:anyuri|literal|rdfs:literal|xsd:double|double|xsd:long|long)",Pattern.CASE_INSENSITIVE);
       Matcher m = p.matcher(purpose);
 
       /*Generation of classes*/
@@ -4726,15 +4784,25 @@ public class Implementations {
       OWLDataProperty prop = dataFactory.getOWLDataProperty(IRI.create(propertyA));
 
       OWLDataPropertyAssertionAxiom dataPropertyAssertionAxiom;
-      if(datatypeB.contains("string") || datatypeB.contains("uri") || datatypeB.contains("literal") || datatypeB.contains("rational")  ) {
+      if(datatypeB.contains("string") || datatypeB.contains("literal") || datatypeB.contains("rational")  ) {
          dataPropertyAssertionAxiom = dataFactory.getOWLDataPropertyAssertionAxiom(prop, indClassA, "Example text");
       }else if(datatypeB.contains("boolean")) {
-         dataPropertyAssertionAxiom = dataFactory.getOWLDataPropertyAssertionAxiom(prop, indClassA, true);
-      }else if(datatypeB.contains("integer")){
-         dataPropertyAssertionAxiom = dataFactory.getOWLDataPropertyAssertionAxiom(prop, indClassA, 1);
+         OWLLiteral dataLiteral = dataFactory.getOWLLiteral("true",
+                 OWL2Datatype.XSD_BOOLEAN);
+         dataPropertyAssertionAxiom = dataFactory.getOWLDataPropertyAssertionAxiom(prop, indClassA, dataLiteral);
+      }else if(datatypeB.contains("integer") || datatypeB.contains("long")){
+         OWLLiteral dataLiteral = dataFactory.getOWLLiteral("1",
+                 OWL2Datatype.XSD_INTEGER);
+         dataPropertyAssertionAxiom = dataFactory.getOWLDataPropertyAssertionAxiom(prop, indClassA, dataLiteral);
       }else if(datatypeB.contains("float") || datatypeB.contains("double") ){
-         dataPropertyAssertionAxiom = dataFactory.getOWLDataPropertyAssertionAxiom(prop, indClassA, 1.0);
-      } else if(datatypeB.contains("datetime")){
+         OWLLiteral dataLiteral = dataFactory.getOWLLiteral("1.0",
+                 OWL2Datatype.XSD_FLOAT);
+         dataPropertyAssertionAxiom = dataFactory.getOWLDataPropertyAssertionAxiom(prop, indClassA, dataLiteral);
+      }else if(datatypeB.contains("uri")){
+         OWLLiteral dataLiteral = dataFactory.getOWLLiteral("http://example.org/ns#",
+                 OWL2Datatype.XSD_ANY_URI);
+         dataPropertyAssertionAxiom = dataFactory.getOWLDataPropertyAssertionAxiom(prop, indClassA, dataLiteral);
+      }else if(datatypeB.contains("datetime")){
          OWLLiteral dataLiteral = dataFactory.getOWLLiteral("2001-10-26T21:32:52.12679",
                  OWL2Datatype.XSD_DATE_TIME);
          dataPropertyAssertionAxiom = dataFactory.getOWLDataPropertyAssertionAxiom(prop, indClassA, dataLiteral);
