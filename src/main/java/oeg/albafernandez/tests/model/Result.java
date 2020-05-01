@@ -8,23 +8,12 @@ public class Result {
     private String got;
     @Schema(description = "List of ontologies URIs to be analysed",example = "[\"http://iot.linkeddata.es/def/core\"]",required = false)
     private List<String> ontologies;
-    @Schema(description = "List of ontologies code to be analysed", example="[]",required = false)
+    @Schema(description = "List of ontologies code to be analysed", example = "[]",required = false)
     private List<String> ontologiesCode;
-    @Schema(description = "Test file with the tests to be executed", example = "@prefix : <http://vicinity.iot.linkeddata.es/vicinity/testing/testsuite-datatype.ttl#> .\n" +
-            "@prefix owl: <http://www.w3.org/2002/07/owl#> .\n" +
-            "@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .\n" +
-            "@prefix xml: <http://www.w3.org/XML/1998/namespace> .\n" +
-            "@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .\n" +
-            "@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .\n" +
-            "@prefix dcterms: <http://purl.org/dc/terms/> .\n" +
-            "@prefix vtc: <http://w3id.org/def/vtc#> .\n" +
-            "@base <http://vicinity.iot.linkeddata.es/vicinity/testing/testsuite-datatype.ttl#> . :Test1 rdf:type <http://w3id.org/def/vtc#TestCaseDesign> ,\n" +
-            "                         owl:NamedIndividual ;\n" +
-            "             vtc:belongsTo :TestsuiteDatatype;\n" +
-            "             vtc:isRelatedToRequirement <http://vicinity.iot.linkeddata.es/vicinity/requirements/report-datatypes.html#datatypes-11>;\n" +
-            "             <http://w3id.org/def/vtc#desiredBehaviour> \"Array subclassOf firstArraryItem only JSONSchema\"^^xsd:string .")
+    @Schema(description = "Test file with the tests to be executed",
+            example = "@prefix : <http://vicinity.iot.linkeddata.es/vicinity/testing/testsuite-datatype.ttl#> . @prefix owl: <http://www.w3.org/2002/07/owl#> . @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> . @prefix vtc: <http://w3id.org/def/vtc#> . @base <http://vicinity.iot.linkeddata.es/vicinity/testing/testsuite-datatype.ttl#> . :Test1 rdf:type <http://w3id.org/def/vtc#TestCaseDesign> , owl:NamedIndividual ; vtc:isRelatedToRequirement <http://vicinity.iot.linkeddata.es/vicinity/requirements/report-datatypes.html#datatypes-11>; http://w3id.org/def/vtc#desiredBehaviour> \"Array subclassOf firstArraryItem only JSONSchema\"^^xsd:string .")
     private String testfile;
-    @Schema(description = "HTML + RDFa document with test cases following the VTC ontology", example=" ")
+    @Schema(description = "HTML + RDFa document with test cases following the VTC ontology", example = "<table prefix=\"rdf: http://www.w3.org/1999/02/22-rdf-syntax-ns# vtc: http://w3id.org/def/vtc# owl: http://www.w3.org/2002/07/owl# xsd: http://www.w3.org/2001/XMLSchema#\" > <thead> <tr><th class=\"col-md-2\">Identifier </th> <th class=\"col-md-1\">Category</th> <th class=\"col-md-4\">Competency Question</th> </tr></thead> <tbody> <tr resource=\"#1\" typeof=\"vtc:TestCaseDesign owl:NamedIndividual\"> <td class=\"tg-031e\"><span property=\"vtc:isRelatedToRequirement\">WoT1</span></td> <td class=\"tg-031e\"><span property=\"vtc:desiredBehaviour\">Thing type Class</span></td> <td class=\"tg-031e\">What is a thing in the web thing context?</td> </tr> </tbody></table>")
     private String documentationFile;
     @Schema(description = "List of tests to be executed", example = "[\"Sensor type Class\", \"Sensor subclassOf Device\"]")
     private List<String> tests;

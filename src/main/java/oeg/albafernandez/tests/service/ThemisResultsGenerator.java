@@ -81,11 +81,25 @@ public class ThemisResultsGenerator {
         //get the right term in the glossary
         for (int i = 0; i < key.length(); i++) {
             JSONObject object = key.getJSONObject(i);
-            Iterator<String> it = object.keys();
-            while (it.hasNext()) {
-                String term = object.getString(it.next());
-                String uri = object.getString(it.next());
-                got.put(term, IRI.create(uri));
+            if(object.has("Type")){
+                Iterator<String> it = object.keys();
+
+                while (it.hasNext()) {
+                    String type = object.getString(it.next());
+                    String term = object.getString(it.next());
+                    String uri = object.getString(it.next());
+
+                    got.put(term, IRI.create(uri));
+                }
+            }else{
+                Iterator<String> it = object.keys();
+
+                while (it.hasNext()) {
+                    String term = object.getString(it.next());
+                    String uri = object.getString(it.next());
+
+                    got.put(term, IRI.create(uri));
+                }
             }
         }
         return got;

@@ -29,6 +29,8 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import java.io.*;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /*This class  defines all the functions that are called by the webapp in order to load the ontology to be validated,
 * to executeTest the tests, export the tests or get the got*/
@@ -39,7 +41,40 @@ public class APIController {
     final static Logger logger = Logger.getLogger(APIController.class);
     ThemisSyntaxChecker syntaxChecker = new ThemisSyntaxChecker();
 
+
     @GET
+    @Path("/exampleFile")
+    @Produces({ MediaType.TEXT_PLAIN})
+    public Response getTestExampleFile(@Context HttpServletRequest req,  @QueryParam("uri") String ontologyURL) throws OWLOntologyStorageException, IOException {
+        if(ontologyURL !=null) {
+            Ontology ontology = new Ontology();
+            ontology.loadOntologyURL(ontologyURL.toString().replace("\"", ""));
+            ThemisExampleGenerator exampleGenerator = new ThemisExampleGenerator();
+            ArrayList<String> tests = exampleGenerator.generateExampleFromOntology(ontology);
+            if (!tests.isEmpty()) {
+                java.io.OutputStream output = new ByteArrayOutputStream();
+                OutputStream outputs = ThemisImplementer.storeTestCaseDesign(tests, output);
+                String outputString = outputs.toString();
+                return Response
+                        .status(200)
+                        .entity(outputString)
+                        .build();
+            } else
+                return  Response
+                        .status(200)
+                        .entity("no tests")
+                        .build();
+        }else {
+            return Response
+                    .status(200)
+                    .entity("no uri")
+                    .build();
+        }
+    }
+
+
+
+        @GET
     @Path("/removegot")
     @Produces({ MediaType.APPLICATION_JSON})
     @Hidden
@@ -80,7 +115,6 @@ public class APIController {
                     @ApiResponse( responseCode = "204", description = "Some tests could not be executed",  content = @Content(mediaType = "application/json")),
                     @ApiResponse( responseCode = "500", description = "Internal error. Check inputs",  content = @Content(mediaType = "application/json")),
             })
-
     public Response getResults(Result results){
         List<String> ontologies = results.getOntologies();
         List<String> ontologiesCode = results.getOntologiesCode();

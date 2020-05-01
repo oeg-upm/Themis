@@ -282,15 +282,15 @@ public class ThemisSyntaxChecker {
 
     public  String  getGoT(Ontology onto) throws JSONException, OWLOntologyStorageException {
 
-            HashMap<String, IRI> elements = new HashMap<>();
-            elements.putAll(onto.getClasses());
-            elements.putAll(onto.getObjectProperties());
-            elements.putAll(onto.getDatatypeProperties());
-            elements.putAll(onto.getIndividuals());
+        HashMap<String, IRI> elements = new HashMap<>();
+        elements.putAll(onto.getClasses());
+        elements.putAll(onto.getObjectProperties());
+        elements.putAll(onto.getDatatypeProperties());
+        elements.putAll(onto.getIndividuals());
 
-            GoT report = new GoT();
-            String reportText = report.generateReport(onto.getKeyName(), elements);
-            JSONObject linkToReportGoT = new JSONObject();
+        GoT report = new GoT();
+        String reportText =  report.generateReport(onto.getKeyName(), (HashMap<String, IRI>) onto.getClasses(), onto.getObjectProperties(), onto.getDatatypeProperties(), onto.getIndividuals());
+        JSONObject linkToReportGoT = new JSONObject();
             linkToReportGoT.put("got", reportText);
             linkToReportGoT.put("key", onto.getKeyName());
             linkToReportGoT.put("uri", onto.getProv());

@@ -834,6 +834,14 @@ public class Implementations {
       }else if(datatypeA.contains("datetime")){
          assertionAxiom2 = dataFactory.getOWLDataPropertyAssertionAxiom(prop, ind1, dataFactory.getOWLLiteral("2001-10-26T21:32:52.12679",
                  OWL2Datatype.XSD_DATE_TIME));
+      }else if( datatypeA.contains("double") ){
+         OWLLiteral dataLiteral = dataFactory.getOWLLiteral("1.0",
+                 OWL2Datatype.XSD_FLOAT);
+         assertionAxiom2 = dataFactory.getOWLDataPropertyAssertionAxiom(prop, ind1, dataLiteral);
+      }else if( datatypeA.contains("double") ){
+         OWLLiteral dataLiteral = dataFactory.getOWLLiteral("1.0",
+                 OWL2Datatype.XSD_DOUBLE);
+         assertionAxiom2 = dataFactory.getOWLDataPropertyAssertionAxiom(prop, ind1, dataLiteral);
       }else{
          assertionAxiom2 = dataFactory.getOWLDataPropertyAssertionAxiom(prop, ind1, 1);
       }
@@ -1682,11 +1690,134 @@ public class Implementations {
 
       manager.removeOntology(ont1);
 
+      OWLOntology ont2 = null;
+      try {
+         ont2 = manager.createOntology(IRI.create(base));
+      } catch (OWLOntologyCreationException e) {
+         ont2 = null;
+      }
+
+      OWLNamedIndividual indOWL5 = dataFactory.getOWLNamedIndividual(IRI.create("ind5"));
+      OWLDeclarationAxiom axiomIndClassA = dataFactory.getOWLDeclarationAxiom(indOWL5);
+      OWLClassAssertionAxiom indAClassAAssertionAxiom = dataFactory.getOWLClassAssertionAxiom(classOWLA, indOWL5);
+
+      OWLDataPropertyAssertionAxiom dataPropertyAssertionAxiom;
+      if(datatype.contains("string") || datatype.contains("literal") || datatype.contains("rational")  ) {
+         OWLLiteral dataLiteral = dataFactory.getOWLLiteral("true",
+                 OWL2Datatype.XSD_BOOLEAN);
+         dataPropertyAssertionAxiom = dataFactory.getOWLDataPropertyAssertionAxiom(prop, indOWL5, dataLiteral);
+      }else if(datatype.contains("boolean")) {
+         OWLLiteral dataLiteral = dataFactory.getOWLLiteral("true",
+                 OWL2Datatype.XSD_STRING);
+         dataPropertyAssertionAxiom = dataFactory.getOWLDataPropertyAssertionAxiom(prop, indOWL5, dataLiteral);
+      }else if(datatype.contains("integer") || datatype.contains("long")){
+         OWLLiteral dataLiteral = dataFactory.getOWLLiteral("1.0",
+                 OWL2Datatype.XSD_FLOAT);
+         dataPropertyAssertionAxiom = dataFactory.getOWLDataPropertyAssertionAxiom(prop, indOWL5, dataLiteral);
+      }else if(datatype.contains("float")  ){
+         OWLLiteral dataLiteral = dataFactory.getOWLLiteral("1",
+                 OWL2Datatype.XSD_INTEGER);
+         dataPropertyAssertionAxiom = dataFactory.getOWLDataPropertyAssertionAxiom(prop, indOWL5, dataLiteral);
+      }else if(datatype.contains("double") ){
+         OWLLiteral dataLiteral = dataFactory.getOWLLiteral("1",
+                 OWL2Datatype.XSD_INTEGER);
+         dataPropertyAssertionAxiom = dataFactory.getOWLDataPropertyAssertionAxiom(prop, indOWL5, dataLiteral);
+      }else if(datatype.contains("uri")){
+         OWLLiteral dataLiteral = dataFactory.getOWLLiteral("1.0",
+                 OWL2Datatype.XSD_FLOAT);
+         dataPropertyAssertionAxiom = dataFactory.getOWLDataPropertyAssertionAxiom(prop, indOWL5, dataLiteral);
+      }else if(datatype.contains("datetime")){
+         OWLLiteral dataLiteral = dataFactory.getOWLLiteral("2001-10-26T21:32:52.12679",
+                 OWL2Datatype.XSD_STRING);
+         dataPropertyAssertionAxiom = dataFactory.getOWLDataPropertyAssertionAxiom(prop, indOWL5, dataLiteral);
+      } else if(datatype.contains("datetimestamp")){
+         OWLLiteral dataLiteral = dataFactory.getOWLLiteral("2001-10-26T21:32:52.12679",
+                 OWL2Datatype.XSD_STRING);
+         dataPropertyAssertionAxiom = dataFactory.getOWLDataPropertyAssertionAxiom(prop, indOWL5, dataLiteral);
+      } else{
+         dataPropertyAssertionAxiom = dataFactory.getOWLDataPropertyAssertionAxiom(prop, indOWL5, "Example text");
+
+      }
+
+
+
+      manager.applyChanges(manager.addAxiom(ont2, axiomIndClassA));
+      manager.applyChanges(manager.addAxiom(ont2, indAClassAAssertionAxiom));
+      manager.applyChanges(manager.addAxiom(ont2, dataPropertyAssertionAxiom));
+
+      OWLOntology assertion2 = manager.getOntology(IRI.create(base));
+
+      String expectedoutputassertion2 = "consistent";
+
+      manager.removeOntology(ont2);
+
+
+      OWLOntology ont3 = null;
+      try {
+         ont3 = manager.createOntology(IRI.create(base));
+      } catch (OWLOntologyCreationException e) {
+         ont3 = null;
+      }
+
+
+      if(datatype.contains("string") || datatype.contains("literal") || datatype.contains("rational")  ) {
+         dataPropertyAssertionAxiom = dataFactory.getOWLDataPropertyAssertionAxiom(prop, indOWL5, "Example text");
+      }else if(datatype.contains("boolean")) {
+         OWLLiteral dataLiteral = dataFactory.getOWLLiteral("true",
+                 OWL2Datatype.XSD_BOOLEAN);
+         dataPropertyAssertionAxiom = dataFactory.getOWLDataPropertyAssertionAxiom(prop, indOWL5, dataLiteral);
+      }else if(datatype.contains("integer") || datatype.contains("long")){
+         OWLLiteral dataLiteral = dataFactory.getOWLLiteral("1",
+                 OWL2Datatype.XSD_INTEGER);
+         dataPropertyAssertionAxiom = dataFactory.getOWLDataPropertyAssertionAxiom(prop, indOWL5, dataLiteral);
+      }else if(datatype.contains("float")  ){
+         OWLLiteral dataLiteral = dataFactory.getOWLLiteral("1.0",
+                 OWL2Datatype.XSD_FLOAT);
+         dataPropertyAssertionAxiom = dataFactory.getOWLDataPropertyAssertionAxiom(prop, indOWL5, dataLiteral);
+      }else if(datatype.contains("double") ){
+         OWLLiteral dataLiteral = dataFactory.getOWLLiteral("1.0",
+                 OWL2Datatype.XSD_DOUBLE);
+         dataPropertyAssertionAxiom = dataFactory.getOWLDataPropertyAssertionAxiom(prop, indOWL5, dataLiteral);
+      }else if(datatype.contains("uri")){
+         OWLLiteral dataLiteral = dataFactory.getOWLLiteral("http://example.org/ns#",
+                 OWL2Datatype.XSD_ANY_URI);
+         dataPropertyAssertionAxiom = dataFactory.getOWLDataPropertyAssertionAxiom(prop, indOWL5, dataLiteral);
+      }else if(datatype.contains("datetime")){
+         OWLLiteral dataLiteral = dataFactory.getOWLLiteral("2001-10-26T21:32:52.12679",
+                 OWL2Datatype.XSD_DATE_TIME);
+         dataPropertyAssertionAxiom = dataFactory.getOWLDataPropertyAssertionAxiom(prop, indOWL5, dataLiteral);
+      } else if(datatype.contains("datetimestamp")){
+         OWLLiteral dataLiteral = dataFactory.getOWLLiteral("2001-10-26T21:32:52.12679",
+                 OWL2Datatype.XSD_DATE_TIME_STAMP);
+         dataPropertyAssertionAxiom = dataFactory.getOWLDataPropertyAssertionAxiom(prop, indOWL5, dataLiteral);
+      } else{
+         dataPropertyAssertionAxiom = dataFactory.getOWLDataPropertyAssertionAxiom(prop, indOWL5, "Example text");
+
+      }
+
+
+
+      manager.applyChanges(manager.addAxiom(ont3, axiomIndClassA));
+      manager.applyChanges(manager.addAxiom(ont3, indAClassAAssertionAxiom));
+      manager.applyChanges(manager.addAxiom(ont3, dataPropertyAssertionAxiom));
+
+      OWLOntology assertion3 = manager.getOntology(IRI.create(base));
+
+      String expectedoutputassertion3 = "consistent";
+
+
       LinkedHashMap<String, OWLOntology> hashinput = new LinkedHashMap();
       hashinput.put("Assertion 1", assertion1);
+      hashinput.put("Assertion 2", assertion2);
+      hashinput.put("Assertion 3", assertion3);
+
 
       LinkedHashMap<String, String> hashoutput = new LinkedHashMap();
       hashoutput.put("Assertion 1",expectedoutputassertion1);
+      hashoutput.put("Assertion 2",expectedoutputassertion2);
+      hashoutput.put("Assertion 3",expectedoutputassertion3);
+
+
 
       for (Map.Entry<String, String> entry : testCase.getAxiomExpectedResultAxioms().entrySet()) {
          hashoutput.put(entry.getKey(), entry.getValue());
@@ -1863,9 +1994,13 @@ public class Implementations {
          OWLLiteral dataLiteral = dataFactory.getOWLLiteral("1",
                  OWL2Datatype.XSD_INTEGER);
          dataPropertyAssertionAxiom = dataFactory.getOWLDataPropertyAssertionAxiom(prop, indOWL5, dataLiteral);
-      }else if(datatype.contains("float") || datatype.contains("double") ){
+      }else if(datatype.contains("float")  ){
          OWLLiteral dataLiteral = dataFactory.getOWLLiteral("1.0",
                  OWL2Datatype.XSD_FLOAT);
+         dataPropertyAssertionAxiom = dataFactory.getOWLDataPropertyAssertionAxiom(prop, indOWL5, dataLiteral);
+      }else if(datatype.contains("double") ){
+         OWLLiteral dataLiteral = dataFactory.getOWLLiteral("1.0",
+                 OWL2Datatype.XSD_DOUBLE);
          dataPropertyAssertionAxiom = dataFactory.getOWLDataPropertyAssertionAxiom(prop, indOWL5, dataLiteral);
       }else if(datatype.contains("uri")){
          OWLLiteral dataLiteral = dataFactory.getOWLLiteral("http://example.org/ns#",
@@ -4759,7 +4894,7 @@ public class Implementations {
       OWLClass classOWLA = dataFactory.getOWLClass(IRI.create(classA));
       OWLDeclarationAxiom axiomClass = dataFactory.getOWLDeclarationAxiom(classOWLA);
 
-      manager.applyChanges(manager.addAxiom(ont, axiomClass));
+      //manager.applyChanges(manager.addAxiom(ont, axiomClass));
       testCase.setPreparationaxioms(manager.getOntology(IRI.create(base)));
       manager.removeOntology(ont);
 
@@ -4794,9 +4929,13 @@ public class Implementations {
          OWLLiteral dataLiteral = dataFactory.getOWLLiteral("1",
                  OWL2Datatype.XSD_INTEGER);
          dataPropertyAssertionAxiom = dataFactory.getOWLDataPropertyAssertionAxiom(prop, indClassA, dataLiteral);
-      }else if(datatypeB.contains("float") || datatypeB.contains("double") ){
+      }else if(datatypeB.contains("float")  ){
          OWLLiteral dataLiteral = dataFactory.getOWLLiteral("1.0",
                  OWL2Datatype.XSD_FLOAT);
+         dataPropertyAssertionAxiom = dataFactory.getOWLDataPropertyAssertionAxiom(prop, indClassA, dataLiteral);
+      }else if( datatypeB.contains("double") ){
+         OWLLiteral dataLiteral = dataFactory.getOWLLiteral("1.0",
+                 OWL2Datatype.XSD_DOUBLE);
          dataPropertyAssertionAxiom = dataFactory.getOWLDataPropertyAssertionAxiom(prop, indClassA, dataLiteral);
       }else if(datatypeB.contains("uri")){
          OWLLiteral dataLiteral = dataFactory.getOWLLiteral("http://example.org/ns#",

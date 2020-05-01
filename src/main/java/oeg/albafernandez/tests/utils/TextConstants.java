@@ -133,7 +133,7 @@ public class TextConstants {
                 "      <div id=\"got \" class=\"table-wrapper-scroll-y\">\n" +
                 "      <table  class = \"got\"  name=\"tablegot\" id=\""+key+"\" class=\"table table-bordered table-responsive \" style=\"back\" >\n" +
                 "      <thead>\n" +
-                "       <tr class = \"got\" ><th class=\"col-md-3\">Term <span class=\"glyphicon glyphicon-pencil\"></span></th><th class=\"col-md-5\">URI</th><th class=\"col-md-2\"></th></tr></thead>\n" +
+                "       <tr class = \"got\" ><th class=\"col-md-3\">Term <span class=\"glyphicon glyphicon-pencil\"></span></th><th class=\"col-md-4\">URI</th><th class=\"col-md-3\">Type</th><th class=\"col-md-2\"></th></tr></thead>\n" +
                 "      <tbody>\n";
 
     }

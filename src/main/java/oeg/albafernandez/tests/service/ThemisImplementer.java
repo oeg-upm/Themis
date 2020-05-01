@@ -9,9 +9,14 @@ import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.io.OWLOntologyDocumentSource;
 import org.semanticweb.owlapi.io.StringDocumentSource;
 import org.semanticweb.owlapi.model.*;
+
+import javax.ws.rs.core.Response;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 import static oeg.albafernandez.tests.utils.Implementations.*;
@@ -122,9 +127,28 @@ public class ThemisImplementer {
     }
 
     /*Store the  test design*/
-    public static OutputStream storeTestCaseDesign(List<String> tests, OutputStream outputStream) throws OWLOntologyStorageException {
-        OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
-        String base = "";
+    public static OutputStream storeTestCaseDesign(List<String> tests, OutputStream outputStream) throws OWLOntologyStorageException, IOException {
+
+        String prefixes="@prefix : <http://example.org#> .\n" +
+                "@prefix owl: <http://www.w3.org/2002/07/owl#> .\n" +
+                "@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .\n" +
+                "@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .\n" +
+                "@base <http://example.org#> .\n\n\n";
+
+
+        int i=1;
+        String testsFile=prefixes;
+        for(String purpose:tests) {
+
+           testsFile += "\n" +
+                   ":Test"+i+" rdf:type <http://w3id.org/def/vtc#TestCaseDesign> ,\n" +
+                   "                owl:NamedIndividual ;\n" +
+                   "       <http://w3id.org/def/vtc#desiredBehaviour> \""+purpose+"\" .\n";
+            i++;
+        }
+        outputStream.write(testsFile.getBytes());
+        /*OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
+        String base = "http://example.org/ns#";
         String verif = "http://w3id.org/def/vtc#";
         OWLOntology ont = null;
         try {
@@ -155,8 +179,11 @@ public class ThemisImplementer {
         TurtleOntologyFormat turtleFormat = new TurtleOntologyFormat();
         turtleFormat.setDefaultPrefix(base);
         manager.saveOntology(ont, turtleFormat, outputStream);
+
+        return outputStream;*/
         return outputStream;
     }
+
 
     //select the type of test to be implemented
     public void mapExpressionTemplates(String purpose) throws OWLOntologyCreationException {

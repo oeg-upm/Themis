@@ -276,7 +276,7 @@ function check() {
                             var cell2 = row.insertCell(1);
                             var cell3 = row.insertCell(2);
                             var cell4 = row.insertCell(3);
-                            cell4.innerHTML = "<button type=\"button\" class=\"btn btn-default\" onclick=\"removeOntology(this)\" title=\"Remove test\"> <span class=\"submit glyphicon glyphicon-remove-sign\"    style =\"color:rgb(255, 0, 0)\"></span> </button>";
+                            cell4.innerHTML = "<button type=\"button\" class=\"btn btn-default\" onclick=\"removeOntology(this)\" title=\"Remove test\"> <span class=\"submit glyphicon glyphicon-trash\" \"></span> </button>";
                             if (result.Result == 'Passed') {
                                 cell1.innerHTML = "<p name=\"testintable\">" + item.Test + "</p>";
                                 cell2.innerHTML = "<span class=\"label label-success\" data-toggle=\"tooltip\" title=\"The ontology passed the test\">Passed</span>";
@@ -347,11 +347,11 @@ function check() {
                             var cell3 = row.insertCell(2);
                             var cell4 = row.insertCell(3);
                             cell1.innerHTML = "<p name=\"testintable\">" + item.Test + "</p>";
-                            cell4.innerHTML = "<button type=\"button\" class=\"btn btn-default\" onclick=\"removeOntology(this)\" title=\"Remove test\"> <span class=\"submit glyphicon glyphicon-remove-sign\"    style =\"color:rgb(255, 0, 0)\"></span> </button>";
-                            if (result.Result == 'passed') {
+                            cell4.innerHTML = "<button type=\"button\" class=\"btn btn-default\" onclick=\"removeOntology(this)\" title=\"Remove test\"> <span class=\"submit glyphicon glyphicon-trash\"    \"></span> </button>";
+                            if (result.Result == 'Passed') {
                                 cell2.innerHTML = "<span class=\"label label-success\" data-toggle=\"tooltip\" title=\"The ontology passed the test\">Passed</span>";
                                 cell3.innerHTML = "<p>None</p>";
-                            } else if (result.Result == 'undefined') {
+                            } else if (result.Result == 'Undefined') {
                                 var test = item.Test;
                                 $.each(result.Undefined, function (j, undefined) {
                                     let re = new RegExp(`\\b${undefined}\\b`, 'gi');
@@ -359,11 +359,23 @@ function check() {
                                 });
                                 cell1.innerHTML = "<p name=\"testintable\">" + test + "</p>";
                                 cell2.innerHTML = "<span class=\"label label-default \" data-toggle=\"tooltip\" title=\"The ontology did not pass the test\">Undefined terms</span>";
+                                cell3.innerHTML = "<p>The terms in the test are not correctly defined in the ontology</p>";
+
+                                cell2.innerHTML = "<span class=\"label label-default \" data-toggle=\"tooltip\" title=\"The ontology did not pass the test\">Undefined terms</span>";
+                                cell3.innerHTML = "<p>The terms in the test are not defined in the ontology</p>";
+                            } else if (result.Result == 'Incorrect') {
+                                var test = item.Test;
+                                $.each(result.Undefined, function (j, undefined) {
+                                    let re = new RegExp(`\\b${incorrect}\\b`, 'gi');
+                                    test = test.replace(re, "<span style=\"color:red;\">"+incorrect+"</span>");
+                                });
+                                cell1.innerHTML = "<p name=\"testintable\">" + test + "</p>";
+                                cell2.innerHTML = "<span class=\"label label-default \" data-toggle=\"tooltip\" title=\"The ontology did not pass the test\">Undefined terms</span>";
                                 cell3.innerHTML = "<p>The terms in the test are not defined in the ontology</p>";
 
                                 cell2.innerHTML = "<span class=\"label label-default \" data-toggle=\"tooltip\" title=\"The ontology did not pass the test\">Undefined terms</span>";
                                 cell3.innerHTML = "<p>The terms in the test are not defined in the ontology</p>";
-                            } else if (result.Result == 'absent') {
+                            } else if (result.Result == 'Absent') {
                                 cell2.innerHTML = "<span class=\"label label-warning\" data-toggle=\"tooltip\" title=\"The ontology did not pass the test\">Absent relation</span>";
                                 cell3.innerHTML = "<p>The ontology does not implement the requirement associated to the test</p>";
                             } else {
@@ -396,17 +408,19 @@ function check() {
                         var table = "<tbody>";
                         table +="<td  class=\"col\">"+item.Test+"</td>";
                         item.Results.forEach(function (result) {
-                            if (result.Result == 'passed') {
+                            if (result.Result == 'Passed') {
                                 table +="<td  class=\"col\"><span class=\"label label-success\" data-toggle=\"tooltip\" title=\"The ontology passed the test\">Passed</span></td>";
-                            } else if (result.Result == 'undefined') {
+                            } else if (result.Result == 'Undefined') {
                                 table += "<td  class=\"col\"><span class=\"label label-default \" data-toggle=\"tooltip\" title=\""+result.Undefined+" not defined in the ontology\">Undefined terms</span></td>";
-                            } else if (result.Result == 'absent') {
+                            }else if (result.Result == 'Incorrect') {
+                                table += "<td  class=\"col\"><span class=\"label label-default \" data-toggle=\"tooltip\" title=\""+result.Incorrect+" not correctly defined in the ontology \">Incorrect terms</span></td>";
+                            } else if (result.Result == 'Absent') {
                                 table += "<td  class=\"col\"><span class=\"label label-warning\" data-toggle=\"tooltip\" title=\"The ontology did not pass the test\">Absent relation</span></td>";
                             } else {
                                 table += "<td  class=\"col\"><span class=\"label label-danger\" data-toggle=\"tooltip\" title=\"The ontology did not pass the test\">Conflict</span></td>";
                             }
                         });
-                        table +="<td  class=\"col\"><button type=\"button\" class=\"btn btn-default\" onclick=\"removeOntology(this)\" title=\"Remove test\"> <span class=\"submit glyphicon glyphicon-remove-sign\"    style =\"color:rgb(255, 0, 0)\"></span> </button></td></tbody>";
+                        table +="<td  class=\"col\"><button type=\"button\" class=\"btn btn-default\" onclick=\"removeOntology(this)\" title=\"Remove test\"> <span class=\"submit glyphicon glyphicon-trash\"    \"></span> </button></td></tbody>";
                         $("#tablemultiple").append(table);
                     }else{
 
@@ -418,12 +432,13 @@ function check() {
                         var index=1;
                         $.each(item.Results, function (i, result) {
                             var cell1 = row.insertCell(i+1);
-                            if (result.Result == 'passed') {
+                            if (result.Result == 'Passed') {
                                 cell1.innerHTML ="<td  class=\"col\"><span class=\"label label-success\" data-toggle=\"tooltip\" title=\"The ontology passed the test\">Passed</span></td>";
-                            } else if (result.Result == 'undefined') {
-
+                            } else if (result.Result == 'Undefined') {
                                 cell1.innerHTML ="<td  class=\"col\"><span class=\"label label-default \" data-toggle=\"tooltip\" title=\""+result.Undefined+"  not defined in the ontology\">Undefined terms</span></td>";
-                            } else if (result.Result == 'absent') {
+                            }else if (result.Result == 'Incorrect') {
+                                cell1.innerHTML ="<td  class=\"col\"><span class=\"label label-default \" data-toggle=\"tooltip\" title=\""+result.Incorrect+" not correctly defined in the ontology \">Incorrect terms</span></td>";
+                            } else if (result.Result == 'Absent') {
                                 cell1.innerHTML ="<td  class=\"col\"><span class=\"label label-warning\" data-toggle=\"tooltip\" title=\"The ontology did not pass the test\">Absent relation</span></td>";
                             } else {
                                 cell1.innerHTML = "<td  class=\"col\"><span class=\"label label-danger\" data-toggle=\"tooltip\" title=\"The ontology did not pass the test\">Conflict</span></td>";
@@ -433,7 +448,7 @@ function check() {
 
                         });
                         var cell3 = row.insertCell(index);
-                        cell3.innerHTML = "<td class=\"col\"></td><button type=\"button\" class=\"btn btn-default\" onclick=\"removeOntology(this)\" title=\"Remove test\"> <span class=\"submit glyphicon glyphicon-remove-sign\"    style =\"color:rgb(255, 0, 0)\"></span> </button></td>";
+                        cell3.innerHTML = "<td class=\"col\"></td><button type=\"button\" class=\"btn btn-default\" onclick=\"removeOntology(this)\" title=\"Remove test\"> <span class=\"submit glyphicon glyphicon-trash\"   \"></span> </button></td>";
 
 
                     }
@@ -544,7 +559,7 @@ function loadontologyFromURI() {
 
                     $("#aux").append(text2);
 
-                    var text = "<p   name=\"" + uri + "\"><a><button type=\"button\" class=\"btn btn-link\" onclick=\"removeGot('" + uri + "')\" ><small><span title=\"Remove ontology\" class=\"glyphicon glyphicon-remove align-middle\" aria-hidden=\"true\"></span> Remove</small> </button></a></p>";
+                    var text = "<p   name=\"" + uri + "\"><a><button type=\"button\" class=\"btn btn-link\" onclick=\"removeGot('" + uri + "')\" ><small><span title=\"Remove ontology\" class=\"glyphicon glyphicon-trash align-middle\" aria-hidden=\"true\"></span> Remove</small> </button></a></p>";
                     $("#deleteonto").append(text);
 
 
@@ -554,6 +569,7 @@ function loadontologyFromURI() {
                     $('#load').removeAttr("disabled");
                     $('#checktests').removeAttr("disabled");
                     $('#export').removeAttr("disabled");
+                    $('#clean').removeAttr("disabled");
                     $('#loadtest').removeAttr("disabled");
                     var testsch = document.getElementById("checkout-tests");
                     testsch.style.opacity=1;
@@ -566,6 +582,7 @@ function loadontologyFromURI() {
                     $('#load').removeAttr("disabled");
                     $('#checktests').removeAttr("disabled");
                     $('#export').removeAttr("disabled");
+                    $('#clean').removeAttr("disabled");
                     $('#loadtest').removeAttr("disabled");
                     var testsch = document.getElementById("checkout-tests");
                     testsch.style.opacity=1;
@@ -636,7 +653,7 @@ function loadontologyFromFile(){
 
                     $("#aux").append(text2);
 
-                    var text = "<p   name=\"" + data.uri + "\"><a><button type=\"button\" class=\"btn btn-link\" onclick=\"removeGot('" + data.uri + "')\" ><small><span title=\"Remove ontology\" class=\"glyphicon glyphicon-remove align-middle\" aria-hidden=\"true\"></span> Remove</small> </button></a></p>";
+                    var text = "<p   name=\"" + data.uri + "\"><a><button type=\"button\" class=\"btn btn-link\" onclick=\"removeGot('" + data.uri + "')\" ><small><span title=\"Remove ontology\" class=\"glyphicon glyphicon-trash align-middle\" aria-hidden=\"true\"></span> Remove</small> </button></a></p>";
                     $("#deleteonto").append(text);
 
 
@@ -645,6 +662,7 @@ function loadontologyFromFile(){
                     $('#loadfile').removeAttr("disabled");
                     $('#checktests').removeAttr("disabled");
                     $('#export').removeAttr("disabled");
+                    $('#clean').removeAttr("disabled");
                     $('#loadtest').removeAttr("disabled");
                     var testsch = document.getElementById("checkout-tests");
                     testsch.style.opacity=1;
@@ -657,6 +675,7 @@ function loadontologyFromFile(){
                     $('#loadfile').removeAttr("disabled");
                     $('#checktests').removeAttr("disabled");
                     $('#export').removeAttr("disabled");
+                    $('#clean').removeAttr("disabled");
                     $('#loadtest').removeAttr("disabled");
                     var testsch = document.getElementById("checkout-tests");
                     testsch.style.opacity=1;
@@ -698,6 +717,7 @@ function loadTests() {
         $('#loadtest').attr("disabled", true);
         $('#checktests').attr("disabled", true);
         $('#export').attr("disabled", true);
+        $('#clean').attr("disabled", true);
         $.ajax({
             type: 'POST',
             data: JSON.stringify(id.value),
@@ -715,6 +735,7 @@ function loadTests() {
                     $('#loadtest').removeAttr("disabled");
                     $('#checktests').removeAttr("disabled");
                     $('#export').removeAttr("disabled");
+                    $('#clean').removeAttr("disabled");
                 } else {
 
                     $('#notmatch').html("This is not a test expression");
@@ -742,6 +763,7 @@ function loadTestsFromFile() {
         $('#loadtestfile').attr("disabled", true);
         $('#checktests').attr("disabled", true);
         $('#export').attr("disabled", true);
+        $('#clean').attr("disabled", true);
         var ontologyCode = id.value.replace(/><\/http.*:>/g,'\/>');
         $.ajax({
             type: 'POST',
@@ -762,6 +784,7 @@ function loadTestsFromFile() {
                     $('#loadtestfile').removeAttr("disabled");
                     $('#checktests').removeAttr("disabled");
                     $('#export').removeAttr("disabled");
+                    $('#clean').removeAttr("disabled");
                 } else {
 
                     $('#notmatch').html("This is not a test expression");
@@ -782,6 +805,16 @@ function  removeOntology(btn) {
     row.parentNode.removeChild(row);
 
 }
+
+function  clearResults() {
+    if($("#table") != null)
+        $("#table").find("tr:gt(0)").remove();
+
+    if($("#tablemultiple") != null)
+        $("#tablemultiple").find("tr:gt(0)").remove();
+
+}
+
 
 
 function exportfile(){
