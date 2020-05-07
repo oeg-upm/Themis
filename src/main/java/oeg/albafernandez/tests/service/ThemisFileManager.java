@@ -27,17 +27,19 @@ import java.util.List;
 
 public class ThemisFileManager {
 
-    public String loadTests(String testuri, String testfile) throws OWLOntologyStorageException, IOException, OWLOntologyCreationException, JSONException {
+    public String loadTests(String testuri, String testfile) throws OWLOntologyStorageException,  OWLOntologyCreationException, JSONException {
         if(testuri!=null) {
             ArrayList<String> testsuiteDesign = new ArrayList<>();
             ThemisImplementer impl = new ThemisImplementer();
-            testsuiteDesign.addAll(impl.loadTestCaseDesign(testuri, testfile));
+            try {
+                testsuiteDesign.addAll(impl.loadTestCaseDesign(testuri, testfile));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             JSONArray tests = new JSONArray();
             for (String test : testsuiteDesign) {
                 JSONObject obj = new JSONObject();
-                if(test==null) {
-                    System.out.println("null");
-                }else{
+                if(test!=null) {
                     obj.put("Test", test.replace("^^xsd:string", ""));
                     tests.put(obj);
                 }

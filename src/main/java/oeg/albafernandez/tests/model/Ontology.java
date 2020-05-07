@@ -1,13 +1,17 @@
 package oeg.albafernandez.tests.model;
 
+import com.google.common.base.Charsets;
+import com.google.common.io.ByteSource;
 import org.apache.log4j.Logger;
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.io.OWLOntologyDocumentSource;
 import org.semanticweb.owlapi.io.StringDocumentSource;
 import org.semanticweb.owlapi.model.*;
 
+import javax.validation.constraints.Null;
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.util.HashMap;
@@ -63,18 +67,23 @@ public class Ontology {
     }
 
     public Map<String, IRI> getClasses(){
-        HashMap<String, IRI> hashMapClasses = new HashMap<>();
-        Iterator<OWLClass> iter = owlOntology.getClassesInSignature(true).iterator();
-        while(iter.hasNext()){
-            OWLClass nextClass=iter.next();
 
-            if(!hashMapClasses.containsKey(nextClass.getIRI().getFragment()) &&
-                    !nextClass.getIRI().getFragment().equalsIgnoreCase("Class") && !nextClass.getIRI().getFragment().equalsIgnoreCase("Property"))
-                hashMapClasses.put(nextClass.getIRI().getFragment(),nextClass.getIRI());
-            else{
-                String[] uri = nextClass.getIRI().getNamespace().split("/");
-                hashMapClasses.put(uri[uri.length-1]+":"+nextClass.getIRI().getFragment(),nextClass.getIRI());
+        HashMap<String, IRI> hashMapClasses = new HashMap<>();
+        try {
+            Iterator<OWLClass> iter = owlOntology.getClassesInSignature(true).iterator();
+            while (iter.hasNext()) {
+                OWLClass nextClass = iter.next();
+
+                if (!hashMapClasses.containsKey(nextClass.getIRI().getFragment()) &&
+                        !nextClass.getIRI().getFragment().equalsIgnoreCase("Class") && !nextClass.getIRI().getFragment().equalsIgnoreCase("Property"))
+                    hashMapClasses.put(nextClass.getIRI().getFragment(), nextClass.getIRI());
+                else {
+                    String[] uri = nextClass.getIRI().getNamespace().split("/");
+                    hashMapClasses.put(uri[uri.length - 1] + ":" + nextClass.getIRI().getFragment(), nextClass.getIRI());
+                }
             }
+        }catch (NullPointerException e){
+            logger.error("Classes from the ontology could not be extracted");
         }
         return  hashMapClasses;
 
@@ -82,20 +91,24 @@ public class Ontology {
 
     public Map<String, IRI> getIndividuals(){
         HashMap<String, IRI> hashMapIndividuals = new HashMap<>();
-        Iterator<OWLNamedIndividual> iter = owlOntology.getIndividualsInSignature(true).iterator();
-        while(iter.hasNext()){
-            OWLNamedIndividual nextIndividual=iter.next();
-            if(!nextIndividual.getIRI().toString().endsWith("/") && !nextIndividual.getIRI().toString().endsWith("#")) { //si es solo una uri
-                 if(!hashMapIndividuals.containsKey(nextIndividual.getIRI().getFragment())) {
+        try {
+            Iterator<OWLNamedIndividual> iter = owlOntology.getIndividualsInSignature(true).iterator();
+            while(iter.hasNext()){
+                OWLNamedIndividual nextIndividual=iter.next();
+                if(!nextIndividual.getIRI().toString().endsWith("/") && !nextIndividual.getIRI().toString().endsWith("#")) { //si es solo una uri
+                     if(!hashMapIndividuals.containsKey(nextIndividual.getIRI().getFragment())) {
 
-                    hashMapIndividuals.put(nextIndividual.getIRI().getFragment(), nextIndividual.getIRI());
+                        hashMapIndividuals.put(nextIndividual.getIRI().getFragment(), nextIndividual.getIRI());
+                    }
+                     else{
+                         String[] uri = nextIndividual.getIRI().getNamespace().split("/");
+                         hashMapIndividuals.put(uri[uri.length-1]+nextIndividual.getIRI().getFragment(),nextIndividual.getIRI());
+                     }
                 }
-                 else{
-                     String[] uri = nextIndividual.getIRI().getNamespace().split("/");
-                     hashMapIndividuals.put(uri[uri.length-1]+nextIndividual.getIRI().getFragment(),nextIndividual.getIRI());
-                 }
-            }
 
+            }
+        }catch (NullPointerException e){
+            logger.error("Individuals from the ontology could not be extracted");
         }
         return  hashMapIndividuals;
 
@@ -103,31 +116,44 @@ public class Ontology {
 
     public Map<String, IRI> getObjectProperties(){
         HashMap<String, IRI> hashMapProp = new HashMap<>();
-        Iterator<OWLObjectProperty> iter = owlOntology.getObjectPropertiesInSignature(true).iterator();
+        try{
+            Iterator<OWLObjectProperty> iter = owlOntology.getObjectPropertiesInSignature(true).iterator();
 
-        while(iter.hasNext()){
-            OWLObjectProperty nextProp=iter.next();
-            hashMapProp.put(nextProp.getIRI().getFragment(),nextProp.getIRI());
+            while(iter.hasNext()){
+                OWLObjectProperty nextProp=iter.next();
+                hashMapProp.put(nextProp.getIRI().getFragment(),nextProp.getIRI());
+            }
+        }catch (NullPointerException e){
+            logger.error("Object properties from the ontology could not be extracted");
         }
         return  hashMapProp;
     }
 
     public Map<String, IRI> getDatatypeProperties(){
         HashMap<String, IRI> hashMapdataProp = new HashMap<>();
-        Iterator<OWLDataProperty> iter = owlOntology.getDataPropertiesInSignature(true).iterator();
+        try{
+            Iterator<OWLDataProperty> iter = owlOntology.getDataPropertiesInSignature(true).iterator();
 
-        while(iter.hasNext()){
-            OWLDataProperty nextProp=iter.next();
-            hashMapdataProp.put(nextProp.getIRI().getFragment(),nextProp.getIRI());
+            while(iter.hasNext()){
+                OWLDataProperty nextProp=iter.next();
+                hashMapdataProp.put(nextProp.getIRI().getFragment(),nextProp.getIRI());
+            }
+        }catch (NullPointerException e){
+            logger.error("Datatype properties from the ontology could not be extracted");
         }
         return  hashMapdataProp;
     }
 
     public String getKeyName(){
+        try{
         if(prov.getFragment().contains(".")) {
             return prov.getFragment().split(Pattern.quote("."))[0];
         }else {
             return prov.getFragment();
+        }
+        }catch (Exception e){
+            logger.error(e.getMessage());
+            return "onto";
         }
 
     }
@@ -162,6 +188,7 @@ public class Ontology {
 
         logger.info("Analysing ontology from file: " + prov);
         OWLOntologyDocumentSource docs = new StringDocumentSource(filename);
+
         try {
             OWLOntology ontology = this.manager.loadOntologyFromOntologyDocument(docs);
             this.setOntology(ontology);
@@ -171,6 +198,7 @@ public class Ontology {
             else
                 this.setProv(IRI.create(iri.toString()));
         } catch (Exception e) {
+            System.out.println("not load "+ e.getMessage() );
             logger.error("could not load vocabulary. " + e.getMessage());
             response = null;
         }

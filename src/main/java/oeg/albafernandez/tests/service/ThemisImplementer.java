@@ -48,8 +48,8 @@ public class ThemisImplementer {
     /*Generate a TestCaseDesign object from the purpose given by the users*/
     public  void processTestCaseDesign(String purpose)  {
         OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
-        String base = "http://www.semanticweb.org/untitled-ontology-53#";
-        String verif = "http://w3id.org/def/vtc#";
+        String base = "http://example.org/ns#";
+        String verif = "https://w3id.org/def/vtc#";
         OWLOntology ont = null;
         try {
             ont = manager.createOntology(IRI.create(base));
@@ -95,7 +95,7 @@ public class ThemisImplementer {
             tc.setUri(IRI.create(cls.toString().replace("<","").replace(">","")));
             for (OWLAnnotationAssertionAxiom op : ontology.getAxioms(AxiomType.ANNOTATION_ASSERTION)) {
                 if (cls.toString().replace(">","").replace("<","").equals(op.getSubject().toString().replace("<","").replace(">",""))) {
-                    if (op.getProperty().toString().contains("http://w3id.org/def/vtc#desiredBehaviour")) {
+                    if (op.getProperty().toString().contains("https://w3id.org/def/vtc#desiredBehaviour")) {
                         purpose = op.getValue().toString().replace("\"","");
                         tc.setPurpose(purpose.replace("^^xsd:string",""));
                     } else if (op.getProperty().toString().contains("http://purl.org/dc/terms/identifier")) {
@@ -109,7 +109,7 @@ public class ThemisImplementer {
             }
             for (OWLDataPropertyAssertionAxiom dp : ontology.getAxioms(AxiomType.DATA_PROPERTY_ASSERTION)) {
                 if (cls.toString().replace(">","").replace("<","").equals(dp.getSubject().toString().replace("<","").replace(">",""))) {
-                    if (dp.getProperty().toString().contains("http://w3id.org/def/vtc#desiredBehaviour")) {
+                    if (dp.getProperty().toString().contains("https://w3id.org/def/vtc#desiredBehaviour")) {
                         purpose = dp.getObject().toString().replace("\"","");
                         tc.setPurpose(purpose);
                     } else if (dp.getProperty().toString().contains("http://purl.org/dc/terms/identifier")) {
@@ -129,11 +129,11 @@ public class ThemisImplementer {
     /*Store the  test design*/
     public static OutputStream storeTestCaseDesign(List<String> tests, OutputStream outputStream) throws OWLOntologyStorageException, IOException {
 
-        String prefixes="@prefix : <http://example.org#> .\n" +
+        String prefixes="@prefix : <http://example.org/ns#> .\n" +
                 "@prefix owl: <http://www.w3.org/2002/07/owl#> .\n" +
                 "@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .\n" +
                 "@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .\n" +
-                "@base <http://example.org#> .\n\n\n";
+                "@base <http://example.org/ns#> .\n\n\n";
 
 
         int i=1;
@@ -141,9 +141,9 @@ public class ThemisImplementer {
         for(String purpose:tests) {
 
            testsFile += "\n" +
-                   ":Test"+i+" rdf:type <http://w3id.org/def/vtc#TestCaseDesign> ,\n" +
+                   ":Test"+i+" rdf:type <https://w3id.org/def/vtc#TestCaseDesign> ,\n" +
                    "                owl:NamedIndividual ;\n" +
-                   "       <http://w3id.org/def/vtc#desiredBehaviour> \""+purpose+"\" .\n";
+                   "       <https://w3id.org/def/vtc#desiredBehaviour> \""+purpose+"\" .\n";
             i++;
         }
         outputStream.write(testsFile.getBytes());
@@ -277,7 +277,7 @@ public class ThemisImplementer {
         this.setTestCase(new TestCaseImpl());
         OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
         String base = "http://www.semanticweb.org/untitled-ontology-53#";
-        String verif = "http://w3id.org/def/vtc#";
+        String verif = "https://w3id.org/def/vtc#";
         OWLOntology ont = null;
         try {
             ont = manager.createOntology(IRI.create(base));

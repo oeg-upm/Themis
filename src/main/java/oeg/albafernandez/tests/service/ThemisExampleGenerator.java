@@ -1,5 +1,6 @@
 package oeg.albafernandez.tests.service;
 
+import com.hp.hpl.jena.ontology.AnnotationProperty;
 import oeg.albafernandez.tests.model.Ontology;
 import oeg.albafernandez.tests.model.TestCaseDesign;
 import org.json.Test;
@@ -31,10 +32,10 @@ public class ThemisExampleGenerator {
         String testCaseDesign = "";
         Iterator it = ontology.getOntology().getClassesInSignature().iterator();
         OWLClass owlClass=null;
-        if(it.hasNext()) {
+        while(it.hasNext()) {
             owlClass = (OWLClass) it.next();
             testCaseDesign = owlClass.getIRI().getFragment()+" type Class";
-
+            return testCaseDesign;
         }
 
         return testCaseDesign;
@@ -45,12 +46,13 @@ public class ThemisExampleGenerator {
         Iterator it = ontology.getOntology().getClassesInSignature().iterator();
         OWLClass owlClass=null;
 
-        if(it.hasNext()) {
+        while(it.hasNext()) {
             Iterator<OWLSubClassOfAxiom>  it2 = ontology.getOntology().getSubClassAxiomsForSubClass((OWLClass) it.next()).iterator();
 
-            if(it2.hasNext()) {
+            while(it2.hasNext()) {
                 OWLSubClassOfAxiom OWLSubClassOf = it2.next();
                 testCaseDesign = OWLSubClassOf.getSubClass().asOWLClass().getIRI().getFragment() +" subClassOf " + OWLSubClassOf.getSuperClass().asOWLClass().getIRI().getFragment();
+                return testCaseDesign;
             }
         }
 
@@ -59,20 +61,21 @@ public class ThemisExampleGenerator {
     }
 
     public String generateRangeExampleFromOntology(Ontology ontology){
-        String testCaseDesign = "";
+        String testCaseDesign = "" ;
         Iterator it = ontology.getOntology().getObjectPropertiesInSignature().iterator();
         OWLObjectProperty owlProperty=null;
-        OWLObjectPropertyRangeAxiom OWLrange=null;
+        OWLObjectPropertyRangeAxiom OWLRange=null;
+        while(it.hasNext()) {
+            OWLObjectProperty obj = (OWLObjectProperty) it.next();
+            Iterator it2 = ontology.getOntology().getObjectPropertyRangeAxioms(obj).iterator();
 
-        if(it.hasNext()) {
-            Iterator it2 = ontology.getOntology().getObjectPropertyRangeAxioms((OWLObjectProperty) it.next()).iterator();
-
-            if(it2.hasNext()) {
-                OWLrange = (OWLObjectPropertyRangeAxiom) it2.next();
-                testCaseDesign = OWLrange.getRange().asOWLClass().getIRI().getFragment() +" and "+ owlProperty.asOWLObjectProperty().getIRI().getFragment();
+            while(it2.hasNext()) {
+                OWLRange = (OWLObjectPropertyRangeAxiom) it2.next();
+                testCaseDesign =  obj.getIRI().getFragment()+" range "+ OWLRange.getRange().asOWLClass().getIRI().getFragment();
+                return testCaseDesign;
             }
-        }
 
+        }
 
         return testCaseDesign;
     }
@@ -82,16 +85,17 @@ public class ThemisExampleGenerator {
         Iterator it = ontology.getOntology().getObjectPropertiesInSignature().iterator();
         OWLObjectProperty owlProperty=null;
         OWLObjectPropertyDomainAxiom OWLdomain=null;
+        while(it.hasNext()) {
+            OWLObjectProperty obj = (OWLObjectProperty) it.next();
+            Iterator it2 = ontology.getOntology().getObjectPropertyDomainAxioms(obj).iterator();
 
-        if(it.hasNext()) {
-            Iterator it2 = ontology.getOntology().getObjectPropertyRangeAxioms((OWLObjectProperty) it.next()).iterator();
-
-            if(it2.hasNext()) {
+            while(it2.hasNext()) {
                 OWLdomain = (OWLObjectPropertyDomainAxiom) it2.next();
-                testCaseDesign = OWLdomain.getDomain().asOWLClass().getIRI().getFragment() +" and "+ owlProperty.asOWLObjectProperty().getIRI().getFragment();
+                testCaseDesign =  obj.getIRI().getFragment()+" domain "+ OWLdomain.getDomain().asOWLClass().getIRI().getFragment();
+                return testCaseDesign;
             }
-        }
 
+        }
 
         return testCaseDesign;
     }

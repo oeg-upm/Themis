@@ -280,7 +280,7 @@ public class ThemisSyntaxChecker {
         return got;
     }
 
-    public  String  getGoT(Ontology onto) throws JSONException, OWLOntologyStorageException {
+    public  String  getGoT(Ontology onto) throws JSONException, NullPointerException {
 
         HashMap<String, IRI> elements = new HashMap<>();
         elements.putAll(onto.getClasses());
@@ -298,19 +298,19 @@ public class ThemisSyntaxChecker {
         return linkToReportGoT.toString();
     }
 
-    public  String  getGoTFromURI(String uri) throws JSONException, OWLOntologyStorageException {
+    public  String  getGoTFromURI(String uri) throws JSONException, NullPointerException {
             Ontology onto = new Ontology();
             onto.loadOntologyURL(uri.replace("\"", "").trim());
             return getGoT(onto);
 
     }
-    public  String  getGoTFromFilename(String ontologycode) throws JSONException, OWLOntologyStorageException {
+    public  String  getGoTFromFilename(String ontologycode) throws JSONException, NullPointerException {
             Ontology onto = new Ontology();
             onto.loadOntologyfile(ontologycode);
             return getGoT(onto);
     }
 
-    public  String  getPlainGoT(Ontology onto) throws JSONException, OWLOntologyStorageException {
+    public  String  getPlainGoT(Ontology onto) throws JSONException, NullPointerException {
 
             HashMap<String, IRI> elements = new HashMap<>();
             elements.putAll(onto.getClasses());
@@ -331,6 +331,7 @@ public class ThemisSyntaxChecker {
     public  String  getPlainGoTFromURI(String uri) throws JSONException, OWLOntologyStorageException {
 
             Ontology onto = new Ontology();
+            System.out.println(uri);
             onto.loadOntologyURL(uri.replace("\"", "").trim());
            return getPlainGoT(onto);
     }

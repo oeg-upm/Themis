@@ -42,13 +42,23 @@ public class APIController {
     ThemisSyntaxChecker syntaxChecker = new ThemisSyntaxChecker();
 
 
-    @GET
-    @Path("/exampleFile")
-    @Produces({ MediaType.TEXT_PLAIN})
-    public Response getTestExampleFile(@Context HttpServletRequest req,  @QueryParam("uri") String ontologyURL) throws OWLOntologyStorageException, IOException {
-        if(ontologyURL !=null) {
+    @POST
+    @Path("/example")
+    @Operation(summary = "generation of test example file", description = "It generates an example file with several tests based on an ontology URI", method = "POST",
+            responses = {
+                    @ApiResponse( responseCode  = "200", description  = "Example tests successfully generated",  content = @Content(mediaType = "application/json")),
+                    @ApiResponse( responseCode = "500", description = "Internal error. Check inputs",  content = @Content(mediaType = "application/json")),
+            })
+    @Produces({ MediaType.APPLICATION_JSON})
+    public Response getTestExampleFile( @Schema(description = "Code of the ontology to extract the tests", example = "@prefix : <http://delta.linkeddata.es/def/core#> .@prefix owl: <http://www.w3.org/2002/07/owl#> .@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .@prefix xml: <http://www.w3.org/XML/1998/namespace> .@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .@base <http://delta.linkeddata.es/def/core> .<http://delta.linkeddata.es/def/core> rdf:type owl:Ontology  .:hasReward rdf:type owl:ObjectProperty ;           rdfs:domain :Customer ;           rdfs:comment \"Link between a customer and its associated reward\" ;           rdfs:label \"has reward\" .:Consumer rdf:type owl:Class ;          rdfs:subClassOf :Prosumer ;          rdfs:comment \"Entity that consumes energy\" ;          rdfs:label \"Consumer\" .:Prosumer rdf:type owl:Class ;          rdfs:comment \"Entity that consumes or produces energy\" ;          rdfs:label \"Prosumer\" .", required = true)String ontologyFile) throws OWLOntologyStorageException, IOException {
+        if(ontologyFile !=null) {
             Ontology ontology = new Ontology();
-            ontology.loadOntologyURL(ontologyURL.toString().replace("\"", ""));
+            if(ontologyFile.contains("\\\"")){
+                ontology.loadOntologyfile(ontologyFile.replaceAll("^\"","").replaceAll("\"\\s*$","").replace("\\\"", "\""));
+            }
+            else{
+                ontology.loadOntologyfile(ontologyFile);
+            }
             ThemisExampleGenerator exampleGenerator = new ThemisExampleGenerator();
             ArrayList<String> tests = exampleGenerator.generateExampleFromOntology(ontology);
             if (!tests.isEmpty()) {
@@ -74,7 +84,7 @@ public class APIController {
 
 
 
-        @GET
+    @GET
     @Path("/removegot")
     @Produces({ MediaType.APPLICATION_JSON})
     @Hidden
@@ -320,13 +330,30 @@ public class APIController {
     @Produces({ MediaType.APPLICATION_JSON})
     /*Method to get the got of each ontology*/
     public  Response  getGoTAsTableFile(     @Schema(description = "Code of the ontology associated to the glossary of term to be extracted",required = true)
-                                                         String filename) throws JSONException, OWLOntologyStorageException {
+                                                         String filename)  {
 
-        String got=syntaxChecker.getGoTFromFilename(filename);
-        return Response
-                .status(200)
-                .entity(got)
-                .build();
+        String got= null;
+        try {
+            got=syntaxChecker.getGoTFromFilename(filename);
+            if(got!=null) {
+                return Response
+                        .status(200)
+                        .entity(got)
+                        .build();
+            }else{
+                return Response
+                        .status(204)
+                        .entity("The ontology could not be loaded. Please check that the ontology URI is correct. If this error persists please contact with albafernandez@fi.upm.es ")
+                        .build();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response
+                    .status(400)
+                    .entity("The ontology could not be loaded. If this error persists please contact with albafernandez@fi.upm.es ")
+                    .build();
+        }
+
 
     }
 
@@ -340,13 +367,32 @@ public class APIController {
     @Produces({ MediaType.APPLICATION_JSON})
     /*Method to get the got of each ontology*/
     public  Response  getGoTAsTable(@Schema(description = "URI of the ontology associated to the glossary of term to be extracted",required = true)
-                                                String URI) throws JSONException, OWLOntologyStorageException {
+                                                String URI) {
 
-        String got=syntaxChecker.getGoTFromURI(URI);
-        return Response
-                .status(200)
-                .entity(got)
-                .build();
+
+        String got= null;
+        try {
+            got = syntaxChecker.getGoTFromURI(URI);
+            if(got!=null) {
+                return Response
+                        .status(200)
+                        .entity(got)
+                        .build();
+            }else{
+                return Response
+                        .status(204)
+                        .entity("The ontology could not be loaded. Please check that the ontology URI is correct. If this error persists please contact with albafernandez@fi.upm.es ")
+                        .build();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response
+                    .status(400)
+                    .entity("The ontology could not be loaded. If this error persists please contact with albafernandez@fi.upm.es ")
+                    .build();
+        }
+
+
     }
 
 
@@ -363,7 +409,7 @@ public class APIController {
                                   @QueryParam("filename") @Parameter(description = "Ontology file", example = "") String filename
                                 ) throws JSONException, OWLOntologyStorageException {
         String got;
-        if (URI == null || URI.equals(""))
+        if (URI != null || !URI.isEmpty())
             got = syntaxChecker.getPlainGoTFromURI(URI);
         else
             got = syntaxChecker.getGoTFromFilename(filename);
@@ -380,11 +426,26 @@ public class APIController {
     @Produces({ MediaType.APPLICATION_JSON})
     @Hidden
     /*Method to load the RDF test design of a given URI*/
-    public Response loadTests(String uri) throws OWLOntologyStorageException, IOException, OWLOntologyCreationException, JSONException {
+    public Response loadTests(String uri)  {
         ThemisFileManager themisFileManagement = new ThemisFileManager();
+        String tests = null;
+        try {
+            tests = themisFileManagement.loadTests(uri,"");
+            if(tests==null || tests.equalsIgnoreCase("[]")){
+                return Response
+                        .status(204)
+                        .entity("No tests found")
+                        .build();
+            }
+        } catch (Exception e) {
+            return Response
+                    .status(400)
+                    .entity("The tests cannot be loaded. Please check the URI.  If this error persists please contact with albafernandez@fi.upm.es")
+                    .build();
+        }
         return Response
                 .status(200)
-                .entity(themisFileManagement.loadTests(uri,""))
+                .entity(tests)
                 .build();
     }
 
@@ -393,11 +454,26 @@ public class APIController {
     @Produces({ MediaType.APPLICATION_JSON})
     @Hidden
     /*Method to load the RDF test design of a given URI*/
-    public Response loadTestsFile(String file) throws OWLOntologyStorageException, IOException, OWLOntologyCreationException, JSONException {
+    public Response loadTestsFile(String file) {
         ThemisFileManager themisFileManagement = new ThemisFileManager();
+        String tests = null;
+        try{
+            tests = themisFileManagement.loadTests("",file);
+            if(tests==null || tests.equalsIgnoreCase("[]")){
+                return Response
+                        .status(204)
+                        .entity("No tests found")
+                        .build();
+            }
+        } catch (Exception e) {
+            return Response
+                    .status(400)
+                    .entity("The tests cannot be loaded. Please check the URI.  If this error persists please contact with albafernandez@fi.upm.es")
+                    .build();
+        }
         return Response
                 .status(200)
-                .entity(themisFileManagement.loadTests("",file))
+                .entity(tests)
                 .build();
     }
 
