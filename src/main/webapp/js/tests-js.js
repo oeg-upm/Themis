@@ -746,7 +746,7 @@ function loadTests() {
 
                     }
                 }else{
-                    alert("No test found");
+                    alert("No test found. Check the URI and the syntax of the RDF file");
                     $('#loadtest').html('Load from URI');
                     $('#loadtest').removeAttr("disabled");
                     $('#checktests').removeAttr("disabled");
@@ -756,7 +756,7 @@ function loadTests() {
 
             },
             error: function (xhr) {
-                alert("No tests found");
+                alert("No test found. Check the syntax of the RDF file");
                 $('#loadtest').html('Load from URI');
                 $('#loadtest').removeAttr("disabled");
                 $('#checktests').removeAttr("disabled");

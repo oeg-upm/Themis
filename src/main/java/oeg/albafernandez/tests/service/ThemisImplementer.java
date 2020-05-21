@@ -95,7 +95,7 @@ public class ThemisImplementer {
             tc.setUri(IRI.create(cls.toString().replace("<","").replace(">","")));
             for (OWLAnnotationAssertionAxiom op : ontology.getAxioms(AxiomType.ANNOTATION_ASSERTION)) {
                 if (cls.toString().replace(">","").replace("<","").equals(op.getSubject().toString().replace("<","").replace(">",""))) {
-                    if (op.getProperty().toString().contains("https://w3id.org/def/vtc#desiredBehaviour")) {
+                    if (op.getProperty().toString().contains("://w3id.org/def/vtc#desiredBehaviour")) {
                         purpose = op.getValue().toString().replace("\"","");
                         tc.setPurpose(purpose.replace("^^xsd:string",""));
                     } else if (op.getProperty().toString().contains("http://purl.org/dc/terms/identifier")) {
@@ -109,7 +109,7 @@ public class ThemisImplementer {
             }
             for (OWLDataPropertyAssertionAxiom dp : ontology.getAxioms(AxiomType.DATA_PROPERTY_ASSERTION)) {
                 if (cls.toString().replace(">","").replace("<","").equals(dp.getSubject().toString().replace("<","").replace(">",""))) {
-                    if (dp.getProperty().toString().contains("https://w3id.org/def/vtc#desiredBehaviour")) {
+                    if (dp.getProperty().toString().contains("//w3id.org/def/vtc#desiredBehaviour")) {
                         purpose = dp.getObject().toString().replace("\"","");
                         tc.setPurpose(purpose);
                     } else if (dp.getProperty().toString().contains("http://purl.org/dc/terms/identifier")) {

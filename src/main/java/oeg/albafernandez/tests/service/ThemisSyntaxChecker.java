@@ -18,9 +18,9 @@ public class ThemisSyntaxChecker {
     static final Logger logger = Logger.getLogger(ThemisImplementer.class);
 
     public String syntaxChecker(String completetest) throws JSONException {
-        String testClean=completetest;
+        String testClean = completetest;
         if (completetest.contains(";")) {
-            testClean=completetest.split(";")[1].replaceAll("\n", "").trim();
+            testClean = completetest.split(";")[1].replaceAll("\n", "").trim();
         }
         List<Pattern> patterns = new ArrayList<>();
         patterns.add(Pattern.compile("^[^\\s]+"));
@@ -38,7 +38,7 @@ public class ThemisSyntaxChecker {
         patterns.add(Pattern.compile("^[^\\s]+\\s+(domain|range)\\s+[^\\s]+$"));
         patterns.add(Pattern.compile("^[^\\s]+\\s+[^\\s]+\\s+[^\\s]+$"));
 
-        for (Pattern patternInd: patterns) {
+        for (Pattern patternInd : patterns) {
             Matcher matcher = patternInd.matcher(testClean.toLowerCase().trim());
             if (matcher.matches()) {
                 return "true";
@@ -48,16 +48,16 @@ public class ThemisSyntaxChecker {
     }
 
 
-    public String autocomplete(String completetest, String term,   String ontology, String filename) throws JSONException {
+    public String autocomplete(String completetest, String term, String ontology, String filename) throws JSONException {
 
-        if(completetest != null && term != null && ontology != null) {
+        if (completetest != null && term != null && ontology != null) {
             JSONArray gotterms = new JSONArray();
             ArrayList<String> keys = new ArrayList<>();
-            String testClean=completetest;
-            if(term.trim().equals(";")){
+            String testClean = completetest;
+            if (term.trim().equals(";")) {
                 testClean = term.trim();
-            }else if (completetest.contains(";")) {
-                testClean=completetest.split(";")[1].replaceAll("\n", "").trim();
+            } else if (completetest.contains(";")) {
+                testClean = completetest.split(";")[1].replaceAll("\n", "").trim();
             }
 
             term = term.trim().replaceAll("\n", "");
@@ -154,23 +154,23 @@ public class ThemisSyntaxChecker {
                 values.add("some");
             } else if (m10.matches() || m19.matches()) {
                 values.add("and");
-            }  else if (m14.matches() ) {
+            } else if (m14.matches()) {
                 values.add("some");
                 values.add("only");
             } else if (m21.matches()) {
                 values.add("disjointWith");
-            }  else if (m2.matches()) {
+            } else if (m2.matches()) {
                 values.add("symmetricProperty(");
             } else if (m29.matches()) {
                 values.add("and");
                 values.add("or");
-            }else if (m32.matches()){
+            } else if (m32.matches()) {
                 values.add(";");
             }
 
-            if ( m1.matches() || m11.matches()) {
+            if (m1.matches() || m11.matches()) {
                 Ontology owlOntology = new Ontology();
-                if(!ontology.equals(""))
+                if (!ontology.equals(""))
                     owlOntology.loadOntologyURL(ontology);
                 else
                     owlOntology.loadOntologyfile(filename);
@@ -192,9 +192,9 @@ public class ThemisSyntaxChecker {
                 }
             }
 
-            if ( m6.matches() || completetest.equals("") || m2.matches() || m3.matches() || m0.matches() || m5.matches() || m9.matches() || m111.matches() || m13.matches() || m15.matches() || m16.matches() || m18.matches() || m20.matches() || m22.matches() || m23.matches() || m27.matches() || m28.matches() || m30.matches() || m31.matches()) {
+            if (m6.matches() || completetest.equals("") || m2.matches() || m3.matches() || m0.matches() || m5.matches() || m9.matches() || m111.matches() || m13.matches() || m15.matches() || m16.matches() || m18.matches() || m20.matches() || m22.matches() || m23.matches() || m27.matches() || m28.matches() || m30.matches() || m31.matches()) {
                 Ontology owlOntology = new Ontology();
-                if(!ontology.equals(""))
+                if (!ontology.equals(""))
                     owlOntology.loadOntologyURL(ontology);
                 else
                     owlOntology.loadOntologyfile(filename);
@@ -227,7 +227,7 @@ public class ThemisSyntaxChecker {
             }
 
             return sort(gotterms).toString();
-        }else
+        } else
             return "";
 
     }
@@ -238,7 +238,7 @@ public class ThemisSyntaxChecker {
             jsonValues.add(gotterms.getJSONObject(i));
         }
         JSONArray sortedJsonArray = new JSONArray();
-        Collections.sort( jsonValues, new Comparator<JSONObject>() {
+        Collections.sort(jsonValues, new Comparator<JSONObject>() {
             //You can change "Name" with "ID" if you want to sort by ID
             private static final String KEY_NAME = "label";
 
@@ -250,9 +250,8 @@ public class ThemisSyntaxChecker {
                 try {
                     valA = (String) a.get(KEY_NAME);
                     valB = (String) b.get(KEY_NAME);
-                }
-                catch (JSONException e) {
-                   logger.error(e.getMessage());
+                } catch (JSONException e) {
+                    logger.error(e.getMessage());
                 }
                 return valA.compareTo(valB);
 
@@ -265,7 +264,7 @@ public class ThemisSyntaxChecker {
         return sortedJsonArray;
     }
 
-    public Map createGot(Ontology ontology){
+    public Map createGot(Ontology ontology) {
         HashMap<String, IRI> got = new HashMap<>();
         got.putAll(ontology.getClasses());
         got.putAll(ontology.getDatatypeProperties());
@@ -273,14 +272,15 @@ public class ThemisSyntaxChecker {
         got.putAll(ontology.getIndividuals());
         return got;
     }
-    public Map createGotOnlyProperties(Ontology ontology){
+
+    public Map createGotOnlyProperties(Ontology ontology) {
         HashMap<String, IRI> got = new HashMap<>();
         got.putAll(ontology.getDatatypeProperties());
         got.putAll(ontology.getObjectProperties());
         return got;
     }
 
-    public  String  getGoT(Ontology onto) throws JSONException, NullPointerException {
+    public String getGoT(Ontology onto) throws JSONException, NullPointerException {
 
         HashMap<String, IRI> elements = new HashMap<>();
         elements.putAll(onto.getClasses());
@@ -288,57 +288,64 @@ public class ThemisSyntaxChecker {
         elements.putAll(onto.getDatatypeProperties());
         elements.putAll(onto.getIndividuals());
 
-        GoT report = new GoT();
-        String reportText =  report.generateReport(onto.getKeyName(), (HashMap<String, IRI>) onto.getClasses(), onto.getObjectProperties(), onto.getDatatypeProperties(), onto.getIndividuals());
-        JSONObject linkToReportGoT = new JSONObject();
+        if (!elements.isEmpty()) {
+            GoT report = new GoT();
+            String reportText = report.generateReport(onto.getKeyName(), (HashMap<String, IRI>) onto.getClasses(), onto.getObjectProperties(), onto.getDatatypeProperties(), onto.getIndividuals());
+            JSONObject linkToReportGoT = new JSONObject();
             linkToReportGoT.put("got", reportText);
             linkToReportGoT.put("key", onto.getKeyName());
             linkToReportGoT.put("uri", onto.getProv());
+            return linkToReportGoT.toString();
+        } else {
+            return null;
+
+        }
+
+    }
+
+    public String getGoTFromURI(String uri) throws JSONException, NullPointerException {
+        Ontology onto = new Ontology();
+        onto.loadOntologyURL(uri.replace("\"", "").trim());
+        return getGoT(onto);
+
+    }
+
+    public String getGoTFromFilename(String ontologycode) throws JSONException, NullPointerException {
+        Ontology onto = new Ontology();
+        onto.loadOntologyfile(ontologycode);
+        return getGoT(onto);
+    }
+
+    public String getPlainGoT(Ontology onto) throws JSONException, NullPointerException {
+
+        HashMap<String, IRI> elements = new HashMap<>();
+        elements.putAll(onto.getClasses());
+        elements.putAll(onto.getObjectProperties());
+        elements.putAll(onto.getDatatypeProperties());
+        elements.putAll(onto.getIndividuals());
+
+        String json = new Gson().toJson(elements);
+
+        JSONObject linkToReportGoT = new JSONObject();
+        linkToReportGoT.put("got", json);
+        linkToReportGoT.put("key", onto.getKeyName());
+
 
         return linkToReportGoT.toString();
-    }
-
-    public  String  getGoTFromURI(String uri) throws JSONException, NullPointerException {
-            Ontology onto = new Ontology();
-            onto.loadOntologyURL(uri.replace("\"", "").trim());
-            return getGoT(onto);
 
     }
-    public  String  getGoTFromFilename(String ontologycode) throws JSONException, NullPointerException {
-            Ontology onto = new Ontology();
-            onto.loadOntologyfile(ontologycode);
-            return getGoT(onto);
+
+    public String getPlainGoTFromURI(String uri) throws JSONException, OWLOntologyStorageException {
+
+        Ontology onto = new Ontology();
+        onto.loadOntologyURL(uri.replace("\"", "").trim());
+        return getPlainGoT(onto);
     }
 
-    public  String  getPlainGoT(Ontology onto) throws JSONException, NullPointerException {
-
-            HashMap<String, IRI> elements = new HashMap<>();
-            elements.putAll(onto.getClasses());
-            elements.putAll(onto.getObjectProperties());
-            elements.putAll(onto.getDatatypeProperties());
-            elements.putAll(onto.getIndividuals());
-
-            String json = new Gson().toJson(elements);
-
-            JSONObject linkToReportGoT = new JSONObject();
-            linkToReportGoT.put("got", json);
-            linkToReportGoT.put("key", onto.getKeyName());
-
-
-            return linkToReportGoT.toString();
-
-    }
-    public  String  getPlainGoTFromURI(String uri) throws JSONException, OWLOntologyStorageException {
-
-            Ontology onto = new Ontology();
-            System.out.println(uri);
-            onto.loadOntologyURL(uri.replace("\"", "").trim());
-           return getPlainGoT(onto);
-    }
-    public  String  getPlainGoTFromFile(String filename) throws JSONException, OWLOntologyStorageException {
-            Ontology onto = new Ontology();
-            onto.loadOntologyfile(filename);
-            return getPlainGoT(onto);
+    public String getPlainGoTFromFile(String filename) throws JSONException, OWLOntologyStorageException {
+        Ontology onto = new Ontology();
+        onto.loadOntologyfile(filename);
+        return getPlainGoT(onto);
 
 
     }

@@ -90,7 +90,7 @@ public class TextConstants {
             "                opacity: 0.1;\n" +
             "                -webkit-transform: translateY(-10px);\n" +
             "            }\n" +
-            "        }"+
+            "        }" +
             "    </style>\n" +
             //"    <link href=\"vocab/css/bootstrap-responsive.css\" rel=\"stylesheet\">\n" +
             "    \n" +
@@ -112,26 +112,25 @@ public class TextConstants {
                     "      <!-- Jumbotron -->\n" +
                     "      <div class=\"jumbotron\">\n" +
                     "        <h2>Glossary of terms</h2>\n" +
-                    "       </div>\n"+
+                    "       </div>\n" +
                     "      <hr>\n";
 
 
-    public static String button(String uri ){
-        return  "     <div class=\"col-md-12 text-right\" >\n" +
-                "            <button id=\"updategot\"  class=\"btn btn-primary mb-2\"  onclick=\"editoGoT('"+uri+"')\">Save changes</button>\n" +
+    public static String button(String uri) {
+        return "     <div class=\"col-md-12 text-right\" >\n" +
+                "            <button id=\"updategot\"  class=\"btn btn-primary mb-2\"  onclick=\"editoGoT('" + uri + "')\">Save changes</button>\n" +
                 "\n" +
                 "      </div>\n" +
                 " <br>   ";
     }
 
 
-
-    public static String headclasseswithkey(String key ){
-        return  "      <div>\n" +
+    public static String headclasseswithkey(String key) {
+        return "      <div>\n" +
                 //"        <h4>Classes</h4>  \n" +
                 "      </div>\n" +
                 "      <div id=\"got \" class=\"table-wrapper-scroll-y\">\n" +
-                "      <table  class = \"got\"  name=\"tablegot\" id=\""+key+"\" class=\"table table-bordered table-responsive \" style=\"back\" >\n" +
+                "      <table  class = \"got\"  name=\"tablegot\" id=\"" + key + "\" class=\"table table-bordered table-responsive \" style=\"back\" >\n" +
                 "      <thead>\n" +
                 "       <tr class = \"got\" ><th class=\"col-md-3\">Term <span class=\"glyphicon glyphicon-pencil\"></span></th><th class=\"col-md-4\">URI</th><th class=\"col-md-3\">Type</th><th class=\"col-md-2\"></th></tr></thead>\n" +
                 "      <tbody>\n";
@@ -139,12 +138,10 @@ public class TextConstants {
     }
 
 
-
-    public static final String endTables="      </tbody>\n" +
+    public static final String endTables = "      </tbody>\n" +
             "\n" +
-            "    </table>\n"+
+            "    </table>\n" +
             "      </div>\n";
-
 
 
 }
