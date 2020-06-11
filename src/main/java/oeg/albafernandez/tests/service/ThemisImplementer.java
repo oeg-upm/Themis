@@ -121,7 +121,8 @@ public class ThemisImplementer {
                     }
                 }
             }
-            testsuite.add(tc.getPurpose());
+            if(tc.getPurpose()!= null)
+                testsuite.add(tc.getPurpose());
         }
         return testsuite;
     }

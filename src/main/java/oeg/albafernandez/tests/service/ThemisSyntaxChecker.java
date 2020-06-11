@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.openjena.atlas.json.JSON;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLOntologyStorageException;
 
@@ -48,11 +49,9 @@ public class ThemisSyntaxChecker {
     }
 
 
-    public String autocomplete(String completetest, String term, String ontology, String filename) throws JSONException {
-
+    public List<Matcher> createPatterns(String completetest, String term, String ontology) {
+        ArrayList<Matcher> matchers = new ArrayList<>();
         if (completetest != null && term != null && ontology != null) {
-            JSONArray gotterms = new JSONArray();
-            ArrayList<String> keys = new ArrayList<>();
             String testClean = completetest;
             if (term.trim().equals(";")) {
                 testClean = term.trim();
@@ -64,16 +63,16 @@ public class ThemisSyntaxChecker {
             Pattern p = Pattern.compile("^.*" + term.toLowerCase() + ".*");
             Pattern test0 = Pattern.compile("^[^\\s]+");
             Pattern test1 = Pattern.compile("^[^\\s]+\\s*$");
-            Pattern test11 = Pattern.compile("^[^\\s]+\\s+" + term.toLowerCase() + "[^\\s]*$");
-            Pattern test2 = Pattern.compile("^[^\\s]+\\s+(subclassof)\\s+" + term.toLowerCase() + "[^\\s]*$");
-            Pattern test3 = Pattern.compile("^[^\\s]+\\s+(type)\\s+" + term.toLowerCase() + "[^\\s]*$");
-            Pattern test4 = Pattern.compile("^[^\\s]+\\s+(subclassof)\\s+[^\\s]+\\s" + term.toLowerCase() + "[^\\s]*$");
-            Pattern test5 = Pattern.compile("^[^\\s]+\\s+(subclassof)\\s+[^\\s]+\\s+(some|only|max\\s+\\d|min\\s+\\d|exactly\\s+\\d|and)\\s+" + term.toLowerCase() + "[^\\s]*$");
-            Pattern test6 = Pattern.compile("^[^\\s]+\\s+(subclassof)\\s+[^\\s]+\\s+(that)\\s+" + term.toLowerCase() + "[^\\s]*"); // property
-            Pattern test7 = Pattern.compile("^[^\\s]+\\s+(subclassof)\\s+[^\\s]+\\s+(that)\\s+[^\\s]+\\s+" + term.toLowerCase() + "[^\\s]*"); // some
+            Pattern test2 = Pattern.compile("^[^\\s]+\\s+" + term.toLowerCase() + "[^\\s]*$");
+            Pattern test3 = Pattern.compile("^[^\\s]+\\s+(subclassof)\\s+" + term.toLowerCase() + "[^\\s]*$");
+            Pattern test4 = Pattern.compile("^[^\\s]+\\s+(type)\\s+" + term.toLowerCase() + "[^\\s]*$");
+            Pattern test5 = Pattern.compile("^[^\\s]+\\s+(subclassof)\\s+[^\\s]+\\s" + term.toLowerCase() + "[^\\s]*$");
+            Pattern test6 = Pattern.compile("^[^\\s]+\\s+(subclassof)\\s+[^\\s]+\\s+(some|only|max\\s+\\d|min\\s+\\d|exactly\\s+\\d|and)\\s+" + term.toLowerCase() + "[^\\s]*$");
+            Pattern test7 = Pattern.compile("^[^\\s]+\\s+(subclassof)\\s+[^\\s]+\\s+(that)\\s+" + term.toLowerCase() + "[^\\s]*"); // property
+            Pattern test8 = Pattern.compile("^[^\\s]+\\s+(subclassof)\\s+[^\\s]+\\s+(that)\\s+[^\\s]+\\s+" + term.toLowerCase() + "[^\\s]*"); // some
             Pattern test9 = Pattern.compile("^[^\\s]+\\s+(subclassof)\\s+[^\\s]+\\s+(that)\\s+[^\\s]+\\s+(some)\\s+" + term.toLowerCase() + "[^\\s]*$");
             Pattern test10 = Pattern.compile("^[^\\s]+\\s+(subclassof)\\s+[^\\s]+\\s+(min\\s+\\d)\\s+[^\\s]+\\s+" + term.toLowerCase() + "[^\\s]*$");
-            Pattern test111 = Pattern.compile("^[^\\s]+\\s+(subclassof)\\s+[^\\s]+\\s+(min\\s+\\d)\\s+[^\\s]+\\s+(and)\\s+" + term.toLowerCase() + "[^\\s]*$");
+            Pattern test11 = Pattern.compile("^[^\\s]+\\s+(subclassof)\\s+[^\\s]+\\s+(min\\s+\\d)\\s+[^\\s]+\\s+(and)\\s+" + term.toLowerCase() + "[^\\s]*$");
             Pattern test12 = Pattern.compile("^[^\\s]+\\s+(subclassof)\\s+[^\\s]+\\s+(min\\s+\\d)\\s+[^\\s]+\\s+(and)\\s+[^\\s]+\\s+" + term.toLowerCase() + "[^\\s]*$");
             Pattern test13 = Pattern.compile("^[^\\s]+\\s+(subclassof)\\s+[^\\s]+\\s+(min\\s+\\d)\\s+[^\\s]+\\s+(and)\\s+[^\\s]+\\s+(subclassof)\\s+" + term.toLowerCase() + "[^\\s]*$");
             Pattern test14 = Pattern.compile("^[^\\s]+\\s+(subclassof)\\s+[^\\s]+\\s+(min\\s+\\d)\\s+[^\\s]+\\s+(and)\\s+[^\\s]+\\s+(subclassof)\\s+[^\\s]+\\s+" + term.toLowerCase() + "[^\\s]*$");
@@ -86,26 +85,26 @@ public class ThemisSyntaxChecker {
             Pattern test21 = Pattern.compile("^[^\\s]+\\s+(subclassof)\\s+[^\\s]+\\s*(and)\\s*[^\\s]+\\s+(subclassof)\\s+[^\\s]+\\s+(that)\\s+[^\\s]+\\s+" + term.toLowerCase() + "[^\\s]*$");
             Pattern test22 = Pattern.compile("^[^\\s]+\\s+(subclassof)\\s+[^\\s]+\\s*(and)\\s*[^\\s]+\\s+(subclassof)\\s+[^\\s]+\\s+(that)\\s+(disjointwith)\\s+" + term.toLowerCase() + "[^\\s]*$");
             Pattern test23 = Pattern.compile("^[^\\s]+\\s+(characteristic symmetricproperty)$"); // got
-            Pattern test27 = Pattern.compile("^[^\\s]+\\s+(disjointwith)\\s+" + term.toLowerCase() + "[^\\s]*$");
-            Pattern test28 = Pattern.compile("^[^\\s]+\\s+(equivalentto)\\s+" + term.toLowerCase() + "[^\\s]*$");
-            Pattern test29 = Pattern.compile("^[^\\s]+\\s+(subclassof)\\s+[^\\s]+\\s+only\\s*[^\\s]+\\s+" + term.toLowerCase() + "[^\\s]*$");//and or
-            Pattern test30 = Pattern.compile("^[^\\s]+\\s+(subclassof)\\s+[^\\s]+\\s+only\\s*[^\\s]+\\s+(and|or)\\s+" + term.toLowerCase() + "[^\\s]*$"); //got
-            Pattern test31 = Pattern.compile("^[^\\s]+\\s+(domain|range)\\s+" + term.toLowerCase() + "[^\\s]*$");
-            Pattern test32 = Pattern.compile("^;$");
+            Pattern test24 = Pattern.compile("^[^\\s]+\\s+(disjointwith)\\s+" + term.toLowerCase() + "[^\\s]*$");
+            Pattern test25 = Pattern.compile("^[^\\s]+\\s+(equivalentto)\\s+" + term.toLowerCase() + "[^\\s]*$");
+            Pattern test26 = Pattern.compile("^[^\\s]+\\s+(subclassof)\\s+[^\\s]+\\s+only\\s*[^\\s]+\\s+" + term.toLowerCase() + "[^\\s]*$");//and or
+            Pattern test27 = Pattern.compile("^[^\\s]+\\s+(subclassof)\\s+[^\\s]+\\s+only\\s*[^\\s]+\\s+(and|or)\\s+" + term.toLowerCase() + "[^\\s]*$"); //got
+            Pattern test28 = Pattern.compile("^[^\\s]+\\s+(domain|range)\\s+" + term.toLowerCase() + "[^\\s]*$");
+            Pattern test29 = Pattern.compile("^;$");
 
-
+            Matcher mp = p.matcher(testClean.toLowerCase());
             Matcher m0 = test0.matcher(testClean.toLowerCase());
             Matcher m1 = test1.matcher(testClean.toLowerCase());
-            Matcher m11 = test11.matcher(testClean.toLowerCase());
             Matcher m2 = test2.matcher(testClean.toLowerCase());
             Matcher m3 = test3.matcher(testClean.toLowerCase());
             Matcher m4 = test4.matcher(testClean.toLowerCase());
             Matcher m5 = test5.matcher(testClean.toLowerCase());
             Matcher m6 = test6.matcher(testClean.toLowerCase());
             Matcher m7 = test7.matcher(testClean.toLowerCase());
+            Matcher m8 = test8.matcher(testClean.toLowerCase());
             Matcher m9 = test9.matcher(testClean.toLowerCase());
             Matcher m10 = test10.matcher(testClean.toLowerCase());
-            Matcher m111 = test111.matcher(testClean.toLowerCase());
+            Matcher m11 = test11.matcher(testClean.toLowerCase());
             Matcher m12 = test12.matcher(testClean.toLowerCase());
             Matcher m13 = test13.matcher(testClean.toLowerCase());
             Matcher m14 = test14.matcher(testClean.toLowerCase());
@@ -118,119 +117,182 @@ public class ThemisSyntaxChecker {
             Matcher m21 = test21.matcher(testClean.toLowerCase());
             Matcher m22 = test22.matcher(testClean.toLowerCase());
             Matcher m23 = test23.matcher(testClean.toLowerCase());
+            Matcher m24 = test24.matcher(testClean.toLowerCase());
+            Matcher m25 = test25.matcher(testClean.toLowerCase());
+            Matcher m26 = test26.matcher(testClean.toLowerCase());
             Matcher m27 = test27.matcher(testClean.toLowerCase());
             Matcher m28 = test28.matcher(testClean.toLowerCase());
             Matcher m29 = test29.matcher(testClean.toLowerCase());
-            Matcher m30 = test30.matcher(testClean.toLowerCase());
-            Matcher m31 = test31.matcher(testClean.toLowerCase());
-            Matcher m32 = test32.matcher(testClean.toLowerCase());
 
-            ArrayList<String> values = new ArrayList<>();
-
-            if (m12.matches() || m17.matches()) {
-                values.add("subClassOf");
-            } else if (m1.matches() || m11.matches() || m27.matches() || m28.matches()) {
-                values.add("subClassOf");
-                values.add("characteristic symmetricproperty");
-                values.add("type");
-                values.add("domain");
-                values.add("range");
-                values.add("disjointWith");
-                values.add("equivalentTo");
-            } else if (m3.matches()) {
-                values.add("Class");
-                values.add("Individual");
-                values.add("Property");
-            } else if (m4.matches()) {
-                values.add("some");
-                values.add("only");
-                values.add("and");
-                values.add("min 1");
-                values.add("max 1");
-                values.add("exactly 1");
-                values.add("value");
-                values.add("that");
-            } else if (m7.matches()) {
-                values.add("some");
-            } else if (m10.matches() || m19.matches()) {
-                values.add("and");
-            } else if (m14.matches()) {
-                values.add("some");
-                values.add("only");
-            } else if (m21.matches()) {
-                values.add("disjointWith");
-            } else if (m2.matches()) {
-                values.add("symmetricProperty(");
-            } else if (m29.matches()) {
-                values.add("and");
-                values.add("or");
-            } else if (m32.matches()) {
-                values.add(";");
-            }
-
-            if (m1.matches() || m11.matches()) {
-                Ontology owlOntology = new Ontology();
-                if (!ontology.equals(""))
-                    owlOntology.loadOntologyURL(ontology);
-                else
-                    owlOntology.loadOntologyfile(filename);
-
-                HashMap<String, IRI> got;
-
-                got = (HashMap<String, IRI>) createGotOnlyProperties(owlOntology);
+            matchers.add(m0);
+            matchers.add(m1);
+            matchers.add(m2);
+            matchers.add(m3);
+            matchers.add(m4);
+            matchers.add(m5);
+            matchers.add(m6);
+            matchers.add(m7);
+            matchers.add(m8);
+            matchers.add(m9);
+            matchers.add(m10);
+            matchers.add(m11);
+            matchers.add(m12);
+            matchers.add(m13);
+            matchers.add(m14);
+            matchers.add(m15);
+            matchers.add(m16);
+            matchers.add(m17);
+            matchers.add(m18);
+            matchers.add(m19);
+            matchers.add(m20);
+            matchers.add(m21);
+            matchers.add(m22);
+            matchers.add(m23);
+            matchers.add(m24);
+            matchers.add(m25);
+            matchers.add(m26);
+            matchers.add(m27);
+            matchers.add(m28);
+            matchers.add(m29);
+            matchers.add(mp);
 
 
-                for (Map.Entry<String, IRI> entry : got.entrySet()) {
-                    Matcher m = p.matcher(entry.getKey().toLowerCase());
-                    if (m.matches() && !keys.contains(entry.getKey())) {
-                        JSONObject obj = new JSONObject();
-                        obj.put("label", entry.getKey().trim());
-                        obj.put("value", entry.getKey().trim());
-                        gotterms.put(obj);
-                        keys.add(entry.getKey());
-                    }
-                }
-            }
+        }
 
-            if (m6.matches() || completetest.equals("") || m2.matches() || m3.matches() || m0.matches() || m5.matches() || m9.matches() || m111.matches() || m13.matches() || m15.matches() || m16.matches() || m18.matches() || m20.matches() || m22.matches() || m23.matches() || m27.matches() || m28.matches() || m30.matches() || m31.matches()) {
-                Ontology owlOntology = new Ontology();
-                if (!ontology.equals(""))
-                    owlOntology.loadOntologyURL(ontology);
-                else
-                    owlOntology.loadOntologyfile(filename);
+        return matchers;
+    }
 
-                HashMap<String, IRI> got;
+    public JSONArray getKeywordsForPattern(List<Matcher> matchers) {
+        JSONArray gotterms = new JSONArray();
+        ArrayList<String> keys = new ArrayList<>();
+        ArrayList<String> values = new ArrayList<>();
 
-                got = (HashMap<String, IRI>) createGot(owlOntology);
+        if (matchers.get(12).matches() || matchers.get(17).matches()) {
+            values.add("subClassOf");
+        } else if (matchers.get(2).matches() || matchers.get(24).matches()) {
+            values.add("subClassOf");
+            values.add("characteristic symmetricproperty");
+            values.add("type");
+            values.add("domain");
+            values.add("range");
+            values.add("disjointWith");
+            values.add("equivalentTo");
+        } else if (matchers.get(4).matches()) {
+            values.add("Class");
+            values.add("Individual");
+            values.add("Property");
+        } else if (matchers.get(5).matches()) {
+            values.add("some");
+            values.add("only");
+            values.add("and");
+            values.add("min 1");
+            values.add("max 1");
+            values.add("exactly 1");
+            values.add("value");
+            values.add("that");
+        } else if (matchers.get(8).matches()) {
+            values.add("some");
+        } else if (matchers.get(10).matches() || matchers.get(19).matches()) {
+            values.add("and");
+        } else if (matchers.get(14).matches()) {
+            values.add("some");
+            values.add("only");
+        } else if (matchers.get(21).matches()) {
+            values.add("disjointWith");
+        } else if (matchers.get(26).matches()) {
+            values.add("and");
+            values.add("or");
+        } else if (matchers.get(29).matches()) {
+            values.add(";");
+        }
 
-
-                for (Map.Entry<String, IRI> entry : got.entrySet()) {
-                    Matcher m = p.matcher(entry.getKey().toLowerCase());
-                    if (m.matches() && !keys.contains(entry.getKey())) {
-                        JSONObject obj = new JSONObject();
-                        obj.put("label", entry.getKey().trim());
-                        obj.put("value", entry.getKey().trim());
-                        gotterms.put(obj);
-                        keys.add(entry.getKey());
-                    }
-                }
-            }
-
-            for (String value : values) {
-                Matcher m = p.matcher(value.toLowerCase());
-                if (m.matches()) {
-                    JSONObject obj = new JSONObject();
+        for (String value : values) {
+            if (matchers.get(30).matches()) {
+                JSONObject obj = new JSONObject();
+                try {
                     obj.put("label", value.trim());
-                    obj.put("value", value.trim());
-                    gotterms.put(obj);
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
+                try {
+                    obj.put("value", value.trim());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                gotterms.put(obj);
             }
-
-            return sort(gotterms).toString();
-        } else
-            return "";
+        }
+        return gotterms;
 
     }
+
+    public JSONArray getOntologyTermsForPattern(List<Matcher> matchers, String ontology, String filename, String completeTest, String term) {
+        JSONArray gotterms = new JSONArray();
+        ArrayList<String> keys = new ArrayList<>();
+        HashMap<String, IRI> got = new HashMap<>();
+        Ontology owlOntology = new Ontology();
+        if (!ontology.equals(""))
+            owlOntology.loadOntologyURL(ontology);
+        else
+            owlOntology.loadOntologyfile(filename);
+
+        if (matchers.get(7).matches() || matchers.get(20).matches()) {
+
+            got = (HashMap<String, IRI>) createGotOnlyProperties(owlOntology);
+        }
+
+        if (matchers.get(4).matches() || matchers.get(6).matches() || matchers.get(9).matches() || matchers.get(22).matches() || matchers.get(11).matches() || matchers.get(15).matches() || matchers.get(28).matches() || matchers.get(24).matches() || matchers.get(25).matches()) {
+
+            got = (HashMap<String, IRI>) createGotOnlyClasses(owlOntology);
+        }
+
+        if ( completeTest.equals("") || matchers.get(2).matches() ||  matchers.get(3).matches() || matchers.get(0).matches() ||   matchers.get(13).matches() ||  matchers.get(16).matches() || matchers.get(18).matches() ||  matchers.get(23).matches() ||  matchers.get(27).matches() || matchers.get(28).matches()) {
+
+            got = (HashMap<String, IRI>) createGot(owlOntology);
+        }
+
+        Pattern p = Pattern.compile("^.*" + term.toLowerCase() + ".*");
+
+        for (Map.Entry<String, IRI> entry : got.entrySet()) {
+            Matcher m = p.matcher(entry.getKey().toLowerCase());
+
+            if (m.matches() && !keys.contains(entry.getKey())) {
+                JSONObject obj = new JSONObject();
+                try {
+                    obj.put("label", entry.getKey().trim());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    obj.put("value", entry.getKey().trim());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                gotterms.put(obj);
+                keys.add(entry.getKey());
+            }
+        }
+
+        return gotterms;
+    }
+
+
+    public String autocomplete(String completeTest, String term, String ontology, String filename) throws JSONException {
+        JSONArray gotComplete = new JSONArray();
+
+        List<Matcher> matchers = createPatterns(completeTest, term, ontology);
+        JSONArray keywords = getKeywordsForPattern(matchers);
+        JSONArray properties = getOntologyTermsForPattern(matchers, ontology, filename, completeTest, term);
+
+        for(int i = 0; i< keywords.length();i++){
+            gotComplete.put(keywords.getJSONObject(i));
+        }
+        for(int i = 0; i< properties.length();i++){
+            gotComplete.put(properties.getJSONObject(i));
+        }
+        return sort(gotComplete).toString();
+    }
+
 
     public JSONArray sort(JSONArray gotterms) throws JSONException {
         List<JSONObject> jsonValues = new ArrayList<>();
@@ -269,6 +331,13 @@ public class ThemisSyntaxChecker {
         got.putAll(ontology.getClasses());
         got.putAll(ontology.getDatatypeProperties());
         got.putAll(ontology.getObjectProperties());
+        got.putAll(ontology.getIndividuals());
+        return got;
+    }
+
+    public Map createGotOnlyClasses(Ontology ontology) {
+        HashMap<String, IRI> got = new HashMap<>();
+        got.putAll(ontology.getClasses());
         got.putAll(ontology.getIndividuals());
         return got;
     }

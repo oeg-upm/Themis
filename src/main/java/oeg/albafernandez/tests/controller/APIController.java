@@ -194,6 +194,7 @@ public class APIController {
 
         } catch (Exception e) {
             status = 500;
+            e.printStackTrace();
         }
 
         return Response.status(status)
@@ -251,10 +252,11 @@ public class APIController {
                                  @QueryParam("ontology") @Parameter(description = "URI of the ontology", example = "http://iot.linkeddata.es/def/core#") String ontologyURI) throws JSONException {
         if (lastTerm == null)
             lastTerm = " ";
+        String got = syntaxChecker.autocomplete(test, lastTerm, ontologyURI, filename);
 
         return Response
                 .status(200)
-                .entity(syntaxChecker.autocomplete(test, lastTerm, ontologyURI, filename))
+                .entity(got)
                 .build();
 
     }
@@ -291,9 +293,12 @@ public class APIController {
         else
             ontologyFile = autocompleteResource.getCode().replace("</http:>", "").replace("</https:>", "");
 
+        String got = syntaxChecker.autocomplete(test, lastTerm, ontologyURI, ontologyFile);
+
+
         return Response
                 .status(200)
-                .entity(syntaxChecker.autocomplete(test, lastTerm, ontologyURI, ontologyFile))
+                .entity(got)
                 .build();
 
     }

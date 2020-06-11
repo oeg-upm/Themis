@@ -1,47 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head >
     <meta charset="UTF-8">
-    <title>Tests description</title>
+    <title>Test description</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="languaje" content="English">
 
-    <link rel="stylesheet" href="vocab/themes/blue/style.css" type="text/css" media="print, projection, screen" />
-    <script src="vocab/js/jquery-1.11.0.js"></script>
-    <script type="text/javascript" src="vocab/js/jquery.tablesorter.min.js"></script>
-    <script type="text/javascript" src="vocab/js/jquery.stickytableheaders.js"></script>
-    <script type="text/javascript" src="vocab/js/jquery-ui.js"></script>
-    <script type="text/javascript" src="vocab/js/bootstrap.js"></script>
-    <link rel="stylesheet" href="vocab/css/jquery-ui.css"></link>
-    <script type="text/javascript" id="js">
-        $(document).ready(function()
-            {
-                $("#tablesorter-demo").tablesorter();
-                $("#tablesorter-demo").stickyTableHeaders();
-                $('[data-toggle="tooltip"]').tooltip();
-            }
-        );
-    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
     <!-- Le styles -->
     <link href="vocab/css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="vocab/css/style-custom.css">
+
     <style type="text/css">
-        body {
-            padding-top: 60px;
-            padding-bottom: 40px;
+
+        .table-wrapper-scroll-y {
+            display: block;
+            max-height: 200px;
+            overflow-y: auto;
+            -ms-overflow-style: -ms-autohiding-scrollbar;
         }
+
+
     </style>
 
 
-
-    <!-- Fav and touch icons -->
 </head>
 
 <body>
+
+<!-- Static navbar -->
+<nav class="navbar navbar-default ">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#"> <img src="images/themis.png" class="img-rounded" class="img-responsive" width="35%" ></a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="index.html">Home</a></li>
+                <li><a href="howto.html">How to use Themis</a></li>
+                <li><a href="swagger-ui/index.html">API REST</a></li>
+                <li><a href="catalogue.html">Catalogue</a></li>
+                <li><a href="https://github.com/oeg-upm/Themis">GitHub</a></li>
+
+                <!--<li><a href="tests-info.html">Supported tests</a></li>-->
+            </ul>
+        </div><!--/.nav-collapse -->
+
+    </div>
+</nav>
+
 <div class="container">
 
     <!-- Jumbotron -->
-    <div class="jumbotron">
+    <div class="jumbotron" style="background-color:white;">
         <h2>Description of the supported tests</h2>
     </div>
     <hr>
@@ -255,12 +280,13 @@
             Icons from <a target="_blank" href="http://glyphicons.com/">Glyphicons</a>
             <br>
             Latest revision April, 2020
-            <br><p>&copy; Ontology Engineering Group</p>
+            <br>
+            Licensed under the <a target="_blank" href="http://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a>
         </div>
         <div class="col-md-5" align="right">
             <a href="http://www.oeg-upm.net/" target="_blank"><img src="images/logo.gif" alt="OEG logo" class="img-rounded" class="img-responsive" width="20%"/></a>
 
-            <a href="http://fi.upm.es/" target="_blank"><img src="images/fiLogo.png" alt="FI logo" class="img-rounded" class="img-responsive" width="20%"/></a>
+            <a href="http://fi.upm.es/" target="_blank"><img src="images/fiLogo.png" alt="FI logo" class="img-rounded" class="img-responsive" width="18%"/></a>
 
             <a href="https://www.upm.es/" target="_blank"><img src="images/upmlogo.png" alt="UPM logo" class="img-rounded" class="img-responsive" width="20%"/></a>
         </div>
