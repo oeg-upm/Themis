@@ -292,7 +292,7 @@ function check() {
                                 cell1.innerHTML = "<p name=\"testintable\">" + test + "</p>";
 
                                 cell2.innerHTML = "<span class=\"label label-default \" data-toggle=\"tooltip\" title=\"The ontology did not pass the test\">Undefined terms</span>";
-                                cell3.innerHTML = "<p>The terms in the test are not correctly defined in the ontology</p>";
+                                cell3.innerHTML = "<p>The terms in the test are not defined in the ontology</p>";
 
                             }else if(result.Result == 'Incorrect'){
                                 var test = item.Test;
@@ -359,22 +359,22 @@ function check() {
                                 });
                                 cell1.innerHTML = "<p name=\"testintable\">" + test + "</p>";
                                 cell2.innerHTML = "<span class=\"label label-default \" data-toggle=\"tooltip\" title=\"The ontology did not pass the test\">Undefined terms</span>";
-                                cell3.innerHTML = "<p>The terms in the test are not correctly defined in the ontology</p>";
+                                cell3.innerHTML = "<p>The terms in the test are not defined in the ontology</p>";
 
                                 cell2.innerHTML = "<span class=\"label label-default \" data-toggle=\"tooltip\" title=\"The ontology did not pass the test\">Undefined terms</span>";
                                 cell3.innerHTML = "<p>The terms in the test are not defined in the ontology</p>";
                             } else if (result.Result == 'Incorrect') {
                                 var test = item.Test;
-                                $.each(result.Undefined, function (j, undefined) {
+                                $.each(result.Incorrect, function (j, incorrect) {
                                     let re = new RegExp(`\\b${incorrect}\\b`, 'gi');
                                     test = test.replace(re, "<span style=\"color:red;\">"+incorrect+"</span>");
                                 });
                                 cell1.innerHTML = "<p name=\"testintable\">" + test + "</p>";
                                 cell2.innerHTML = "<span class=\"label label-default \" data-toggle=\"tooltip\" title=\"The ontology did not pass the test\">Undefined terms</span>";
-                                cell3.innerHTML = "<p>The terms in the test are not defined in the ontology</p>";
+                                cell3.innerHTML = "<p>The terms in the test are not correctly defined in the ontology</p>";
 
                                 cell2.innerHTML = "<span class=\"label label-default \" data-toggle=\"tooltip\" title=\"The ontology did not pass the test\">Undefined terms</span>";
-                                cell3.innerHTML = "<p>The terms in the test are not defined in the ontology</p>";
+                                cell3.innerHTML = "<p>The terms in the test are not correctly defined in the ontology</p>";
                             } else if (result.Result == 'Absent') {
                                 cell2.innerHTML = "<span class=\"label label-warning\" data-toggle=\"tooltip\" title=\"The ontology did not pass the test\">Absent relation</span>";
                                 cell3.innerHTML = "<p>The ontology does not implement the requirement associated to the test</p>";
