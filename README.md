@@ -1,6 +1,6 @@
 # Themis 
 
-This repository is a web service that publishes the services of Themis, providing an interface to execute tests on one or more ontologies, and also a REST API to be used by third-party services.
+This repository stores the code of Themis, which is a web application that provides an interface to execute tests on one or more ontologies, and also a REST API to be used by third-party services.
 
 ## Inputs
 Themis needs two inputs:
