@@ -1,0 +1,2838 @@
+ <html lang="en">
+<head >
+    <meta charset="UTF-8">
+    <title>Validate your ontology</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="languaje" content="English">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <!-- Le styles -->
+    <link href="../vocab/css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../vocab/css/style-custom.css">
+
+    <style type="text/css">
+
+        .table-wrapper-scroll-y {
+            display: block;
+            max-height: 200px;
+            overflow-y: auto;
+            -ms-overflow-style: -ms-autohiding-scrollbar;
+        }
+
+
+    </style>
+
+
+    <script type="text/javascript" id="js">
+        $(document).ready(function()
+            {
+                $("#tablesorter-demo").tablesorter();
+                $("#tablesorter-demo").stickyTableHeaders();
+                $('[data-toggle="tooltip"]').tooltip();
+            }
+        );
+    </script>
+</head>
+
+<body data-spy="scroll" data-target="#myScrollspy">
+
+
+<nav class="navbar navbar-default "  id="catalogue">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#"> <img src="../images/themis.png" class="img-rounded" class="img-responsive" width="70%" ></a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../howto.html">How to use it</a></li>
+                <li><a href="../../../../target/swagger-ui/META-INF/resources/webjars/swagger-ui/3.17.0/index.html">API REST</a></li>
+                <li><a href="../catalogue.html">Catalogue</a></li>
+                <!--<li><a href="tests-info.html">Supported tests</a></li>-->
+            </ul>
+        </div><!--/.nav-collapse -->
+
+    </div>
+</nav>  <!-- Jumbotron -->
+    <div class="jumbotron" style="background-color:white;">
+        <h2> Glossary of terms</h2>
+        <p class="lead">Glossary of terms for the VICINITY Adapters ontology.</a></p>
+
+
+    </div><nav class="col-sm-3" id="myScrollspy">
+    <ul class="nav nav-pills nav-stacked">
+        <li class="active" class="nav nav-pills nav-stacked"><a href="#got">Glossary</a></li>
+        <li class="nav nav-pills nav-stacked"><a href="#catalogue"><span class="glyphicon glyphicon-chevron-up
+" aria-hidden="true"></span>
+            Go top</a></li>
+
+    </ul>
+</nav>   <div class="col-sm-9">
+    <div id="got">
+
+
+        <input id="filter" type="text" placeholder="Search..">
+
+        <table id="tablesorter-demo" class="tablesorter table table-hover table-responsive">
+
+            <thead>
+            <tr class="got">
+                <th class="col-md-3">Term</th>
+                <th class="col-md-4">URI</th>
+                <th class="col-md-3">Type</th>
+                <th class="col-md-2"></th>
+            </tr>
+            </thead>
+            <tbody>				<tr class = "got">
+					<td class="term got" class="tg-031e">0.1:Agent</td>
+					<td class="uri got tg-031e ">http://xmlns.com/foaf/0.1/Agent</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Accuracy</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/systems/Accuracy</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Action</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/wot#Action</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Activity</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/prov#Activity</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">ActivityTracker</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#ActivityTracker</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">ActuatableProperty</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/ActuatableProperty</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Actuation</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/Actuation</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Actuator</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/core#Actuator</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">AdministrativeArea</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/saref4city#AdministrativeArea</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Agent</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/core#Agent</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">AmbientHumidityProperty</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#AmbientHumidityProperty</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">AmbientProperty</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#AmbientProperty</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">AmbientTemperatureProperty</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#AmbientTemperatureProperty</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Application</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/core#Application</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Battery</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#Battery</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">BatteryLifetime</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/systems/BatteryLifetime</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">BatteryStorageUnit</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#BatteryStorageUnit</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">BeaconReader</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#BeaconReader</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">BitcoinWallet</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#BitcoinWallet</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">BloodPressureMonitor</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#BloodPressureMonitor</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Building</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/saref4bldg#Building</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">BuildingSpace</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/saref4bldg#BuildingSpace</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">BusinessEntity</td>
+					<td class="uri got tg-031e ">http://purl.org/goodrelations/v1#BusinessEntity</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">CO2Sensor</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#CO2Sensor</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">CarbonDioxide</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#CarbonDioxide</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">CarbonMonoxide</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#CarbonMonoxide</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">ChangeEvent</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/org#ChangeEvent</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Charger</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#Charger</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">City</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/saref4city#City</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">ComboBatteryPV</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#ComboBatteryPV</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">CommunicationProtocol</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/wot#CommunicationProtocol</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">ComposedThing</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/core#ComposedThing</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Concept</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2004/02/skos/core#Concept</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Condition</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/systems/Condition</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Contract</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/core#Contract</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Country</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/saref4city#Country</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">DashWallet</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#DashWallet</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">DataSchema</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/wot#DataSchema</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">DataType</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/wot#DataType</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Deployment</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/Deployment</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">DetectionLimit</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/systems/DetectionLimit</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Device</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/core#Device</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">DeviceDoorStatusProperty</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#DeviceDoorStatusProperty</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">DeviceLightStatusProperty</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#DeviceLightStatusProperty</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">DeviceTemperatureProperty</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#DeviceTemperatureProperty</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">DigitalUser</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/core#DigitalUser</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">DoorSensor</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#DoorSensor</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Drift</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/systems/Drift</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">EBikeCharger</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#EBikeCharger</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">EVCharger</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#EVCharger</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Ecosystem</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/core#Ecosystem</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">ElectricVehicle</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#ElectricVehicle</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Event</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/wot#Event</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Feature</td>
+					<td class="uri got tg-031e ">http://www.opengis.net/ont/geosparql#Feature</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">FeatureOfInterest</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/FeatureOfInterest</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">FeatureProperty</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/core#FeatureProperty</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">FormalOrganization</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/org#FormalOrganization</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Frequency</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/systems/Frequency</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Geometry</td>
+					<td class="uri got tg-031e ">http://www.opengis.net/ont/geosparql#Geometry</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Glucometer</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#Glucometer</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">HVACSensor</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#HVACSensor</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">HealthProperty</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#HealthProperty</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">HumanUser</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/core#HumanUser</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">HumiditySensor</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#HumiditySensor</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Image</td>
+					<td class="uri got tg-031e ">http://xmlns.com/foaf/0.1/Image</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">IndoorClimateQualitySensor</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#IndoorClimateQualitySensor</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">InteractionPattern</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/wot#InteractionPattern</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Irradiance</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#Irradiance</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Latency</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/systems/Latency</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">LightProperty</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#LightProperty</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">LightSwitch</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#LightSwitch</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Lightbulb</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#Lightbulb</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Link</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/wot#Link</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">LuminanceMeter</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#LuminanceMeter</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">LuminusFlux</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#LuminusFlux</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">LuminusIntensity</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#LuminusIntensity</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">MaintenanceSchedule</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/systems/MaintenanceSchedule</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">MeasurementRange</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/systems/MeasurementRange</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">MediaType</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/wot#MediaType</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Membership</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/org#Membership</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">MotionProperty</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#MotionProperty</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">MotionSensor</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#MotionSensor</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Neighbourhood</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/core#Neighbourhood</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">NoiseSensor</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#NoiseSensor</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">ObservableProperty</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/ObservableProperty</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Observation</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/Observation</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">OccupancySensor</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#OccupancySensor</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">OperatingPowerRange</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/systems/OperatingPowerRange</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">OperatingProperty</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/systems/OperatingProperty</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">OperatingRange</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/systems/OperatingRange</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">OperationalStatus</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#OperationalStatus</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Organization</td>
+					<td class="uri got tg-031e ">http://xmlns.com/foaf/0.1/Organization</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">OrganizationalCollaboration</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/org#OrganizationalCollaboration</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">OrganizationalUnit</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/org#OrganizationalUnit</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">PanicButton</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#PanicButton</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">PeopleCounter</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#PeopleCounter</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Person</td>
+					<td class="uri got tg-031e ">http://xmlns.com/foaf/0.1/Person</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">PhotovoltaicPanel</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#PhotovoltaicPanel</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">PhysicalObject</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/saref4bldg#PhysicalObject</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">PhysicalThing</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/core#PhysicalThing</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Platform</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/Platform</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Point</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2003/01/geo/wgs84_pos#Point</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Post</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/org#Post</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Power</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#Power</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">PowerConsumption</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#PowerConsumption</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">PowerMeter</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#PowerMeter</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Precision</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/systems/Precision</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Presence</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#Presence</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">PressureMat</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#PressureMat</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Procedure</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/Procedure</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Radiance</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#Radiance</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">RadiantIntensity</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#RadiantIntensity</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">RelativeEndpoint</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/core#RelativeEndpoint</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Repository</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#Repository</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">RepositoryProperty</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#RepositoryProperty</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Resolution</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/systems/Resolution</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Resource</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2000/01/rdf-schema#Resource</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">ResponseTime</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/systems/ResponseTime</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Result</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/Result</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Role</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/org#Role</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Sample</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/Sample</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Sampler</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/Sampler</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Sampling</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/Sampling</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Security</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/wot#Security</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Selectivity</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/systems/Selectivity</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Sensitivity</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/systems/Sensitivity</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Sensor</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/Sensor</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Service</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/core#Service</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Site</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/org#Site</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">SmartOven</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#SmartOven</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">SmartRefrigerator</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#SmartRefrigerator</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">SmartWatch</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#SmartWatch</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">SolarRadiationAmbientProperty</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#SolarRadiationAmbientProperty</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Sound</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#Sound</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">SpaceProperty</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#SpaceProperty</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">SpatialObject</td>
+					<td class="uri got tg-031e ">http://www.opengis.net/ont/geosparql#SpatialObject</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">SurvivalProperty</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/systems/SurvivalProperty</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">SurvivalRange</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/systems/SurvivalRange</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">System</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/System</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">SystemCapability</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/systems/SystemCapability</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">SystemLifetime</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/systems/SystemLifetime</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">SystemProperty</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/systems/SystemProperty</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">TemperatureProperty</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#TemperatureProperty</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">TemporalEntity</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#TemporalEntity</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Thermometer</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#Thermometer</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Thermostat</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#Thermostat</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Thing</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/wot#Thing</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">ThingDescription</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/core#ThingDescription</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">ThingEcosystemDescription</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/core#ThingEcosystemDescription</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">TimeProperty</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#TimeProperty</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Unit_of_measure</td>
+					<td class="uri got tg-031e ">http://www.wurvoc.org/vocabularies/om-1.8/Unit_of_measure</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Value</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/core#Value</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">VirtualThing</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/core#VirtualThing</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Vocabulary</td>
+					<td class="uri got tg-031e ">http://purl.org/vocommons/voaf#Vocabulary</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Wallet</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#Wallet</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">WalletProperty</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#WalletProperty</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">WaterEnergyMeter</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#WaterEnergyMeter</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">WaterFlowMeter</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#WaterFlowMeter</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">WaterProperty</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#WaterProperty</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">WeatherStation</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#WeatherStation</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">WeightScale</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#WeightScale</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">WindAmbientProperty</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#WindAmbientProperty</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">WindowSensor</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#WindowSensor</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">core#:Sensor</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/core#Sensor</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">org#:Organization</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/org#Organization</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">owl#:Thing</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2002/07/owl#Thing</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">saref#:Service</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Service</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">sosa:Actuator</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/Actuator</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">ssn:Property</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/Property</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">wot#:Property</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/wot#Property</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">aboutFeatureOfInterest</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/core#aboutFeatureOfInterest</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">aboutProperty</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/core#aboutProperty</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">actsOnFeatureProperty</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/core#actsOnFeatureProperty</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">actsOnProperty</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/actsOnProperty</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">avatar</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/core#avatar</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">basedAt</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/org#basedAt</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">changedBy</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/org#changedBy</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">classification</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/org#classification</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">contains</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/saref4bldg#contains</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">depiction</td>
+					<td class="uri got tg-031e ">http://xmlns.com/foaf/0.1/depiction</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">describes</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/wot#describes</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">describesEcosystem</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/core#describesEcosystem</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">exposes</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/core#exposes</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">expressedInFormat</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/core#expressedInFormat</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">forProperty</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/forProperty</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasComponent</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/core#hasComponent</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasDeployment</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/hasDeployment</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasFeatureOfInterest</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/hasFeatureOfInterest</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasGeometry</td>
+					<td class="uri got tg-031e ">http://www.opengis.net/ont/geosparql#hasGeometry</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasInputData</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/wot#hasInputData</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasMaxValue</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/core#hasMaxValue</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasMember</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/org#hasMember</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasMembership</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/org#hasMembership</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasMinValue</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/core#hasMinValue</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasNeighbourhood</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/core#hasNeighbourhood</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasOperatingProperty</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/systems/hasOperatingProperty</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasOperatingRange</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/systems/hasOperatingRange</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasOutputData</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/wot#hasOutputData</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasOwner</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/core#hasOwner</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasPartnershipWith</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/core#hasPartnershipWith</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasPost</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/org#hasPost</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasPrimarySite</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/org#hasPrimarySite</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasPriorityEndpoint</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/wot#hasPriorityEndpoint</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasProperty</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/hasProperty</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasRegisteredSite</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/org#hasRegisteredSite</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasResult</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/hasResult</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasSample</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/hasSample</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasSite</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/org#hasSite</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasSpace</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/saref4bldg#hasSpace</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasSubOrganization</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/org#hasSubOrganization</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasSubSystem</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/hasSubSystem</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasSurvivalProperty</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/systems/hasSurvivalProperty</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasSurvivalRange</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/systems/hasSurvivalRange</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasSystemCapability</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/systems/hasSystemCapability</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasSystemProperty</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/systems/hasSystemProperty</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasUnit</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/org#hasUnit</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasValue</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/core#hasValue</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasValueType</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/wot#hasValueType</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasVendor</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/core#hasVendor</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">headOf</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/org#headOf</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">heldBy</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/org#heldBy</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">holds</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/org#holds</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hosts</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/hosts</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">implements</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/implements</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">implementsSecurity</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/wot#implementsSecurity</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">inCondition</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/systems/inCondition</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">interactsUsing</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/core#interactsUsing</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">involves</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/core#involves</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isAccessibleThrough</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/wot#isAccessibleThrough</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isActedOnBy</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/isActedOnBy</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isComponentOf</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/core#isComponentOf</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isComposedBy</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/core#isComposedBy</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isDescribedBy</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/core#isDescribedBy</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isEcosystemDescribedBy</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/core#isEcosystemDescribedBy</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isFeatureOfInterestOf</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/isFeatureOfInterestOf</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isHostedBy</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/isHostedBy</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isInvolvedIn</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/core#isInvolvedIn</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isLocatedAt</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/core#isLocatedAt</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isMeasuredIn</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/wot#isMeasuredIn</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isNeighbourhoodOf</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/core#isNeighbourhoodOf</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isObservedBy</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/isObservedBy</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isPropertyOf</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/isPropertyOf</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isProvidedOverProtocol</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/wot#isProvidedOverProtocol</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isReadableThrough</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/wot#isReadableThrough</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isRelativeTo</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/core#isRelativeTo</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isRepresentedBy</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/core#isRepresentedBy</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isResultOf</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/isResultOf</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isSampleOf</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/isSampleOf</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isSpaceOf</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/saref4bldg#isSpaceOf</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isWritableThrough</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/wot#isWritableThrough</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">linkedTo</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/org#linkedTo</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">literalValue</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/core#literalValue</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">location</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2003/01/geo/wgs84_pos#location</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">madeActuation</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/madeActuation</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">madeByActuator</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/madeByActuator</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">madeBySampler</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/madeBySampler</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">madeBySensor</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/madeBySensor</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">madeObservation</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/madeObservation</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">madeSampling</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/madeSampling</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">member</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/org#member</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">memberDuring</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/org#memberDuring</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">memberOf</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/org#memberOf</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">monitorsFeatureProperty</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/core#monitorsFeatureProperty</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">observedProperty</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/observedProperty</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">observes</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/observes</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">organization</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/org#organization</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">originalOrganization</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/org#originalOrganization</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">owns</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/core#owns</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">petitionerItemInvolved</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/core#petitionerItemInvolved</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">phenomenonTime</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/phenomenonTime</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">postIn</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/org#postIn</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">providedBy</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/wot#providedBy</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">providesInteractionPattern</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/wot#providesInteractionPattern</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">qualityOfObservation</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/systems/qualityOfObservation</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">remuneration</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/org#remuneration</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">reportsTo</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/org#reportsTo</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">represents</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/core#represents</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">requestedService</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/core#requestedService</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">resultedFrom</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/org#resultedFrom</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">resultingOrganization</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/org#resultingOrganization</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">role</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/org#role</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">serviceOwner</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/core#serviceOwner</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">servicePetitioner</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/core#servicePetitioner</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">sfContains</td>
+					<td class="uri got tg-031e ">http://www.opengis.net/ont/geosparql#sfContains</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">sfWithin</td>
+					<td class="uri got tg-031e ">http://www.opengis.net/ont/geosparql#sfWithin</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">siteAddress</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/org#siteAddress</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">siteOf</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/org#siteOf</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">subOrganizationOf</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/org#subOrganizationOf</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">transitiveSubOrganizationOf</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/org#transitiveSubOrganizationOf</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">unitOf</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/org#unitOf</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">used</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/prov#used</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">usedProcedure</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/usedProcedure</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">value</td>
+					<td class="uri got tg-031e ">http://www.w3.org/1999/02/22-rdf-syntax-ns#value</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">wasDerivedFrom</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/prov#wasDerivedFrom</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">wasGeneratedBy</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/prov#wasGeneratedBy</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">baseURI</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/wot#baseURI</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">contractId</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/core#contractId</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">dataModelVersion</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/core#dataModelVersion</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">defaultValue</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/wot#defaultValue</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">description</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/core#description</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">deviceDescription</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/core#deviceDescription</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">deviceName</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/core#deviceName</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasMediaType</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/wot#hasMediaType</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasSimpleResult</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/hasSimpleResult</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">href</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/wot#href</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">identifier</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/org#identifier</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">interactionDescription</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/wot#interactionDescription</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">interactionName</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/wot#interactionName</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isQueueable</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/wot#isQueueable</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isRequired</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/wot#isRequired</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isWritable</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/wot#isWritable</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">location</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/org#location</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">name</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/wot#name</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">notation</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2004/02/skos/core#notation</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">protocolIndependentId</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/core#protocolIndependentId</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">readWrite</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/core#readWrite</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">relativeHref</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/core#relativeHref</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">resultTime</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/resultTime</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">serialNumber</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/core#serialNumber</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">serviceDescription</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/core#serviceDescription</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">serviceId</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/core#serviceId</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">serviceName</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/core#serviceName</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">serviceVersion</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/core#serviceVersion</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">softwareVersion</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/core#softwareVersion</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">specVersion</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/core#specVersion</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">thingName</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/wot#thingName</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">timeStamp</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/core#timeStamp</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">topDataProperty</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2002/07/owl#topDataProperty</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">AccumulatedEnergyConsumed</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#AccumulatedEnergyConsumed</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">AccumulatedEnergyInjectedToGrid</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#AccumulatedEnergyInjectedToGrid</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">AccumulatedEnergyProduced</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#AccumulatedEnergyProduced</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">ActivePowerAbsorbedFromGrid</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#ActivePowerAbsorbedFromGrid</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">ActivePowerInjectedToGrid</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#ActivePowerInjectedToGrid</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">ActivePowerProduction</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#ActivePowerProduction</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">ActivePowerSetPoint</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#ActivePowerSetPoint</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">ActualActivePowerGeneration</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#ActualActivePowerGeneration</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">ActualActivePowerInjectedToGrid</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#ActualActivePowerInjectedToGrid</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">ActualActivePowerLoad</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#ActualActivePowerLoad</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">ActualActivePowerProduction</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#ActualActivePowerProduction</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">ActualBatteryStateOfCharge</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#ActualBatteryStateOfCharge</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">ActualChargingSessionDuration</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#ActualChargingSessionDuration</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">ActualDCCurrent</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#ActualDCCurrent</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">ActualDCPower</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#ActualDCPower</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">ActualDCVoltage</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#ActualDCVoltage</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">ActualEnergyConsumedChargingSession</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#ActualEnergyConsumedChargingSession</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">ActualReactivePowerGeneration</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#ActualReactivePowerGeneration</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">ActualReactivePowerInjectedToGrid</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#ActualReactivePowerInjectedToGrid</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">ActualReactivePowerLoad</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#ActualReactivePowerLoad</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">ActualReactivePowerProduction</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#ActualReactivePowerProduction</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">AlarmTime</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#AlarmTime</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">AmbientTemperature</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#AmbientTemperature</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">AverageCO2Concentration</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#AverageCO2Concentration</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">AverageCO2ConcentrationDeviation</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#AverageCO2ConcentrationDeviation</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">AverageHumidity</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#AverageHumidity</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">AverageHumidityDeviation</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#AverageHumidityDeviation</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">AverageLightIntensity</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#AverageLightIntensity</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">AverageMovemenetShare</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#AverageMovemenetShare</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">AverageMovementTime</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#AverageMovementTime</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">AverageSound</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#AverageSound</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">AverageSoundDeviation</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#AverageSoundDeviation</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">AverageTemperature</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#AverageTemperature</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">AverageTemperatureDeviation</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#AverageTemperatureDeviation</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Azimuth</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#Azimuth</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Baking</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#Baking</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">BakingEndTimeHour</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#BakingEndTimeHour</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">BakingEndTimeMinute</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#BakingEndTimeMinute</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">BakingRemainingTime</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#BakingRemainingTime</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">BakingStartTimeHour</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#BakingStartTimeHour</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">BakingStartTimeMinute</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#BakingStartTimeMinute</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">BakingStep</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#BakingStep</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">BakingTemperature</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#BakingTemperature</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">BakingTime</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#BakingTime</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">BasalMetabolicRate</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#BasalMetabolicRate</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">BatteryActualControlMode</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#BatteryActualControlMode</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">BatteryActualDCCurrent</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#BatteryActualDCCurrent</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">BatteryActualDCPower</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#BatteryActualDCPower</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">BatteryActualDCVoltage</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#BatteryActualDCVoltage</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">BatteryActualPowerSetPoint</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#BatteryActualPowerSetPoint</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">BatteryChargeStatus</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#BatteryChargeStatus</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">BatteryConnectionStatus</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#BatteryConnectionStatus</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">BatteryNominalCapacity</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#BatteryNominalCapacity</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">BatteryNominalPower</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#BatteryNominalPower</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">BatteryOperationalStatus</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#BatteryOperationalStatus</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">BodyFatPercentage</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#BodyFatPercentage</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">BodyMassIndex</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#BodyMassIndex</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">BoneMineralContent</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#BoneMineralContent</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">CO2Concentration</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#CO2Concentration</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">CaloriesBurned</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#CaloriesBurned</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">ChargeStatus</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#ChargeStatus</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">ChargingStationOperationalStatus</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#ChargingStationOperationalStatus</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">ChildLock</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#ChildLock</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Clouds</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#Clouds</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">ConnectorCurrentChargingPower</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#ConnectorCurrentChargingPower</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">ConnectorDesiredMaxPower</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#ConnectorDesiredMaxPower</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">ConnectorSmartChargingProfile</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#ConnectorSmartChargingProfile</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">ConnectorStatus</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#ConnectorStatus</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">ConsumerActivePowerLoad</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#ConsumerActivePowerLoad</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">CurrentBakingStepRemainingTime</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#CurrentBakingStepRemainingTime</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">DelayedBaking</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#DelayedBaking</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">DeviceLightStatus</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#DeviceLightStatus</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">DeviceStatus</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#DeviceStatus</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">DeviceTemperature</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#DeviceTemperature</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">DiastolicBloodPressure</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#DiastolicBloodPressure</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">DimmingLevel</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#DimmingLevel</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">DirectSolarRadiation</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#DirectSolarRadiation</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">DistanceWalked</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#DistanceWalked</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">ElapsedBakingTime</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#ElapsedBakingTime</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Elevation</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#Elevation</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">EnergySupplySystem</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#EnergySupplySystem</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">EntryExit</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#EntryExit</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">FanSpeed</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#FanSpeed</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">FastFreeze</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#FastFreeze</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">FreezerDoorStatus</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#FreezerDoorStatus</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">FreezerEmergency</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#FreezerEmergency</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">FreezerLightStatus</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#FreezerLightStatus</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">FreezerTemperature</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#FreezerTemperature</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">GPSAltitude</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#GPSAltitude</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">GPSLatitude</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#GPSLatitude</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">GPSLongitude</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#GPSLongitude</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">GPSPrecision</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#GPSPrecision</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">GlobalSolarRadiation</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#GlobalSolarRadiation</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">GridActivePowerLoad</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#GridActivePowerLoad</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Head</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/org#Head</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">HeartRate</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#HeartRate</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">HeaterDefaultTemperature</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#HeaterDefaultTemperature</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">HeaterMaxTemperature</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#HeaterMaxTemperature</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">HeaterMeatProbeAllowed</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#HeaterMeatProbeAllowed</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">HeaterMinTemperature</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#HeaterMinTemperature</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">HeaterPreheatAllowed</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#HeaterPreheatAllowed</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">HeaterSystem</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#HeaterSystem</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">HighestCO2ConcentrationDeviation</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#HighestCO2ConcentrationDeviation</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">HighestHumidityDeviation</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#HighestHumidityDeviation</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">HighestSoundDeviation</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#HighestSoundDeviation</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">HighestTemperatureDeviation</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#HighestTemperatureDeviation</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Illuminance</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#Illuminance</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">IndoorEnvironmentalQualityScore</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#IndoorEnvironmentalQualityScore</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">InverterAccumulatedActiveEnergyConsumption</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#InverterAccumulatedActiveEnergyConsumption</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">InverterAccumulatedActiveEnergyProduction</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#InverterAccumulatedActiveEnergyProduction</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">InverterActualActivePower</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#InverterActualActivePower</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">InverterActualFrequency</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#InverterActualFrequency</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">InverterActualReactivePower</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#InverterActualReactivePower</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">InverterConsumerActivePowerLoad</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#InverterConsumerActivePowerLoad</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">InverterGridActivePowerLoad</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#InverterGridActivePowerLoad</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">InverterNominalPower</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#InverterNominalPower</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">InverterPVActualActivePower</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#InverterPVActualActivePower</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">InverterPVActualActivePowerL1</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#InverterPVActualActivePowerL1</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">InverterPVActualActivePowerL2</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#InverterPVActualActivePowerL2</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">InverterPVActualActivePowerL3</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#InverterPVActualActivePowerL3</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">InverterPVActualReactivePower</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#InverterPVActualReactivePower</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">InverterPVActualReactivePowerL1</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#InverterPVActualReactivePowerL1</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">InverterPVActualReactivePowerL2</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#InverterPVActualReactivePowerL2</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">InverterPVActualReactivePowerL3</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#InverterPVActualReactivePowerL3</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">InverterStatus</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#InverterStatus</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">InverterTotalDCPower</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#InverterTotalDCPower</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">LightColor</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#LightColor</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Location</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#Location</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">LowerStateOfChargeBoundary</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#LowerStateOfChargeBoundary</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Luminance</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#Luminance</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">MaxBatteryStateOfCharge</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#MaxBatteryStateOfCharge</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">MaxCO2Concentration</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#MaxCO2Concentration</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">MaxHumidity</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#MaxHumidity</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">MaxLightIntensity</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#MaxLightIntensity</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">MaxPowerConsumption</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#MaxPowerConsumption</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">MaxSound</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#MaxSound</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">MaxTemperature</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#MaxTemperature</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">MaximalCurrentOfChargingCable</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#MaximalCurrentOfChargingCable</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">MaximalPowerPerConnector</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#MaximalPowerPerConnector</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">MeanPowerConsumption</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#MeanPowerConsumption</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">MeatProbeTemperature</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#MeatProbeTemperature</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">MinBatteryStateOfCharge</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#MinBatteryStateOfCharge</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">MinCO2Concentration</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#MinCO2Concentration</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">MinHumidity</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#MinHumidity</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">MinLightIntensity</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#MinLightIntensity</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">MinPowerConsumption</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#MinPowerConsumption</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">MinSound</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#MinSound</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">MinTemperature</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#MinTemperature</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Mode</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#Mode</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Motion</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#Motion</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">MuscleMass</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#MuscleMass</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">NoiseLevel</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#NoiseLevel</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">NominalElectricVehicleCurrent</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#NominalElectricVehicleCurrent</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">NominalProductionCapacity</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#NominalProductionCapacity</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">NumberOfConnectors</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#NumberOfConnectors</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">OnOff</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#OnOff</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">OpenClosed</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#OpenClosed</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">OvenDoorStatus</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#OvenDoorStatus</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">OvenEmergency</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#OvenEmergency</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">OxidationReductionPotential</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#OxidationReductionPotential</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">PH</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#PH</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">PVAccumulatedDCEnergy</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#PVAccumulatedDCEnergy</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">PVActualDCCurrent</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#PVActualDCCurrent</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">PVActualDCPower</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#PVActualDCPower</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">PVActualDCVoltage</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#PVActualDCVoltage</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">PVConnectionStatus</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#PVConnectionStatus</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">PVForecast</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#PVForecast</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">PVInstalledCapacity</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#PVInstalledCapacity</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">PVOperationStatus</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#PVOperationStatus</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">PowerFactorLowerBound</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#PowerFactorLowerBound</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Precipitation</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#Precipitation</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Pressure</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#Pressure</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Protein</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#Protein</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Pulse</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#Pulse</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">ReactivePowerAbsorbedFromGrid</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#ReactivePowerAbsorbedFromGrid</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">ReactivePowerInjectedToGrid</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#ReactivePowerInjectedToGrid</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">ReactivePowerProduction</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#ReactivePowerProduction</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">ReactivePowerSetPoint</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#ReactivePowerSetPoint</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">RefrigeratorDoorStatus</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#RefrigeratorDoorStatus</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">RefrigeratorEmergency</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#RefrigeratorEmergency</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">RefrigeratorLightStatus</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#RefrigeratorLightStatus</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">RefrigeratorTemperature</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#RefrigeratorTemperature</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">RelativeHumidity</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#RelativeHumidity</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">RepositoryDigitalAsset</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#RepositoryDigitalAsset</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">RepositoyEntity</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#RepositoyEntity</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">ServiceLevel</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#ServiceLevel</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">SimultaneousCharging</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#SimultaneousCharging</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Sleep</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#Sleep</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Start</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#Start</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Steps</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#Steps</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Stop</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#Stop</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">StoredEnergy</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#StoredEnergy</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">SugarLevel</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#SugarLevel</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Sunrise</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#Sunrise</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Sunset</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#Sunset</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">SuperCool</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#SuperCool</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">SystolicBloodPressure</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#SystolicBloodPressure</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">TotalBodyWaterPercentage</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#TotalBodyWaterPercentage</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">UVIndex</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#UVIndex</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">UpperStateOfChargeBoundary</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#UpperStateOfChargeBoundary</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">ValvePosition</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#ValvePosition</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">VisceralFatRating</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#VisceralFatRating</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Visibility</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#Visibility</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">WalletBalance</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#WalletBalance</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">WalletEntity</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#WalletEntity</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">WalletFundingAddress</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#WalletFundingAddress</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">WalletPaymentForward</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#WalletPaymentForward</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">WalletPrivateKey</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#WalletPrivateKey</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">WalletTransactions</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#WalletTransactions</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">WalletValue</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#WalletValue</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">WeatherForecast</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#WeatherForecast</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Weight</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#Weight</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">WindOrientation</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#WindOrientation</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">WindSpeed</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/adapters#WindSpeed</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+      </tbody>
+
+    </table>
+      </div>
+   </div>
+
+    <hr><footer class="footer">
+        <div class="row">
+            <div class="col-md-10">
+                Contact email: albafernandez@fi.upm.es
+                <br>
+                Built with <a target="_blank" href="http://getbootstrap.com/">Bootstrap</a>
+                Icons from <a target="_blank" href="http://glyphicons.com/">Glyphicons</a>
+                <br>
+                Latest revision March, 2020
+                <br><p>&copy; Ontology Engineering Group</p>
+            </div>
+            <div class="col-md-2">
+                <a href="http://www.oeg-upm.net/" target="_blank"><img src="./../vocab/logo.gif" alt="OEG logo" class="img-rounded" class="img-responsive" /></a>
+            </div>
+        </div>
+    </footer>
+</div> <!-- /container -->
+
+
+
+
+</body>
+</html>

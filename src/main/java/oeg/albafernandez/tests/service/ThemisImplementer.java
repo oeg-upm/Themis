@@ -1,22 +1,15 @@
 package oeg.albafernandez.tests.service;
 
-
 import oeg.albafernandez.tests.model.TestCaseDesign;
 import oeg.albafernandez.tests.model.TestCaseImpl;
 import org.apache.log4j.Logger;
-import org.coode.owlapi.turtle.TurtleOntologyFormat;
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.io.OWLOntologyDocumentSource;
 import org.semanticweb.owlapi.io.StringDocumentSource;
 import org.semanticweb.owlapi.model.*;
-
-import javax.ws.rs.core.Response;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 
 import static oeg.albafernandez.tests.utils.Implementations.*;
@@ -74,7 +67,7 @@ public class ThemisImplementer {
     }
 
     /*Load a set of tests provided in a file */
-    public List<String> loadTestCaseDesign(String filename, String filecontent) throws IOException, OWLOntologyCreationException {
+    public List<String> loadTestCaseDesign(String filename, String filecontent) throws  OWLOntologyCreationException {
 
         OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
         OWLOntology ontology=null;
@@ -128,7 +121,7 @@ public class ThemisImplementer {
     }
 
     /*Store the  test design*/
-    public static OutputStream storeTestCaseDesign(List<String> tests, OutputStream outputStream) throws OWLOntologyStorageException, IOException {
+    public static OutputStream storeTestCaseDesign(List<String> tests, OutputStream outputStream) throws  IOException {
 
         String prefixes="@prefix : <http://example.org/ns#> .\n" +
                 "@prefix owl: <http://www.w3.org/2002/07/owl#> .\n" +
@@ -138,50 +131,19 @@ public class ThemisImplementer {
 
 
         int i=1;
-        String testsFile=prefixes;
+        StringBuilder testsFile = new StringBuilder();
+
+        testsFile.append(prefixes);
         for(String purpose:tests) {
 
-           testsFile += "\n" +
+            testsFile.append("\n" +
                    ":Test"+i+" rdf:type <https://w3id.org/def/vtc#TestCaseDesign> ,\n" +
                    "                owl:NamedIndividual ;\n" +
-                   "       <https://w3id.org/def/vtc#desiredBehaviour> \""+purpose+"\" .\n";
+                   "       <https://w3id.org/def/vtc#desiredBehaviour> \""+purpose+"\" .\n");
             i++;
         }
-        outputStream.write(testsFile.getBytes());
-        /*OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
-        String base = "http://example.org/ns#";
-        String verif = "http://w3id.org/def/vtc#";
-        OWLOntology ont = null;
-        try {
-            ont = manager.createOntology(IRI.create(base));
-        } catch (OWLOntologyCreationException e) {
-            ont = null;
-        }
-        int i=1;
-        for(String purpose:tests) {
+        outputStream.write(testsFile.toString().getBytes());
 
-            TestCaseDesign tc = new TestCaseDesign();
-            tc.setPurpose(purpose);  // create a test design only with the purpose (test expression)
-
-            OWLDataFactory dataFactory = manager.getOWLDataFactory();
-
-            OWLClass verifTestDesignClass = dataFactory.getOWLClass(IRI.create(verif + "TestCaseDesign"));
-
-            OWLIndividual subject = dataFactory.getOWLNamedIndividual(IRI.create(base + "Test"+i));
-            OWLClassAssertionAxiom classAssertion = dataFactory.getOWLClassAssertionAxiom(verifTestDesignClass, subject);
-            manager.addAxiom(ont, classAssertion);
-
-            OWLDataProperty desiredBehaviour = dataFactory.getOWLDataProperty(IRI.create(verif + "desiredBehaviour"));
-            OWLAxiom axiomprecondition = dataFactory.getOWLDataPropertyAssertionAxiom(desiredBehaviour, subject, tc.getPurpose());
-            manager.addAxiom(ont, axiomprecondition);
-            i++;
-        }
-
-        TurtleOntologyFormat turtleFormat = new TurtleOntologyFormat();
-        turtleFormat.setDefaultPrefix(base);
-        manager.saveOntology(ont, turtleFormat, outputStream);
-
-        return outputStream;*/
         return outputStream;
     }
 

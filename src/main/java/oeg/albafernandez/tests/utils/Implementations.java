@@ -29,76 +29,75 @@ public class Implementations {
       Matcher m = p.matcher(purpose);
       /*Generation of classes*/
       m.find();
-      String classA = m.group(1).toString();
+      String classA = m.group(1);
       String classA1 = classA+"1";
 
-      String P = m.group(2).toString();
-      String ind1 = m.group(3).toString();
+      String P = m.group(2);
+      String individual = m.group(3);
 
       /*Preconditions*/
-      ArrayList<String> precond = new ArrayList<>();
-      precond.add("Class(<"+classA+">)");
-      precond.add("Property(<"+P+">)");
-      precond.add("Individual(<"+ind1+">)");
-      testCase.getPrecondition().addAll(precond);
+      ArrayList<String> precondition = new ArrayList<>();
+      precondition.add("Class(<"+classA+">)");
+      precondition.add("Property(<"+P+">)");
+      precondition.add("Individual(<"+individual+">)");
+      testCase.getPrecondition().addAll(precondition);
 
       String base = "";
       OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
-      OWLOntology ont = null;
+      OWLOntology ontology = null;
       try {
-         ont = manager.createOntology(IRI.create(base));
+          ontology = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont = null;
+          ontology = null;
       }
       OWLDataFactory dataFactory = manager.getOWLDataFactory();
 
       /*Preparation*/
-      OWLNamedIndividual individual1 = dataFactory.getOWLNamedIndividual(IRI.create(ind1));
+      OWLNamedIndividual individual1 = dataFactory.getOWLNamedIndividual(IRI.create(individual));
       OWLNamedIndividual individual2 = dataFactory.getOWLNamedIndividual(IRI.create(base+"individual2"));
       OWLClass class1 = dataFactory.getOWLClass(IRI.create(classA1));
       OWLDeclarationAxiom axiomClass = dataFactory.getOWLDeclarationAxiom(class1);
-      OWLDeclarationAxiom axiomInd1 = dataFactory.getOWLDeclarationAxiom(individual1);
-      OWLDeclarationAxiom axiomInd2 = dataFactory.getOWLDeclarationAxiom(individual2);
-      manager.applyChanges(manager.addAxiom(ont, axiomClass));
-      manager.applyChanges(manager.addAxiom(ont, axiomInd1));
-      manager.applyChanges(manager.addAxiom(ont, axiomInd2));
-      manager.applyChanges(manager.addAxiom(ont,  dataFactory.getOWLDifferentIndividualsAxiom(individual1, individual2)));
+      OWLDeclarationAxiom axiomIndividual1 = dataFactory.getOWLDeclarationAxiom(individual1);
+      OWLDeclarationAxiom axiomIndividual2 = dataFactory.getOWLDeclarationAxiom(individual2);
+
+      manager.applyChanges(manager.addAxiom(ontology, axiomClass));
+      manager.applyChanges(manager.addAxiom(ontology, axiomIndividual1));
+      manager.applyChanges(manager.addAxiom(ontology, axiomIndividual2));
+      manager.applyChanges(manager.addAxiom(ontology,  dataFactory.getOWLDifferentIndividualsAxiom(individual1, individual2)));
       testCase.setPreparationaxioms(manager.getOntology(IRI.create(base)));
-      manager.removeOntology(ont);
+      manager.removeOntology(ontology);
 
       /*Assertions*/
-      OWLOntology ont1 = null;
+      OWLOntology ontology1 = null;
       try {
-         ont1 = manager.createOntology(IRI.create(base));
+         ontology1 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont1 = null;
+         ontology1 = null;
       }
       OWLClass classOWLA = dataFactory.getOWLClass(IRI.create(classA));
-      OWLSubClassOfAxiom axiomsubclass1= dataFactory.getOWLSubClassOfAxiom(class1, classOWLA);
-      manager.applyChanges(manager.addAxiom(ont1, axiomsubclass1));
+      OWLSubClassOfAxiom axiomSubclass1= dataFactory.getOWLSubClassOfAxiom(class1, classOWLA);
+      manager.applyChanges(manager.addAxiom(ontology1, axiomSubclass1));
       OWLObjectProperty prop = dataFactory.getOWLObjectProperty(IRI.create(P));
-      OWLSubClassOfAxiom axiomsubclass2 = dataFactory.getOWLSubClassOfAxiom( class1, dataFactory.getOWLObjectAllValuesFrom(prop,dataFactory.getOWLObjectOneOf(individual2)));
-      manager.applyChanges(manager.addAxiom(ont1, axiomsubclass2));
+      OWLSubClassOfAxiom axiomSubclass2 = dataFactory.getOWLSubClassOfAxiom( class1, dataFactory.getOWLObjectAllValuesFrom(prop,dataFactory.getOWLObjectOneOf(individual2)));
+      manager.applyChanges(manager.addAxiom(ontology1, axiomSubclass2));
       OWLOntology assertion1 = manager.getOntology(IRI.create(base));
-      String expectedoutputassertion1 = "unsatisfiable";
-      manager.removeOntology(ont1);
+      String expectedOutAssertion1 = "unsatisfiable";
+      manager.removeOntology(ontology1);
 
+      LinkedHashMap<String, OWLOntology> hashInput = new LinkedHashMap();
+      hashInput.put("Assertion 1", assertion1);
 
-      LinkedHashMap<String, OWLOntology> hashinput = new LinkedHashMap();
-      hashinput.put("Assertion 1", assertion1);
-
-
-      LinkedHashMap<String, String> hashoutput = new LinkedHashMap();
-      hashoutput.put("Assertion 1",expectedoutputassertion1);
+      LinkedHashMap<String, String> hashOutput = new LinkedHashMap();
+      hashOutput.put("Assertion 1",expectedOutAssertion1);
       for (Map.Entry<String, String> entry : testCase.getAxiomExpectedResultAxioms().entrySet()) {
-         hashoutput.put(entry.getKey(), entry.getValue());
+         hashOutput.put(entry.getKey(), entry.getValue());
       }
 
-      testCase.setAxiomExpectedResultAxioms(hashoutput);
+      testCase.setAxiomExpectedResultAxioms(hashOutput);
       for (Map.Entry<String, OWLOntology> entry : testCase.getAssertionsAxioms().entrySet()) {
-         hashinput.put(entry.getKey(), entry.getValue());
+         hashInput.put(entry.getKey(), entry.getValue());
       }
-      testCase.setAssertionsAxioms(hashinput);
+      testCase.setAssertionsAxioms(hashInput);
       return null;
    }
 
@@ -109,13 +108,13 @@ public class Implementations {
 
       /*Generation of classes*/
       m.find();
-      String classA = m.group(1).toString();
+      String classA = m.group(1);
 
       String classA1 = classA+"1";
-      String R = m.group(2).toString();
+      String R = m.group(2);
 
       String datatype = "";
-      datatype = m.group(5).toString();
+      datatype = m.group(5);
       if( datatype.equals("string") || datatype.equals("integer") || datatype.equals("double")  || datatype.equals("long") ||  datatype.equals("float") || datatype.equals("boolean") || datatype.equals("anyuri"))
          datatype = "<http://www.w3.org/2001/XMLSchema#"+datatype+">";
       else if(datatype.equals("rational")){
@@ -124,110 +123,113 @@ public class Implementations {
 
       Integer num = Integer.parseInt(m.group(4).toString());
       /*Preconditions*/
-      ArrayList<String> precond = new ArrayList<>();
-      precond.add("Class(<"+classA+">)");
-      precond.add("Property(<"+R+">)");
-      testCase.getPrecondition().addAll(precond);
+      ArrayList<String> precondition = new ArrayList<>();
+      precondition.add("Class(<"+classA+">)");
+      precondition.add("Property(<"+R+">)");
+      testCase.getPrecondition().addAll(precondition);
 
       /*Axioms to be added*/
 
       /*Preparation*/
       String base = "";
       OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
-      OWLOntology ont = null;
+      OWLOntology ontology = null;
       try {
-         ont = manager.createOntology(IRI.create(base));
+         ontology = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont = null;
+         ontology = null;
       }
       OWLDataFactory dataFactory = manager.getOWLDataFactory();
       OWLClass classOWLA = dataFactory.getOWLClass(IRI.create(classA));
       OWLClass classOWLA1 = dataFactory.getOWLClass(IRI.create(classA1));
       OWLDeclarationAxiom axiomClass = dataFactory.getOWLDeclarationAxiom(classOWLA1);
-      OWLSubClassOfAxiom axiomsubclass1= dataFactory.getOWLSubClassOfAxiom(classOWLA1, classOWLA);
-      manager.addAxiom(ont,axiomClass);
-      manager.applyChanges(manager.addAxiom(ont, axiomsubclass1));
+      OWLSubClassOfAxiom axiomSubclass1= dataFactory.getOWLSubClassOfAxiom(classOWLA1, classOWLA);
+
+      manager.addAxiom(ontology,axiomClass);
+      manager.applyChanges(manager.addAxiom(ontology, axiomSubclass1));
       testCase.setPreparation(manager.getOntology(IRI.create(base)).getAxioms().toString());
-      manager.removeOntology(ont);
+      manager.removeOntology(ontology);
+
       /*Assertions*/
-      OWLOntology ont1 = null;
+      OWLOntology ontology1 = null;
       try {
-         ont1 = manager.createOntology(IRI.create(base));
+         ontology1 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont1 = null;
+         ontology1 = null;
       }
       OWLDataProperty prop = dataFactory.getOWLDataProperty(IRI.create(R));
       OWLDatatype dp = dataFactory.getOWLDatatype(IRI.create(datatype));
-      OWLSubClassOfAxiom axiomsubclass4 = dataFactory.getOWLSubClassOfAxiom(classOWLA1, dataFactory.getOWLDataMaxCardinality(num-1, prop, dp));
-      OWLDeclarationAxiom axiomdeclaration1 = dataFactory.getOWLDeclarationAxiom(dp);
-      manager.applyChanges(manager.addAxiom(ont1, axiomsubclass4));
-      manager.applyChanges(manager.addAxiom(ont1, axiomdeclaration1));
-      OWLOntology assertion1 = manager.getOntology(IRI.create(base));
-      String expectedoutputassertion1 = "";
-      if (type == "min" || type == "exactly")
-         expectedoutputassertion1 = "unsatisfiable";
-      else
-         expectedoutputassertion1 = "consistent";
+      OWLSubClassOfAxiom axiomSubclass4 = dataFactory.getOWLSubClassOfAxiom(classOWLA1, dataFactory.getOWLDataMaxCardinality(num-1, prop, dp));
+      OWLDeclarationAxiom axiomDeclaration1 = dataFactory.getOWLDeclarationAxiom(dp);
 
-      manager.removeOntology(ont1);
-      OWLOntology ont2 = null;
+      manager.applyChanges(manager.addAxiom(ontology1, axiomSubclass4));
+      manager.applyChanges(manager.addAxiom(ontology1, axiomDeclaration1));
+      OWLOntology assertion1 = manager.getOntology(IRI.create(base));
+      String expectedOutputAssertion1 = "";
+      if (type == "min" || type == "exactly")
+         expectedOutputAssertion1 = "unsatisfiable";
+      else
+         expectedOutputAssertion1 = "consistent";
+
+      manager.removeOntology(ontology1);
+      OWLOntology ontology2 = null;
       try {
-         ont2 = manager.createOntology(IRI.create(base));
+         ontology2 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont2 = null;
+         ontology2 = null;
       }
-      OWLSubClassOfAxiom axiomsubclass5 = dataFactory.getOWLSubClassOfAxiom(classOWLA1, dataFactory.getOWLDataMinCardinality(num+1, prop, dp));
-      manager.applyChanges(manager.addAxiom(ont2, axiomdeclaration1));
-      manager.applyChanges(manager.addAxiom(ont2, axiomsubclass5));
+      OWLSubClassOfAxiom axiomSubclass5 = dataFactory.getOWLSubClassOfAxiom(classOWLA1, dataFactory.getOWLDataMinCardinality(num+1, prop, dp));
+
+      manager.applyChanges(manager.addAxiom(ontology2, axiomDeclaration1));
+      manager.applyChanges(manager.addAxiom(ontology2, axiomSubclass5));
       OWLOntology assertion2 = manager.getOntology(IRI.create(base));
 
-      String expectedoutputassertion2 = "";
+      String expectedOutputAssertion2 = "";
       if (type == "max" || type == "exactly")
-         expectedoutputassertion2 = "unsatisfiable";
+         expectedOutputAssertion2 = "unsatisfiable";
       else
-         expectedoutputassertion2 = "consistent";
+         expectedOutputAssertion2 = "consistent";
 
-      manager.removeOntology(ont2);
+      manager.removeOntology(ontology2);
 
-      OWLOntology ont3 = null;
+      OWLOntology ontology3 = null;
       try {
-         ont3 = manager.createOntology(IRI.create(base));
+         ontology3 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont3 = null;
+         ontology3 = null;
       }
-      OWLSubClassOfAxiom axiomsubclass6 = null;
-      //String assertion3 ="";
+      OWLSubClassOfAxiom axiomSubclass6 = null;
+
       if(type == "max") {
-         axiomsubclass6 = dataFactory.getOWLSubClassOfAxiom(classOWLA, dataFactory.getOWLDataMinCardinality(num, prop, dp) );
+         axiomSubclass6 = dataFactory.getOWLSubClassOfAxiom(classOWLA, dataFactory.getOWLDataMinCardinality(num, prop, dp) );
       }else{
-         axiomsubclass6 = dataFactory.getOWLSubClassOfAxiom( dataFactory.getOWLDataMaxCardinality(num, prop, dp), classOWLA);
+         axiomSubclass6 = dataFactory.getOWLSubClassOfAxiom( dataFactory.getOWLDataMaxCardinality(num, prop, dp), classOWLA);
       }
-      manager.applyChanges(manager.addAxiom(ont3, axiomdeclaration1));
-      manager.applyChanges(manager.addAxiom(ont3, axiomsubclass6));
+      manager.applyChanges(manager.addAxiom(ontology3, axiomDeclaration1));
+      manager.applyChanges(manager.addAxiom(ontology3, axiomSubclass6));
       OWLOntology assertion3 = manager.getOntology(IRI.create(base));
-      String expectedoutputassertion3 = "consistent";
+      String expectedOutputAssertion3 = "consistent";
 
-      LinkedHashMap<String, OWLOntology> hashinput = new LinkedHashMap();
-      hashinput.put("Assertion 1", assertion1);
-      hashinput.put("Assertion 2", assertion2);
-      hashinput.put("Assertion 3", assertion3);
+      LinkedHashMap<String, OWLOntology> hashInput = new LinkedHashMap();
+      hashInput.put("Assertion 1", assertion1);
+      hashInput.put("Assertion 2", assertion2);
+      hashInput.put("Assertion 3", assertion3);
 
-
-      LinkedHashMap<String, String> hashoutput = new LinkedHashMap();
-      hashoutput.put("Assertion 1",expectedoutputassertion1);
-      hashoutput.put("Assertion 2",expectedoutputassertion2);
-      hashoutput.put("Assertion 3",expectedoutputassertion3);
+      LinkedHashMap<String, String> hashOutput = new LinkedHashMap();
+      hashOutput.put("Assertion 1",expectedOutputAssertion1);
+      hashOutput.put("Assertion 2",expectedOutputAssertion2);
+      hashOutput.put("Assertion 3",expectedOutputAssertion3);
 
       for (Map.Entry<String, String> entry : testCase.getAxiomExpectedResultAxioms().entrySet()) {
-         hashoutput.put(entry.getKey(), entry.getValue());
+         hashOutput.put(entry.getKey(), entry.getValue());
       }
 
-      testCase.setAxiomExpectedResultAxioms(hashoutput);
+      testCase.setAxiomExpectedResultAxioms(hashOutput);
 
       for (Map.Entry<String, OWLOntology> entry : testCase.getAssertionsAxioms().entrySet()) {
-         hashinput.put(entry.getKey(), entry.getValue());
+         hashInput.put(entry.getKey(), entry.getValue());
       }
-      testCase.setAssertionsAxioms(hashinput);
+      testCase.setAssertionsAxioms(hashInput);
       return testCase;
 
    }
@@ -239,69 +241,71 @@ public class Implementations {
 
       /*Generation of classes*/
       m.find();
-      String indA = m.group(1).toString();
-      String classB = m.group(2).toString();
-      String noClassB =  "No"+classB.split("(#|\\/)")[classB.split("(#|\\/)").length-1];
+      String individual = m.group(1);
+      String classA = m.group(2);
+      String noClassA =  "No"+classA.split("(#|\\/)")[classA.split("(#|\\/)").length-1];
 
       /*Preconditions*/
-      ArrayList<String> precond = new ArrayList<>();
-      precond.add("Individual(<"+indA+">)");
-      precond.add("Class(<"+classB+">)");
-      testCase.getPrecondition().addAll(precond);
+      ArrayList<String> precondition = new ArrayList<>();
+      precondition.add("Individual(<"+individual+">)");
+      precondition.add("Class(<"+classA+">)");
+      testCase.getPrecondition().addAll(precondition);
 
       String base = "";
       OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
-      OWLOntology ont = null;
+      OWLOntology ontology = null;
       try {
-         ont = manager.createOntology(IRI.create(base));
+         ontology = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont = null;
+         ontology = null;
       }
       OWLDataFactory dataFactory = manager.getOWLDataFactory();
 
       /*Axioms to be added*/
-      OWLClass classOWLB = dataFactory.getOWLClass(IRI.create(classB));
-      OWLClass noClassOWLB = dataFactory.getOWLClass(IRI.create(noClassB));
-      OWLDeclarationAxiom axiomClass = dataFactory.getOWLDeclarationAxiom(classOWLB);
-      OWLDeclarationAxiom axiomClass2 = dataFactory.getOWLDeclarationAxiom(noClassOWLB);
-      OWLEquivalentClassesAxiom equivalentClassesAxiom = dataFactory.getOWLEquivalentClassesAxiom(noClassOWLB, dataFactory.getOWLObjectComplementOf(classOWLB));
-      manager.applyChanges(manager.addAxiom(ont, axiomClass));
-      manager.applyChanges(manager.addAxiom(ont, axiomClass2));
-      manager.applyChanges(manager.addAxiom(ont, equivalentClassesAxiom));
+      OWLClass classOWLA = dataFactory.getOWLClass(IRI.create(classA));
+      OWLClass noClassOWLA = dataFactory.getOWLClass(IRI.create(noClassA));
+      OWLDeclarationAxiom axiomClass = dataFactory.getOWLDeclarationAxiom(classOWLA);
+      OWLDeclarationAxiom axiomClass2 = dataFactory.getOWLDeclarationAxiom(noClassOWLA);
+      OWLEquivalentClassesAxiom equivalentClassesAxiom = dataFactory.getOWLEquivalentClassesAxiom(noClassOWLA, dataFactory.getOWLObjectComplementOf(classOWLA));
+
+      manager.applyChanges(manager.addAxiom(ontology, axiomClass));
+      manager.applyChanges(manager.addAxiom(ontology, axiomClass2));
+      manager.applyChanges(manager.addAxiom(ontology, equivalentClassesAxiom));
       testCase.setPreparationaxioms(manager.getOntology(IRI.create(base)));
-      manager.removeOntology(ont);
+      manager.removeOntology(ontology);
 
       /*Assertions*/
-      OWLOntology ont1 = null;
+      OWLOntology ontology1 = null;
       try {
-         ont1 = manager.createOntology(IRI.create(base));
+         ontology1 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont1 = null;
+         ontology1 = null;
       }
-      OWLNamedIndividual indOWLA = dataFactory.getOWLNamedIndividual(IRI.create(indA));
-      OWLDeclarationAxiom axiomInd1 = dataFactory.getOWLDeclarationAxiom(indOWLA);
-      OWLClassAssertionAxiom classAssertionAxiom = dataFactory.getOWLClassAssertionAxiom(noClassOWLB, indOWLA);
-      manager.applyChanges(manager.addAxiom(ont1, axiomInd1));
-      manager.applyChanges(manager.addAxiom(ont1, classAssertionAxiom));
+      OWLNamedIndividual indOWLA = dataFactory.getOWLNamedIndividual(IRI.create(individual));
+      OWLDeclarationAxiom axiomIndividualividual1 = dataFactory.getOWLDeclarationAxiom(indOWLA);
+      OWLClassAssertionAxiom classAssertionAxiom = dataFactory.getOWLClassAssertionAxiom(noClassOWLA, indOWLA);
+
+      manager.applyChanges(manager.addAxiom(ontology1, axiomIndividualividual1));
+      manager.applyChanges(manager.addAxiom(ontology1, classAssertionAxiom));
       OWLOntology assertion1 = manager.getOntology(IRI.create(base));
 
-      String expectedoutputassertion1 = "inconsistent";
+      String expectedOutAssertion1 = "inconsistent";
 
-      LinkedHashMap<String, OWLOntology> hashinput = new LinkedHashMap();
-      hashinput.put("Assertion 1", assertion1);
+      LinkedHashMap<String, OWLOntology> hashInput = new LinkedHashMap();
+      hashInput.put("Assertion 1", assertion1);
 
-      LinkedHashMap<String, String> hashoutput = new LinkedHashMap();
-      hashoutput.put("Assertion 1",expectedoutputassertion1);
+      LinkedHashMap<String, String> hashOutput = new LinkedHashMap();
+      hashOutput.put("Assertion 1",expectedOutAssertion1);
       for (Map.Entry<String, String> entry : testCase.getAxiomExpectedResultAxioms().entrySet()) {
-         hashoutput.put(entry.getKey(), entry.getValue());
+         hashOutput.put(entry.getKey(), entry.getValue());
       }
 
-      testCase.setAxiomExpectedResultAxioms(hashoutput);
+      testCase.setAxiomExpectedResultAxioms(hashOutput);
 
       for (Map.Entry<String, OWLOntology> entry : testCase.getAssertionsAxioms().entrySet()) {
-         hashinput.put(entry.getKey(), entry.getValue());
+         hashInput.put(entry.getKey(), entry.getValue());
       }
-      testCase.setAssertionsAxioms(hashinput);
+      testCase.setAssertionsAxioms(hashInput);
       return testCase;
    }
 
@@ -311,108 +315,108 @@ public class Implementations {
       Matcher m = p.matcher(purpose);
       String classA;
       String classB;
-      String R;
+      String relation;
       String classA1;
 
       /*Generation of classes*/
       m.find();
       classA = "classA";
       classA1 = classA+"1";
-      R = m.group(1).toString();
+      relation = m.group(1);
       classB = "classB";
       /*Preconditions*/
-      ArrayList<String> precond = new ArrayList<>();
-      precond.add("Property(<"+R+">)\n");
-      testCase.getPrecondition().addAll(precond);
+      ArrayList<String> precondition = new ArrayList<>();
+      precondition.add("Property(<"+relation+">)\n");
+      testCase.getPrecondition().addAll(precondition);
 
       /*Axioms to be added*/
-      String ind1= "individual001";
-      String ind2 = "individua002";
-      String ind3 = "individua003";
+      String individual001= "individual001";
+      String individual002 = "individual002";
+      String individua003 = "individual003";
 
       String base = "";
       OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
-      OWLOntology ont = null;
+      OWLOntology ontology = null;
       try {
-         ont = manager.createOntology(IRI.create(base));
+         ontology = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont = null;
+         ontology = null;
       }
       OWLDataFactory dataFactory = manager.getOWLDataFactory();
-      OWLNamedIndividual individualOWL1 = dataFactory.getOWLNamedIndividual(IRI.create(ind1));
-      OWLNamedIndividual individualOWL2 = dataFactory.getOWLNamedIndividual(IRI.create(ind2));
-      OWLNamedIndividual individualOWL3 = dataFactory.getOWLNamedIndividual(IRI.create(ind3));
+      OWLNamedIndividual individualOWL1 = dataFactory.getOWLNamedIndividual(IRI.create(individual001));
+      OWLNamedIndividual individualOWL2 = dataFactory.getOWLNamedIndividual(IRI.create(individual002));
+      OWLNamedIndividual individualOWL3 = dataFactory.getOWLNamedIndividual(IRI.create(individua003));
       OWLClass classOWLB = dataFactory.getOWLClass(IRI.create(classB));
-      OWLClassAssertionAxiom owlClassAssertionAxiom = dataFactory.getOWLClassAssertionAxiom(classOWLB, individualOWL2);
+      OWLClassAssertionAxiom owlClassAssertionAxiom1 = dataFactory.getOWLClassAssertionAxiom(classOWLB, individualOWL2);
       OWLClass classOWLA1 = dataFactory.getOWLClass(IRI.create(classA1));
       OWLClass classOWLA = dataFactory.getOWLClass(IRI.create(classA));
-      OWLObjectProperty prop = dataFactory.getOWLObjectProperty(IRI.create(R));
-      OWLSubClassOfAxiom subClassOfAxiom = dataFactory.getOWLSubClassOfAxiom(classOWLA1, classOWLA);
+      OWLObjectProperty prop = dataFactory.getOWLObjectProperty(IRI.create(relation));
+      OWLSubClassOfAxiom subClassOfAxiom1 = dataFactory.getOWLSubClassOfAxiom(classOWLA1, classOWLA);
       OWLSubClassOfAxiom subClassOfAxiom2 = dataFactory.getOWLSubClassOfAxiom( classOWLA1, dataFactory.getOWLObjectAllValuesFrom(prop,dataFactory.getOWLObjectOneOf(individualOWL2)));
-      OWLDifferentIndividualsAxiom differentIndividualsAxiom = dataFactory.getOWLDifferentIndividualsAxiom(individualOWL1, individualOWL2);
+      OWLDifferentIndividualsAxiom differentIndividualsAxiom1 = dataFactory.getOWLDifferentIndividualsAxiom(individualOWL1, individualOWL2);
       OWLDifferentIndividualsAxiom differentIndividualsAxiom2 = dataFactory.getOWLDifferentIndividualsAxiom(individualOWL3, individualOWL2);
       OWLClassAssertionAxiom owlClassAssertionAxiom2 = dataFactory.getOWLClassAssertionAxiom(classOWLA1, individualOWL1);
       OWLClassAssertionAxiom owlClassAssertionAxiom3 = dataFactory.getOWLClassAssertionAxiom(classOWLB, individualOWL3);
 
-      manager.applyChanges(manager.addAxiom(ont, dataFactory.getOWLDeclarationAxiom(classOWLB)));
-      manager.applyChanges(manager.addAxiom(ont, owlClassAssertionAxiom));
-      manager.applyChanges(manager.addAxiom(ont, dataFactory.getOWLDeclarationAxiom(classOWLA1)));
-      manager.applyChanges(manager.addAxiom(ont, dataFactory.getOWLDeclarationAxiom(classOWLA)));
-      manager.applyChanges(manager.addAxiom(ont, dataFactory.getOWLDeclarationAxiom(prop)));
-      manager.applyChanges(manager.addAxiom(ont, subClassOfAxiom));
-      manager.applyChanges(manager.addAxiom(ont, subClassOfAxiom2));
-      manager.applyChanges(manager.addAxiom(ont,  differentIndividualsAxiom));
-      manager.applyChanges(manager.addAxiom(ont,  differentIndividualsAxiom2));
-      manager.applyChanges(manager.addAxiom(ont,  owlClassAssertionAxiom2));
-      manager.applyChanges(manager.addAxiom(ont,  owlClassAssertionAxiom3));
+      manager.applyChanges(manager.addAxiom(ontology, dataFactory.getOWLDeclarationAxiom(classOWLB)));
+      manager.applyChanges(manager.addAxiom(ontology, owlClassAssertionAxiom1));
+      manager.applyChanges(manager.addAxiom(ontology, dataFactory.getOWLDeclarationAxiom(classOWLA1)));
+      manager.applyChanges(manager.addAxiom(ontology, dataFactory.getOWLDeclarationAxiom(classOWLA)));
+      manager.applyChanges(manager.addAxiom(ontology, dataFactory.getOWLDeclarationAxiom(prop)));
+      manager.applyChanges(manager.addAxiom(ontology, subClassOfAxiom1));
+      manager.applyChanges(manager.addAxiom(ontology, subClassOfAxiom2));
+      manager.applyChanges(manager.addAxiom(ontology,  differentIndividualsAxiom1));
+      manager.applyChanges(manager.addAxiom(ontology,  differentIndividualsAxiom2));
+      manager.applyChanges(manager.addAxiom(ontology,  owlClassAssertionAxiom2));
+      manager.applyChanges(manager.addAxiom(ontology,  owlClassAssertionAxiom3));
       testCase.setPreparationaxioms(manager.getOntology(IRI.create(base)));
-      manager.removeOntology(ont);
+      manager.removeOntology(ontology);
 
-      OWLOntology ont1 = null;
+      OWLOntology ontology1 = null;
       try {
-         ont1 = manager.createOntology(IRI.create(base));
+         ontology1 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont1 = null;
+         ontology1 = null;
       }
-      OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiom = dataFactory.getOWLObjectPropertyAssertionAxiom(prop, individualOWL1,individualOWL2);
-      manager.applyChanges(manager.addAxiom(ont1, objectPropertyAssertionAxiom));
+      OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiom1 = dataFactory.getOWLObjectPropertyAssertionAxiom(prop, individualOWL1,individualOWL2);
+      manager.applyChanges(manager.addAxiom(ontology1, objectPropertyAssertionAxiom1));
       OWLOntology assertion1 = manager.getOntology(IRI.create(base));
-      String expectedoutputassertion1 = "consistent";
-      manager.removeOntology(ont1);
+      String expectedOutAssertion1 = "consistent";
+      manager.removeOntology(ontology1);
 
-      OWLOntology ont2 = null;
+      OWLOntology ontology2 = null;
       try {
-         ont2 = manager.createOntology(IRI.create(base));
+         ontology2 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont2 = null;
+         ontology2 = null;
       }
       OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiom2 = dataFactory.getOWLObjectPropertyAssertionAxiom(prop, individualOWL3,individualOWL1);
-      manager.applyChanges(manager.addAxiom(ont2, objectPropertyAssertionAxiom2));
+      manager.applyChanges(manager.addAxiom(ontology2, objectPropertyAssertionAxiom2));
       OWLOntology assertion2 = manager.getOntology(IRI.create(base));
-      manager.removeOntology(ont2);
-      String expectedoutputassertion2 = "inconsistent";
+      manager.removeOntology(ontology2);
+      String expectedOutAssertion2 = "inconsistent";
 
-      LinkedHashMap<String, OWLOntology> hashinput = new LinkedHashMap();
-      hashinput.put("Assertion 1", assertion1);
-      hashinput.put("Assertion 2", assertion2);
+      LinkedHashMap<String, OWLOntology> hashInput = new LinkedHashMap();
+      hashInput.put("Assertion 1", assertion1);
+      hashInput.put("Assertion 2", assertion2);
 
-
-      LinkedHashMap<String, String> hashoutput = new LinkedHashMap();
-      hashoutput.put("Assertion 1",expectedoutputassertion1);
-      hashoutput.put("Assertion 2",expectedoutputassertion2);
+      LinkedHashMap<String, String> hashOutput = new LinkedHashMap();
+      hashOutput.put("Assertion 1",expectedOutAssertion1);
+      hashOutput.put("Assertion 2",expectedOutAssertion2);
       for (Map.Entry<String, String> entry : testCase.getAxiomExpectedResultAxioms().entrySet()) {
-         hashoutput.put(entry.getKey(), entry.getValue());
+         hashOutput.put(entry.getKey(), entry.getValue());
       }
 
-      testCase.setAxiomExpectedResultAxioms(hashoutput);
+      testCase.setAxiomExpectedResultAxioms(hashOutput);
 
       for (Map.Entry<String, OWLOntology> entry : testCase.getAssertionsAxioms().entrySet()) {
-         hashinput.put(entry.getKey(), entry.getValue());
+         hashInput.put(entry.getKey(), entry.getValue());
       }
-      testCase.setAssertionsAxioms(hashinput);
+      testCase.setAssertionsAxioms(hashInput);
       return testCase;
    }
 
+   /*TODO*/
    public static TestCaseImpl symmetryWithDomainRangeTest(String purpose, TestCaseImpl testCase){ /*Check*/
       Pattern p = Pattern.compile("(.*) subclassof symmetricproperty\\((.*)\\) (some|only) (.*)",Pattern.CASE_INSENSITIVE );
       Matcher m = p.matcher(purpose);
@@ -427,24 +431,24 @@ public class Implementations {
          p = Pattern.compile("(.*) subclassOf coparticipateswith (some|only) (.*)",Pattern.CASE_INSENSITIVE);
          m = p.matcher(purpose);
          m.find();
-         classA = m.group(1).toString().replace(" ","");
+         classA = m.group(1).replace(" ","");
          classA1 = classA+"1";
          R = "coparticipateswith";
-         classB = m.group(2).toString().replace(" ","");
+         classB = m.group(2).replace(" ","");
       }else{
-         classA = m.group(1).toString().replace(" ","");
+         classA = m.group(1).replace(" ","");
          classA1 = classA+"1";
-         R = m.group(2).toString().replace(" ","");
-         classB = m.group(4).toString().replace(" ","");
+         R = m.group(2).replace(" ","");
+         classB = m.group(4).replace(" ","");
       }
 
 
       /*Preconditions*/
-      ArrayList<String> precond = new ArrayList<>();
-      precond.add("Class(<"+classA+">)\n");
-      precond.add("Property(<"+R+">)\n");
-      precond.add("Class(<"+classB+">)\n");
-      testCase.getPrecondition().addAll(precond);
+      ArrayList<String> precondition = new ArrayList<>();
+      precondition.add("Class(<"+classA+">)\n");
+      precondition.add("Property(<"+R+">)\n");
+      precondition.add("Class(<"+classB+">)\n");
+      testCase.getPrecondition().addAll(precondition);
 
       /*Axioms to be added*/
 
@@ -454,11 +458,11 @@ public class Implementations {
 
       String base = "";
       OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
-      OWLOntology ont = null;
+      OWLOntology ontology = null;
       try {
-         ont = manager.createOntology(IRI.create(base));
+         ontology = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont = null;
+         ontology = null;
       }
       OWLDataFactory dataFactory = manager.getOWLDataFactory();
       OWLNamedIndividual individualOWL1 = dataFactory.getOWLNamedIndividual(IRI.create(ind1));
@@ -476,63 +480,62 @@ public class Implementations {
       OWLClassAssertionAxiom owlClassAssertionAxiom2 = dataFactory.getOWLClassAssertionAxiom(classOWLA1, individualOWL1);
       OWLClassAssertionAxiom owlClassAssertionAxiom3 = dataFactory.getOWLClassAssertionAxiom(classOWLB, individualOWL3);
 
-
-      manager.applyChanges(manager.addAxiom(ont, dataFactory.getOWLDeclarationAxiom(classOWLB)));
-      manager.applyChanges(manager.addAxiom(ont, owlClassAssertionAxiom));
-      manager.applyChanges(manager.addAxiom(ont, dataFactory.getOWLDeclarationAxiom(classOWLA1)));
-      manager.applyChanges(manager.addAxiom(ont, dataFactory.getOWLDeclarationAxiom(classOWLA)));
-      manager.applyChanges(manager.addAxiom(ont, dataFactory.getOWLDeclarationAxiom(prop)));
-      manager.applyChanges(manager.addAxiom(ont, subClassOfAxiom));
-      manager.applyChanges(manager.addAxiom(ont, subClassOfAxiom2));
-      manager.applyChanges(manager.addAxiom(ont,  differentIndividualsAxiom));
-      manager.applyChanges(manager.addAxiom(ont,  differentIndividualsAxiom2));
-      manager.applyChanges(manager.addAxiom(ont,  owlClassAssertionAxiom2));
-      manager.applyChanges(manager.addAxiom(ont,  owlClassAssertionAxiom3));
+      manager.applyChanges(manager.addAxiom(ontology, dataFactory.getOWLDeclarationAxiom(classOWLB)));
+      manager.applyChanges(manager.addAxiom(ontology, owlClassAssertionAxiom));
+      manager.applyChanges(manager.addAxiom(ontology, dataFactory.getOWLDeclarationAxiom(classOWLA1)));
+      manager.applyChanges(manager.addAxiom(ontology, dataFactory.getOWLDeclarationAxiom(classOWLA)));
+      manager.applyChanges(manager.addAxiom(ontology, dataFactory.getOWLDeclarationAxiom(prop)));
+      manager.applyChanges(manager.addAxiom(ontology, subClassOfAxiom));
+      manager.applyChanges(manager.addAxiom(ontology, subClassOfAxiom2));
+      manager.applyChanges(manager.addAxiom(ontology,  differentIndividualsAxiom));
+      manager.applyChanges(manager.addAxiom(ontology,  differentIndividualsAxiom2));
+      manager.applyChanges(manager.addAxiom(ontology,  owlClassAssertionAxiom2));
+      manager.applyChanges(manager.addAxiom(ontology,  owlClassAssertionAxiom3));
 
       testCase.setPreparationaxioms(manager.getOntology(IRI.create(base)));
-      manager.removeOntology(ont);
+      manager.removeOntology(ontology);
 
-      OWLOntology ont1 = null;
+      OWLOntology ontology1 = null;
       try {
-         ont1 = manager.createOntology(IRI.create(base));
+         ontology1 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont1 = null;
+         ontology1 = null;
       }
       OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiom = dataFactory.getOWLObjectPropertyAssertionAxiom(prop, individualOWL1,individualOWL2);
-      manager.applyChanges(manager.addAxiom(ont1, objectPropertyAssertionAxiom));
+      manager.applyChanges(manager.addAxiom(ontology1, objectPropertyAssertionAxiom));
       OWLOntology assertion1 = manager.getOntology(IRI.create(base));
-      String expectedoutputassertion1 = "consistent";
-      manager.removeOntology(ont1);
+      String expectedOutAssertion1 = "consistent";
+      manager.removeOntology(ontology1);
 
-      OWLOntology ont2 = null;
+      OWLOntology ontology2 = null;
       try {
-         ont2 = manager.createOntology(IRI.create(base));
+         ontology2 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont2 = null;
+         ontology2 = null;
       }
       OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiom2 = dataFactory.getOWLObjectPropertyAssertionAxiom(prop, individualOWL3,individualOWL1);
-      manager.applyChanges(manager.addAxiom(ont2, objectPropertyAssertionAxiom2));
+      manager.applyChanges(manager.addAxiom(ontology2, objectPropertyAssertionAxiom2));
       OWLOntology assertion2 = manager.getOntology(IRI.create(base));
-      manager.removeOntology(ont2);
-      String expectedoutputassertion2 = "inconsistent";
+      manager.removeOntology(ontology2);
+      String expectedOutAssertion2 = "inconsistent";
 
-      LinkedHashMap<String, OWLOntology> hashinput = new LinkedHashMap();
-      hashinput.put("Assertion 1", assertion1);
-      hashinput.put("Assertion 2", assertion2);
+      LinkedHashMap<String, OWLOntology> hashInput = new LinkedHashMap();
+      hashInput.put("Assertion 1", assertion1);
+      hashInput.put("Assertion 2", assertion2);
 
-      LinkedHashMap<String, String> hashoutput = new LinkedHashMap();
-      hashoutput.put("Assertion 1",expectedoutputassertion1);
-      hashoutput.put("Assertion 2",expectedoutputassertion2);
+      LinkedHashMap<String, String> hashOutput = new LinkedHashMap();
+      hashOutput.put("Assertion 1",expectedOutAssertion1);
+      hashOutput.put("Assertion 2",expectedOutAssertion2);
       for (Map.Entry<String, String> entry : testCase.getAxiomExpectedResultAxioms().entrySet()) {
-         hashoutput.put(entry.getKey(), entry.getValue());
+         hashOutput.put(entry.getKey(), entry.getValue());
       }
 
-      testCase.setAxiomExpectedResultAxioms(hashoutput);
+      testCase.setAxiomExpectedResultAxioms(hashOutput);
 
       for (Map.Entry<String, OWLOntology> entry : testCase.getAssertionsAxioms().entrySet()) {
-         hashinput.put(entry.getKey(), entry.getValue());
+         hashInput.put(entry.getKey(), entry.getValue());
       }
-      testCase.setAssertionsAxioms(hashinput);
+      testCase.setAssertionsAxioms(hashInput);
       return testCase;
    }
 
@@ -543,114 +546,110 @@ public class Implementations {
 
       /*Generation of classes*/
       m.find();
-      String propertyA = m.group(1).toString();
-      String classA = m.group(2).toString();
-      String classAnoSymb = propertyA.replace(">","").replace("<","");
+      String relation = m.group(1);
+      String classA = m.group(2);
+      String classAnoSymb = relation.replace(">","").replace("<","");
       String noClassA =  "No"+classAnoSymb.split("(#|\\/)")[classA.split("(#)").length-1]+"";
 
       /*Preconditions*/
-      ArrayList<String> precond = new ArrayList<>();
-      precond.add("Class(<"+classA+">)");
-      precond.add("Property(<"+propertyA+">)");
-      testCase.getPrecondition().addAll(precond);
+      ArrayList<String> precondition = new ArrayList<>();
+      precondition.add("Class(<"+classA+">)");
+      precondition.add("Property(<"+relation+">)");
+      testCase.getPrecondition().addAll(precondition);
 
       /*Axioms to be added*/
       String base = "";
       OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
-      OWLOntology ont = null;
+      OWLOntology ontology = null;
       try {
-         ont = manager.createOntology(IRI.create(base));
+         ontology = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont = null;
+         ontology = null;
       }
       OWLDataFactory dataFactory = manager.getOWLDataFactory();
       OWLClass classOWLA = dataFactory.getOWLClass(IRI.create(classA));
       OWLClass noClassOWLA = dataFactory.getOWLClass(IRI.create(noClassA));
-      OWLDeclarationAxiom axiomClass = dataFactory.getOWLDeclarationAxiom(classOWLA);
+      OWLDeclarationAxiom axiomClass1 = dataFactory.getOWLDeclarationAxiom(classOWLA);
       OWLDeclarationAxiom axiomClass2 = dataFactory.getOWLDeclarationAxiom(noClassOWLA);
       OWLEquivalentClassesAxiom equivalentClassesAxiom = dataFactory.getOWLEquivalentClassesAxiom(noClassOWLA, dataFactory.getOWLObjectComplementOf(classOWLA));
-      manager.applyChanges(manager.addAxiom(ont, axiomClass));
-      manager.applyChanges(manager.addAxiom(ont, axiomClass2));
-      manager.applyChanges(manager.addAxiom(ont, equivalentClassesAxiom));
+
+      manager.applyChanges(manager.addAxiom(ontology, axiomClass1));
+      manager.applyChanges(manager.addAxiom(ontology, axiomClass2));
+      manager.applyChanges(manager.addAxiom(ontology, equivalentClassesAxiom));
       testCase.setPreparationaxioms(manager.getOntology(IRI.create(base)));
-      manager.removeOntology(ont);
+      manager.removeOntology(ontology);
 
       /*Assertions*/
-      OWLOntology ont1 = null;
+      OWLOntology ontology1 = null;
       try {
-         ont1 = manager.createOntology(IRI.create(base));
+         ontology1 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont1 = null;
+         ontology1 = null;
       }
 
-      String classAwithouturi = noClassA.split("(#|\\/)")[classA.split("(#|\\/)").length-1];
+      String classAwithoutURI = noClassA.split("(#|\\/)")[classA.split("(#|\\/)").length-1];
 
-      String ind1= classAwithouturi.toLowerCase().replace(">","").replace("<","")+"001";
-      String ind2 = "thing002";
+      String individual1= classAwithoutURI.toLowerCase().replace(">","").replace("<","")+"001";
+      String individual2 = "thing002";
 
-      OWLNamedIndividual indOWLnoA = dataFactory.getOWLNamedIndividual(IRI.create(ind1));
-      OWLDeclarationAxiom axiomInd1 = dataFactory.getOWLDeclarationAxiom(indOWLnoA);
+      OWLNamedIndividual indOWLnoA = dataFactory.getOWLNamedIndividual(IRI.create(individual1));
+      OWLDeclarationAxiom axiomIndividual1 = dataFactory.getOWLDeclarationAxiom(indOWLnoA);
       OWLClassAssertionAxiom classAssertionAxiom = dataFactory.getOWLClassAssertionAxiom(noClassOWLA, indOWLnoA);
-      OWLNamedIndividual indOWL = dataFactory.getOWLNamedIndividual(IRI.create(ind2));
-      OWLDeclarationAxiom axiomInd2 = dataFactory.getOWLDeclarationAxiom(indOWL);
-      OWLObjectProperty prop = dataFactory.getOWLObjectProperty(IRI.create(propertyA));
-      //OWLDeclarationAxiom axiomProp1 = dataFactory.getOWLDeclarationAxiom(prop);
-      OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiom = dataFactory.getOWLObjectPropertyAssertionAxiom(prop, indOWLnoA, indOWL);
+      OWLNamedIndividual indOWLThing = dataFactory.getOWLNamedIndividual(IRI.create(individual2));
+      OWLDeclarationAxiom axiomIndividual2 = dataFactory.getOWLDeclarationAxiom(indOWLThing);
+      OWLObjectProperty prop = dataFactory.getOWLObjectProperty(IRI.create(relation));
+      OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiom = dataFactory.getOWLObjectPropertyAssertionAxiom(prop, indOWLnoA, indOWLThing);
 
-      manager.applyChanges(manager.addAxiom(ont1, axiomInd1));
-      manager.applyChanges(manager.addAxiom(ont1, classAssertionAxiom));
-      manager.applyChanges(manager.addAxiom(ont1, axiomInd2));
-      //manager.applyChanges(manager.addAxiom(ont1, axiomProp1));
-      manager.applyChanges(manager.addAxiom(ont1, objectPropertyAssertionAxiom));
+      manager.applyChanges(manager.addAxiom(ontology1, axiomIndividual1));
+      manager.applyChanges(manager.addAxiom(ontology1, classAssertionAxiom));
+      manager.applyChanges(manager.addAxiom(ontology1, axiomIndividual2));
+      manager.applyChanges(manager.addAxiom(ontology1, objectPropertyAssertionAxiom));
 
       OWLOntology assertion1 = manager.getOntology(IRI.create(base));
 
-      String expectedoutputassertion1 = "inconsistent";
-      manager.removeOntology(ont1);
+      String expectedOutAssertion1 = "inconsistent";
+      manager.removeOntology(ontology1);
 
-      OWLOntology ont2 = null;
+      OWLOntology ontology2 = null;
       try {
-         ont2 = manager.createOntology(IRI.create(base));
+         ontology2 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont2 = null;
+         ontology2 = null;
       }
 
+      OWLNamedIndividual indOWLA = dataFactory.getOWLNamedIndividual(IRI.create(individual1));
+      OWLDeclarationAxiom axiomIndividualA = dataFactory.getOWLDeclarationAxiom(indOWLA);
+      OWLClassAssertionAxiom classAssertionAxiom2 = dataFactory.getOWLClassAssertionAxiom(classOWLA, indOWLA);
+      OWLPropertyAssertionAxiom objectPropertyAssertionAxiom2 = dataFactory.getOWLObjectPropertyAssertionAxiom(prop, indOWLA, indOWLThing);
 
-      OWLNamedIndividual indOWLA = dataFactory.getOWLNamedIndividual(IRI.create(ind1));
-      OWLDeclarationAxiom axiomIndA = dataFactory.getOWLDeclarationAxiom(indOWLA);
-      OWLClassAssertionAxiom classAssertionAxiom2 = dataFactory.getOWLClassAssertionAxiom(classOWLA, indOWLnoA);
-      OWLPropertyAssertionAxiom objectPropertyAssertionAxiom2 = dataFactory.getOWLObjectPropertyAssertionAxiom(prop, indOWLA, indOWL);
-
-      manager.applyChanges(manager.addAxiom(ont2, axiomIndA));
-      manager.applyChanges(manager.addAxiom(ont2, classAssertionAxiom2));
-      manager.applyChanges(manager.addAxiom(ont2, axiomInd2));
-      //manager.applyChanges(manager.addAxiom(ont2, axiomProp1));
-      manager.applyChanges(manager.addAxiom(ont2, objectPropertyAssertionAxiom2));
+      manager.applyChanges(manager.addAxiom(ontology2, axiomIndividualA));
+      manager.applyChanges(manager.addAxiom(ontology2, classAssertionAxiom2));
+      manager.applyChanges(manager.addAxiom(ontology2, axiomIndividual2));
+      manager.applyChanges(manager.addAxiom(ontology2, objectPropertyAssertionAxiom2));
 
       OWLOntology assertion2 = manager.getOntology(IRI.create(base));
-      manager.removeOntology(ont2);
+      manager.removeOntology(ontology2);
 
-      String expectedoutputassertion2 = "consistent";
+      String expectedOutAssertion2 = "consistent";
 
+      LinkedHashMap<String, OWLOntology> hashInput = new LinkedHashMap();
+      hashInput.put("Assertion 1", assertion1);
+      hashInput.put("Assertion 2", assertion2);
 
-      LinkedHashMap<String, OWLOntology> hashinput = new LinkedHashMap();
-      hashinput.put("Assertion 1", assertion1);
-      hashinput.put("Assertion 2", assertion2);
-
-      LinkedHashMap<String, String> hashoutput = new LinkedHashMap();
-      hashoutput.put("Assertion 1",expectedoutputassertion1);
-      hashoutput.put("Assertion 2",expectedoutputassertion2);
+      LinkedHashMap<String, String> hashOutput = new LinkedHashMap();
+      hashOutput.put("Assertion 1",expectedOutAssertion1);
+      hashOutput.put("Assertion 2",expectedOutAssertion2);
 
       for (Map.Entry<String, String> entry : testCase.getAxiomExpectedResultAxioms().entrySet()) {
-         hashoutput.put(entry.getKey(), entry.getValue());
+         hashOutput.put(entry.getKey(), entry.getValue());
       }
 
-      testCase.setAxiomExpectedResultAxioms(hashoutput);
+      testCase.setAxiomExpectedResultAxioms(hashOutput);
 
       for (Map.Entry<String, OWLOntology> entry : testCase.getAssertionsAxioms().entrySet()) {
-         hashinput.put(entry.getKey(), entry.getValue());
+         hashInput.put(entry.getKey(), entry.getValue());
       }
-      testCase.setAssertionsAxioms(hashinput);
+      testCase.setAssertionsAxioms(hashInput);
       return testCase;
 
    }
@@ -662,25 +661,25 @@ public class Implementations {
 
       /*Generation of classes*/
       m.find();
-      String propertyA = m.group(1).toString();
-      String classA = m.group(2).toString();
+      String propertyA = m.group(1);
+      String classA = m.group(2);
       String classA1 = classA+"1";
       String noClassA =  "No"+classA.split("(#|\\/)")[classA.split("(#)").length-1];
 
       /*Preconditions*/
-      ArrayList<String> precond = new ArrayList<>();
-      precond.add("Class(<"+classA+">)");
-      precond.add("Property(<"+propertyA+">)");
-      testCase.getPrecondition().addAll(precond);
+      ArrayList<String> precondition = new ArrayList<>();
+      precondition.add("Class(<"+classA+">)");
+      precondition.add("Property(<"+propertyA+">)");
+      testCase.getPrecondition().addAll(precondition);
 
       /*Axioms to be added*/
       String base = "";
       OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
-      OWLOntology ont = null;
+      OWLOntology ontology = null;
       try {
-         ont = manager.createOntology(IRI.create(base));
+         ontology = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont = null;
+         ontology = null;
       }
       OWLDataFactory dataFactory = manager.getOWLDataFactory();
       OWLClass classOWLA = dataFactory.getOWLClass(IRI.create(classA));
@@ -688,75 +687,77 @@ public class Implementations {
       OWLDeclarationAxiom axiomClass = dataFactory.getOWLDeclarationAxiom(classOWLA);
       OWLDeclarationAxiom axiomClass2 = dataFactory.getOWLDeclarationAxiom(noClassOWLA);
       OWLEquivalentClassesAxiom equivalentClassesAxiom = dataFactory.getOWLEquivalentClassesAxiom(noClassOWLA, dataFactory.getOWLObjectComplementOf(classOWLA));
-      manager.applyChanges(manager.addAxiom(ont, axiomClass));
-      manager.applyChanges(manager.addAxiom(ont, axiomClass2));
-      manager.applyChanges(manager.addAxiom(ont, equivalentClassesAxiom));
-      testCase.setPreparationaxioms(manager.getOntology(IRI.create(base)));
-      manager.removeOntology(ont);
 
-      OWLOntology ont1 = null;
+      manager.applyChanges(manager.addAxiom(ontology, axiomClass));
+      manager.applyChanges(manager.addAxiom(ontology, axiomClass2));
+      manager.applyChanges(manager.addAxiom(ontology, equivalentClassesAxiom));
+      testCase.setPreparationaxioms(manager.getOntology(IRI.create(base)));
+      manager.removeOntology(ontology);
+
+      OWLOntology ontology1 = null;
       try {
-         ont1 = manager.createOntology(IRI.create(base));
+         ontology1 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont1 = null;
+         ontology1 = null;
       }
       String classAwithouturi = noClassA.split("(#|\\/)")[classA.split("(#|\\/)").length-1];
       String ind1= classAwithouturi.toLowerCase().replace(">","").replace("<","")+"001";
       String ind2 = "thing002";
       OWLNamedIndividual indOWLnoA = dataFactory.getOWLNamedIndividual(IRI.create(ind1));
-      OWLDeclarationAxiom axiomInd1 = dataFactory.getOWLDeclarationAxiom(indOWLnoA);
+      OWLDeclarationAxiom axiomIndividualividual1 = dataFactory.getOWLDeclarationAxiom(indOWLnoA);
       OWLClassAssertionAxiom classAssertionAxiom = dataFactory.getOWLClassAssertionAxiom(noClassOWLA, indOWLnoA);
       OWLNamedIndividual indOWL = dataFactory.getOWLNamedIndividual(IRI.create(ind2));
-      OWLDeclarationAxiom axiomInd2 = dataFactory.getOWLDeclarationAxiom(indOWL);
+      OWLDeclarationAxiom axiomIndividualividual2 = dataFactory.getOWLDeclarationAxiom(indOWL);
       OWLObjectProperty prop = dataFactory.getOWLObjectProperty(IRI.create(propertyA));
-     // OWLDeclarationAxiom axiomProp1 = dataFactory.getOWLDeclarationAxiom(prop);
       OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiom = dataFactory.getOWLObjectPropertyAssertionAxiom(prop, indOWL, indOWLnoA);
-      manager.applyChanges(manager.addAxiom(ont1, axiomInd1));
-      manager.applyChanges(manager.addAxiom(ont1, classAssertionAxiom));
-      manager.applyChanges(manager.addAxiom(ont1, axiomInd2));
-      //manager.applyChanges(manager.addAxiom(ont1, axiomProp1));
-      manager.applyChanges(manager.addAxiom(ont1, objectPropertyAssertionAxiom));
+
+      manager.applyChanges(manager.addAxiom(ontology1, axiomIndividualividual1));
+      manager.applyChanges(manager.addAxiom(ontology1, classAssertionAxiom));
+      manager.applyChanges(manager.addAxiom(ontology1, axiomIndividualividual2));
+      manager.applyChanges(manager.addAxiom(ontology1, objectPropertyAssertionAxiom));
       OWLOntology assertion1 = manager.getOntology(IRI.create(base));
-      String expectedoutputassertion1 = "inconsistent";
-      manager.removeOntology(ont1);
+      String expectedOutAssertion1 = "inconsistent";
+      manager.removeOntology(ontology1);
 
-      OWLOntology ont2 = null;
+      OWLOntology ontology2 = null;
       try {
-         ont2 = manager.createOntology(IRI.create(base));
+         ontology2 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont2 = null;
+         ontology2 = null;
       }
-      OWLNamedIndividual indOWLA = dataFactory.getOWLNamedIndividual(IRI.create(ind1));
-      OWLDeclarationAxiom axiomIndA = dataFactory.getOWLDeclarationAxiom(indOWLA);
-      OWLClassAssertionAxiom classAssertionAxiom2 = dataFactory.getOWLClassAssertionAxiom(classOWLA, indOWLnoA);
+
+      String ind3= classA.split("(#|\\/)")[classA.split("(#|\\/)").length-1].toLowerCase().replace(">","").replace("<","")+"002";
+      OWLNamedIndividual indOWLA = dataFactory.getOWLNamedIndividual(IRI.create(ind3));
+      OWLDeclarationAxiom axiomIndividualividualA = dataFactory.getOWLDeclarationAxiom(indOWLA);
+      OWLClassAssertionAxiom classAssertionAxiom2 = dataFactory.getOWLClassAssertionAxiom(classOWLA, indOWLA);
       OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiom2 = dataFactory.getOWLObjectPropertyAssertionAxiom(prop, indOWL, indOWLA);
-      manager.applyChanges(manager.addAxiom(ont2, axiomIndA));
-      manager.applyChanges(manager.addAxiom(ont2, classAssertionAxiom2));
-      manager.applyChanges(manager.addAxiom(ont2, axiomInd2));
-      //manager.applyChanges(manager.addAxiom(ont2, axiomProp1));
-      manager.applyChanges(manager.addAxiom(ont2, objectPropertyAssertionAxiom2));
+
+      manager.applyChanges(manager.addAxiom(ontology2, axiomIndividualividualA));
+      manager.applyChanges(manager.addAxiom(ontology2, classAssertionAxiom2));
+      manager.applyChanges(manager.addAxiom(ontology2, axiomIndividualividual2));
+      manager.applyChanges(manager.addAxiom(ontology2, objectPropertyAssertionAxiom2));
       OWLOntology assertion2 = manager.getOntology(IRI.create(base));
-      String expectedoutputassertion2 = "consistent";
-      manager.removeOntology(ont2);
+      String expectedOutAssertion2 = "consistent";
+      manager.removeOntology(ontology2);
 
-      LinkedHashMap<String, OWLOntology> hashinput = new LinkedHashMap();
-      hashinput.put("Assertion 1", assertion1);
-      hashinput.put("Assertion 2", assertion2);
+      LinkedHashMap<String, OWLOntology> hashInput = new LinkedHashMap();
+      hashInput.put("Assertion 1", assertion1);
+      hashInput.put("Assertion 2", assertion2);
 
-      LinkedHashMap<String, String> hashoutput = new LinkedHashMap();
-      hashoutput.put("Assertion 1",expectedoutputassertion1);
-      hashoutput.put("Assertion 2",expectedoutputassertion2);
+      LinkedHashMap<String, String> hashOutput = new LinkedHashMap();
+      hashOutput.put("Assertion 1",expectedOutAssertion1);
+      hashOutput.put("Assertion 2",expectedOutAssertion2);
 
       for (Map.Entry<String, String> entry : testCase.getAxiomExpectedResultAxioms().entrySet()) {
-         hashoutput.put(entry.getKey(), entry.getValue());
+         hashOutput.put(entry.getKey(), entry.getValue());
       }
 
-      testCase.setAxiomExpectedResultAxioms(hashoutput);
+      testCase.setAxiomExpectedResultAxioms(hashOutput);
 
       for (Map.Entry<String, OWLOntology> entry : testCase.getAssertionsAxioms().entrySet()) {
-         hashinput.put(entry.getKey(), entry.getValue());
+         hashInput.put(entry.getKey(), entry.getValue());
       }
-      testCase.setAssertionsAxioms(hashinput);
+      testCase.setAssertionsAxioms(hashInput);
       return testCase;
    }
 
@@ -768,44 +769,45 @@ public class Implementations {
 
       /*Generation of classes*/
       m.find();
-      String propertyA = m.group(1).toString();
-      String datatypeA = m.group(2).toString();
-      String nodatatypeA =  "No"+datatypeA.split("(#|\\/)")[datatypeA.split("(#)").length-1];
+      String propertyA = m.group(1);
+      String datatypeA = m.group(2);
+      String noDatatypeA =  "No"+datatypeA.split("(#|\\/)")[datatypeA.split("(#)").length-1];
 
       /*Preconditions*/
-      ArrayList<String> precond = new ArrayList<>();
-      precond.add("Property(<"+propertyA+">)");
-      testCase.getPrecondition().addAll(precond);
+      ArrayList<String> precondition = new ArrayList<>();
+      precondition.add("Property(<"+propertyA+">)");
+      testCase.getPrecondition().addAll(precondition);
 
       /*Axioms to be added*/
       String base = "";
       OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
-      OWLOntology ont = null;
+      OWLOntology ontology = null;
       try {
-         ont = manager.createOntology(IRI.create(base));
+         ontology = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont = null;
+         ontology = null;
       }
       OWLDataFactory dataFactory = manager.getOWLDataFactory();
       OWLDataProperty datatypeOWLA = dataFactory.getOWLDataProperty(IRI.create(datatypeA));
-      OWLDataProperty nodatatypeOWLA = dataFactory.getOWLDataProperty(IRI.create(nodatatypeA));
-      OWLDeclarationAxiom axiomDatatype = dataFactory.getOWLDeclarationAxiom(datatypeOWLA);
-      OWLDeclarationAxiom axiomDatatype2 = dataFactory.getOWLDeclarationAxiom(nodatatypeOWLA);
+      OWLDataProperty noDatatypeOWLA = dataFactory.getOWLDataProperty(IRI.create(noDatatypeA));
+      OWLDeclarationAxiom axiomDatatype1 = dataFactory.getOWLDeclarationAxiom(datatypeOWLA);
+      OWLDeclarationAxiom axiomDatatype2 = dataFactory.getOWLDeclarationAxiom(noDatatypeOWLA);
       OWLNamedIndividual ind1 = dataFactory.getOWLNamedIndividual(IRI.create("individual1"));
-      manager.applyChanges(manager.addAxiom(ont, axiomDatatype));
-      manager.applyChanges(manager.addAxiom(ont, axiomDatatype2));
-      manager.applyChanges(manager.addAxiom(ont, dataFactory.getOWLDeclarationAxiom(ind1)));
+
+      manager.applyChanges(manager.addAxiom(ontology, axiomDatatype1));
+      manager.applyChanges(manager.addAxiom(ontology, axiomDatatype2));
+      manager.applyChanges(manager.addAxiom(ontology, dataFactory.getOWLDeclarationAxiom(ind1)));
       testCase.setPreparationaxioms(manager.getOntology(IRI.create(base)));
-      manager.removeOntology(ont);
+      manager.removeOntology(ontology);
 
       /*
        *Assertions
        * */
-      OWLOntology ont1 = null;
+      OWLOntology ontology1 = null;
       try {
-         ont1 = manager.createOntology(IRI.create(base));
+         ontology1 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont1 = null;
+         ontology1 = null;
       }
       OWLDataProperty prop = dataFactory.getOWLDataProperty(IRI.create(propertyA));
       OWLDataPropertyAssertionAxiom assertionAxiom = null;
@@ -814,17 +816,17 @@ public class Implementations {
       }else{
          assertionAxiom = dataFactory.getOWLDataPropertyAssertionAxiom(prop, ind1, "temporalEntity");
       }
-      manager.applyChanges(manager.addAxiom(ont, dataFactory.getOWLDeclarationAxiom(ind1)));
-      manager.applyChanges(manager.addAxiom(ont1, assertionAxiom));
+      manager.applyChanges(manager.addAxiom(ontology, dataFactory.getOWLDeclarationAxiom(ind1)));
+      manager.applyChanges(manager.addAxiom(ontology1, assertionAxiom));
       OWLOntology assertion1 = manager.getOntology(IRI.create(base));
-      String expectedoutputassertion1 = "inconsistent";
-      manager.removeOntology(ont1);
+      String expectedOutAssertion1 = "inconsistent";
+      manager.removeOntology(ontology1);
 
-      OWLOntology ont2 = null;
+      OWLOntology ontology2 = null;
       try {
-         ont2 = manager.createOntology(IRI.create(base));
+         ontology2 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont2 = null;
+         ontology2 = null;
       }
       OWLDataPropertyAssertionAxiom assertionAxiom2 = null;
       if(datatypeA.contains("string") || datatypeA.contains("literal") || datatypeA.contains("rational")|| datatypeA.contains("anyuri")){
@@ -845,30 +847,30 @@ public class Implementations {
       }else{
          assertionAxiom2 = dataFactory.getOWLDataPropertyAssertionAxiom(prop, ind1, 1);
       }
-      manager.applyChanges(manager.addAxiom(ont2, dataFactory.getOWLDeclarationAxiom(ind1)));
-      manager.applyChanges(manager.addAxiom(ont2, assertionAxiom2));
+      manager.applyChanges(manager.addAxiom(ontology2, dataFactory.getOWLDeclarationAxiom(ind1)));
+      manager.applyChanges(manager.addAxiom(ontology2, assertionAxiom2));
       OWLOntology assertion2 = manager.getOntology(IRI.create(base));
-      String expectedoutputassertion2 = "consistent";
-      manager.removeOntology(ont2);
+      String expectedOutAssertion2 = "consistent";
+      manager.removeOntology(ontology2);
 
-      LinkedHashMap<String, OWLOntology> hashinput = new LinkedHashMap();
-      hashinput.put("Assertion 1", assertion1);
-      hashinput.put("Assertion 2", assertion2);
+      LinkedHashMap<String, OWLOntology> hashInput = new LinkedHashMap();
+      hashInput.put("Assertion 1", assertion1);
+      hashInput.put("Assertion 2", assertion2);
 
-      LinkedHashMap<String, String> hashoutput = new LinkedHashMap();
-      hashoutput.put("Assertion 1",expectedoutputassertion1);
-      hashoutput.put("Assertion 2",expectedoutputassertion2);
+      LinkedHashMap<String, String> hashOutput = new LinkedHashMap();
+      hashOutput.put("Assertion 1",expectedOutAssertion1);
+      hashOutput.put("Assertion 2",expectedOutAssertion2);
 
       for (Map.Entry<String, String> entry : testCase.getAxiomExpectedResultAxioms().entrySet()) {
-         hashoutput.put(entry.getKey(), entry.getValue());
+         hashOutput.put(entry.getKey(), entry.getValue());
       }
 
-      testCase.setAxiomExpectedResultAxioms(hashoutput);
+      testCase.setAxiomExpectedResultAxioms(hashOutput);
 
       for (Map.Entry<String, OWLOntology> entry : testCase.getAssertionsAxioms().entrySet()) {
-         hashinput.put(entry.getKey(), entry.getValue());
+         hashInput.put(entry.getKey(), entry.getValue());
       }
-      testCase.setAssertionsAxioms(hashinput);
+      testCase.setAssertionsAxioms(hashInput);
       return testCase;
    }
 
@@ -879,90 +881,91 @@ public class Implementations {
 
       /*Generation of classes*/
       m.find();
-      String propertyA = m.group(1).toString();
-      String datatypeA = m.group(2).toString();
-      String nodatatypeA =  "No"+datatypeA.split("(#|\\/)")[datatypeA.split("(#)").length-1];
+      String propertyA = m.group(1);
+      String datatypeA = m.group(2);
+      String noDatatypeA =  "No"+datatypeA.split("(#|\\/)")[datatypeA.split("(#)").length-1];
 
       /*Preconditions*/
-      ArrayList<String> precond = new ArrayList<>();
-      precond.add("Property(<"+propertyA+">)");
-      testCase.getPrecondition().addAll(precond);
+      ArrayList<String> precondition = new ArrayList<>();
+      precondition.add("Property(<"+propertyA+">)");
+      testCase.getPrecondition().addAll(precondition);
 
       /*Axioms to be added*/
       String base = "";
       OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
-      OWLOntology ont = null;
+      OWLOntology ontology = null;
       try {
-         ont = manager.createOntology(IRI.create(base));
+         ontology = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont = null;
+         ontology = null;
       }
       OWLDataFactory dataFactory = manager.getOWLDataFactory();
       OWLDataProperty datatypeOWLA = dataFactory.getOWLDataProperty(IRI.create(datatypeA));
-      OWLDataProperty nodatatypeOWLA = dataFactory.getOWLDataProperty(IRI.create(nodatatypeA));
-      OWLDeclarationAxiom axiomDatatype = dataFactory.getOWLDeclarationAxiom(datatypeOWLA);
-      OWLDeclarationAxiom axiomDatatype2 = dataFactory.getOWLDeclarationAxiom(nodatatypeOWLA);
-      OWLNamedIndividual ind1 = dataFactory.getOWLNamedIndividual(IRI.create("individual1"));
-      manager.applyChanges(manager.addAxiom(ont, axiomDatatype));
-      manager.applyChanges(manager.addAxiom(ont, axiomDatatype2));
-      manager.applyChanges(manager.addAxiom(ont, dataFactory.getOWLDeclarationAxiom(ind1)));
+      OWLDataProperty noDatatypeOWLA = dataFactory.getOWLDataProperty(IRI.create(noDatatypeA));
+      OWLDeclarationAxiom axiomDatatype1 = dataFactory.getOWLDeclarationAxiom(datatypeOWLA);
+      OWLDeclarationAxiom axiomDatatype2 = dataFactory.getOWLDeclarationAxiom(noDatatypeOWLA);
+      OWLNamedIndividual individual1 = dataFactory.getOWLNamedIndividual(IRI.create("individual1"));
+
+      manager.applyChanges(manager.addAxiom(ontology, axiomDatatype1));
+      manager.applyChanges(manager.addAxiom(ontology, axiomDatatype2));
+      manager.applyChanges(manager.addAxiom(ontology, dataFactory.getOWLDeclarationAxiom(individual1)));
       testCase.setPreparationaxioms(manager.getOntology(IRI.create(base)));
-      manager.removeOntology(ont);
+      manager.removeOntology(ontology);
 
       /*
        *Assertions
        * */
-      OWLOntology ont1 = null;
+      OWLOntology ontology1 = null;
       try {
-         ont1 = manager.createOntology(IRI.create(base));
+         ontology1 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont1 = null;
+         ontology1 = null;
       }
       OWLDataProperty prop = dataFactory.getOWLDataProperty(IRI.create(propertyA));
-      OWLDataPropertyAssertionAxiom assertionAxiom = null;
+      OWLDataPropertyAssertionAxiom assertionAxiom1 = null;
 
-      assertionAxiom = dataFactory.getOWLDataPropertyAssertionAxiom(prop, ind1, 1 );
+      assertionAxiom1 = dataFactory.getOWLDataPropertyAssertionAxiom(prop, individual1, 1 );
 
-      manager.applyChanges(manager.addAxiom(ont, dataFactory.getOWLDeclarationAxiom(ind1)));
-      manager.applyChanges(manager.addAxiom(ont1, assertionAxiom));
+      manager.applyChanges(manager.addAxiom(ontology, dataFactory.getOWLDeclarationAxiom(individual1)));
+      manager.applyChanges(manager.addAxiom(ontology1, assertionAxiom1));
       OWLOntology assertion1 = manager.getOntology(IRI.create(base));
-      String expectedoutputassertion1 = "consistent";
-      manager.removeOntology(ont1);
+      String expectedOutAssertion1 = "consistent";
+      manager.removeOntology(ontology1);
 
-      OWLOntology ont2 = null;
+      OWLOntology ontology2 = null;
       try {
-         ont2 = manager.createOntology(IRI.create(base));
+         ontology2 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont2 = null;
+         ontology2 = null;
       }
       OWLDataPropertyAssertionAxiom assertionAxiom2 = null;
 
-      assertionAxiom2 = dataFactory.getOWLDataPropertyAssertionAxiom(prop, ind1, "temporalEntity");
+      assertionAxiom2 = dataFactory.getOWLDataPropertyAssertionAxiom(prop, individual1, "temporalEntity");
 
-      manager.applyChanges(manager.addAxiom(ont2, dataFactory.getOWLDeclarationAxiom(ind1)));
-      manager.applyChanges(manager.addAxiom(ont2, assertionAxiom2));
+      manager.applyChanges(manager.addAxiom(ontology2, dataFactory.getOWLDeclarationAxiom(individual1)));
+      manager.applyChanges(manager.addAxiom(ontology2, assertionAxiom2));
       OWLOntology assertion2 = manager.getOntology(IRI.create(base));
-      String expectedoutputassertion2 = "consistent";
-      manager.removeOntology(ont2);
+      String expectedOutAssertion2 = "consistent";
+      manager.removeOntology(ontology2);
 
-      LinkedHashMap<String, OWLOntology> hashinput = new LinkedHashMap();
-      hashinput.put("Assertion 1", assertion1);
-      hashinput.put("Assertion 2", assertion2);
+      LinkedHashMap<String, OWLOntology> hashInput = new LinkedHashMap();
+      hashInput.put("Assertion 1", assertion1);
+      hashInput.put("Assertion 2", assertion2);
 
-      LinkedHashMap<String, String> hashoutput = new LinkedHashMap();
-      hashoutput.put("Assertion 1",expectedoutputassertion1);
-      hashoutput.put("Assertion 2",expectedoutputassertion2);
+      LinkedHashMap<String, String> hashOutput = new LinkedHashMap();
+      hashOutput.put("Assertion 1",expectedOutAssertion1);
+      hashOutput.put("Assertion 2",expectedOutAssertion2);
 
       for (Map.Entry<String, String> entry : testCase.getAxiomExpectedResultAxioms().entrySet()) {
-         hashoutput.put(entry.getKey(), entry.getValue());
+         hashOutput.put(entry.getKey(), entry.getValue());
       }
 
-      testCase.setAxiomExpectedResultAxioms(hashoutput);
+      testCase.setAxiomExpectedResultAxioms(hashOutput);
 
       for (Map.Entry<String, OWLOntology> entry : testCase.getAssertionsAxioms().entrySet()) {
-         hashinput.put(entry.getKey(), entry.getValue());
+         hashInput.put(entry.getKey(), entry.getValue());
       }
-      testCase.setAssertionsAxioms(hashinput);
+      testCase.setAssertionsAxioms(hashInput);
       testCase.setType("literal");
       return testCase;
    }
@@ -974,35 +977,35 @@ public class Implementations {
       Matcher m = p.matcher(purpose);
       /*Generation of classes*/
       m.find();
-      String classA = m.group(1).toString();
+      String classA = m.group(1);
       String noClassA =  "No"+classA.split("(#|\\/)")[classA.split("(#)").length-1];
       String classA1 =  classA.split("(#|\\/)")[classA.split("(#)").length-1]+"1";
-      String classB = m.group(2).toString();
+      String classB = m.group(2);
       String noClassB =  "No"+classB.split("(#|\\/)")[classB.split("(#|\\/)").length-1];
-      String classC = m.group(3).toString();
+      String classC = m.group(3);
       String noClassC =  "No"+classC.split("(#|\\/)")[classC.split("(#|\\/)").length-1];
       /*Preconditions*/
-      ArrayList<String> precond = new ArrayList<>();
-      precond.add("Class(<"+classA.replaceAll(" ","")+">)");
-      precond.add("Class(<"+classB.replaceAll(" ","")+">)");
-      precond.add("Class(<"+classC.replaceAll(" ","")+">)");
-      testCase.getPrecondition().addAll(precond);
+      ArrayList<String> precondition = new ArrayList<>();
+      precondition.add("Class(<"+classA.replaceAll(" ","")+">)");
+      precondition.add("Class(<"+classB.replaceAll(" ","")+">)");
+      precondition.add("Class(<"+classC.replaceAll(" ","")+">)");
+      testCase.getPrecondition().addAll(precondition);
 
       /*Axioms to be added*/
       String base = "";
       OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
-      OWLOntology ont = null;
+      OWLOntology ontology = null;
       try {
-         ont = manager.createOntology(IRI.create(base));
+         ontology = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont = null;
+         ontology = null;
       }
       OWLDataFactory dataFactory = manager.getOWLDataFactory();
       OWLClass classOWLA = dataFactory.getOWLClass(IRI.create(classA));
       OWLClass noClassOWLA = dataFactory.getOWLClass(IRI.create(noClassA));
-      OWLDeclarationAxiom axiomClass = dataFactory.getOWLDeclarationAxiom(classOWLA);
+      OWLDeclarationAxiom axiomClass1 = dataFactory.getOWLDeclarationAxiom(classOWLA);
       OWLDeclarationAxiom axiomClass2 = dataFactory.getOWLDeclarationAxiom(noClassOWLA);
-      OWLEquivalentClassesAxiom equivalentClassesAxiom = dataFactory.getOWLEquivalentClassesAxiom(noClassOWLA, dataFactory.getOWLObjectComplementOf(classOWLA));
+      OWLEquivalentClassesAxiom equivalentClassesAxiom1 = dataFactory.getOWLEquivalentClassesAxiom(noClassOWLA, dataFactory.getOWLObjectComplementOf(classOWLA));
       OWLClass classOWLB = dataFactory.getOWLClass(IRI.create(classB));
       OWLClass noClassOWLB = dataFactory.getOWLClass(IRI.create(noClassB));
       OWLDeclarationAxiom axiomClass3 = dataFactory.getOWLDeclarationAxiom(classOWLB);
@@ -1014,132 +1017,132 @@ public class Implementations {
       OWLDeclarationAxiom axiomClass6 = dataFactory.getOWLDeclarationAxiom(noClassOWLC);
       OWLEquivalentClassesAxiom equivalentClassesAxiom3 = dataFactory.getOWLEquivalentClassesAxiom(noClassOWLC, dataFactory.getOWLObjectComplementOf(classOWLC));
 
-      manager.applyChanges(manager.addAxiom(ont, axiomClass));
-      manager.applyChanges(manager.addAxiom(ont, axiomClass2));
-      manager.applyChanges(manager.addAxiom(ont, equivalentClassesAxiom));
-      manager.applyChanges(manager.addAxiom(ont, axiomClass3));
-      manager.applyChanges(manager.addAxiom(ont, axiomClass4));
-      manager.applyChanges(manager.addAxiom(ont, equivalentClassesAxiom2));
-      manager.applyChanges(manager.addAxiom(ont, axiomClass5));
-      manager.applyChanges(manager.addAxiom(ont, axiomClass6));
-      manager.applyChanges(manager.addAxiom(ont, equivalentClassesAxiom3));
+      manager.applyChanges(manager.addAxiom(ontology, axiomClass1));
+      manager.applyChanges(manager.addAxiom(ontology, axiomClass2));
+      manager.applyChanges(manager.addAxiom(ontology, equivalentClassesAxiom1));
+      manager.applyChanges(manager.addAxiom(ontology, axiomClass3));
+      manager.applyChanges(manager.addAxiom(ontology, axiomClass4));
+      manager.applyChanges(manager.addAxiom(ontology, equivalentClassesAxiom2));
+      manager.applyChanges(manager.addAxiom(ontology, axiomClass5));
+      manager.applyChanges(manager.addAxiom(ontology, axiomClass6));
+      manager.applyChanges(manager.addAxiom(ontology, equivalentClassesAxiom3));
       testCase.setPreparationaxioms(manager.getOntology(IRI.create(base)));
-      manager.removeOntology(ont);
+      manager.removeOntology(ontology);
 
-      OWLOntology ont1 = null;
+      OWLOntology ontology1 = null;
       try {
-         ont1 = manager.createOntology(IRI.create(base));
+         ontology1 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont1 = null;
+         ontology1 = null;
       }
       OWLClass classOWLA1 = dataFactory.getOWLClass(IRI.create(classA1));
       OWLDeclarationAxiom axiomClass7 = dataFactory.getOWLDeclarationAxiom(classOWLA1);
       OWLSubClassOfAxiom subClassOfAxiom1 = dataFactory.getOWLSubClassOfAxiom(classOWLA1, dataFactory.getOWLObjectIntersectionOf(noClassOWLA, classOWLB));
-      manager.applyChanges(manager.addAxiom(ont1, axiomClass7));
-      manager.applyChanges(manager.addAxiom(ont1, subClassOfAxiom1));
+      manager.applyChanges(manager.addAxiom(ontology1, axiomClass7));
+      manager.applyChanges(manager.addAxiom(ontology1, subClassOfAxiom1));
 
       OWLOntology assertion1 = manager.getOntology(IRI.create(base));
-      manager.removeOntology(ont1);
+      manager.removeOntology(ontology1);
 
-      String expectedoutputassertion1 ="";
-      expectedoutputassertion1 = "consistent";
+      String expectedOutAssertion1 ="";
+      expectedOutAssertion1 = "consistent";
 
-      OWLOntology ont2 = null;
+      OWLOntology ontology2 = null;
       try {
-         ont2 = manager.createOntology(IRI.create(base));
+         ontology2 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont2 = null;
+         ontology2 = null;
       }
       OWLSubClassOfAxiom subClassOfAxiom2 = dataFactory.getOWLSubClassOfAxiom(classOWLA1, dataFactory.getOWLObjectIntersectionOf(noClassOWLB, classOWLA));
-      manager.applyChanges(manager.addAxiom(ont2, axiomClass7));
-      manager.applyChanges(manager.addAxiom(ont2, subClassOfAxiom2));
+      manager.applyChanges(manager.addAxiom(ontology2, axiomClass7));
+      manager.applyChanges(manager.addAxiom(ontology2, subClassOfAxiom2));
       OWLOntology assertion2 = manager.getOntology(IRI.create(base));
-      manager.removeOntology(ont2);
-      String expectedoutputassertion2 = "unsatisfiable";
+      manager.removeOntology(ontology2);
+      String expectedOutAssertion2 = "unsatisfiable";
 
 
-      OWLOntology ont3 = null;
+      OWLOntology ontology3 = null;
       try {
-         ont3 = manager.createOntology(IRI.create(base));
+         ontology3 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont3 = null;
+         ontology3 = null;
       }
       OWLSubClassOfAxiom subClassOfAxiom3 = dataFactory.getOWLSubClassOfAxiom(classOWLA1, dataFactory.getOWLObjectIntersectionOf(classOWLB, classOWLA));
-      manager.applyChanges(manager.addAxiom(ont3, axiomClass7));
-      manager.applyChanges(manager.addAxiom(ont3, subClassOfAxiom3));
+      manager.applyChanges(manager.addAxiom(ontology3, axiomClass7));
+      manager.applyChanges(manager.addAxiom(ontology3, subClassOfAxiom3));
       OWLOntology assertion3 = manager.getOntology(IRI.create(base));
-      manager.removeOntology(ont3);
-      String expectedoutputassertion3  = "consistent";
+      manager.removeOntology(ontology3);
+      String expectedOutAssertion3  = "consistent";
 
-      OWLOntology ont4 = null;
+      OWLOntology ontology4 = null;
       try {
-         ont4 = manager.createOntology(IRI.create(base));
+         ontology4 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont4 = null;
+         ontology4 = null;
       }
       OWLSubClassOfAxiom subClassOfAxiom4 = dataFactory.getOWLSubClassOfAxiom(classOWLA1, dataFactory.getOWLObjectIntersectionOf(noClassOWLA, classOWLC));
-      manager.applyChanges(manager.addAxiom(ont4, axiomClass7));
-      manager.applyChanges(manager.addAxiom(ont4, subClassOfAxiom4));
+      manager.applyChanges(manager.addAxiom(ontology4, axiomClass7));
+      manager.applyChanges(manager.addAxiom(ontology4, subClassOfAxiom4));
 
       OWLOntology assertion4 = manager.getOntology(IRI.create(base));
-      manager.removeOntology(ont4);
+      manager.removeOntology(ontology4);
 
-      String expectedoutputassertion4 ="";
-      expectedoutputassertion4 = "consistent";
+      String expectedOutAssertion4 ="consistent";
 
-      OWLOntology ont5 = null;
+
+      OWLOntology ontology5 = null;
       try {
-         ont5 = manager.createOntology(IRI.create(base));
+         ontology5 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont5 = null;
+         ontology5 = null;
       }
 
       OWLSubClassOfAxiom subClassOfAxiom5 = dataFactory.getOWLSubClassOfAxiom(classOWLA1, dataFactory.getOWLObjectIntersectionOf(classOWLA, noClassOWLC));
-      manager.applyChanges(manager.addAxiom(ont5, axiomClass7));
-      manager.applyChanges(manager.addAxiom(ont5, subClassOfAxiom5));
+      manager.applyChanges(manager.addAxiom(ontology5, axiomClass7));
+      manager.applyChanges(manager.addAxiom(ontology5, subClassOfAxiom5));
       OWLOntology assertion5 = manager.getOntology(IRI.create(base));
-      manager.removeOntology(ont5);
-      String expectedoutputassertion5 = "unsatisfiable";
+      manager.removeOntology(ontology5);
+      String expectedOutAssertion5 = "unsatisfiable";
 
-      OWLOntology ont6 = null;
+      OWLOntology ontology6 = null;
       try {
-         ont6 = manager.createOntology(IRI.create(base));
+         ontology6 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont6 = null;
+         ontology6 = null;
       }
       OWLSubClassOfAxiom subClassOfAxiom6 = dataFactory.getOWLSubClassOfAxiom(classOWLA1, dataFactory.getOWLObjectIntersectionOf(classOWLA, classOWLC));
-      manager.applyChanges(manager.addAxiom(ont6, axiomClass7));
-      manager.applyChanges(manager.addAxiom(ont6, subClassOfAxiom6));
+      manager.applyChanges(manager.addAxiom(ontology6, axiomClass7));
+      manager.applyChanges(manager.addAxiom(ontology6, subClassOfAxiom6));
       OWLOntology assertion6 = manager.getOntology(IRI.create(base));
-      manager.removeOntology(ont6);
-      String expectedoutputassertion6 = "consistent";
+      manager.removeOntology(ontology6);
+      String expectedOutAssertion6 = "consistent";
 
-      LinkedHashMap<String, OWLOntology> hashinput = new LinkedHashMap();
-      hashinput.put("Assertion 1", assertion1);
-      hashinput.put("Assertion 2", assertion2);
-      hashinput.put("Assertion 3", assertion3);
-      hashinput.put("Assertion 4", assertion4);
-      hashinput.put("Assertion 5", assertion5);
-      hashinput.put("Assertion 6", assertion6);
+      LinkedHashMap<String, OWLOntology> hashInput = new LinkedHashMap();
+      hashInput.put("Assertion 1", assertion1);
+      hashInput.put("Assertion 2", assertion2);
+      hashInput.put("Assertion 3", assertion3);
+      hashInput.put("Assertion 4", assertion4);
+      hashInput.put("Assertion 5", assertion5);
+      hashInput.put("Assertion 6", assertion6);
 
-      LinkedHashMap<String, String> hashoutput = new LinkedHashMap();
-      hashoutput.put("Assertion 1",expectedoutputassertion1);
-      hashoutput.put("Assertion 2",expectedoutputassertion2);
-      hashoutput.put("Assertion 3",expectedoutputassertion3);
-      hashoutput.put("Assertion 4",expectedoutputassertion4);
-      hashoutput.put("Assertion 5",expectedoutputassertion5);
-      hashoutput.put("Assertion 6",expectedoutputassertion6);
+      LinkedHashMap<String, String> hashOutput = new LinkedHashMap();
+      hashOutput.put("Assertion 1",expectedOutAssertion1);
+      hashOutput.put("Assertion 2",expectedOutAssertion2);
+      hashOutput.put("Assertion 3",expectedOutAssertion3);
+      hashOutput.put("Assertion 4",expectedOutAssertion4);
+      hashOutput.put("Assertion 5",expectedOutAssertion5);
+      hashOutput.put("Assertion 6",expectedOutAssertion6);
 
       for (Map.Entry<String, String> entry : testCase.getAxiomExpectedResultAxioms().entrySet()) {
-         hashoutput.put(entry.getKey(), entry.getValue());
+         hashOutput.put(entry.getKey(), entry.getValue());
       }
 
-      testCase.setAxiomExpectedResultAxioms(hashoutput);
+      testCase.setAxiomExpectedResultAxioms(hashOutput);
 
       for (Map.Entry<String, OWLOntology> entry : testCase.getAssertionsAxioms().entrySet()) {
-         hashinput.put(entry.getKey(), entry.getValue());
+         hashInput.put(entry.getKey(), entry.getValue());
       }
-      testCase.setAssertionsAxioms(hashinput);
+      testCase.setAssertionsAxioms(hashInput);
       return testCase;
    }
 
@@ -1155,32 +1158,32 @@ public class Implementations {
       m.find();
 
       /*Generation of classes*/
-      classA = m.group(1).toString();
+      classA = m.group(1);
       noClassA = "No" + classA.split("(#|\\/)")[classA.split("(#)").length - 1];
       classA1 = classA.split("(#|\\/)")[classA.split("(#)").length - 1] + "1";
 
-      classB = m.group(3).toString();
+      classB = m.group(3);
       noClassB = "No" + classB.split("(#|\\/)")[classB.split("(#|\\/)").length - 1];
 
       /*Preconditions*/
-      ArrayList<String> precond = new ArrayList<>();
-      precond.add("Class(<"+classA.replaceAll(" ","")+">)");
-      precond.add("Class(<"+classB.replaceAll(" ","")+">)");
-      testCase.getPrecondition().addAll(precond);
+      ArrayList<String> precondition = new ArrayList<>();
+      precondition.add("Class(<"+classA.replaceAll(" ","")+">)");
+      precondition.add("Class(<"+classB.replaceAll(" ","")+">)");
+      testCase.getPrecondition().addAll(precondition);
 
       /*Axioms to be added*/
       String base = "";
       OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
-      OWLOntology ont = null;
+      OWLOntology ontology = null;
       try {
-         ont = manager.createOntology(IRI.create(base));
+         ontology = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont = null;
+         ontology = null;
       }
       OWLDataFactory dataFactory = manager.getOWLDataFactory();
 
-      LinkedHashMap<String, OWLOntology> hashinput = new LinkedHashMap();
-      LinkedHashMap<String, String> hashoutput = new LinkedHashMap();
+      LinkedHashMap<String, OWLOntology> hashInput = new LinkedHashMap();
+      LinkedHashMap<String, String> hashOutput = new LinkedHashMap();
 
       if(!classA.equals(classB)) {
          /*Preparation*/
@@ -1188,164 +1191,164 @@ public class Implementations {
          OWLClass noClassOWLA = dataFactory.getOWLClass(IRI.create(noClassA));
          OWLDeclarationAxiom axiomClass = dataFactory.getOWLDeclarationAxiom(classOWLA);
          OWLDeclarationAxiom axiomClass2 = dataFactory.getOWLDeclarationAxiom(noClassOWLA);
-         OWLEquivalentClassesAxiom equivalentClassesAxiom = dataFactory.getOWLEquivalentClassesAxiom(noClassOWLA, dataFactory.getOWLObjectComplementOf(classOWLA));
+         OWLEquivalentClassesAxiom equivalentClassesAxiom1 = dataFactory.getOWLEquivalentClassesAxiom(noClassOWLA, dataFactory.getOWLObjectComplementOf(classOWLA));
          OWLClass classOWLB = dataFactory.getOWLClass(IRI.create(classB));
          OWLClass noClassOWLB = dataFactory.getOWLClass(IRI.create(noClassB));
          OWLDeclarationAxiom axiomClass3 = dataFactory.getOWLDeclarationAxiom(classOWLB);
          OWLDeclarationAxiom axiomClass4 = dataFactory.getOWLDeclarationAxiom(noClassOWLB);
          OWLEquivalentClassesAxiom equivalentClassesAxiom2 = dataFactory.getOWLEquivalentClassesAxiom(noClassOWLB, dataFactory.getOWLObjectComplementOf(classOWLB));
 
-         manager.applyChanges(manager.addAxiom(ont, axiomClass));
-         manager.applyChanges(manager.addAxiom(ont, axiomClass2));
-         manager.applyChanges(manager.addAxiom(ont, axiomClass3));
-         manager.applyChanges(manager.addAxiom(ont, axiomClass4));
-         manager.applyChanges(manager.addAxiom(ont, equivalentClassesAxiom));
-         manager.applyChanges(manager.addAxiom(ont, equivalentClassesAxiom2));
+         manager.applyChanges(manager.addAxiom(ontology, axiomClass));
+         manager.applyChanges(manager.addAxiom(ontology, axiomClass2));
+         manager.applyChanges(manager.addAxiom(ontology, axiomClass3));
+         manager.applyChanges(manager.addAxiom(ontology, axiomClass4));
+         manager.applyChanges(manager.addAxiom(ontology, equivalentClassesAxiom1));
+         manager.applyChanges(manager.addAxiom(ontology, equivalentClassesAxiom2));
          testCase.setPreparationaxioms(manager.getOntology(IRI.create(base)));
-         manager.removeOntology(ont);
+         manager.removeOntology(ontology);
 
          /*Assertions*/
-         OWLOntology ont1 = null;
+         OWLOntology ontology1 = null;
          try {
-            ont1 = manager.createOntology(IRI.create(base));
+            ontology1 = manager.createOntology(IRI.create(base));
          } catch (OWLOntologyCreationException e) {
-            ont1 = null;
+            ontology1 = null;
          }
 
          OWLClass classOWLA1 = dataFactory.getOWLClass(IRI.create(classA1));
          OWLDeclarationAxiom axiomClass7 = dataFactory.getOWLDeclarationAxiom(classOWLA1);
          OWLSubClassOfAxiom subClassOfAxiom1 = dataFactory.getOWLSubClassOfAxiom(classOWLA1, dataFactory.getOWLObjectIntersectionOf(noClassOWLA, classOWLB));
-         manager.applyChanges(manager.addAxiom(ont1, axiomClass7));
-         manager.applyChanges(manager.addAxiom(ont1, subClassOfAxiom1));
+         manager.applyChanges(manager.addAxiom(ontology1, axiomClass7));
+         manager.applyChanges(manager.addAxiom(ontology1, subClassOfAxiom1));
 
          OWLOntology assertion1 = manager.getOntology(IRI.create(base));
-         manager.removeOntology(ont1);
+         manager.removeOntology(ontology1);
 
-         String expectedoutputassertion1 = "";
+         String expectedOutAssertion1 = "";
          if (type == "equivalence")
-            expectedoutputassertion1 = "unsatisfiable";
+            expectedOutAssertion1 = "unsatisfiable";
          else
-            expectedoutputassertion1 = "consistent";
+            expectedOutAssertion1 = "consistent";
 
-         OWLOntology ont2 = null;
+         OWLOntology ontology2 = null;
          try {
-            ont2 = manager.createOntology(IRI.create(base));
+            ontology2 = manager.createOntology(IRI.create(base));
          } catch (OWLOntologyCreationException e) {
-            ont2 = null;
+            ontology2 = null;
          }
 
          OWLSubClassOfAxiom subClassOfAxiom2 = dataFactory.getOWLSubClassOfAxiom(classOWLA1, dataFactory.getOWLObjectIntersectionOf(noClassOWLB, classOWLA));
-         manager.applyChanges(manager.addAxiom(ont2, axiomClass7));
-         manager.applyChanges(manager.addAxiom(ont2, subClassOfAxiom2));
+         manager.applyChanges(manager.addAxiom(ontology2, axiomClass7));
+         manager.applyChanges(manager.addAxiom(ontology2, subClassOfAxiom2));
 
          OWLOntology assertion2 = manager.getOntology(IRI.create(base));
-         manager.removeOntology(ont2);
+         manager.removeOntology(ontology2);
 
-         String expectedoutputassertion2 = "";
+         String expectedOutAssertion2 = "";
          if (type == "strict subclass" || type == "equivalence")
-            expectedoutputassertion2 = "unsatisfiable";
+            expectedOutAssertion2 = "unsatisfiable";
          else
-            expectedoutputassertion2 = "consistent";
+            expectedOutAssertion2 = "consistent";
 
-         OWLOntology ont3 = null;
+         OWLOntology ontology3 = null;
          try {
-            ont3 = manager.createOntology(IRI.create(base));
+            ontology3 = manager.createOntology(IRI.create(base));
          } catch (OWLOntologyCreationException e) {
-            ont3 = null;
+            ontology3 = null;
          }
 
          OWLSubClassOfAxiom subClassOfAxiom3 = dataFactory.getOWLSubClassOfAxiom(classOWLA1, dataFactory.getOWLObjectIntersectionOf(classOWLB, classOWLA));
-         manager.applyChanges(manager.addAxiom(ont3, axiomClass7));
-         manager.applyChanges(manager.addAxiom(ont3, subClassOfAxiom3));
+         manager.applyChanges(manager.addAxiom(ontology3, axiomClass7));
+         manager.applyChanges(manager.addAxiom(ontology3, subClassOfAxiom3));
 
          OWLOntology assertion3 = manager.getOntology(IRI.create(base));
-         manager.removeOntology(ont3);
+         manager.removeOntology(ontology3);
 
-         String expectedoutputassertion3 = "";
+         String expectedOutAssertion3 = "";
          if (type == "disjoint")
-            expectedoutputassertion3 = "unsatisfiable";
+            expectedOutAssertion3 = "unsatisfiable";
          else
-            expectedoutputassertion3 = "consistent";
+            expectedOutAssertion3 = "consistent";
 
 
-         hashinput.put("Assertion 1", assertion1);
-         hashinput.put("Assertion 2", assertion2);
-         hashinput.put("Assertion 3", assertion3);
+         hashInput.put("Assertion 1", assertion1);
+         hashInput.put("Assertion 2", assertion2);
+         hashInput.put("Assertion 3", assertion3);
 
-         hashoutput.put("Assertion 1",expectedoutputassertion1);
-         hashoutput.put("Assertion 2",expectedoutputassertion2);
-         hashoutput.put("Assertion 3",expectedoutputassertion3);
+         hashOutput.put("Assertion 1",expectedOutAssertion1);
+         hashOutput.put("Assertion 2",expectedOutAssertion2);
+         hashOutput.put("Assertion 3",expectedOutAssertion3);
 
          for (Map.Entry<String, String> entry : testCase.getAxiomExpectedResultAxioms().entrySet()) {
-            hashoutput.put(entry.getKey(), entry.getValue());
+            hashOutput.put(entry.getKey(), entry.getValue());
          }
 
          for (Map.Entry<String, OWLOntology> entry : testCase.getAssertionsAxioms().entrySet()) {
-            hashinput.put(entry.getKey(), entry.getValue());
+            hashInput.put(entry.getKey(), entry.getValue());
          }
       }else{
          OWLClass classOWLB = dataFactory.getOWLClass(IRI.create(classB));
          OWLClass noClassOWLB = dataFactory.getOWLClass(IRI.create(noClassB));
-         OWLDeclarationAxiom axiomClass = dataFactory.getOWLDeclarationAxiom(classOWLB);
-         OWLDeclarationAxiom axiomClass1 = dataFactory.getOWLDeclarationAxiom(noClassOWLB);
+         OWLDeclarationAxiom axiomClass1 = dataFactory.getOWLDeclarationAxiom(classOWLB);
+         OWLDeclarationAxiom axiomClass2 = dataFactory.getOWLDeclarationAxiom(noClassOWLB);
          OWLEquivalentClassesAxiom equivalentClassesAxiom2 = dataFactory.getOWLEquivalentClassesAxiom(noClassOWLB, dataFactory.getOWLObjectComplementOf(classOWLB));
 
-         manager.applyChanges(manager.addAxiom(ont, axiomClass));
-         manager.applyChanges(manager.addAxiom(ont, axiomClass1));
-         manager.applyChanges(manager.addAxiom(ont, equivalentClassesAxiom2));
+         manager.applyChanges(manager.addAxiom(ontology, axiomClass1));
+         manager.applyChanges(manager.addAxiom(ontology, axiomClass2));
+         manager.applyChanges(manager.addAxiom(ontology, equivalentClassesAxiom2));
          testCase.setPreparationaxioms(manager.getOntology(IRI.create(base)));
-         manager.removeOntology(ont);
+         manager.removeOntology(ontology);
 
-         OWLOntology ont1 = null;
+         OWLOntology ontology1 = null;
          try {
-            ont1 = manager.createOntology(IRI.create(base));
+            ontology1 = manager.createOntology(IRI.create(base));
          } catch (OWLOntologyCreationException e) {
-            ont1 = null;
+            ontology1 = null;
          }
 
          OWLClass classOWLA1 = dataFactory.getOWLClass(IRI.create(classA1));
-         OWLDeclarationAxiom axiomClass2 = dataFactory.getOWLDeclarationAxiom(classOWLA1);
+         OWLDeclarationAxiom axiomClass3 = dataFactory.getOWLDeclarationAxiom(classOWLA1);
          OWLSubClassOfAxiom subClassOfAxiom1 = dataFactory.getOWLSubClassOfAxiom(classOWLA1, classOWLB);
-         manager.applyChanges(manager.addAxiom(ont1, axiomClass2));
-         manager.applyChanges(manager.addAxiom(ont1, subClassOfAxiom1));
+         manager.applyChanges(manager.addAxiom(ontology1, axiomClass3));
+         manager.applyChanges(manager.addAxiom(ontology1, subClassOfAxiom1));
 
          OWLOntology assertion1 = manager.getOntology(IRI.create(base));
-         manager.removeOntology(ont1);
+         manager.removeOntology(ontology1);
 
-         String expectedoutputassertion1 = "consistent";
-         OWLOntology ont2 = null;
+         String expectedOutAssertion1 = "consistent";
+         OWLOntology ontology2 = null;
          try {
-            ont2 = manager.createOntology(IRI.create(base));
+            ontology2 = manager.createOntology(IRI.create(base));
          } catch (OWLOntologyCreationException e) {
-            ont2 = null;
+            ontology2 = null;
          }
 
          OWLSubClassOfAxiom subClassOfAxiom2 = dataFactory.getOWLSubClassOfAxiom(classOWLA1, noClassOWLB);
-         manager.applyChanges(manager.addAxiom(ont2, axiomClass2));
-         manager.applyChanges(manager.addAxiom(ont2, subClassOfAxiom2));
+         manager.applyChanges(manager.addAxiom(ontology2, axiomClass3));
+         manager.applyChanges(manager.addAxiom(ontology2, subClassOfAxiom2));
 
          OWLOntology assertion2 = manager.getOntology(IRI.create(base));
-         manager.removeOntology(ont2);
+         manager.removeOntology(ontology2);
 
-         String  expectedoutputassertion2 = "unsatisfiable";
+         String  expectedOutAssertion2 = "unsatisfiable";
 
-         hashinput.put("Assertion 1", assertion1);
-         hashinput.put("Assertion 2", assertion2);
+         hashInput.put("Assertion 1", assertion1);
+         hashInput.put("Assertion 2", assertion2);
 
-         hashoutput.put("Assertion 1",expectedoutputassertion1);
-         hashoutput.put("Assertion 2",expectedoutputassertion2);
+         hashOutput.put("Assertion 1",expectedOutAssertion1);
+         hashOutput.put("Assertion 2",expectedOutAssertion2);
 
          for (Map.Entry<String, String> entry : testCase.getAxiomExpectedResultAxioms().entrySet()) {
-            hashoutput.put(entry.getKey(), entry.getValue());
+            hashOutput.put(entry.getKey(), entry.getValue());
          }
 
          for (Map.Entry<String, OWLOntology> entry : testCase.getAssertionsAxioms().entrySet()) {
-            hashinput.put(entry.getKey(), entry.getValue());
+            hashInput.put(entry.getKey(), entry.getValue());
          }
       }
 
-      testCase.setAxiomExpectedResultAxioms(hashoutput);
-      testCase.setAssertionsAxioms(hashinput);
+      testCase.setAxiomExpectedResultAxioms(hashOutput);
+      testCase.setAssertionsAxioms(hashInput);
       return testCase;
    }
 
@@ -1356,126 +1359,125 @@ public class Implementations {
 
       /*Generation of classes*/
       m.find();
-      String classA = m.group(1).toString().replaceAll("\\(","").replaceAll("\\)","").replaceAll("  "," ");;
+      String classA = m.group(1).replaceAll("\\(","").replaceAll("\\)","").replaceAll("  "," ");;
       String classA1 = classA+"1";
-      String R = m.group(2).toString().replaceAll("  ","");
+      String R = m.group(2).replaceAll("  ","");
 
-      String classB = "";
-      classB = m.group(3).toString().replaceAll("\\(","").replaceAll("\\)","").replaceAll("  "," ");
+      String classB = m.group(3).replaceAll("\\(","").replaceAll("\\)","").replaceAll("  "," ");
       String noClassB =  "No"+classB.split("(#|\\/)")[classB.split("(#|\\/)").length-1];
 
       /*Preconditions*/
-      ArrayList<String> precond = new ArrayList<>();
-      precond.add("Class(<"+classA+">)");
-      precond.add("Property(<"+R+">)");
-      precond.add("Class(<"+classB+">)");
-      testCase.getPrecondition().addAll(precond);
+      ArrayList<String> precondition = new ArrayList<>();
+      precondition.add("Class(<"+classA+">)");
+      precondition.add("Property(<"+R+">)");
+      precondition.add("Class(<"+classB+">)");
+      testCase.getPrecondition().addAll(precondition);
 
-      String ind1= "individua001";
-      String ind2 = "individua002";
-      String ind3 = "individua003";
+      String individual001= "individual001";
+      String individual002 = "individual002";
+      String individual003 = "individual003";
 
 
       /*Axioms to be added*/
       /*Preparation*/
       String base = "";
       OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
-      OWLOntology ont = null;
+      OWLOntology ontology = null;
       try {
-         ont = manager.createOntology(IRI.create(base));
+         ontology = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont = null;
+         ontology = null;
       }
       OWLDataFactory dataFactory = manager.getOWLDataFactory();
 
       OWLClass classOWLB = dataFactory.getOWLClass(IRI.create(classB));
       OWLClass noClassOWLB = dataFactory.getOWLClass(IRI.create(noClassB));
-      OWLDeclarationAxiom axiomClass = dataFactory.getOWLDeclarationAxiom(classOWLB);
-      OWLDeclarationAxiom axiomClass1 = dataFactory.getOWLDeclarationAxiom(noClassOWLB);
+      OWLDeclarationAxiom axiomClass1 = dataFactory.getOWLDeclarationAxiom(classOWLB);
+      OWLDeclarationAxiom axiomClass2 = dataFactory.getOWLDeclarationAxiom(noClassOWLB);
       OWLEquivalentClassesAxiom equivalentClassesAxiom = dataFactory.getOWLEquivalentClassesAxiom(noClassOWLB, dataFactory.getOWLObjectComplementOf(classOWLB));
       OWLClass classOWLA = dataFactory.getOWLClass(IRI.create(classA));
       OWLClass classOWLA1 = dataFactory.getOWLClass(IRI.create(classA1));
-      OWLDeclarationAxiom axiomclassA1 = dataFactory.getOWLDeclarationAxiom(classOWLA1);
-      OWLNamedIndividual indOWLA1 = dataFactory.getOWLNamedIndividual(IRI.create(ind1));
-      OWLDeclarationAxiom axiomInd1 = dataFactory.getOWLDeclarationAxiom(indOWLA1);
-      OWLClassAssertionAxiom classAssertionAxiom = dataFactory.getOWLClassAssertionAxiom(classOWLA1, indOWLA1);
-      OWLNamedIndividual indOWLnoB = dataFactory.getOWLNamedIndividual(IRI.create(ind2));
-      OWLDeclarationAxiom axiomInd2 = dataFactory.getOWLDeclarationAxiom(indOWLnoB);
+      OWLDeclarationAxiom axiomClassA1 = dataFactory.getOWLDeclarationAxiom(classOWLA1);
+      OWLNamedIndividual indOWLA1 = dataFactory.getOWLNamedIndividual(IRI.create(individual001));
+      OWLDeclarationAxiom axiomIndividual1 = dataFactory.getOWLDeclarationAxiom(indOWLA1);
+      OWLClassAssertionAxiom classAssertionAxiom1 = dataFactory.getOWLClassAssertionAxiom(classOWLA1, indOWLA1);
+      OWLNamedIndividual indOWLnoB = dataFactory.getOWLNamedIndividual(IRI.create(individual002));
+      OWLDeclarationAxiom axiomIndividual2 = dataFactory.getOWLDeclarationAxiom(indOWLnoB);
       OWLClassAssertionAxiom classAssertionAxiom2 = dataFactory.getOWLClassAssertionAxiom(noClassOWLB, indOWLnoB);
-      manager.applyChanges(manager.addAxiom(ont, axiomClass));
-      manager.applyChanges(manager.addAxiom(ont, axiomClass1));
-      manager.applyChanges(manager.addAxiom(ont, equivalentClassesAxiom));
-      manager.applyChanges(manager.addAxiom(ont, axiomInd1));
-      manager.applyChanges(manager.addAxiom(ont, axiomclassA1));
-      manager.applyChanges(manager.addAxiom(ont, classAssertionAxiom));
-      manager.applyChanges(manager.addAxiom(ont, axiomInd2));
-      manager.applyChanges(manager.addAxiom(ont, classAssertionAxiom2));
+      manager.applyChanges(manager.addAxiom(ontology, axiomClass1));
+      manager.applyChanges(manager.addAxiom(ontology, axiomClass2));
+      manager.applyChanges(manager.addAxiom(ontology, equivalentClassesAxiom));
+      manager.applyChanges(manager.addAxiom(ontology, axiomIndividual1));
+      manager.applyChanges(manager.addAxiom(ontology, axiomClassA1));
+      manager.applyChanges(manager.addAxiom(ontology, classAssertionAxiom1));
+      manager.applyChanges(manager.addAxiom(ontology, axiomIndividual2));
+      manager.applyChanges(manager.addAxiom(ontology, classAssertionAxiom2));
       testCase.setPreparationaxioms(manager.getOntology(IRI.create(base)));
-      manager.removeOntology(ont);
+      manager.removeOntology(ontology);
 
       /*Assertions*/
-      OWLOntology ont1 = null;
+      OWLOntology ontology1 = null;
       try {
-         ont1 = manager.createOntology(IRI.create(base));
+         ontology1 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont1 = null;
+         ontology1 = null;
       }
-      OWLSubClassOfAxiom axiomsubclass1= dataFactory.getOWLSubClassOfAxiom(classOWLA1, classOWLA);
+      OWLSubClassOfAxiom axiomSubclass1= dataFactory.getOWLSubClassOfAxiom(classOWLA1, classOWLA);
       OWLObjectProperty prop = dataFactory.getOWLObjectProperty(IRI.create(R));
-      OWLSubClassOfAxiom axiomsubclass2 = dataFactory.getOWLSubClassOfAxiom( classOWLA1, dataFactory.getOWLObjectAllValuesFrom(prop,dataFactory.getOWLObjectOneOf(indOWLnoB)));
-      OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiom = dataFactory.getOWLObjectPropertyAssertionAxiom(prop, indOWLA1, indOWLnoB);
-      manager.applyChanges(manager.addAxiom(ont1, axiomsubclass1));
-      manager.applyChanges(manager.addAxiom(ont1, axiomsubclass2));
-      manager.applyChanges(manager.addAxiom(ont1, objectPropertyAssertionAxiom));
+      OWLSubClassOfAxiom axiomSubclass2 = dataFactory.getOWLSubClassOfAxiom( classOWLA1, dataFactory.getOWLObjectAllValuesFrom(prop,dataFactory.getOWLObjectOneOf(indOWLnoB)));
+      OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiom1 = dataFactory.getOWLObjectPropertyAssertionAxiom(prop, indOWLA1, indOWLnoB);
+      manager.applyChanges(manager.addAxiom(ontology1, axiomSubclass1));
+      manager.applyChanges(manager.addAxiom(ontology1, axiomSubclass2));
+      manager.applyChanges(manager.addAxiom(ontology1, objectPropertyAssertionAxiom1));
       OWLOntology assertion1 = manager.getOntology(IRI.create(base));
-      String expectedoutputassertion1 = "inconsistent";
-      manager.removeOntology(ont1);
+      String expectedOutAssertion1 = "inconsistent";
+      manager.removeOntology(ontology1);
 
-      OWLOntology ont2 = null;
+      OWLOntology ontology2 = null;
       try {
-         ont2 = manager.createOntology(IRI.create(base));
+         ontology2 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont2 = null;
+         ontology2 = null;
       }
-      OWLNamedIndividual indOWL3 = dataFactory.getOWLNamedIndividual(IRI.create(ind3));
-      OWLDeclarationAxiom axiomInd3 = dataFactory.getOWLDeclarationAxiom(indOWL3);
-      OWLSubClassOfAxiom axiomsubclass3 = dataFactory.getOWLSubClassOfAxiom( classOWLA1, dataFactory.getOWLObjectAllValuesFrom(prop,dataFactory.getOWLObjectOneOf(indOWLnoB, indOWL3)));
+      OWLNamedIndividual indOWL3 = dataFactory.getOWLNamedIndividual(IRI.create(individual003));
+      OWLDeclarationAxiom axiomIndividual3 = dataFactory.getOWLDeclarationAxiom(indOWL3);
+      OWLSubClassOfAxiom axiomSubclass3 = dataFactory.getOWLSubClassOfAxiom( classOWLA1, dataFactory.getOWLObjectAllValuesFrom(prop,dataFactory.getOWLObjectOneOf(indOWLnoB, indOWL3)));
       OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiom2 = dataFactory.getOWLObjectPropertyAssertionAxiom(prop, indOWLA1, indOWLnoB);
       OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiom3 = dataFactory.getOWLObjectPropertyAssertionAxiom(prop, indOWLA1, indOWL3);
       OWLClassAssertionAxiom classAssertionAxiom3 = dataFactory.getOWLClassAssertionAxiom(classOWLB, indOWL3);
 
-      manager.applyChanges(manager.addAxiom(ont2, axiomInd3));
-      manager.applyChanges(manager.addAxiom(ont2, axiomsubclass1));
-      manager.applyChanges(manager.addAxiom(ont2, axiomsubclass3));
-      manager.applyChanges(manager.addAxiom(ont2, classAssertionAxiom));
-      manager.applyChanges(manager.addAxiom(ont2, objectPropertyAssertionAxiom2));
-      manager.applyChanges(manager.addAxiom(ont2, classAssertionAxiom2));
-      manager.applyChanges(manager.addAxiom(ont2, classAssertionAxiom3));
-      manager.applyChanges(manager.addAxiom(ont2, objectPropertyAssertionAxiom3));
+      manager.applyChanges(manager.addAxiom(ontology2, axiomIndividual3));
+      manager.applyChanges(manager.addAxiom(ontology2, axiomSubclass1));
+      manager.applyChanges(manager.addAxiom(ontology2, axiomSubclass3));
+      manager.applyChanges(manager.addAxiom(ontology2, classAssertionAxiom1));
+      manager.applyChanges(manager.addAxiom(ontology2, objectPropertyAssertionAxiom2));
+      manager.applyChanges(manager.addAxiom(ontology2, classAssertionAxiom2));
+      manager.applyChanges(manager.addAxiom(ontology2, classAssertionAxiom3));
+      manager.applyChanges(manager.addAxiom(ontology2, objectPropertyAssertionAxiom3));
       OWLOntology assertion2 = manager.getOntology(IRI.create(base));
 
-      manager.removeOntology(ont2);
+      manager.removeOntology(ontology2);
 
-      String expectedoutputassertion2 = "consistent";
+      String expectedOutAssertion2 = "consistent";
 
-      LinkedHashMap<String, OWLOntology> hashinput = new LinkedHashMap();
-      hashinput.put("Assertion 1", assertion1);
-      hashinput.put("Assertion 2", assertion2);
+      LinkedHashMap<String, OWLOntology> hashInput = new LinkedHashMap();
+      hashInput.put("Assertion 1", assertion1);
+      hashInput.put("Assertion 2", assertion2);
 
-      LinkedHashMap<String, String> hashoutput = new LinkedHashMap();
-      hashoutput.put("Assertion 1",expectedoutputassertion1);
-      hashoutput.put("Assertion 2",expectedoutputassertion2);
+      LinkedHashMap<String, String> hashOutput = new LinkedHashMap();
+      hashOutput.put("Assertion 1",expectedOutAssertion1);
+      hashOutput.put("Assertion 2",expectedOutAssertion2);
 
       for (Map.Entry<String, String> entry : testCase.getAxiomExpectedResultAxioms().entrySet()) {
-         hashoutput.put(entry.getKey(), entry.getValue());
+         hashOutput.put(entry.getKey(), entry.getValue());
       }
 
-      testCase.setAxiomExpectedResultAxioms(hashoutput);
+      testCase.setAxiomExpectedResultAxioms(hashOutput);
 
       for (Map.Entry<String, OWLOntology> entry : testCase.getAssertionsAxioms().entrySet()) {
-         hashinput.put(entry.getKey(), entry.getValue());
+         hashInput.put(entry.getKey(), entry.getValue());
       }
-      testCase.setAssertionsAxioms(hashinput);
+      testCase.setAssertionsAxioms(hashInput);
       testCase.setType("existential");
       return testCase;
    }
@@ -1488,127 +1490,127 @@ public class Implementations {
 
       /*Generation of classes*/
       m.find();
-      String classA = m.group(1).toString().replaceAll("\\(","").replaceAll("\\)","").replaceAll("  "," ");;
+      String classA = m.group(1).replaceAll("\\(","").replaceAll("\\)","").replaceAll("  "," ");;
       String classA1 = classA+"1";
-      String R = m.group(2).toString().replaceAll("  ","");
+      String R = m.group(2).replaceAll("  ","");
 
       String classB = "";
-      classB = m.group(3).toString().replaceAll("\\(","").replaceAll("\\)","").replaceAll("  "," ");
+      classB = m.group(3).replaceAll("\\(","").replaceAll("\\)","").replaceAll("  "," ");
       String noClassB =  "No"+classB.split("(#|\\/)")[classB.split("(#|\\/)").length-1];
 
       /*Preconditions*/
-      ArrayList<String> precond = new ArrayList<>();
-      precond.add("Class(<"+classA+">)");
-      precond.add("Property(<"+R+">)");
-      precond.add("Class(<"+classB+">)");
-      testCase.getPrecondition().addAll(precond);
+      ArrayList<String> precondition = new ArrayList<>();
+      precondition.add("Class(<"+classA+">)");
+      precondition.add("Property(<"+R+">)");
+      precondition.add("Class(<"+classB+">)");
+      testCase.getPrecondition().addAll(precondition);
 
-      String ind1= "individua001";
-      String ind2 = "individua002";
-      String ind3 = "individua003";
+      String individual001= "individual001";
+      String individual002 = "individual002";
+      String individual003 = "individual003";
 
       /*Axioms to be added*/
       /*Preparation*/
       String base = "";
       OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
-      OWLOntology ont = null;
+      OWLOntology ontology = null;
       try {
-         ont = manager.createOntology(IRI.create(base));
+         ontology = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont = null;
+         ontology = null;
       }
       OWLDataFactory dataFactory = manager.getOWLDataFactory();
       OWLClass classOWLB = dataFactory.getOWLClass(IRI.create(classB));
       OWLClass noClassOWLB = dataFactory.getOWLClass(IRI.create(noClassB));
-      OWLDeclarationAxiom axiomClass = dataFactory.getOWLDeclarationAxiom(classOWLB);
-      OWLDeclarationAxiom axiomClass1 = dataFactory.getOWLDeclarationAxiom(noClassOWLB);
+      OWLDeclarationAxiom axiomClass1 = dataFactory.getOWLDeclarationAxiom(classOWLB);
+      OWLDeclarationAxiom axiomClass2 = dataFactory.getOWLDeclarationAxiom(noClassOWLB);
       OWLEquivalentClassesAxiom equivalentClassesAxiom = dataFactory.getOWLEquivalentClassesAxiom(noClassOWLB, dataFactory.getOWLObjectComplementOf(classOWLB));
       OWLClass classOWLA = dataFactory.getOWLClass(IRI.create(classA));
       OWLClass classOWLA1 = dataFactory.getOWLClass(IRI.create(classA1));
-      OWLDeclarationAxiom axiomclassA1 = dataFactory.getOWLDeclarationAxiom(classOWLA1);
-      OWLNamedIndividual indOWLA1 = dataFactory.getOWLNamedIndividual(IRI.create(ind1));
-      OWLDeclarationAxiom axiomInd1 = dataFactory.getOWLDeclarationAxiom(indOWLA1);
-      OWLClassAssertionAxiom classAssertionAxiom = dataFactory.getOWLClassAssertionAxiom(classOWLA1, indOWLA1);
-      OWLNamedIndividual indOWLB = dataFactory.getOWLNamedIndividual(IRI.create(ind2));
-      OWLDeclarationAxiom axiomInd2 = dataFactory.getOWLDeclarationAxiom(indOWLB);
+      OWLDeclarationAxiom axiomClassA1 = dataFactory.getOWLDeclarationAxiom(classOWLA1);
+      OWLNamedIndividual indOWLA1 = dataFactory.getOWLNamedIndividual(IRI.create(individual001));
+      OWLDeclarationAxiom axiomIndividual1 = dataFactory.getOWLDeclarationAxiom(indOWLA1);
+      OWLClassAssertionAxiom classAssertionAxiom1 = dataFactory.getOWLClassAssertionAxiom(classOWLA1, indOWLA1);
+      OWLNamedIndividual indOWLB = dataFactory.getOWLNamedIndividual(IRI.create(individual002));
+      OWLDeclarationAxiom axiomIndividual2 = dataFactory.getOWLDeclarationAxiom(indOWLB);
       OWLClassAssertionAxiom classAssertionAxiom2 = dataFactory.getOWLClassAssertionAxiom(noClassOWLB, indOWLB);
-      manager.applyChanges(manager.addAxiom(ont, axiomClass));
-      manager.applyChanges(manager.addAxiom(ont, axiomClass1));
-      manager.applyChanges(manager.addAxiom(ont, equivalentClassesAxiom));
-      manager.applyChanges(manager.addAxiom(ont, axiomInd1));
-      manager.applyChanges(manager.addAxiom(ont, axiomclassA1));
-      manager.applyChanges(manager.addAxiom(ont, classAssertionAxiom));
-      manager.applyChanges(manager.addAxiom(ont, axiomInd2));
-      manager.applyChanges(manager.addAxiom(ont, classAssertionAxiom2));
+
+      manager.applyChanges(manager.addAxiom(ontology, axiomClass1));
+      manager.applyChanges(manager.addAxiom(ontology, axiomClass2));
+      manager.applyChanges(manager.addAxiom(ontology, equivalentClassesAxiom));
+      manager.applyChanges(manager.addAxiom(ontology, axiomIndividual1));
+      manager.applyChanges(manager.addAxiom(ontology, axiomClassA1));
+      manager.applyChanges(manager.addAxiom(ontology, classAssertionAxiom1));
+      manager.applyChanges(manager.addAxiom(ontology, axiomIndividual2));
+      manager.applyChanges(manager.addAxiom(ontology, classAssertionAxiom2));
       testCase.setPreparationaxioms(manager.getOntology(IRI.create(base)));
-      manager.removeOntology(ont);
+      manager.removeOntology(ontology);
       /*Assertions */
-      OWLOntology ont1 = null;
+      OWLOntology ontology1 = null;
       try {
-         ont1 = manager.createOntology(IRI.create(base));
+         ontology1 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont1 = null;
+         ontology1 = null;
       }
-      OWLSubClassOfAxiom axiomsubclass1= dataFactory.getOWLSubClassOfAxiom(classOWLA1, classOWLA);
+      OWLSubClassOfAxiom axiomSubclass1= dataFactory.getOWLSubClassOfAxiom(classOWLA1, classOWLA);
       OWLObjectProperty prop = dataFactory.getOWLObjectProperty(IRI.create(R));
-      OWLSubClassOfAxiom axiomsubclass2 = dataFactory.getOWLSubClassOfAxiom( classOWLA1, dataFactory.getOWLObjectSomeValuesFrom(prop,dataFactory.getOWLObjectOneOf(indOWLB)));
-      OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiom = dataFactory.getOWLObjectPropertyAssertionAxiom(prop, indOWLA1, indOWLB);
+      OWLSubClassOfAxiom axiomSubclass2 = dataFactory.getOWLSubClassOfAxiom( classOWLA1, dataFactory.getOWLObjectSomeValuesFrom(prop,dataFactory.getOWLObjectOneOf(indOWLB)));
+      OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiom1 = dataFactory.getOWLObjectPropertyAssertionAxiom(prop, indOWLA1, indOWLB);
 
-      manager.applyChanges(manager.addAxiom(ont1, axiomsubclass1));
-      manager.applyChanges(manager.addAxiom(ont1, axiomsubclass2));
-      manager.applyChanges(manager.addAxiom(ont1, classAssertionAxiom));
-      manager.applyChanges(manager.addAxiom(ont1, objectPropertyAssertionAxiom));
+      manager.applyChanges(manager.addAxiom(ontology1, axiomSubclass1));
+      manager.applyChanges(manager.addAxiom(ontology1, axiomSubclass2));
+      manager.applyChanges(manager.addAxiom(ontology1, classAssertionAxiom1));
+      manager.applyChanges(manager.addAxiom(ontology1, objectPropertyAssertionAxiom1));
       OWLOntology assertion1 = manager.getOntology(IRI.create(base));
-      String expectedoutputassertion1 = "inconsistent";
+      String expectedOutAssertion1 = "inconsistent";
 
-      manager.removeOntology(ont1);
+      manager.removeOntology(ontology1);
 
-      OWLOntology ont2 = null;
+      OWLOntology ontology2 = null;
       try {
-         ont2 = manager.createOntology(IRI.create(base));
+         ontology2 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont2 = null;
+         ontology2 = null;
       }
-      OWLNamedIndividual indOWL3 = dataFactory.getOWLNamedIndividual(IRI.create(ind3));
-      OWLDeclarationAxiom axiomInd3 = dataFactory.getOWLDeclarationAxiom(indOWL3);
-      OWLClassAssertionAxiom owlClassAssertionAxiom = dataFactory.getOWLClassAssertionAxiom(noClassOWLB, indOWL3);
-      OWLSubClassOfAxiom axiomsubclass3 = dataFactory.getOWLSubClassOfAxiom( classOWLA1, dataFactory.getOWLObjectAllValuesFrom(prop,dataFactory.getOWLObjectOneOf(indOWLB, indOWL3)));
+      OWLNamedIndividual indOWL3 = dataFactory.getOWLNamedIndividual(IRI.create(individual003));
+      OWLDeclarationAxiom axiomIndividual3 = dataFactory.getOWLDeclarationAxiom(indOWL3);
+      OWLClassAssertionAxiom owlClassAssertionAxiom1 = dataFactory.getOWLClassAssertionAxiom(noClassOWLB, indOWL3);
+      OWLSubClassOfAxiom axiomSubclass3 = dataFactory.getOWLSubClassOfAxiom( classOWLA1, dataFactory.getOWLObjectAllValuesFrom(prop,dataFactory.getOWLObjectOneOf(indOWLB, indOWL3)));
       OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiom2 = dataFactory.getOWLObjectPropertyAssertionAxiom(prop, indOWLA1, indOWLB);
       OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiom3 = dataFactory.getOWLObjectPropertyAssertionAxiom(prop, indOWLA1, indOWL3);
 
-
-      manager.applyChanges(manager.addAxiom(ont2, axiomInd3));
-      manager.applyChanges(manager.addAxiom(ont2, owlClassAssertionAxiom));
-      manager.applyChanges(manager.addAxiom(ont2, axiomsubclass1));
-      manager.applyChanges(manager.addAxiom(ont2, axiomsubclass3));
-      manager.applyChanges(manager.addAxiom(ont2, classAssertionAxiom));
-      manager.applyChanges(manager.addAxiom(ont2, objectPropertyAssertionAxiom2));
-      manager.applyChanges(manager.addAxiom(ont2, classAssertionAxiom2));
-      manager.applyChanges(manager.addAxiom(ont2, objectPropertyAssertionAxiom3));
+      manager.applyChanges(manager.addAxiom(ontology2, axiomIndividual3));
+      manager.applyChanges(manager.addAxiom(ontology2, owlClassAssertionAxiom1));
+      manager.applyChanges(manager.addAxiom(ontology2, axiomSubclass1));
+      manager.applyChanges(manager.addAxiom(ontology2, axiomSubclass3));
+      manager.applyChanges(manager.addAxiom(ontology2, classAssertionAxiom1));
+      manager.applyChanges(manager.addAxiom(ontology2, objectPropertyAssertionAxiom2));
+      manager.applyChanges(manager.addAxiom(ontology2, classAssertionAxiom2));
+      manager.applyChanges(manager.addAxiom(ontology2, objectPropertyAssertionAxiom3));
       OWLOntology assertion2 = manager.getOntology(IRI.create(base));
-      manager.removeOntology(ont2);
-      String expectedoutputassertion2 = "inconsistent";
+      manager.removeOntology(ontology2);
+      String expectedOutAssertion2 = "inconsistent";
 
 
-      LinkedHashMap<String, OWLOntology> hashinput = new LinkedHashMap();
-      hashinput.put("Assertion 1", assertion1);
-      hashinput.put("Assertion 2", assertion2);
+      LinkedHashMap<String, OWLOntology> hashInput = new LinkedHashMap();
+      hashInput.put("Assertion 1", assertion1);
+      hashInput.put("Assertion 2", assertion2);
 
-      LinkedHashMap<String, String> hashoutput = new LinkedHashMap();
-      hashoutput.put("Assertion 1",expectedoutputassertion1);
-      hashoutput.put("Assertion 2",expectedoutputassertion2);
+      LinkedHashMap<String, String> hashOutput = new LinkedHashMap();
+      hashOutput.put("Assertion 1",expectedOutAssertion1);
+      hashOutput.put("Assertion 2",expectedOutAssertion2);
 
 
       for (Map.Entry<String, String> entry : testCase.getAxiomExpectedResultAxioms().entrySet()) {
-         hashoutput.put(entry.getKey(), entry.getValue());
+         hashOutput.put(entry.getKey(), entry.getValue());
       }
 
-      testCase.setAxiomExpectedResultAxioms(hashoutput);
+      testCase.setAxiomExpectedResultAxioms(hashOutput);
 
       for (Map.Entry<String, OWLOntology> entry : testCase.getAssertionsAxioms().entrySet()) {
-         hashinput.put(entry.getKey(), entry.getValue());
+         hashInput.put(entry.getKey(), entry.getValue());
       }
-      testCase.setAssertionsAxioms(hashinput);
+      testCase.setAssertionsAxioms(hashInput);
       return testCase;
    }
 
@@ -1619,59 +1621,60 @@ public class Implementations {
 
       /*Generation of classes*/
       m.find();
-      String classA = m.group(1).toString().replaceAll("\\(","").replaceAll("\\)","");;
+      String classA = m.group(1).replaceAll("\\(","").replaceAll("\\)","");;
       String classA1 = classA+"1";
-      String R = m.group(2).toString();
+      String R = m.group(2);
       String datatype = "";
-      datatype = m.group(3).toString().replaceAll("\\(","").replaceAll("\\)","");;
+      datatype = m.group(3).replaceAll("\\(","").replaceAll("\\)","");;
       String nodatatype =  "No"+datatype.split("(#|\\/)")[datatype.split("(#|\\/)").length-1];
 
       /*Preconditions*/
-      ArrayList<String> precond = new ArrayList<>();
-      precond.add("Class(<"+classA+">)");
-      precond.add("Property(<"+R+">)");
-      testCase.getPrecondition().addAll(precond);
+      ArrayList<String> precondition = new ArrayList<>();
+      precondition.add("Class(<"+classA+">)");
+      precondition.add("Property(<"+R+">)");
+      testCase.getPrecondition().addAll(precondition);
 
       /*Preparation*/
       /*Axioms to be added*/
       String base = "";
       OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
       OWLDataFactory dataFactory = manager.getOWLDataFactory();
-      OWLOntology ont = null;
+      OWLOntology ontology = null;
       try {
-         ont = manager.createOntology(IRI.create(base));
+         ontology = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont = null;
+         ontology = null;
       }
 
       OWLClass classOWLA = dataFactory.getOWLClass(IRI.create(classA));
       OWLClass classOWLA1 = dataFactory.getOWLClass(IRI.create(classA1));
-      OWLDeclarationAxiom axiomclass1 = dataFactory.getOWLDeclarationAxiom(classOWLA);
-      OWLDeclarationAxiom axiomclass2 = dataFactory.getOWLDeclarationAxiom(classOWLA1);
+      OWLDeclarationAxiom axiomClass1 = dataFactory.getOWLDeclarationAxiom(classOWLA);
+      OWLDeclarationAxiom axiomClass2 = dataFactory.getOWLDeclarationAxiom(classOWLA1);
       OWLSubClassOfAxiom subClassOfAxiomAA1 = dataFactory.getOWLSubClassOfAxiom(classOWLA1, classOWLA);
       OWLDataProperty datatypeOWLA = dataFactory.getOWLDataProperty(IRI.create(datatype));
-      OWLDataProperty nodatatypeOWLA = dataFactory.getOWLDataProperty(IRI.create(nodatatype));
-      OWLDeclarationAxiom axiomDatatype = dataFactory.getOWLDeclarationAxiom(datatypeOWLA);
-      OWLDeclarationAxiom axiomDatatype2 = dataFactory.getOWLDeclarationAxiom(nodatatypeOWLA);
+      OWLDataProperty noDatatypeOWLA = dataFactory.getOWLDataProperty(IRI.create(nodatatype));
+      OWLDeclarationAxiom axiomDatatype1 = dataFactory.getOWLDeclarationAxiom(datatypeOWLA);
+      OWLDeclarationAxiom axiomDatatype2 = dataFactory.getOWLDeclarationAxiom(noDatatypeOWLA);
       OWLNamedIndividual indOWL1 = dataFactory.getOWLNamedIndividual(IRI.create("individual1"));
       OWLClassAssertionAxiom assertionAxiom = dataFactory.getOWLClassAssertionAxiom(classOWLA1, indOWL1);
-      manager.applyChanges(manager.addAxiom(ont, axiomclass1));
-      manager.applyChanges(manager.addAxiom(ont, axiomclass2));
-      manager.applyChanges(manager.addAxiom(ont, subClassOfAxiomAA1));
-      manager.applyChanges(manager.addAxiom(ont, axiomDatatype));
-      manager.applyChanges(manager.addAxiom(ont, axiomDatatype2));
-      manager.applyChanges(manager.addAxiom(ont, subClassOfAxiomAA1));
-      manager.applyChanges(manager.addAxiom(ont, dataFactory.getOWLDeclarationAxiom(indOWL1)));
-      manager.applyChanges(manager.addAxiom(ont, assertionAxiom));
+
+      manager.applyChanges(manager.addAxiom(ontology, axiomClass1));
+      manager.applyChanges(manager.addAxiom(ontology, axiomClass2));
+      manager.applyChanges(manager.addAxiom(ontology, subClassOfAxiomAA1));
+      manager.applyChanges(manager.addAxiom(ontology, axiomDatatype1));
+      manager.applyChanges(manager.addAxiom(ontology, axiomDatatype2));
+      manager.applyChanges(manager.addAxiom(ontology, subClassOfAxiomAA1));
+      manager.applyChanges(manager.addAxiom(ontology, dataFactory.getOWLDeclarationAxiom(indOWL1)));
+      manager.applyChanges(manager.addAxiom(ontology, assertionAxiom));
       testCase.setPreparationaxioms(manager.getOntology(IRI.create(base)));
-      manager.removeOntology(ont);
+      manager.removeOntology(ontology);
 
       /*Axioms to be added*/
-      OWLOntology ont1 = null;
+      OWLOntology ontology1 = null;
       try {
-         ont1 = manager.createOntology(IRI.create(base));
+         ontology1 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont1 = null;
+         ontology1 = null;
       }
       OWLDataProperty prop = dataFactory.getOWLDataProperty(IRI.create(R));
       OWLSubClassOfAxiom subClassOfAxiom = null;
@@ -1684,21 +1687,21 @@ public class Implementations {
          subClassOfAxiom = dataFactory.getOWLSubClassOfAxiom(classOWLA1, dataFactory.getOWLDataAllValuesFrom(prop, OWL2Datatype.XSD_STRING.getDatatype(dataFactory)));
       }
 
-      manager.applyChanges(manager.addAxiom(ont1, subClassOfAxiom));
+      manager.applyChanges(manager.addAxiom(ontology1, subClassOfAxiom));
       OWLOntology assertion1 = manager.getOntology(IRI.create(base));
-      String expectedoutputassertion1 = "inconsistent";
+      String expectedOutAssertion1 = "inconsistent";
 
-      manager.removeOntology(ont1);
+      manager.removeOntology(ontology1);
 
-      OWLOntology ont2 = null;
+      OWLOntology ontology2 = null;
       try {
-         ont2 = manager.createOntology(IRI.create(base));
+         ontology2 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont2 = null;
+         ontology2 = null;
       }
 
-      OWLNamedIndividual indOWL5 = dataFactory.getOWLNamedIndividual(IRI.create("ind5"));
-      OWLDeclarationAxiom axiomIndClassA = dataFactory.getOWLDeclarationAxiom(indOWL5);
+      OWLNamedIndividual indOWL5 = dataFactory.getOWLNamedIndividual(IRI.create("individual5"));
+      OWLDeclarationAxiom axiomIndividualClassA = dataFactory.getOWLDeclarationAxiom(indOWL5);
       OWLClassAssertionAxiom indAClassAAssertionAxiom = dataFactory.getOWLClassAssertionAxiom(classOWLA, indOWL5);
 
       OWLDataPropertyAssertionAxiom dataPropertyAssertionAxiom;
@@ -1739,24 +1742,22 @@ public class Implementations {
 
       }
 
-
-
-      manager.applyChanges(manager.addAxiom(ont2, axiomIndClassA));
-      manager.applyChanges(manager.addAxiom(ont2, indAClassAAssertionAxiom));
-      manager.applyChanges(manager.addAxiom(ont2, dataPropertyAssertionAxiom));
+      manager.applyChanges(manager.addAxiom(ontology2, axiomIndividualClassA));
+      manager.applyChanges(manager.addAxiom(ontology2, indAClassAAssertionAxiom));
+      manager.applyChanges(manager.addAxiom(ontology2, dataPropertyAssertionAxiom));
 
       OWLOntology assertion2 = manager.getOntology(IRI.create(base));
 
-      String expectedoutputassertion2 = "consistent";
+      String expectedOutAssertion2 = "consistent";
 
-      manager.removeOntology(ont2);
+      manager.removeOntology(ontology2);
 
 
-      OWLOntology ont3 = null;
+      OWLOntology ontology3 = null;
       try {
-         ont3 = manager.createOntology(IRI.create(base));
+         ontology3 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont3 = null;
+         ontology3 = null;
       }
 
 
@@ -1795,40 +1796,37 @@ public class Implementations {
 
       }
 
-
-
-      manager.applyChanges(manager.addAxiom(ont3, axiomIndClassA));
-      manager.applyChanges(manager.addAxiom(ont3, indAClassAAssertionAxiom));
-      manager.applyChanges(manager.addAxiom(ont3, dataPropertyAssertionAxiom));
+      manager.applyChanges(manager.addAxiom(ontology3, axiomIndividualClassA));
+      manager.applyChanges(manager.addAxiom(ontology3, indAClassAAssertionAxiom));
+      manager.applyChanges(manager.addAxiom(ontology3, dataPropertyAssertionAxiom));
 
       OWLOntology assertion3 = manager.getOntology(IRI.create(base));
 
-      String expectedoutputassertion3 = "consistent";
+      String expectedOutAssertion3 = "consistent";
+
+      LinkedHashMap<String, OWLOntology> hashInput = new LinkedHashMap();
+      hashInput.put("Assertion 1", assertion1);
+      hashInput.put("Assertion 2", assertion2);
+      hashInput.put("Assertion 3", assertion3);
 
 
-      LinkedHashMap<String, OWLOntology> hashinput = new LinkedHashMap();
-      hashinput.put("Assertion 1", assertion1);
-      hashinput.put("Assertion 2", assertion2);
-      hashinput.put("Assertion 3", assertion3);
-
-
-      LinkedHashMap<String, String> hashoutput = new LinkedHashMap();
-      hashoutput.put("Assertion 1",expectedoutputassertion1);
-      hashoutput.put("Assertion 2",expectedoutputassertion2);
-      hashoutput.put("Assertion 3",expectedoutputassertion3);
+      LinkedHashMap<String, String> hashOutput = new LinkedHashMap();
+      hashOutput.put("Assertion 1",expectedOutAssertion1);
+      hashOutput.put("Assertion 2",expectedOutAssertion2);
+      hashOutput.put("Assertion 3",expectedOutAssertion3);
 
 
 
       for (Map.Entry<String, String> entry : testCase.getAxiomExpectedResultAxioms().entrySet()) {
-         hashoutput.put(entry.getKey(), entry.getValue());
+         hashOutput.put(entry.getKey(), entry.getValue());
       }
 
-      testCase.setAxiomExpectedResultAxioms(hashoutput);
+      testCase.setAxiomExpectedResultAxioms(hashOutput);
 
       for (Map.Entry<String, OWLOntology> entry : testCase.getAssertionsAxioms().entrySet()) {
-         hashinput.put(entry.getKey(), entry.getValue());
+         hashInput.put(entry.getKey(), entry.getValue());
       }
-      testCase.setAssertionsAxioms(hashinput);
+      testCase.setAssertionsAxioms(hashInput);
       testCase.setType("existential dp");
       return testCase;
    }
@@ -1840,7 +1838,7 @@ public class Implementations {
          Pattern p = Pattern.compile("not\\((.*?)\\)");
          Matcher m = p.matcher(purpose);
          while(m.find()){
-            complementClasses.add(m.group().toString().replace("not(","").replace(")",""));
+            complementClasses.add(m.group().replace("not(","").replace(")",""));
          }
       }
 
@@ -1849,138 +1847,136 @@ public class Implementations {
 
       /*Generation of classes*/
       m.find();
-      String classA = m.group(1).toString().replaceAll("\\(","").replaceAll("\\)","");;
+      String classA = m.group(1).replaceAll("\\(","").replaceAll("\\)","");;
       String classA1 = classA+"1";
-      String R = m.group(2).toString();
+      String relation = m.group(2);
       String datatype = "";
-      datatype = m.group(3).toString().replaceAll("\\(","").replaceAll("\\)","").toLowerCase();;
+      datatype = m.group(3).replaceAll("\\(","").replaceAll("\\)","").toLowerCase();;
       String nodatatype =  "No"+datatype.split("(#|\\/)")[datatype.split("(#|\\/)").length-1];
 
       /*Preconditions*/
-      ArrayList<String> precond = new ArrayList<>();
-      precond.add("Class(<"+classA+">)");
-      precond.add("Property(<"+R+">)");
-      testCase.getPrecondition().addAll(precond);
+      ArrayList<String> precondition = new ArrayList<>();
+      precondition.add("Class(<"+classA+">)");
+      precondition.add("Property(<"+relation+">)");
+      testCase.getPrecondition().addAll(precondition);
 
       /*Preparation*/
       /*Axioms to be added*/
       String base = "";
       OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
       OWLDataFactory dataFactory = manager.getOWLDataFactory();
-      OWLOntology ont = null;
+      OWLOntology ontology = null;
       try {
-         ont = manager.createOntology(IRI.create(base));
+         ontology = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont = null;
+         ontology = null;
       }
 
       OWLClass classOWLA = dataFactory.getOWLClass(IRI.create(classA));
       OWLClass classOWLA1 = dataFactory.getOWLClass(IRI.create(classA1));
-      OWLDeclarationAxiom axiomclass1 = dataFactory.getOWLDeclarationAxiom(classOWLA);
-      OWLDeclarationAxiom axiomclass2 = dataFactory.getOWLDeclarationAxiom(classOWLA1);
+      OWLDeclarationAxiom axiomClass1 = dataFactory.getOWLDeclarationAxiom(classOWLA);
+      OWLDeclarationAxiom axiomClass2 = dataFactory.getOWLDeclarationAxiom(classOWLA1);
       OWLSubClassOfAxiom subClassOfAxiomAA1 = dataFactory.getOWLSubClassOfAxiom(classOWLA1, classOWLA);
-      manager.applyChanges(manager.addAxiom(ont, axiomclass1));
-      manager.applyChanges(manager.addAxiom(ont, axiomclass2));
-      manager.applyChanges(manager.addAxiom(ont, subClassOfAxiomAA1));
+      manager.applyChanges(manager.addAxiom(ontology, axiomClass1));
+      manager.applyChanges(manager.addAxiom(ontology, axiomClass2));
+      manager.applyChanges(manager.addAxiom(ontology, subClassOfAxiomAA1));
 
       OWLDataProperty datatypeOWLA = dataFactory.getOWLDataProperty(IRI.create(datatype));
-      OWLDataProperty nodatatypeOWLA = dataFactory.getOWLDataProperty(IRI.create(nodatatype));
-      OWLDeclarationAxiom axiomDatatype = dataFactory.getOWLDeclarationAxiom(datatypeOWLA);
-      OWLDeclarationAxiom axiomDatatype2 = dataFactory.getOWLDeclarationAxiom(nodatatypeOWLA);
+      OWLDataProperty noDatatypeOWLA = dataFactory.getOWLDataProperty(IRI.create(nodatatype));
+      OWLDeclarationAxiom axiomDatatype1 = dataFactory.getOWLDeclarationAxiom(datatypeOWLA);
+      OWLDeclarationAxiom axiomDatatype2 = dataFactory.getOWLDeclarationAxiom(noDatatypeOWLA);
 
       OWLNamedIndividual indOWL1 = dataFactory.getOWLNamedIndividual(IRI.create("individual1"));
       OWLClassAssertionAxiom assertionAxiom = dataFactory.getOWLClassAssertionAxiom(classOWLA1, indOWL1);
 
-      manager.applyChanges(manager.addAxiom(ont, axiomDatatype));
-      manager.applyChanges(manager.addAxiom(ont, axiomDatatype2));
-      manager.applyChanges(manager.addAxiom(ont, dataFactory.getOWLDeclarationAxiom(indOWL1)));
-      manager.applyChanges(manager.addAxiom(ont, assertionAxiom));
+      manager.applyChanges(manager.addAxiom(ontology, axiomDatatype1));
+      manager.applyChanges(manager.addAxiom(ontology, axiomDatatype2));
+      manager.applyChanges(manager.addAxiom(ontology, dataFactory.getOWLDeclarationAxiom(indOWL1)));
+      manager.applyChanges(manager.addAxiom(ontology, assertionAxiom));
       testCase.setPreparationaxioms(manager.getOntology(IRI.create(base)));
-      manager.removeOntology(ont);
+      manager.removeOntology(ontology);
 
       /*Axioms to be added*/
-      OWLOntology ont1 = null;
+      OWLOntology ontology1 = null;
       try {
-         ont1 = manager.createOntology(IRI.create(base));
+         ontology1 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont1 = null;
+         ontology1 = null;
       }
-      OWLDataProperty prop = dataFactory.getOWLDataProperty(IRI.create(R));
-      OWLClassAssertionAxiom owlClassAssertionAxiom;
+      OWLDataProperty prop = dataFactory.getOWLDataProperty(IRI.create(relation));
+      OWLClassAssertionAxiom owlClassAssertionAxiom1;
       OWLDataPropertyAssertionAxiom objectPropertyAssertionAxiom2;
       if(datatype.contains("string") || datatype.contains("datetime") || datatype.contains("rational")|| datatype.contains("anyuri")){
-         OWLNamedIndividual indOWL3 = dataFactory.getOWLNamedIndividual(IRI.create("ind3"));
-         owlClassAssertionAxiom = dataFactory.getOWLClassAssertionAxiom(classOWLA1, indOWL3);
+         OWLNamedIndividual indOWL3 = dataFactory.getOWLNamedIndividual(IRI.create("individual3"));
+         owlClassAssertionAxiom1 = dataFactory.getOWLClassAssertionAxiom(classOWLA1, indOWL3);
          objectPropertyAssertionAxiom2 = dataFactory.getOWLDataPropertyAssertionAxiom(prop, indOWL3, 1);
       }else if(datatype.contains("anyuri")){
-         OWLNamedIndividual indOWL3 = dataFactory.getOWLNamedIndividual(IRI.create("ind3"));
-         owlClassAssertionAxiom = dataFactory.getOWLClassAssertionAxiom(classOWLA1, indOWL3);
+         OWLNamedIndividual indOWL3 = dataFactory.getOWLNamedIndividual(IRI.create("individual3"));
+         owlClassAssertionAxiom1 = dataFactory.getOWLClassAssertionAxiom(classOWLA1, indOWL3);
          objectPropertyAssertionAxiom2 = dataFactory.getOWLDataPropertyAssertionAxiom(prop, indOWL3, 1);
       }else{
-         OWLNamedIndividual indOWL3 = dataFactory.getOWLNamedIndividual(IRI.create("ind3"));
-         owlClassAssertionAxiom = dataFactory.getOWLClassAssertionAxiom(classOWLA1, indOWL3);
+         OWLNamedIndividual indOWL3 = dataFactory.getOWLNamedIndividual(IRI.create("individual3"));
+         owlClassAssertionAxiom1 = dataFactory.getOWLClassAssertionAxiom(classOWLA1, indOWL3);
          objectPropertyAssertionAxiom2 = dataFactory.getOWLDataPropertyAssertionAxiom(prop, indOWL3, "");
 
       }
-      manager.applyChanges(manager.addAxiom(ont1, axiomDatatype));
-      manager.applyChanges(manager.addAxiom(ont1, axiomDatatype2));
-      manager.applyChanges(manager.addAxiom(ont1, dataFactory.getOWLDeclarationAxiom(indOWL1)));
-      manager.applyChanges(manager.addAxiom(ont1, assertionAxiom));
-      manager.applyChanges(manager.addAxiom(ont1, objectPropertyAssertionAxiom2));
-      manager.applyChanges(manager.addAxiom(ont1, owlClassAssertionAxiom));
+      manager.applyChanges(manager.addAxiom(ontology1, axiomDatatype1));
+      manager.applyChanges(manager.addAxiom(ontology1, axiomDatatype2));
+      manager.applyChanges(manager.addAxiom(ontology1, dataFactory.getOWLDeclarationAxiom(indOWL1)));
+      manager.applyChanges(manager.addAxiom(ontology1, assertionAxiom));
+      manager.applyChanges(manager.addAxiom(ontology1, objectPropertyAssertionAxiom2));
+      manager.applyChanges(manager.addAxiom(ontology1, owlClassAssertionAxiom1));
       OWLOntology assertion1 = manager.getOntology(IRI.create(base));
-      String expectedoutputassertion1 = "inconsistent";
+      String expectedOutAssertion1 = "inconsistent";
 
-      manager.removeOntology(ont1);
+      manager.removeOntology(ontology1);
 
-      OWLOntology ont2 = null;
+      OWLOntology ontology2 = null;
       try {
-         ont2 = manager.createOntology(IRI.create(base));
+         ontology2 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont2 = null;
+         ontology2 = null;
       }
-      OWLSubClassOfAxiom subClassOfAxiom2 = null;
-      OWLDeclarationAxiom axiomInd4;
+
       OWLClassAssertionAxiom owlClassAssertionAxiom2;
       OWLDataPropertyAssertionAxiom objectPropertyAssertionAxiom3;
       if(datatype.contains("string") || datatype.contains("datetime") || datatype.contains("rational")){
-         OWLNamedIndividual indOWL4 = dataFactory.getOWLNamedIndividual(IRI.create("ind4"));
-         axiomInd4 = dataFactory.getOWLDeclarationAxiom(indOWL4);
+         OWLNamedIndividual indOWL4 = dataFactory.getOWLNamedIndividual(IRI.create("individual4"));
          owlClassAssertionAxiom2 = dataFactory.getOWLClassAssertionAxiom(classOWLA1, indOWL4);
          objectPropertyAssertionAxiom3 = dataFactory.getOWLDataPropertyAssertionAxiom(prop, indOWL4, "");
       }else if(datatype.contains("anyuri")){
-         OWLNamedIndividual indOWL4 = dataFactory.getOWLNamedIndividual(IRI.create("ind4"));
+         OWLNamedIndividual indOWL4 = dataFactory.getOWLNamedIndividual(IRI.create("individual4"));
          owlClassAssertionAxiom2 = dataFactory.getOWLClassAssertionAxiom(classOWLA1, indOWL4);
          objectPropertyAssertionAxiom3 = dataFactory.getOWLDataPropertyAssertionAxiom(prop, indOWL4,"");
       }else{
-         OWLNamedIndividual indOWL4 = dataFactory.getOWLNamedIndividual(IRI.create("ind4"));
+         OWLNamedIndividual indOWL4 = dataFactory.getOWLNamedIndividual(IRI.create("individual4"));
          owlClassAssertionAxiom2 = dataFactory.getOWLClassAssertionAxiom(classOWLA1, indOWL4);
          objectPropertyAssertionAxiom3 = dataFactory.getOWLDataPropertyAssertionAxiom(prop, indOWL4, 3);
       }
 
-      manager.applyChanges(manager.addAxiom(ont2, axiomDatatype));
-      manager.applyChanges(manager.addAxiom(ont2, axiomDatatype2));
-      manager.applyChanges(manager.addAxiom(ont2, dataFactory.getOWLDeclarationAxiom(indOWL1)));
-      manager.applyChanges(manager.addAxiom(ont2, assertionAxiom));
-      manager.applyChanges(manager.addAxiom(ont2, objectPropertyAssertionAxiom2));
-      manager.applyChanges(manager.addAxiom(ont2, owlClassAssertionAxiom));
-      manager.applyChanges(manager.addAxiom(ont2, owlClassAssertionAxiom2));
-      manager.applyChanges(manager.addAxiom(ont2, objectPropertyAssertionAxiom3));
+      manager.applyChanges(manager.addAxiom(ontology2, axiomDatatype1));
+      manager.applyChanges(manager.addAxiom(ontology2, axiomDatatype2));
+      manager.applyChanges(manager.addAxiom(ontology2, dataFactory.getOWLDeclarationAxiom(indOWL1)));
+      manager.applyChanges(manager.addAxiom(ontology2, assertionAxiom));
+      manager.applyChanges(manager.addAxiom(ontology2, objectPropertyAssertionAxiom2));
+      manager.applyChanges(manager.addAxiom(ontology2, owlClassAssertionAxiom1));
+      manager.applyChanges(manager.addAxiom(ontology2, owlClassAssertionAxiom2));
+      manager.applyChanges(manager.addAxiom(ontology2, objectPropertyAssertionAxiom3));
       OWLOntology assertion2 = manager.getOntology(IRI.create(base));
-      String expectedoutputassertion2 = "inconsistent";
+      String expectedOutAssertion2 = "inconsistent";
 
-      manager.removeOntology(ont2);
+      manager.removeOntology(ontology2);
 
 
-      OWLOntology ont3 = null;
+      OWLOntology ontology3 = null;
       try {
-         ont3 = manager.createOntology(IRI.create(base));
+         ontology3 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont3 = null;
+         ontology3 = null;
       }
 
-      OWLNamedIndividual indOWL5 = dataFactory.getOWLNamedIndividual(IRI.create("ind5"));
-      OWLDeclarationAxiom axiomIndClassA = dataFactory.getOWLDeclarationAxiom(indOWL5);
+      OWLNamedIndividual indOWL5 = dataFactory.getOWLNamedIndividual(IRI.create("individual5"));
+      OWLDeclarationAxiom axiomIndividualClassA = dataFactory.getOWLDeclarationAxiom(indOWL5);
       OWLClassAssertionAxiom indAClassAAssertionAxiom = dataFactory.getOWLClassAssertionAxiom(classOWLA, indOWL5);
 
       OWLDataPropertyAssertionAxiom dataPropertyAssertionAxiom;
@@ -2021,36 +2017,36 @@ public class Implementations {
 
 
 
-      manager.applyChanges(manager.addAxiom(ont3, axiomIndClassA));
-      manager.applyChanges(manager.addAxiom(ont3, indAClassAAssertionAxiom));
-      manager.applyChanges(manager.addAxiom(ont3, dataPropertyAssertionAxiom));
+      manager.applyChanges(manager.addAxiom(ontology3, axiomIndividualClassA));
+      manager.applyChanges(manager.addAxiom(ontology3, indAClassAAssertionAxiom));
+      manager.applyChanges(manager.addAxiom(ontology3, dataPropertyAssertionAxiom));
 
       OWLOntology assertion3 = manager.getOntology(IRI.create(base));
 
-      String expectedoutputassertion3 = "consistent";
+      String expectedOutAssertion3 = "consistent";
 
-      manager.removeOntology(ont3);
+      manager.removeOntology(ontology3);
 
-      LinkedHashMap<String, OWLOntology> hashinput = new LinkedHashMap();
-      hashinput.put("Assertion 1", assertion1);
-      hashinput.put("Assertion 2", assertion2);
-      hashinput.put("Assertion 3", assertion3);
+      LinkedHashMap<String, OWLOntology> hashInput = new LinkedHashMap();
+      hashInput.put("Assertion 1", assertion1);
+      hashInput.put("Assertion 2", assertion2);
+      hashInput.put("Assertion 3", assertion3);
 
-      LinkedHashMap<String, String> hashoutput = new LinkedHashMap();
-      hashoutput.put("Assertion 1",expectedoutputassertion1);
-      hashoutput.put("Assertion 2",expectedoutputassertion2);
-      hashoutput.put("Assertion 3",expectedoutputassertion3);
+      LinkedHashMap<String, String> hashOutput = new LinkedHashMap();
+      hashOutput.put("Assertion 1",expectedOutAssertion1);
+      hashOutput.put("Assertion 2",expectedOutAssertion2);
+      hashOutput.put("Assertion 3",expectedOutAssertion3);
 
       for (Map.Entry<String, String> entry : testCase.getAxiomExpectedResultAxioms().entrySet()) {
-         hashoutput.put(entry.getKey(), entry.getValue());
+         hashOutput.put(entry.getKey(), entry.getValue());
       }
 
-      testCase.setAxiomExpectedResultAxioms(hashoutput);
+      testCase.setAxiomExpectedResultAxioms(hashOutput);
 
       for (Map.Entry<String, OWLOntology> entry : testCase.getAssertionsAxioms().entrySet()) {
-         hashinput.put(entry.getKey(), entry.getValue());
+         hashInput.put(entry.getKey(), entry.getValue());
       }
-      testCase.setAssertionsAxioms(hashinput);
+      testCase.setAssertionsAxioms(hashInput);
       return testCase;
    }
 
@@ -2061,126 +2057,127 @@ public class Implementations {
 
       /*Generation of classes*/
       m.find();
-      String classA = m.group(1).toString();
+      String classA = m.group(1);
 
       String classA1 = classA+"1";
-      String R = m.group(2).toString();
+      String relation = m.group(2);
       String classB = "";
-      classB = m.group(5).toString();
-      Integer num = Integer.parseInt(m.group(4).toString());
+      classB = m.group(5);
+      Integer num = Integer.parseInt(m.group(4));
 
       /*Preconditions*/
-      ArrayList<String> precond = new ArrayList<>();
-      precond.add("Class(<"+classA+">)");
-      precond.add("Property(<"+R+">)");
-      precond.add("Class(<"+classB+">)");
-      testCase.getPrecondition().addAll(precond);
+      ArrayList<String> precondition = new ArrayList<>();
+      precondition.add("Class(<"+classA+">)");
+      precondition.add("Property(<"+relation+">)");
+      precondition.add("Class(<"+classB+">)");
+      testCase.getPrecondition().addAll(precondition);
 
       /*Axioms to be added*/
 
       /*Preparation*/
       String base = "";
       OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
-      OWLOntology ont = null;
+      OWLOntology ontology = null;
       try {
-         ont = manager.createOntology(IRI.create(base));
+         ontology = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont = null;
+         ontology = null;
       }
       OWLDataFactory dataFactory = manager.getOWLDataFactory();
       OWLClass classOWLA = dataFactory.getOWLClass(IRI.create(classA));
       OWLClass classOWLA1 = dataFactory.getOWLClass(IRI.create(classA1));
       OWLDeclarationAxiom axiomClass = dataFactory.getOWLDeclarationAxiom(classOWLA1);
-      manager.addAxiom(ont,axiomClass);
-      manager.applyChanges(manager.addAxiom(ont, axiomClass));
+      manager.addAxiom(ontology,axiomClass);
+      manager.applyChanges(manager.addAxiom(ontology, axiomClass));
 
-      OWLSubClassOfAxiom axiomsubclass1= dataFactory.getOWLSubClassOfAxiom(classOWLA1, classOWLA);
-      manager.applyChanges(manager.addAxiom(ont, axiomsubclass1));
+      OWLSubClassOfAxiom axiomSubclass1= dataFactory.getOWLSubClassOfAxiom(classOWLA1, classOWLA);
+      manager.applyChanges(manager.addAxiom(ontology, axiomSubclass1));
       testCase.setPreparationaxioms(manager.getOntology(IRI.create(base)));
-      manager.removeOntology(ont);
+      manager.removeOntology(ontology);
+
       /*Assertions*/
       /*Assertions 1 */
-      OWLOntology ont2 = null;
+      OWLOntology ontology2 = null;
       try {
-         ont2 = manager.createOntology(IRI.create(base));
+         ontology2 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont2 = null;
+         ontology2 = null;
       }
-      OWLObjectProperty prop = dataFactory.getOWLObjectProperty(IRI.create(R));
+      OWLObjectProperty prop = dataFactory.getOWLObjectProperty(IRI.create(relation));
       OWLClass classOWLB = dataFactory.getOWLClass(IRI.create(classB));
       OWLDeclarationAxiom axiomClass2 = dataFactory.getOWLDeclarationAxiom(classOWLB);
-      manager.addAxiom(ont,axiomClass2);
-      OWLSubClassOfAxiom axiomsubclass4 = dataFactory.getOWLSubClassOfAxiom(classOWLA1, dataFactory.getOWLObjectMaxCardinality(num-1, prop, classOWLB));
-      manager.addAxiom(ont2, axiomsubclass4);
-      manager.addAxiom(ont2, axiomClass2);
+      manager.addAxiom(ontology,axiomClass2);
+      OWLSubClassOfAxiom axiomSubclass4 = dataFactory.getOWLSubClassOfAxiom(classOWLA1, dataFactory.getOWLObjectMaxCardinality(num-1, prop, classOWLB));
+      manager.addAxiom(ontology2, axiomSubclass4);
+      manager.addAxiom(ontology2, axiomClass2);
       OWLOntology assertion1 = manager.getOntology(IRI.create(base));
 
-      String expectedoutputassertion1 = "";
+      String expectedOutAssertion1 = "";
       if (type == "min" || type == "exactly")
-         expectedoutputassertion1 = "unsatisfiable";
+         expectedOutAssertion1 = "unsatisfiable";
       else
-         expectedoutputassertion1 = "consistent";
-      manager.removeOntology(ont2);
+         expectedOutAssertion1 = "consistent";
+      manager.removeOntology(ontology2);
       /*Assertions 2 */
-      OWLOntology ont4 = null;
+      OWLOntology ontology4 = null;
       try {
-         ont4 = manager.createOntology(IRI.create(base));
+         ontology4 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont4 = null;
+         ontology4 = null;
       }
-      OWLSubClassOfAxiom axiomsubclass2 = dataFactory.getOWLSubClassOfAxiom( classOWLA1, dataFactory.getOWLObjectMinCardinality(num+1, prop, classOWLB) );
-      manager.applyChanges( manager.addAxiom(ont4, axiomsubclass2));
-      manager.applyChanges( manager.addAxiom(ont4, axiomClass2));
+      OWLSubClassOfAxiom axiomSubclass2 = dataFactory.getOWLSubClassOfAxiom( classOWLA1, dataFactory.getOWLObjectMinCardinality(num+1, prop, classOWLB) );
+      manager.applyChanges( manager.addAxiom(ontology4, axiomSubclass2));
+      manager.applyChanges( manager.addAxiom(ontology4, axiomClass2));
       OWLOntology assertion2 = manager.getOntology(IRI.create(base));
 
-      String expectedoutputassertion2 = "";
+      String expectedOutAssertion2 = "";
       if (type == "max" || type == "exactly")
-         expectedoutputassertion2 = "unsatisfiable";
+         expectedOutAssertion2 = "unsatisfiable";
       else
-         expectedoutputassertion2 = "consistent";
-      manager.removeOntology(ont4);
+         expectedOutAssertion2 = "consistent";
+      manager.removeOntology(ontology4);
       /*Assertions 3 */
-      OWLOntology ont3 = null;
+      OWLOntology ontology3 = null;
       try {
-         ont3 = manager.createOntology(IRI.create(base));
+         ontology3 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont3 = null;
+         ontology3 = null;
       }
-      OWLSubClassOfAxiom axiomsubclass3 = null;
+      OWLSubClassOfAxiom axiomSubclass3 = null;
 
       if(type == "max") {
-         axiomsubclass3 = dataFactory.getOWLSubClassOfAxiom(classOWLA1, dataFactory.getOWLObjectMinCardinality(num, prop, classOWLB));
+         axiomSubclass3 = dataFactory.getOWLSubClassOfAxiom(classOWLA1, dataFactory.getOWLObjectMinCardinality(num, prop, classOWLB));
 
       }else{
-         axiomsubclass3 = dataFactory.getOWLSubClassOfAxiom( dataFactory.getOWLObjectMaxCardinality(num, prop, classOWLB), classOWLA1);
+         axiomSubclass3 = dataFactory.getOWLSubClassOfAxiom( dataFactory.getOWLObjectMaxCardinality(num, prop, classOWLB), classOWLA1);
       }
-      manager.applyChanges(manager.addAxiom(ont3, axiomsubclass3));
-      manager.applyChanges(manager.addAxiom(ont3,axiomClass2));
+      manager.applyChanges(manager.addAxiom(ontology3, axiomSubclass3));
+      manager.applyChanges(manager.addAxiom(ontology3,axiomClass2));
       OWLOntology assertion3 = manager.getOntology(IRI.create(base));
 
-      String expectedoutputassertion3 = "consistent";
+      String expectedOutAssertion3 = "consistent";
 
-      LinkedHashMap<String, OWLOntology> hashinput = new LinkedHashMap();
-      hashinput.put("Assertion 1", assertion1);
-      hashinput.put("Assertion 2", assertion2);
-      hashinput.put("Assertion 3", assertion3);
+      LinkedHashMap<String, OWLOntology> hashInput = new LinkedHashMap();
+      hashInput.put("Assertion 1", assertion1);
+      hashInput.put("Assertion 2", assertion2);
+      hashInput.put("Assertion 3", assertion3);
 
 
-      LinkedHashMap<String, String> hashoutput = new LinkedHashMap();
-      hashoutput.put("Assertion 1",expectedoutputassertion1);
-      hashoutput.put("Assertion 2",expectedoutputassertion2);
-      hashoutput.put("Assertion 3",expectedoutputassertion3);
+      LinkedHashMap<String, String> hashOutput = new LinkedHashMap();
+      hashOutput.put("Assertion 1",expectedOutAssertion1);
+      hashOutput.put("Assertion 2",expectedOutAssertion2);
+      hashOutput.put("Assertion 3",expectedOutAssertion3);
 
       for (Map.Entry<String, String> entry : testCase.getAxiomExpectedResultAxioms().entrySet()) {
-         hashoutput.put(entry.getKey(), entry.getValue());
+         hashOutput.put(entry.getKey(), entry.getValue());
       }
 
-      testCase.setAxiomExpectedResultAxioms(hashoutput);
+      testCase.setAxiomExpectedResultAxioms(hashOutput);
 
       for (Map.Entry<String, OWLOntology> entry : testCase.getAssertionsAxioms().entrySet()) {
-         hashinput.put(entry.getKey(), entry.getValue());
+         hashInput.put(entry.getKey(), entry.getValue());
       }
-      testCase.setAssertionsAxioms(hashinput);
+      testCase.setAssertionsAxioms(hashInput);
       return testCase;
 
    }
@@ -2192,38 +2189,38 @@ public class Implementations {
 
       /*Generation of classes*/
       m.find();
-      String classA = m.group(1).toString().replaceAll("\\(","").replaceAll("\\)","");
+      String classA = m.group(1).replaceAll("\\(","").replaceAll("\\)","");
       String classA1 = classA+"1";
 
-      String R = m.group(2).toString();
+      String R = m.group(2);
 
-      String classB = m.group(5).toString().replaceAll("\\(","").replaceAll("\\)","");
+      String classB = m.group(5).replaceAll("\\(","").replaceAll("\\)","");
       String noClassB =  "No"+classB.split("(#|\\/)")[classB.split("(#|\\/)").length-1];
 
-      String classC = m.group(6).toString().replaceAll("\\(","").replaceAll("\\)","");
+      String classC = m.group(6).replaceAll("\\(","").replaceAll("\\)","");
       String noClassC =  "No"+classC.split("(#|\\/)")[classB.split("(#|\\/)").length-1];
 
-      Integer num = Integer.parseInt(m.group(4).toString().replace("min","").replace("max","").replace("exactly","").replace(" ",""));
+      Integer num = Integer.parseInt(m.group(4).replace("min","").replace("max","").replace("exactly","").replace(" ",""));
 
 
       /*Preconditions*/
-      ArrayList<String> precond = new ArrayList<>();
-      precond.add("Class(<"+classA+">)\n");
-      precond.add("Property(<"+R+">)\n");
-      precond.add("Class(<"+classB+">)\n");
-      precond.add("Class(<"+classC+">)\n");
+      ArrayList<String> precondition = new ArrayList<>();
+      precondition.add("Class(<"+classA+">)\n");
+      precondition.add("Property(<"+R+">)\n");
+      precondition.add("Class(<"+classB+">)\n");
+      precondition.add("Class(<"+classC+">)\n");
 
-      testCase.getPrecondition().addAll(precond);
+      testCase.getPrecondition().addAll(precondition);
 
       /*Axioms to be added*/
       /*Preparation*/
       String base = "";
       OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
-      OWLOntology ont = null;
+      OWLOntology ontology = null;
       try {
-         ont = manager.createOntology(IRI.create(base));
+         ontology = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont = null;
+         ontology = null;
       }
       OWLDataFactory dataFactory = manager.getOWLDataFactory();
 
@@ -2237,178 +2234,178 @@ public class Implementations {
       OWLDeclarationAxiom axiomClass2 = dataFactory.getOWLDeclarationAxiom(classOWLC);
       OWLDeclarationAxiom axiomClass3 = dataFactory.getOWLDeclarationAxiom(noClassOWLC);
       OWLEquivalentClassesAxiom equivalentClassesAxiom2 = dataFactory.getOWLEquivalentClassesAxiom(noClassOWLC, dataFactory.getOWLObjectComplementOf(classOWLC));
-      manager.applyChanges(manager.addAxiom(ont, axiomClass));
-      manager.applyChanges(manager.addAxiom(ont, axiomClass1));
-      manager.applyChanges(manager.addAxiom(ont, equivalentClassesAxiom));
-      manager.applyChanges(manager.addAxiom(ont, axiomClass2));
-      manager.applyChanges(manager.addAxiom(ont, axiomClass3));
-      manager.applyChanges(manager.addAxiom(ont, equivalentClassesAxiom2));
+      manager.applyChanges(manager.addAxiom(ontology, axiomClass));
+      manager.applyChanges(manager.addAxiom(ontology, axiomClass1));
+      manager.applyChanges(manager.addAxiom(ontology, equivalentClassesAxiom));
+      manager.applyChanges(manager.addAxiom(ontology, axiomClass2));
+      manager.applyChanges(manager.addAxiom(ontology, axiomClass3));
+      manager.applyChanges(manager.addAxiom(ontology, equivalentClassesAxiom2));
 
       testCase.setPreparationaxioms(manager.getOntology(IRI.create(base)));
-      manager.removeOntology(ont);
+      manager.removeOntology(ontology);
 
       /*Assertions*/
-      OWLOntology ont1 = null;
+      OWLOntology ontology1 = null;
       try {
-         ont1 = manager.createOntology(IRI.create(base));
+         ontology1 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont1 = null;
+         ontology1 = null;
       }
       OWLClass classOWLA = dataFactory.getOWLClass(IRI.create(classA));
       OWLClass classOWLA1 = dataFactory.getOWLClass(IRI.create(classA1));
       OWLDeclarationAxiom axiomclassA1 = dataFactory.getOWLDeclarationAxiom(classOWLA1);
-      OWLSubClassOfAxiom axiomsubclass1= dataFactory.getOWLSubClassOfAxiom(classOWLA1, classOWLA);
+      OWLSubClassOfAxiom axiomSubclass1= dataFactory.getOWLSubClassOfAxiom(classOWLA1, classOWLA);
       OWLObjectProperty prop = dataFactory.getOWLObjectProperty(IRI.create(R));
-      OWLSubClassOfAxiom axiomsubclass2 = dataFactory.getOWLSubClassOfAxiom( classOWLA1, dataFactory.getOWLObjectMaxCardinality(num-1,prop,
+      OWLSubClassOfAxiom axiomSubclass2 = dataFactory.getOWLSubClassOfAxiom( classOWLA1, dataFactory.getOWLObjectMaxCardinality(num-1,prop,
               dataFactory.getOWLObjectIntersectionOf(classOWLB,classOWLC)));
 
-      manager.applyChanges(manager.addAxiom(ont1, axiomclassA1));
-      manager.applyChanges(manager.addAxiom(ont1, axiomsubclass1));
-      manager.applyChanges(manager.addAxiom(ont1, axiomsubclass2));
+      manager.applyChanges(manager.addAxiom(ontology1, axiomclassA1));
+      manager.applyChanges(manager.addAxiom(ontology1, axiomSubclass1));
+      manager.applyChanges(manager.addAxiom(ontology1, axiomSubclass2));
 
       OWLOntology assertion2 = manager.getOntology(IRI.create(base));
-      manager.removeOntology(ont1);
+      manager.removeOntology(ontology1);
 
-      String expectedoutputassertion2 = "";
+      String expectedOutAssertion2 = "";
       if (type == "min" || type == "exactly")
-         expectedoutputassertion2 = "unsatisfiable";
+         expectedOutAssertion2 = "unsatisfiable";
       else
-         expectedoutputassertion2 = "consistent";
+         expectedOutAssertion2 = "consistent";
 
-      OWLOntology ont2 = null;
+      OWLOntology ontology2 = null;
       try {
-         ont2 = manager.createOntology(IRI.create(base));
+         ontology2 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont2 = null;
+         ontology2 = null;
       }
 
-      OWLSubClassOfAxiom axiomsubclass3 = dataFactory.getOWLSubClassOfAxiom( classOWLA1, dataFactory.getOWLObjectMinCardinality(num+1,prop,
+      OWLSubClassOfAxiom axiomSubclass3 = dataFactory.getOWLSubClassOfAxiom( classOWLA1, dataFactory.getOWLObjectMinCardinality(num+1,prop,
               dataFactory.getOWLObjectIntersectionOf(classOWLB,classOWLC)));
-      manager.applyChanges(manager.addAxiom(ont2, axiomclassA1));
-      manager.applyChanges(manager.addAxiom(ont2, axiomsubclass1));
-      manager.applyChanges(manager.addAxiom(ont2, axiomsubclass3));
+      manager.applyChanges(manager.addAxiom(ontology2, axiomclassA1));
+      manager.applyChanges(manager.addAxiom(ontology2, axiomSubclass1));
+      manager.applyChanges(manager.addAxiom(ontology2, axiomSubclass3));
 
       OWLOntology assertion3 = manager.getOntology(IRI.create(base));
-      manager.removeOntology(ont2);
-      String expectedoutputassertion3 = "";
+      manager.removeOntology(ontology2);
+      String expectedOutAssertion3 = "";
       if (type == "max" || type == "exactly")
-         expectedoutputassertion3 = "unsatisfiable";
+         expectedOutAssertion3 = "unsatisfiable";
       else
-         expectedoutputassertion3 = "consistent";
+         expectedOutAssertion3 = "consistent";
 
-      OWLOntology ont3 = null;
+      OWLOntology ontology3 = null;
       try {
-         ont3 = manager.createOntology(IRI.create(base));
+         ontology3 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont3 = null;
+         ontology3 = null;
       }
 
-      OWLSubClassOfAxiom axiomsubclass4 = null;
+      OWLSubClassOfAxiom axiomSubclass4 = null;
 
       if(type == "max") {
-         axiomsubclass4 = dataFactory.getOWLSubClassOfAxiom( classOWLA1, dataFactory.getOWLObjectMinCardinality(num,prop,
+         axiomSubclass4 = dataFactory.getOWLSubClassOfAxiom( classOWLA1, dataFactory.getOWLObjectMinCardinality(num,prop,
                  dataFactory.getOWLObjectIntersectionOf(classOWLB,classOWLC)));
       }else{
-         axiomsubclass4 = dataFactory.getOWLSubClassOfAxiom( classOWLA1, dataFactory.getOWLObjectMaxCardinality(num,prop,
+         axiomSubclass4 = dataFactory.getOWLSubClassOfAxiom( classOWLA1, dataFactory.getOWLObjectMaxCardinality(num,prop,
                  dataFactory.getOWLObjectIntersectionOf(classOWLB,classOWLC)));
       }
-      String expectedoutputassertion4 = "consistent";
+      String expectedOutAssertion4 = "consistent";
 
 
-      manager.applyChanges(manager.addAxiom(ont3, axiomclassA1));
-      manager.applyChanges(manager.addAxiom(ont3, axiomsubclass1));
-      manager.applyChanges(manager.addAxiom(ont3, axiomsubclass4));
+      manager.applyChanges(manager.addAxiom(ontology3, axiomclassA1));
+      manager.applyChanges(manager.addAxiom(ontology3, axiomSubclass1));
+      manager.applyChanges(manager.addAxiom(ontology3, axiomSubclass4));
 
       OWLOntology assertion4 = manager.getOntology(IRI.create(base));
-      manager.removeOntology(ont3);
+      manager.removeOntology(ontology3);
 
-      OWLOntology ont4 = null;
+      OWLOntology ontology4 = null;
       try {
-         ont4 = manager.createOntology(IRI.create(base));
+         ontology4 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont4 = null;
+         ontology4 = null;
       }
 
-      OWLSubClassOfAxiom axiomsubclass5 = null;
+      OWLSubClassOfAxiom axiomSubclass5 = null;
       if(type== "max") {
-         axiomsubclass5 = dataFactory.getOWLSubClassOfAxiom( classOWLA1, dataFactory.getOWLObjectMinCardinality(num+1,prop,
+         axiomSubclass5 = dataFactory.getOWLSubClassOfAxiom( classOWLA1, dataFactory.getOWLObjectMinCardinality(num+1,prop,
                  classOWLB));
       }
-      String expectedoutputassertion5 = "consistent";
-      manager.applyChanges(manager.addAxiom(ont4, axiomclassA1));
-      manager.applyChanges(manager.addAxiom(ont4, axiomsubclass1));
-      manager.applyChanges(manager.addAxiom(ont4, axiomsubclass5));
+      String expectedOutAssertion5 = "consistent";
+      manager.applyChanges(manager.addAxiom(ontology4, axiomclassA1));
+      manager.applyChanges(manager.addAxiom(ontology4, axiomSubclass1));
+      manager.applyChanges(manager.addAxiom(ontology4, axiomSubclass5));
 
       OWLOntology assertion5 = manager.getOntology(IRI.create(base));
-      manager.removeOntology(ont4);
+      manager.removeOntology(ontology4);
 
-      OWLOntology ont5 = null;
+      OWLOntology ontology5 = null;
       try {
-         ont5 = manager.createOntology(IRI.create(base));
+         ontology5 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont5 = null;
+         ontology5 = null;
       }
 
-      OWLSubClassOfAxiom axiomsubclass6 = null;
+      OWLSubClassOfAxiom axiomSubclass6 = null;
       if(type =="max"){
-         axiomsubclass6 = dataFactory.getOWLSubClassOfAxiom( classOWLA1, dataFactory.getOWLObjectMinCardinality(num+1,prop,
+         axiomSubclass6 = dataFactory.getOWLSubClassOfAxiom( classOWLA1, dataFactory.getOWLObjectMinCardinality(num+1,prop,
                  classOWLC));
       }
-      String expectedoutputassertion6 = "consistent";
-      manager.applyChanges(manager.addAxiom(ont5, axiomclassA1));
-      manager.applyChanges(manager.addAxiom(ont5, axiomsubclass1));
-      manager.applyChanges(manager.addAxiom(ont5, axiomsubclass6));
+      String expectedOutAssertion6 = "consistent";
+      manager.applyChanges(manager.addAxiom(ontology5, axiomclassA1));
+      manager.applyChanges(manager.addAxiom(ontology5, axiomSubclass1));
+      manager.applyChanges(manager.addAxiom(ontology5, axiomSubclass6));
 
       OWLOntology assertion6 = manager.getOntology(IRI.create(base));
-      manager.removeOntology(ont5);
-      OWLOntology ont6 = null;
+      manager.removeOntology(ontology5);
+      OWLOntology ontology6 = null;
       try {
-         ont6 = manager.createOntology(IRI.create(base));
+         ontology6 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont6 = null;
+         ontology6 = null;
       }
 
-      OWLSubClassOfAxiom axiomsubclass7 = null;
+      OWLSubClassOfAxiom axiomSubclass7 = null;
       if(type == "max"){
-         axiomsubclass7 = dataFactory.getOWLSubClassOfAxiom( classOWLA1, dataFactory.getOWLObjectMinCardinality(num+1,prop,
+         axiomSubclass7 = dataFactory.getOWLSubClassOfAxiom( classOWLA1, dataFactory.getOWLObjectMinCardinality(num+1,prop,
                  dataFactory.getOWLObjectIntersectionOf(classOWLB,classOWLC)));
       }
-      String expectedoutputassertion7 = "unsatisfiable";
-      manager.applyChanges(manager.addAxiom(ont6, axiomclassA1));
-      manager.applyChanges(manager.addAxiom(ont6, axiomsubclass1));
-      manager.applyChanges(manager.addAxiom(ont6, axiomsubclass7));
+      String expectedOutAssertion7 = "unsatisfiable";
+      manager.applyChanges(manager.addAxiom(ontology6, axiomclassA1));
+      manager.applyChanges(manager.addAxiom(ontology6, axiomSubclass1));
+      manager.applyChanges(manager.addAxiom(ontology6, axiomSubclass7));
 
       OWLOntology assertion7 = manager.getOntology(IRI.create(base));
-      manager.removeOntology(ont6);
+      manager.removeOntology(ontology6);
 
 
-      LinkedHashMap<String, OWLOntology> hashinput = new LinkedHashMap();
-      hashinput.put("Assertion 2", assertion2);
-      hashinput.put("Assertion 3", assertion3);
-      hashinput.put("Assertion 4", assertion4);
-      hashinput.put("Assertion 5", assertion5);
-      hashinput.put("Assertion 6", assertion6);
-      hashinput.put("Assertion 7", assertion7);
+      LinkedHashMap<String, OWLOntology> hashInput = new LinkedHashMap();
+      hashInput.put("Assertion 2", assertion2);
+      hashInput.put("Assertion 3", assertion3);
+      hashInput.put("Assertion 4", assertion4);
+      hashInput.put("Assertion 5", assertion5);
+      hashInput.put("Assertion 6", assertion6);
+      hashInput.put("Assertion 7", assertion7);
 
-      LinkedHashMap<String, String> hashoutput = new LinkedHashMap();
-      hashoutput.put("Assertion 2",expectedoutputassertion2);
-      hashoutput.put("Assertion 3",expectedoutputassertion3);
-      hashoutput.put("Assertion 4",expectedoutputassertion4);
-      hashoutput.put("Assertion 5",expectedoutputassertion5);
-      hashoutput.put("Assertion 6",expectedoutputassertion6);
-      hashoutput.put("Assertion 7",expectedoutputassertion7);
+      LinkedHashMap<String, String> hashOutput = new LinkedHashMap();
+      hashOutput.put("Assertion 2",expectedOutAssertion2);
+      hashOutput.put("Assertion 3",expectedOutAssertion3);
+      hashOutput.put("Assertion 4",expectedOutAssertion4);
+      hashOutput.put("Assertion 5",expectedOutAssertion5);
+      hashOutput.put("Assertion 6",expectedOutAssertion6);
+      hashOutput.put("Assertion 7",expectedOutAssertion7);
 
 
       for (Map.Entry<String, String> entry : testCase.getAxiomExpectedResultAxioms().entrySet()) {
-         hashoutput.put(entry.getKey(), entry.getValue());
+         hashOutput.put(entry.getKey(), entry.getValue());
       }
 
-      testCase.setAxiomExpectedResultAxioms(hashoutput);
+      testCase.setAxiomExpectedResultAxioms(hashOutput);
 
       for (Map.Entry<String, OWLOntology> entry : testCase.getAssertionsAxioms().entrySet()) {
-         hashinput.put(entry.getKey(), entry.getValue());
+         hashInput.put(entry.getKey(), entry.getValue());
       }
-      testCase.setAssertionsAxioms(hashinput);
+      testCase.setAssertionsAxioms(hashInput);
       return testCase;
    }
 
@@ -2419,34 +2416,34 @@ public class Implementations {
 
       /*Generation of classes*/
       m.find();
-      String classA = m.group(1).toString();
+      String classA = m.group(1);
       String classA1 =  classA.split("(#|\\/)")[classA.split("(#)").length-1]+"1";
 
-      String R =m.group(2).toString();
-      String classB = m.group(3).toString();
+      String relation =m.group(2);
+      String classB = m.group(3);
       String noClassB =  "No"+classB.split("(#|\\/)")[classB.split("(#|\\/)").length-1];
 
-      String classC = m.group(4).toString();
+      String classC = m.group(4);
       String noClassC =  "No"+classC.split("(#|\\/)")[classB.split("(#|\\/)").length-1];
       String noClassCB =  "No"+classC.split("(#|\\/)")[classB.split("(#|\\/)").length-1]+classB.split("(#|\\/)")[classB.split("(#|\\/)").length-1];
 
       /*Preconditions*/
-      ArrayList<String> precond = new ArrayList<>();
-      precond.add("Class(<"+classA+">)");
-      precond.add("Class(<"+classB+">)");
-      precond.add("Class(<"+classC+">)");
-      precond.add("Property(<"+R+">)");
-      testCase.getPrecondition().addAll(precond);
+      ArrayList<String> precondition = new ArrayList<>();
+      precondition.add("Class(<"+classA+">)");
+      precondition.add("Class(<"+classB+">)");
+      precondition.add("Class(<"+classC+">)");
+      precondition.add("Property(<"+relation+">)");
+      testCase.getPrecondition().addAll(precondition);
 
       /*Axioms to be added*/
       /*Preconditions*/
       String base = "";
       OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
-      OWLOntology ont = null;
+      OWLOntology ontology = null;
       try {
-         ont = manager.createOntology(IRI.create(base));
+         ontology = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont = null;
+         ontology = null;
       }
       OWLDataFactory dataFactory = manager.getOWLDataFactory();
       OWLClass classOWLB = dataFactory.getOWLClass(IRI.create(classB));
@@ -2456,97 +2453,97 @@ public class Implementations {
       OWLClass classOWLA1 = dataFactory.getOWLClass(IRI.create(classA1));
       OWLClass noclassOWLCB = dataFactory.getOWLClass(IRI.create(noClassCB));
       OWLSubClassOfAxiom subClassOfAxiom = dataFactory.getOWLSubClassOfAxiom(classOWLA1, dataFactory.getOWLClass(IRI.create(classA)));
-      OWLDeclarationAxiom axiomClass = dataFactory.getOWLDeclarationAxiom(classOWLB);
-      OWLDeclarationAxiom axiomClass1 = dataFactory.getOWLDeclarationAxiom(noClassOWLB);
-      OWLDeclarationAxiom axiomClass2 = dataFactory.getOWLDeclarationAxiom(classOWLC);
-      OWLDeclarationAxiom axiomClass3 = dataFactory.getOWLDeclarationAxiom(noClassOWLC);
-      OWLDeclarationAxiom axiomClass4 = dataFactory.getOWLDeclarationAxiom(classOWLA1);
-      OWLDeclarationAxiom axiomClass5 = dataFactory.getOWLDeclarationAxiom(noclassOWLCB);
-      OWLEquivalentClassesAxiom equivalentClassesAxiom = dataFactory.getOWLEquivalentClassesAxiom(noClassOWLB, dataFactory.getOWLObjectComplementOf(classOWLB));
+      OWLDeclarationAxiom axiomClass1 = dataFactory.getOWLDeclarationAxiom(classOWLB);
+      OWLDeclarationAxiom axiomClass2 = dataFactory.getOWLDeclarationAxiom(noClassOWLB);
+      OWLDeclarationAxiom axiomClass3 = dataFactory.getOWLDeclarationAxiom(classOWLC);
+      OWLDeclarationAxiom axiomClass4 = dataFactory.getOWLDeclarationAxiom(noClassOWLC);
+      OWLDeclarationAxiom axiomClass5 = dataFactory.getOWLDeclarationAxiom(classOWLA1);
+      OWLEquivalentClassesAxiom equivalentClassesAxiom1 = dataFactory.getOWLEquivalentClassesAxiom(noClassOWLB, dataFactory.getOWLObjectComplementOf(classOWLB));
       OWLEquivalentClassesAxiom equivalentClassesAxiom2 = dataFactory.getOWLEquivalentClassesAxiom(noClassOWLC, dataFactory.getOWLObjectComplementOf(classOWLC));
       OWLEquivalentClassesAxiom equivalentClassesAxiom3 = dataFactory.getOWLEquivalentClassesAxiom(noclassOWLCB, dataFactory.getOWLObjectComplementOf(classOWLC));
       OWLEquivalentClassesAxiom equivalentClassesAxiom4 = dataFactory.getOWLEquivalentClassesAxiom(noclassOWLCB, dataFactory.getOWLObjectComplementOf(classOWLB));
-      manager.applyChanges(manager.addAxiom(ont, axiomClass));
-      manager.applyChanges(manager.addAxiom(ont, axiomClass1));
-      manager.applyChanges(manager.addAxiom(ont, axiomClass2));
-      manager.applyChanges(manager.addAxiom(ont, axiomClass3));
-      manager.applyChanges(manager.addAxiom(ont, axiomClass4));
-      manager.applyChanges(manager.addAxiom(ont, subClassOfAxiom));
-      manager.applyChanges(manager.addAxiom(ont, equivalentClassesAxiom));
-      manager.applyChanges(manager.addAxiom(ont, equivalentClassesAxiom2));
-      manager.applyChanges(manager.addAxiom(ont, equivalentClassesAxiom3));
-      manager.applyChanges(manager.addAxiom(ont, equivalentClassesAxiom4));
+
+      manager.applyChanges(manager.addAxiom(ontology, axiomClass1));
+      manager.applyChanges(manager.addAxiom(ontology, axiomClass2));
+      manager.applyChanges(manager.addAxiom(ontology, axiomClass3));
+      manager.applyChanges(manager.addAxiom(ontology, axiomClass4));
+      manager.applyChanges(manager.addAxiom(ontology, axiomClass5));
+      manager.applyChanges(manager.addAxiom(ontology, subClassOfAxiom));
+      manager.applyChanges(manager.addAxiom(ontology, equivalentClassesAxiom1));
+      manager.applyChanges(manager.addAxiom(ontology, equivalentClassesAxiom2));
+      manager.applyChanges(manager.addAxiom(ontology, equivalentClassesAxiom3));
+      manager.applyChanges(manager.addAxiom(ontology, equivalentClassesAxiom4));
       testCase.setPreparationaxioms(manager.getOntology(IRI.create(base)));
-      manager.removeOntology(ont);
+      manager.removeOntology(ontology);
       /*Assertions*/
-      OWLOntology ont1 = null;
+      OWLOntology ontology1 = null;
       try {
-         ont1 = manager.createOntology(IRI.create(base));
+         ontology1 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont1 = null;
+         ontology1 = null;
       }
-      OWLObjectProperty prop = dataFactory.getOWLObjectProperty(IRI.create(R));
+      OWLObjectProperty prop = dataFactory.getOWLObjectProperty(IRI.create(relation));
       OWLSubClassOfAxiom subClassOfAxiom1 = dataFactory.getOWLSubClassOfAxiom(classOWLA1,
               dataFactory.getOWLObjectSomeValuesFrom(prop, classOWLB));
 
-      manager.applyChanges(manager.addAxiom(ont1, subClassOfAxiom1));
+      manager.applyChanges(manager.addAxiom(ontology1, subClassOfAxiom1));
       OWLOntology assertion1 = manager.getOntology(IRI.create(base));
-      String expectedoutputassertion1 = "consistent";
+      String expectedOutAssertion1 = "consistent";
 
-      manager.removeOntology(ont1);
+      manager.removeOntology(ontology1);
 
-      OWLOntology ont2 = null;
+      OWLOntology ontology2 = null;
       try {
-         ont2 = manager.createOntology(IRI.create(base));
+         ontology2 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont2 = null;
+         ontology2 = null;
       }
       OWLSubClassOfAxiom subClassOfAxiom2 = dataFactory.getOWLSubClassOfAxiom(classOWLA1,
               dataFactory.getOWLObjectSomeValuesFrom(prop, classOWLC));
 
-      manager.applyChanges(manager.addAxiom(ont2, subClassOfAxiom2));
+      manager.applyChanges(manager.addAxiom(ontology2, subClassOfAxiom2));
       OWLOntology assertion2 = manager.getOntology(IRI.create(base));
-      String expectedoutputassertion2 = "consistent";
+      String expectedOutAssertion2 = "consistent";
 
-      manager.removeOntology(ont2);
+      manager.removeOntology(ontology2);
 
-      OWLOntology ont3 = null;
+      OWLOntology ontology3 = null;
       try {
-         ont3 = manager.createOntology(IRI.create(base));
+         ontology3 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont3 = null;
+         ontology3 = null;
       }
       OWLSubClassOfAxiom subClassOfAxiom3 = dataFactory.getOWLSubClassOfAxiom(classOWLA1,
               dataFactory.getOWLObjectSomeValuesFrom(prop, noclassOWLCB));
 
-      manager.applyChanges(manager.addAxiom(ont3, subClassOfAxiom3));
+      manager.applyChanges(manager.addAxiom(ontology3, subClassOfAxiom3));
       OWLOntology assertion3 = manager.getOntology(IRI.create(base));
 
-      manager.removeOntology(ont3);
+      manager.removeOntology(ontology3);
 
-      String expectedoutputassertion3 ="";
-      expectedoutputassertion3 = "unsatisfiable";
+      String expectedOutAssertion3 ="";
+      expectedOutAssertion3 = "unsatisfiable";
 
-      LinkedHashMap<String, OWLOntology> hashinput = new LinkedHashMap();
-      hashinput.put("Assertion 1", assertion1);
-      hashinput.put("Assertion 2", assertion2);
-      hashinput.put("Assertion 3", assertion3);
+      LinkedHashMap<String, OWLOntology> hashInput = new LinkedHashMap();
+      hashInput.put("Assertion 1", assertion1);
+      hashInput.put("Assertion 2", assertion2);
+      hashInput.put("Assertion 3", assertion3);
 
-      LinkedHashMap<String, String> hashoutput = new LinkedHashMap();
-      hashoutput.put("Assertion 1",expectedoutputassertion1);
-      hashoutput.put("Assertion 2",expectedoutputassertion2);
-      hashoutput.put("Assertion 3",expectedoutputassertion3);
+      LinkedHashMap<String, String> hashOutput = new LinkedHashMap();
+      hashOutput.put("Assertion 1",expectedOutAssertion1);
+      hashOutput.put("Assertion 2",expectedOutAssertion2);
+      hashOutput.put("Assertion 3",expectedOutAssertion3);
 
       for (Map.Entry<String, String> entry : testCase.getAxiomExpectedResultAxioms().entrySet()) {
-         hashoutput.put(entry.getKey(), entry.getValue());
+         hashOutput.put(entry.getKey(), entry.getValue());
       }
 
-      testCase.setAxiomExpectedResultAxioms(hashoutput);
+      testCase.setAxiomExpectedResultAxioms(hashOutput);
 
       for (Map.Entry<String, OWLOntology> entry : testCase.getAssertionsAxioms().entrySet()) {
-         hashinput.put(entry.getKey(), entry.getValue());
+         hashInput.put(entry.getKey(), entry.getValue());
       }
-      testCase.setAssertionsAxioms(hashinput);
+      testCase.setAssertionsAxioms(hashInput);
       return testCase;
    }
 
@@ -2557,34 +2554,34 @@ public class Implementations {
 
       /*Generation of classes*/
       m.find();
-      String classA = m.group(1).toString();
+      String classA = m.group(1);
       String classA1 =  classA.split("(#|\\/)")[classA.split("(#)").length-1]+"1";
 
-      String R =m.group(2).toString();
-      String classB = m.group(3).toString();
+      String relation =m.group(2);
+      String classB = m.group(3);
 
       String noClassB =  "No"+classB.split("(#|\\/)")[classB.split("(#|\\/)").length-1];
 
-      String classC = m.group(4).toString();
+      String classC = m.group(4);
       String noClassC =  "No"+classC.split("(#|\\/)")[classB.split("(#|\\/)").length-1];
 
       /*Preconditions*/
-      ArrayList<String> precond = new ArrayList<>();
-      precond.add("Class(<"+classA+">)");
-      precond.add("Class(<"+classB+">)");
-      precond.add("Class(<"+classC+">)");
-      precond.add("Property(<"+R+">)");
-      testCase.getPrecondition().addAll(precond);
+      ArrayList<String> precondition = new ArrayList<>();
+      precondition.add("Class(<"+classA+">)");
+      precondition.add("Class(<"+classB+">)");
+      precondition.add("Class(<"+classC+">)");
+      precondition.add("Property(<"+relation+">)");
+      testCase.getPrecondition().addAll(precondition);
 
       /*Axioms to be added*/
       /*Preconditions*/
       String base = "";
       OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
-      OWLOntology ont = null;
+      OWLOntology ontology = null;
       try {
-         ont = manager.createOntology(IRI.create(base));
+         ontology = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont = null;
+         ontology = null;
       }
       OWLDataFactory dataFactory = manager.getOWLDataFactory();
       OWLClass classOWLB = dataFactory.getOWLClass(IRI.create(classB));
@@ -2592,133 +2589,134 @@ public class Implementations {
       OWLClass classOWLC = dataFactory.getOWLClass(IRI.create(classC));
       OWLClass noClassOWLC = dataFactory.getOWLClass(IRI.create(noClassC));
       OWLClass classOWLA1 = dataFactory.getOWLClass(IRI.create(classA1));
-      OWLSubClassOfAxiom subClassOfAxiom = dataFactory.getOWLSubClassOfAxiom(classOWLA1, dataFactory.getOWLClass(IRI.create(classA)));
-      OWLDeclarationAxiom axiomClass = dataFactory.getOWLDeclarationAxiom(classOWLB);
-      OWLDeclarationAxiom axiomClass1 = dataFactory.getOWLDeclarationAxiom(noClassOWLB);
-      OWLDeclarationAxiom axiomClass2 = dataFactory.getOWLDeclarationAxiom(classOWLC);
-      OWLDeclarationAxiom axiomClass3 = dataFactory.getOWLDeclarationAxiom(noClassOWLC);
-      OWLDeclarationAxiom axiomClass4 = dataFactory.getOWLDeclarationAxiom(classOWLA1);
-      OWLEquivalentClassesAxiom equivalentClassesAxiom = dataFactory.getOWLEquivalentClassesAxiom(noClassOWLB, dataFactory.getOWLObjectComplementOf(classOWLB));
+      OWLSubClassOfAxiom subClassOfAxiom1 = dataFactory.getOWLSubClassOfAxiom(classOWLA1, dataFactory.getOWLClass(IRI.create(classA)));
+      OWLDeclarationAxiom axiomClass1 = dataFactory.getOWLDeclarationAxiom(classOWLB);
+      OWLDeclarationAxiom axiomClass2 = dataFactory.getOWLDeclarationAxiom(noClassOWLB);
+      OWLDeclarationAxiom axiomClass3 = dataFactory.getOWLDeclarationAxiom(classOWLC);
+      OWLDeclarationAxiom axiomClass4 = dataFactory.getOWLDeclarationAxiom(noClassOWLC);
+      OWLDeclarationAxiom axiomClass5 = dataFactory.getOWLDeclarationAxiom(classOWLA1);
+      OWLEquivalentClassesAxiom equivalentClassesAxiom1 = dataFactory.getOWLEquivalentClassesAxiom(noClassOWLB, dataFactory.getOWLObjectComplementOf(classOWLB));
       OWLEquivalentClassesAxiom equivalentClassesAxiom2 = dataFactory.getOWLEquivalentClassesAxiom(noClassOWLC, dataFactory.getOWLObjectComplementOf(classOWLC));
-      manager.applyChanges(manager.addAxiom(ont, axiomClass));
-      manager.applyChanges(manager.addAxiom(ont, axiomClass1));
-      manager.applyChanges(manager.addAxiom(ont, axiomClass2));
-      manager.applyChanges(manager.addAxiom(ont, axiomClass3));
-      manager.applyChanges(manager.addAxiom(ont, axiomClass4));
-      manager.applyChanges(manager.addAxiom(ont, subClassOfAxiom));
-      manager.applyChanges(manager.addAxiom(ont, equivalentClassesAxiom));
-      manager.applyChanges(manager.addAxiom(ont, equivalentClassesAxiom2));
-      testCase.setPreparationaxioms(manager.getOntology(IRI.create(base)));
-      manager.removeOntology(ont);
 
-      OWLOntology ont1 = null;
+      manager.applyChanges(manager.addAxiom(ontology, axiomClass1));
+      manager.applyChanges(manager.addAxiom(ontology, axiomClass2));
+      manager.applyChanges(manager.addAxiom(ontology, axiomClass3));
+      manager.applyChanges(manager.addAxiom(ontology, axiomClass4));
+      manager.applyChanges(manager.addAxiom(ontology, axiomClass5));
+      manager.applyChanges(manager.addAxiom(ontology, subClassOfAxiom1));
+      manager.applyChanges(manager.addAxiom(ontology, equivalentClassesAxiom1));
+      manager.applyChanges(manager.addAxiom(ontology, equivalentClassesAxiom2));
+      testCase.setPreparationaxioms(manager.getOntology(IRI.create(base)));
+      manager.removeOntology(ontology);
+
+      OWLOntology ontology1 = null;
       try {
-         ont1 = manager.createOntology(IRI.create(base));
+         ontology1 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont1 = null;
+         ontology1 = null;
       }
-      OWLObjectProperty prop = dataFactory.getOWLObjectProperty(IRI.create(R));
-      OWLSubClassOfAxiom subClassOfAxiom1 = dataFactory.getOWLSubClassOfAxiom(classOWLA1,
+      OWLObjectProperty prop = dataFactory.getOWLObjectProperty(IRI.create(relation));
+      OWLSubClassOfAxiom subClassOfAxiom2 = dataFactory.getOWLSubClassOfAxiom(classOWLA1,
               dataFactory.getOWLObjectAllValuesFrom(prop, dataFactory.getOWLObjectIntersectionOf(classOWLB)));
 
-      manager.applyChanges(manager.addAxiom(ont1, subClassOfAxiom1));
+      manager.applyChanges(manager.addAxiom(ontology1, subClassOfAxiom2));
       OWLOntology assertion1 = manager.getOntology(IRI.create(base));
-      String expectedoutputassertion1 = "consistent";
+      String expectedOutAssertion1 = "consistent";
 
-      manager.removeOntology(ont1);
+      manager.removeOntology(ontology1);
 
-      OWLOntology ont2 = null;
+      OWLOntology ontology2 = null;
       try {
-         ont2 = manager.createOntology(IRI.create(base));
+         ontology2 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont2 = null;
-      }
-      OWLSubClassOfAxiom subClassOfAxiom2 = dataFactory.getOWLSubClassOfAxiom(classOWLA1,
-              dataFactory.getOWLObjectAllValuesFrom(prop, dataFactory.getOWLObjectIntersectionOf(noClassOWLB, noClassOWLC)));
-
-      manager.applyChanges(manager.addAxiom(ont2, subClassOfAxiom2));
-      OWLOntology assertion2 = manager.getOntology(IRI.create(base));
-
-      manager.removeOntology(ont2);
-
-      String expectedoutputassertion2 ="";
-      expectedoutputassertion2 = "unsatisfiable";
-
-      OWLOntology ont3 = null;
-      try {
-         ont3 = manager.createOntology(IRI.create(base));
-      } catch (OWLOntologyCreationException e) {
-         ont3 = null;
+         ontology2 = null;
       }
       OWLSubClassOfAxiom subClassOfAxiom3 = dataFactory.getOWLSubClassOfAxiom(classOWLA1,
-              dataFactory.getOWLObjectAllValuesFrom(prop, dataFactory.getOWLObjectIntersectionOf(classOWLB, noClassOWLC)));
+              dataFactory.getOWLObjectAllValuesFrom(prop, dataFactory.getOWLObjectIntersectionOf(noClassOWLB, noClassOWLC)));
 
-      manager.applyChanges(manager.addAxiom(ont3, subClassOfAxiom3));
-      OWLOntology assertion3 = manager.getOntology(IRI.create(base));
+      manager.applyChanges(manager.addAxiom(ontology2, subClassOfAxiom3));
+      OWLOntology assertion2 = manager.getOntology(IRI.create(base));
 
-      manager.removeOntology(ont3);
+      manager.removeOntology(ontology2);
 
-      String expectedoutputassertion3 = "";
+      String expectedOutAssertion2 ="";
+      expectedOutAssertion2 = "unsatisfiable";
 
-      expectedoutputassertion3 = "unsatisfiable";
-
-      OWLOntology ont4 = null;
+      OWLOntology ontology3 = null;
       try {
-         ont4 = manager.createOntology(IRI.create(base));
+         ontology3 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont4 = null;
+         ontology3 = null;
       }
       OWLSubClassOfAxiom subClassOfAxiom4 = dataFactory.getOWLSubClassOfAxiom(classOWLA1,
+              dataFactory.getOWLObjectAllValuesFrom(prop, dataFactory.getOWLObjectIntersectionOf(classOWLB, noClassOWLC)));
+
+      manager.applyChanges(manager.addAxiom(ontology3, subClassOfAxiom4));
+      OWLOntology assertion3 = manager.getOntology(IRI.create(base));
+
+      manager.removeOntology(ontology3);
+
+      String expectedOutAssertion3 = "";
+
+      expectedOutAssertion3 = "unsatisfiable";
+
+      OWLOntology ontology4 = null;
+      try {
+         ontology4 = manager.createOntology(IRI.create(base));
+      } catch (OWLOntologyCreationException e) {
+         ontology4 = null;
+      }
+      OWLSubClassOfAxiom subClassOfAxiom5 = dataFactory.getOWLSubClassOfAxiom(classOWLA1,
               dataFactory.getOWLObjectAllValuesFrom(prop, dataFactory.getOWLObjectIntersectionOf(classOWLC, noClassOWLB)));
 
-      manager.applyChanges(manager.addAxiom(ont4, subClassOfAxiom4));
+      manager.applyChanges(manager.addAxiom(ontology4, subClassOfAxiom5));
       OWLOntology assertion4 = manager.getOntology(IRI.create(base));
 
-      manager.removeOntology(ont3);
+      manager.removeOntology(ontology3);
 
-      String expectedoutputassertion4 = "";
+      String expectedOutAssertion4 = "";
 
-      expectedoutputassertion4 = "unsatisfiable";
+      expectedOutAssertion4 = "unsatisfiable";
 
 
-      OWLSubClassOfAxiom subClassOfAxiom5 = dataFactory.getOWLSubClassOfAxiom(classOWLA1,
+      OWLSubClassOfAxiom subClassOfAxiom6 = dataFactory.getOWLSubClassOfAxiom(classOWLA1,
               dataFactory.getOWLObjectAllValuesFrom(prop, classOWLC));
 
-      manager.applyChanges(manager.addAxiom(ont4, subClassOfAxiom5));
+      manager.applyChanges(manager.addAxiom(ontology4, subClassOfAxiom6));
       OWLOntology assertion5 = manager.getOntology(IRI.create(base));
 
-      manager.removeOntology(ont3);
+      manager.removeOntology(ontology3);
 
-      String expectedoutputassertion5 = "";
+      String expectedOutAssertion5 = "";
 
-      expectedoutputassertion5 = "consistent";
+      expectedOutAssertion5 = "consistent";
 
 
-      LinkedHashMap<String, OWLOntology> hashinput = new LinkedHashMap();
-      hashinput.put("Assertion 1", assertion1);
-      hashinput.put("Assertion 2", assertion2);
-      hashinput.put("Assertion 3", assertion3);
-      hashinput.put("Assertion 4", assertion4);
-      hashinput.put("Assertion 5", assertion5);
+      LinkedHashMap<String, OWLOntology> hashInput = new LinkedHashMap();
+      hashInput.put("Assertion 1", assertion1);
+      hashInput.put("Assertion 2", assertion2);
+      hashInput.put("Assertion 3", assertion3);
+      hashInput.put("Assertion 4", assertion4);
+      hashInput.put("Assertion 5", assertion5);
 
-      LinkedHashMap<String, String> hashoutput = new LinkedHashMap();
-      hashoutput.put("Assertion 1",expectedoutputassertion1);
-      hashoutput.put("Assertion 2",expectedoutputassertion2);
-      hashoutput.put("Assertion 3",expectedoutputassertion3);
-      hashoutput.put("Assertion 4",expectedoutputassertion4);
-      hashoutput.put("Assertion 5",expectedoutputassertion5);
+      LinkedHashMap<String, String> hashOutput = new LinkedHashMap();
+      hashOutput.put("Assertion 1",expectedOutAssertion1);
+      hashOutput.put("Assertion 2",expectedOutAssertion2);
+      hashOutput.put("Assertion 3",expectedOutAssertion3);
+      hashOutput.put("Assertion 4",expectedOutAssertion4);
+      hashOutput.put("Assertion 5",expectedOutAssertion5);
 
 
       for (Map.Entry<String, String> entry : testCase.getAxiomExpectedResultAxioms().entrySet()) {
-         hashoutput.put(entry.getKey(), entry.getValue());
+         hashOutput.put(entry.getKey(), entry.getValue());
       }
 
-      testCase.setAxiomExpectedResultAxioms(hashoutput);
+      testCase.setAxiomExpectedResultAxioms(hashOutput);
 
       for (Map.Entry<String, OWLOntology> entry : testCase.getAssertionsAxioms().entrySet()) {
-         hashinput.put(entry.getKey(), entry.getValue());
+         hashInput.put(entry.getKey(), entry.getValue());
       }
-      testCase.setAssertionsAxioms(hashinput);
+      testCase.setAssertionsAxioms(hashInput);
       return testCase;
    }
 
@@ -2729,111 +2727,107 @@ public class Implementations {
 
       /*Generation of classes*/
       m.find();
-      String classA = m.group(1).toString();
+      String classA = m.group(1);
       String classA1 = classA+"1>";
-      String R = m.group(2).toString();
-      String classB = "";
-      classB = m.group(3).toString();
+      String R = m.group(2);
+      String classB = m.group(3);
       String noClassB =  "No"+classB.split("(#|\\/)")[classB.split("(#|\\/)").length-1];
 
       /*Preconditions*/
-      ArrayList<String> precond = new ArrayList<>();
-      precond.add("Class(<"+classA+">)");
-      precond.add("Property(<"+R+">)");
-      precond.add("Class(<"+classB+">)");
-      testCase.getPrecondition().addAll(precond);
-
-      String classA1withouturi = classA1.split("(#|\\/)")[classA1.split("(#|\\/)").length-1];
-      String classBwithouturi = classB.split("(#|\\/)")[noClassB.split("(#|\\/)").length-1];
+      ArrayList<String> precondition = new ArrayList<>();
+      precondition.add("Class(<"+classA+">)");
+      precondition.add("Property(<"+R+">)");
+      precondition.add("Class(<"+classB+">)");
+      testCase.getPrecondition().addAll(precondition);
 
 
       /*Axioms to be added -- we need to test if the relation is transitive*/
       /*Preparation*/
-      /*Preparation*/
       String base = "";
       OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
-      OWLOntology ont = null;
+      OWLOntology ontology = null;
       try {
-         ont = manager.createOntology(IRI.create(base));
+         ontology = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont = null;
+         ontology = null;
       }
       OWLDataFactory dataFactory = manager.getOWLDataFactory();
 
       OWLClass classOWLB = dataFactory.getOWLClass(IRI.create(classB));
       OWLClass noClassOWLB = dataFactory.getOWLClass(IRI.create(noClassB));
-      OWLDeclarationAxiom axiomClass = dataFactory.getOWLDeclarationAxiom(classOWLB);
-      OWLDeclarationAxiom axiomClass1 = dataFactory.getOWLDeclarationAxiom(noClassOWLB);
+      OWLDeclarationAxiom axiomClass1 = dataFactory.getOWLDeclarationAxiom(classOWLB);
+      OWLDeclarationAxiom axiomClass2 = dataFactory.getOWLDeclarationAxiom(noClassOWLB);
       OWLEquivalentClassesAxiom equivalentClassesAxiom = dataFactory.getOWLEquivalentClassesAxiom(noClassOWLB, dataFactory.getOWLObjectComplementOf(classOWLB));
       OWLClass classOWLA = dataFactory.getOWLClass(IRI.create(classA));
       OWLClass classOWLA1 = dataFactory.getOWLClass(IRI.create(classA1));
-      OWLDeclarationAxiom axiomclassA1 = dataFactory.getOWLDeclarationAxiom(classOWLA1);
-      OWLNamedIndividual indOWLA1 = dataFactory.getOWLNamedIndividual(IRI.create("ind1"));
-      OWLDeclarationAxiom axiomInd1 = dataFactory.getOWLDeclarationAxiom(indOWLA1);
+      OWLDeclarationAxiom axiomClassA1 = dataFactory.getOWLDeclarationAxiom(classOWLA1);
+      OWLNamedIndividual indOWLA1 = dataFactory.getOWLNamedIndividual(IRI.create("individual1"));
+      OWLDeclarationAxiom axiomIndividual1 = dataFactory.getOWLDeclarationAxiom(indOWLA1);
       OWLClassAssertionAxiom classAssertionAxiom = dataFactory.getOWLClassAssertionAxiom(classOWLA1, indOWLA1);
-      OWLNamedIndividual indOWLB = dataFactory.getOWLNamedIndividual(IRI.create("ind2"));
-      OWLDeclarationAxiom axiomInd2 = dataFactory.getOWLDeclarationAxiom(indOWLB);
+      OWLNamedIndividual indOWLB = dataFactory.getOWLNamedIndividual(IRI.create("individual2"));
+      OWLDeclarationAxiom axiomIndividual2 = dataFactory.getOWLDeclarationAxiom(indOWLB);
       OWLClassAssertionAxiom classAssertionAxiom2 = dataFactory.getOWLClassAssertionAxiom(noClassOWLB, indOWLB);
-      manager.applyChanges(manager.addAxiom(ont, axiomClass));
-      manager.applyChanges(manager.addAxiom(ont, axiomClass1));
-      manager.applyChanges(manager.addAxiom(ont, equivalentClassesAxiom));
-      manager.applyChanges(manager.addAxiom(ont, axiomInd1));
-      manager.applyChanges(manager.addAxiom(ont, axiomclassA1));
-      manager.applyChanges(manager.addAxiom(ont, classAssertionAxiom));
-      manager.applyChanges(manager.addAxiom(ont, axiomInd2));
-      manager.applyChanges(manager.addAxiom(ont, classAssertionAxiom2));
+
+      manager.applyChanges(manager.addAxiom(ontology, axiomClass1));
+      manager.applyChanges(manager.addAxiom(ontology, axiomClass2));
+      manager.applyChanges(manager.addAxiom(ontology, equivalentClassesAxiom));
+      manager.applyChanges(manager.addAxiom(ontology, axiomIndividual1));
+      manager.applyChanges(manager.addAxiom(ontology, axiomClassA1));
+      manager.applyChanges(manager.addAxiom(ontology, classAssertionAxiom));
+      manager.applyChanges(manager.addAxiom(ontology, axiomIndividual2));
+      manager.applyChanges(manager.addAxiom(ontology, classAssertionAxiom2));
       testCase.setPreparationaxioms(manager.getOntology(IRI.create(base)));
-      manager.removeOntology(ont);
+      manager.removeOntology(ontology);
 
       /*Assertions*/
-      OWLOntology ont1 = null;
+      OWLOntology ontology1 = null;
       try {
-         ont1 = manager.createOntology(IRI.create(base));
+         ontology1 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont1 = null;
+         ontology1 = null;
       }
-      OWLSubClassOfAxiom axiomsubclass1= dataFactory.getOWLSubClassOfAxiom(classOWLA1, classOWLA);
+      OWLSubClassOfAxiom axiomSubclass1= dataFactory.getOWLSubClassOfAxiom(classOWLA1, classOWLA);
       OWLObjectProperty prop = dataFactory.getOWLObjectProperty(IRI.create(R));
-      OWLSubClassOfAxiom axiomsubclass2 = dataFactory.getOWLSubClassOfAxiom( classOWLA1, dataFactory.getOWLObjectAllValuesFrom(prop,dataFactory.getOWLObjectOneOf(indOWLB)));
-      OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiom = dataFactory.getOWLObjectPropertyAssertionAxiom(prop, indOWLA1, indOWLB);
-      manager.applyChanges(manager.addAxiom(ont1, axiomsubclass1));
-      manager.applyChanges(manager.addAxiom(ont1, axiomsubclass2));
-      manager.applyChanges(manager.addAxiom(ont1, objectPropertyAssertionAxiom));
+      OWLSubClassOfAxiom axiomSubclass2 = dataFactory.getOWLSubClassOfAxiom( classOWLA1, dataFactory.getOWLObjectAllValuesFrom(prop,dataFactory.getOWLObjectOneOf(indOWLB)));
+      OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiom1 = dataFactory.getOWLObjectPropertyAssertionAxiom(prop, indOWLA1, indOWLB);
+      manager.applyChanges(manager.addAxiom(ontology1, axiomSubclass1));
+      manager.applyChanges(manager.addAxiom(ontology1, axiomSubclass2));
+      manager.applyChanges(manager.addAxiom(ontology1, objectPropertyAssertionAxiom1));
       OWLOntology assertion1 = manager.getOntology(IRI.create(base));
-      String expectedoutputassertion1 = "inconsistent";
-      manager.removeOntology(ont1);
+      String expectedOutAssertion1 = "inconsistent";
+      manager.removeOntology(ontology1);
 
-      OWLOntology ont2 = null;
+      OWLOntology ontology2 = null;
       try {
-         ont2 = manager.createOntology(IRI.create(base));
+         ontology2 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont2 = null;
+         ontology2 = null;
       }
-      OWLNamedIndividual indOWL3 = dataFactory.getOWLNamedIndividual(IRI.create("ind3"));
-      OWLDeclarationAxiom axiomInd3 = dataFactory.getOWLDeclarationAxiom(indOWL3);
-      OWLSubClassOfAxiom axiomsubclass3 = dataFactory.getOWLSubClassOfAxiom( classOWLA1, dataFactory.getOWLObjectAllValuesFrom(prop,dataFactory.getOWLObjectOneOf(indOWLB, indOWL3)));
+      OWLNamedIndividual indOWL3 = dataFactory.getOWLNamedIndividual(IRI.create("individual3"));
+      OWLDeclarationAxiom axiomIndividual3 = dataFactory.getOWLDeclarationAxiom(indOWL3);
+      OWLSubClassOfAxiom axiomSubclass3 = dataFactory.getOWLSubClassOfAxiom( classOWLA1, dataFactory.getOWLObjectAllValuesFrom(prop,dataFactory.getOWLObjectOneOf(indOWLB, indOWL3)));
       OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiom2 = dataFactory.getOWLObjectPropertyAssertionAxiom(prop, indOWLA1, indOWLB);
       OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiom3 = dataFactory.getOWLObjectPropertyAssertionAxiom(prop, indOWLA1, indOWL3);
-      manager.applyChanges(manager.addAxiom(ont2, axiomInd3));
-      manager.applyChanges(manager.addAxiom(ont2, axiomsubclass1));
-      manager.applyChanges(manager.addAxiom(ont2, axiomsubclass3));
-      manager.applyChanges(manager.addAxiom(ont2, classAssertionAxiom));
-      manager.applyChanges(manager.addAxiom(ont2, objectPropertyAssertionAxiom2));
-      manager.applyChanges(manager.addAxiom(ont2, classAssertionAxiom2));
-      manager.applyChanges(manager.addAxiom(ont2, objectPropertyAssertionAxiom3));
+      manager.applyChanges(manager.addAxiom(ontology2, axiomIndividual3));
+      manager.applyChanges(manager.addAxiom(ontology2, axiomSubclass1));
+      manager.applyChanges(manager.addAxiom(ontology2, axiomSubclass3));
+      manager.applyChanges(manager.addAxiom(ontology2, classAssertionAxiom));
+      manager.applyChanges(manager.addAxiom(ontology2, objectPropertyAssertionAxiom2));
+      manager.applyChanges(manager.addAxiom(ontology2, classAssertionAxiom2));
+      manager.applyChanges(manager.addAxiom(ontology2, objectPropertyAssertionAxiom3));
       OWLOntology assertion2 = manager.getOntology(IRI.create(base));
 
-      manager.removeOntology(ont2);
+      manager.removeOntology(ontology2);
 
-      String expectedoutputassertion2 = "consistent";
+      String expectedOutAssertion2 = "consistent";
 
 
       /*Assertions*/
-      OWLOntology ont3 = null;
+      OWLOntology ontology3 = null;
       try {
-         ont3 = manager.createOntology(IRI.create(base));
+         ontology3 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont3 = null;
+         ontology3 = null;
       }
       String inverse = "";
       if(R.equals("ispartof"))
@@ -2842,58 +2836,58 @@ public class Implementations {
          inverse = "isPartOf";
 
       OWLObjectProperty propInverse = dataFactory.getOWLObjectProperty(IRI.create(inverse));
-      OWLSubClassOfAxiom axiomsubclass4 = dataFactory.getOWLSubClassOfAxiom( classOWLB, dataFactory.getOWLObjectAllValuesFrom(propInverse,dataFactory.getOWLObjectOneOf(indOWLA1)));
+      OWLSubClassOfAxiom axiomSubclass4 = dataFactory.getOWLSubClassOfAxiom( classOWLB, dataFactory.getOWLObjectAllValuesFrom(propInverse,dataFactory.getOWLObjectOneOf(indOWLA1)));
       OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiom4 = dataFactory.getOWLObjectPropertyAssertionAxiom(propInverse, indOWLB, indOWLA1);
-      manager.applyChanges(manager.addAxiom(ont3, axiomsubclass1));
-      manager.applyChanges(manager.addAxiom(ont3, axiomsubclass4));
-      manager.applyChanges(manager.addAxiom(ont3, objectPropertyAssertionAxiom4));
+      manager.applyChanges(manager.addAxiom(ontology3, axiomSubclass1));
+      manager.applyChanges(manager.addAxiom(ontology3, axiomSubclass4));
+      manager.applyChanges(manager.addAxiom(ontology3, objectPropertyAssertionAxiom4));
       OWLOntology assertion3 = manager.getOntology(IRI.create(base));
-      String expectedoutputassertion3 = "inconsistent";
-      manager.removeOntology(ont1);
+      String expectedOutAssertion3 = "inconsistent";
+      manager.removeOntology(ontology1);
 
-      OWLOntology ont4 = null;
+      OWLOntology ontology4 = null;
       try {
-         ont4 = manager.createOntology(IRI.create(base));
+         ontology4 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont4 = null;
+         ontology4 = null;
       }
 
-      OWLSubClassOfAxiom axiomsubclass5 = dataFactory.getOWLSubClassOfAxiom( classOWLB, dataFactory.getOWLObjectAllValuesFrom(propInverse,dataFactory.getOWLObjectOneOf(indOWLA1, indOWL3)));
+      OWLSubClassOfAxiom axiomSubclass5 = dataFactory.getOWLSubClassOfAxiom( classOWLB, dataFactory.getOWLObjectAllValuesFrom(propInverse,dataFactory.getOWLObjectOneOf(indOWLA1, indOWL3)));
       OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiom5 = dataFactory.getOWLObjectPropertyAssertionAxiom(propInverse, indOWLB, indOWLA1);
       OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiom6 = dataFactory.getOWLObjectPropertyAssertionAxiom(propInverse, indOWLB, indOWL3);
-      manager.applyChanges(manager.addAxiom(ont4, axiomInd3));
-      manager.applyChanges(manager.addAxiom(ont4, axiomsubclass1));
-      manager.applyChanges(manager.addAxiom(ont4, classAssertionAxiom));
-      manager.applyChanges(manager.addAxiom(ont4, objectPropertyAssertionAxiom5));
-      manager.applyChanges(manager.addAxiom(ont4, axiomsubclass5));
-      manager.applyChanges(manager.addAxiom(ont4, objectPropertyAssertionAxiom6));
+      manager.applyChanges(manager.addAxiom(ontology4, axiomIndividual3));
+      manager.applyChanges(manager.addAxiom(ontology4, axiomSubclass1));
+      manager.applyChanges(manager.addAxiom(ontology4, classAssertionAxiom));
+      manager.applyChanges(manager.addAxiom(ontology4, objectPropertyAssertionAxiom5));
+      manager.applyChanges(manager.addAxiom(ontology4, axiomSubclass5));
+      manager.applyChanges(manager.addAxiom(ontology4, objectPropertyAssertionAxiom6));
       OWLOntology assertion4 = manager.getOntology(IRI.create(base));
-      manager.removeOntology(ont4);
-      String expectedoutputassertion4 = "consistent";
+      manager.removeOntology(ontology4);
+      String expectedOutAssertion4 = "consistent";
 
-      LinkedHashMap<String, OWLOntology> hashinput = new LinkedHashMap();
-      hashinput.put("Assertion 1", assertion1);
-      hashinput.put("Assertion 2", assertion2);
-      hashinput.put("Assertion 3", assertion3);
-      hashinput.put("Assertion 4", assertion4);
+      LinkedHashMap<String, OWLOntology> hashInput = new LinkedHashMap();
+      hashInput.put("Assertion 1", assertion1);
+      hashInput.put("Assertion 2", assertion2);
+      hashInput.put("Assertion 3", assertion3);
+      hashInput.put("Assertion 4", assertion4);
 
 
-      LinkedHashMap<String, String> hashoutput = new LinkedHashMap();
-      hashoutput.put("Assertion 1",expectedoutputassertion1);
-      hashoutput.put("Assertion 2",expectedoutputassertion2);
-      hashoutput.put("Assertion 3",expectedoutputassertion3);
-      hashoutput.put("Assertion 4",expectedoutputassertion4);
+      LinkedHashMap<String, String> hashOutput = new LinkedHashMap();
+      hashOutput.put("Assertion 1",expectedOutAssertion1);
+      hashOutput.put("Assertion 2",expectedOutAssertion2);
+      hashOutput.put("Assertion 3",expectedOutAssertion3);
+      hashOutput.put("Assertion 4",expectedOutAssertion4);
 
       for (Map.Entry<String, String> entry : testCase.getAxiomExpectedResultAxioms().entrySet()) {
-         hashoutput.put(entry.getKey(), entry.getValue());
+         hashOutput.put(entry.getKey(), entry.getValue());
       }
 
-      testCase.setAxiomExpectedResultAxioms(hashoutput);
+      testCase.setAxiomExpectedResultAxioms(hashOutput);
 
       for (Map.Entry<String, OWLOntology> entry : testCase.getAssertionsAxioms().entrySet()) {
-         hashinput.put(entry.getKey(), entry.getValue());
+         hashInput.put(entry.getKey(), entry.getValue());
       }
-      testCase.setAssertionsAxioms(hashinput);
+      testCase.setAssertionsAxioms(hashInput);
       return testCase;
    }
 
@@ -2904,19 +2898,19 @@ public class Implementations {
 
       /*Generation of classes*/
       m.find();
-      String classA = m.group(1).toString();
+      String classA = m.group(1);
       String classA1 = classA+"1";
-      String R = m.group(2).toString();
+      String R = m.group(2);
       String classB = "";
-      classB = m.group(3).toString();
+      classB = m.group(3);
       String noClassB =  "No"+classB.split("(#|\\/)")[classB.split("(#|\\/)").length-1];
 
       /*Preconditions*/
-      ArrayList<String> precond = new ArrayList<>();
-      precond.add("Class(<"+classA+">)");
-      precond.add("Property(<"+R+">)");
-      precond.add("Class(<"+classB+">)");
-      testCase.getPrecondition().addAll(precond);
+      ArrayList<String> precondition = new ArrayList<>();
+      precondition.add("Class(<"+classA+">)");
+      precondition.add("Property(<"+R+">)");
+      precondition.add("Class(<"+classB+">)");
+      testCase.getPrecondition().addAll(precondition);
 
       String classA1withouturi = classA1.split("(#|\\/)")[classA1.split("(#|\\/)").length-1];
       String classBwithouturi = classB.split("(#|\\/)")[noClassB.split("(#|\\/)").length-1];
@@ -2926,88 +2920,88 @@ public class Implementations {
       /*Preparation*/
       String base = "";
       OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
-      OWLOntology ont = null;
+      OWLOntology ontology = null;
       try {
-         ont = manager.createOntology(IRI.create(base));
+         ontology = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont = null;
+         ontology = null;
       }
       OWLDataFactory dataFactory = manager.getOWLDataFactory();
 
       OWLClass classOWLB = dataFactory.getOWLClass(IRI.create(classB));
       OWLClass noClassOWLB = dataFactory.getOWLClass(IRI.create(noClassB));
-      OWLDeclarationAxiom axiomClass = dataFactory.getOWLDeclarationAxiom(classOWLB);
-      OWLDeclarationAxiom axiomClass1 = dataFactory.getOWLDeclarationAxiom(noClassOWLB);
+      OWLDeclarationAxiom axiomClass1 = dataFactory.getOWLDeclarationAxiom(classOWLB);
+      OWLDeclarationAxiom axiomClass2 = dataFactory.getOWLDeclarationAxiom(noClassOWLB);
       OWLEquivalentClassesAxiom equivalentClassesAxiom = dataFactory.getOWLEquivalentClassesAxiom(noClassOWLB, dataFactory.getOWLObjectComplementOf(classOWLB));
       OWLClass classOWLA = dataFactory.getOWLClass(IRI.create(classA));
       OWLClass classOWLA1 = dataFactory.getOWLClass(IRI.create(classA1));
-      OWLDeclarationAxiom axiomclassA1 = dataFactory.getOWLDeclarationAxiom(classOWLA1);
-      OWLNamedIndividual indOWLA1 = dataFactory.getOWLNamedIndividual(IRI.create("ind1"));
-      OWLDeclarationAxiom axiomInd1 = dataFactory.getOWLDeclarationAxiom(indOWLA1);
-      OWLClassAssertionAxiom classAssertionAxiom = dataFactory.getOWLClassAssertionAxiom(classOWLA1, indOWLA1);
-      OWLNamedIndividual indOWLB = dataFactory.getOWLNamedIndividual(IRI.create("ind2"));
-      OWLDeclarationAxiom axiomInd2 = dataFactory.getOWLDeclarationAxiom(indOWLB);
+      OWLDeclarationAxiom axiomClassA1 = dataFactory.getOWLDeclarationAxiom(classOWLA1);
+      OWLNamedIndividual indOWLA1 = dataFactory.getOWLNamedIndividual(IRI.create("individual1"));
+      OWLDeclarationAxiom axiomIndividual1 = dataFactory.getOWLDeclarationAxiom(indOWLA1);
+      OWLClassAssertionAxiom classAssertionAxiom1 = dataFactory.getOWLClassAssertionAxiom(classOWLA1, indOWLA1);
+      OWLNamedIndividual indOWLB = dataFactory.getOWLNamedIndividual(IRI.create("individual2"));
+      OWLDeclarationAxiom axiomIndividual2 = dataFactory.getOWLDeclarationAxiom(indOWLB);
       OWLClassAssertionAxiom classAssertionAxiom2 = dataFactory.getOWLClassAssertionAxiom(noClassOWLB, indOWLB);
-      manager.applyChanges(manager.addAxiom(ont, axiomClass));
-      manager.applyChanges(manager.addAxiom(ont, axiomClass1));
-      manager.applyChanges(manager.addAxiom(ont, equivalentClassesAxiom));
-      manager.applyChanges(manager.addAxiom(ont, axiomInd1));
-      manager.applyChanges(manager.addAxiom(ont, axiomclassA1));
-      manager.applyChanges(manager.addAxiom(ont, classAssertionAxiom));
-      manager.applyChanges(manager.addAxiom(ont, axiomInd2));
-      manager.applyChanges(manager.addAxiom(ont, classAssertionAxiom2));
+      manager.applyChanges(manager.addAxiom(ontology, axiomClass1));
+      manager.applyChanges(manager.addAxiom(ontology, axiomClass2));
+      manager.applyChanges(manager.addAxiom(ontology, equivalentClassesAxiom));
+      manager.applyChanges(manager.addAxiom(ontology, axiomIndividual1));
+      manager.applyChanges(manager.addAxiom(ontology, axiomClassA1));
+      manager.applyChanges(manager.addAxiom(ontology, classAssertionAxiom1));
+      manager.applyChanges(manager.addAxiom(ontology, axiomIndividual2));
+      manager.applyChanges(manager.addAxiom(ontology, classAssertionAxiom2));
       testCase.setPreparationaxioms(manager.getOntology(IRI.create(base)));
-      manager.removeOntology(ont);
+      manager.removeOntology(ontology);
 
       /*Assertions*/
-      OWLOntology ont1 = null;
+      OWLOntology ontology1 = null;
       try {
-         ont1 = manager.createOntology(IRI.create(base));
+         ontology1 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont1 = null;
+         ontology1 = null;
       }
-      OWLSubClassOfAxiom axiomsubclass1= dataFactory.getOWLSubClassOfAxiom(classOWLA1, classOWLA);
+      OWLSubClassOfAxiom axiomSubclass1= dataFactory.getOWLSubClassOfAxiom(classOWLA1, classOWLA);
       OWLObjectProperty prop = dataFactory.getOWLObjectProperty(IRI.create(R));
-      OWLSubClassOfAxiom axiomsubclass2 = dataFactory.getOWLSubClassOfAxiom( classOWLA1, dataFactory.getOWLObjectSomeValuesFrom(prop,dataFactory.getOWLObjectOneOf(indOWLB)));
-      OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiom = dataFactory.getOWLObjectPropertyAssertionAxiom(prop, indOWLA1, indOWLB);
-      manager.applyChanges(manager.addAxiom(ont1, axiomsubclass1));
-      manager.applyChanges(manager.addAxiom(ont1, axiomsubclass2));
-      manager.applyChanges(manager.addAxiom(ont1, objectPropertyAssertionAxiom));
+      OWLSubClassOfAxiom axiomSubclass2 = dataFactory.getOWLSubClassOfAxiom( classOWLA1, dataFactory.getOWLObjectSomeValuesFrom(prop,dataFactory.getOWLObjectOneOf(indOWLB)));
+      OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiom1 = dataFactory.getOWLObjectPropertyAssertionAxiom(prop, indOWLA1, indOWLB);
+      manager.applyChanges(manager.addAxiom(ontology1, axiomSubclass1));
+      manager.applyChanges(manager.addAxiom(ontology1, axiomSubclass2));
+      manager.applyChanges(manager.addAxiom(ontology1, objectPropertyAssertionAxiom1));
       OWLOntology assertion1 = manager.getOntology(IRI.create(base));
-      String expectedoutputassertion1 = "inconsistent";
-      manager.removeOntology(ont1);
+      String expectedOutAssertion1 = "inconsistent";
+      manager.removeOntology(ontology1);
 
-      OWLOntology ont2 = null;
+      OWLOntology ontology2 = null;
       try {
-         ont2 = manager.createOntology(IRI.create(base));
+         ontology2 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont2 = null;
+         ontology2 = null;
       }
-      OWLNamedIndividual indOWL3 = dataFactory.getOWLNamedIndividual(IRI.create("ind3"));
-      OWLDeclarationAxiom axiomInd3 = dataFactory.getOWLDeclarationAxiom(indOWL3);
-      OWLSubClassOfAxiom axiomsubclass3 = dataFactory.getOWLSubClassOfAxiom( classOWLA1, dataFactory.getOWLObjectAllValuesFrom(prop,dataFactory.getOWLObjectOneOf(indOWLB, indOWL3)));
+      OWLNamedIndividual indOWL3 = dataFactory.getOWLNamedIndividual(IRI.create("individual3"));
+      OWLDeclarationAxiom axiomIndividual3 = dataFactory.getOWLDeclarationAxiom(indOWL3);
+      OWLSubClassOfAxiom axiomSubclass3 = dataFactory.getOWLSubClassOfAxiom( classOWLA1, dataFactory.getOWLObjectAllValuesFrom(prop,dataFactory.getOWLObjectOneOf(indOWLB, indOWL3)));
       OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiom2 = dataFactory.getOWLObjectPropertyAssertionAxiom(prop, indOWLA1, indOWLB);
       OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiom3 = dataFactory.getOWLObjectPropertyAssertionAxiom(prop, indOWLA1, indOWL3);
-      manager.applyChanges(manager.addAxiom(ont2, axiomInd3));
-      manager.applyChanges(manager.addAxiom(ont2, axiomsubclass1));
-      manager.applyChanges(manager.addAxiom(ont2, axiomsubclass3));
-      manager.applyChanges(manager.addAxiom(ont2, classAssertionAxiom));
-      manager.applyChanges(manager.addAxiom(ont2, objectPropertyAssertionAxiom2));
-      manager.applyChanges(manager.addAxiom(ont2, classAssertionAxiom2));
-      manager.applyChanges(manager.addAxiom(ont2, objectPropertyAssertionAxiom3));
+      manager.applyChanges(manager.addAxiom(ontology2, axiomIndividual3));
+      manager.applyChanges(manager.addAxiom(ontology2, axiomSubclass1));
+      manager.applyChanges(manager.addAxiom(ontology2, axiomSubclass3));
+      manager.applyChanges(manager.addAxiom(ontology2, classAssertionAxiom1));
+      manager.applyChanges(manager.addAxiom(ontology2, objectPropertyAssertionAxiom2));
+      manager.applyChanges(manager.addAxiom(ontology2, classAssertionAxiom2));
+      manager.applyChanges(manager.addAxiom(ontology2, objectPropertyAssertionAxiom3));
       OWLOntology assertion2 = manager.getOntology(IRI.create(base));
 
-      manager.removeOntology(ont2);
+      manager.removeOntology(ontology2);
 
-      String expectedoutputassertion2 = "consistent";
+      String expectedOutAssertion2 = "consistent";
 
 
       /*Assertions*/
-      OWLOntology ont3 = null;
+      OWLOntology ontology3 = null;
       try {
-         ont3 = manager.createOntology(IRI.create(base));
+         ontology3 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont3 = null;
+         ontology3 = null;
       }
       String inverse = "";
       if(R.equals("ispartof"))
@@ -3017,58 +3011,58 @@ public class Implementations {
 
       OWLObjectProperty propInverse = dataFactory.getOWLObjectProperty(IRI.create(inverse));
 
-      OWLSubClassOfAxiom axiomsubclass4 = dataFactory.getOWLSubClassOfAxiom( classOWLB, dataFactory.getOWLObjectSomeValuesFrom(prop,dataFactory.getOWLObjectOneOf(indOWLA1)));
+      OWLSubClassOfAxiom axiomSubclass4 = dataFactory.getOWLSubClassOfAxiom( classOWLB, dataFactory.getOWLObjectSomeValuesFrom(prop,dataFactory.getOWLObjectOneOf(indOWLA1)));
       OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiom4 = dataFactory.getOWLObjectPropertyAssertionAxiom(propInverse, indOWLB, indOWLA1);
-      manager.applyChanges(manager.addAxiom(ont3, axiomsubclass1));
-      manager.applyChanges(manager.addAxiom(ont3, axiomsubclass4));
-      manager.applyChanges(manager.addAxiom(ont3, objectPropertyAssertionAxiom4));
+      manager.applyChanges(manager.addAxiom(ontology3, axiomSubclass1));
+      manager.applyChanges(manager.addAxiom(ontology3, axiomSubclass4));
+      manager.applyChanges(manager.addAxiom(ontology3, objectPropertyAssertionAxiom4));
       OWLOntology assertion3 = manager.getOntology(IRI.create(base));
-      String expectedoutputassertion3 = "inconsistent";
-      manager.removeOntology(ont1);
+      String expectedOutAssertion3 = "inconsistent";
+      manager.removeOntology(ontology1);
 
-      OWLOntology ont4 = null;
+      OWLOntology ontology4 = null;
       try {
-         ont4 = manager.createOntology(IRI.create(base));
+         ontology4 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont4 = null;
+         ontology4 = null;
       }
 
-      OWLSubClassOfAxiom axiomsubclass5 = dataFactory.getOWLSubClassOfAxiom( classOWLB, dataFactory.getOWLObjectAllValuesFrom(propInverse,dataFactory.getOWLObjectOneOf(indOWLA1, indOWL3)));
+      OWLSubClassOfAxiom axiomSubclass5 = dataFactory.getOWLSubClassOfAxiom( classOWLB, dataFactory.getOWLObjectAllValuesFrom(propInverse,dataFactory.getOWLObjectOneOf(indOWLA1, indOWL3)));
       OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiom5 = dataFactory.getOWLObjectPropertyAssertionAxiom(propInverse, indOWLB, indOWLA1);
       OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiom6 = dataFactory.getOWLObjectPropertyAssertionAxiom(propInverse, indOWLB, indOWL3);
-      manager.applyChanges(manager.addAxiom(ont4, axiomInd3));
-      manager.applyChanges(manager.addAxiom(ont4, axiomsubclass1));
-      manager.applyChanges(manager.addAxiom(ont4, classAssertionAxiom));
-      manager.applyChanges(manager.addAxiom(ont4, objectPropertyAssertionAxiom5));
-      manager.applyChanges(manager.addAxiom(ont4, axiomsubclass5));
-      manager.applyChanges(manager.addAxiom(ont4, objectPropertyAssertionAxiom6));
+      manager.applyChanges(manager.addAxiom(ontology4, axiomIndividual3));
+      manager.applyChanges(manager.addAxiom(ontology4, axiomSubclass1));
+      manager.applyChanges(manager.addAxiom(ontology4, classAssertionAxiom1));
+      manager.applyChanges(manager.addAxiom(ontology4, objectPropertyAssertionAxiom5));
+      manager.applyChanges(manager.addAxiom(ontology4, axiomSubclass5));
+      manager.applyChanges(manager.addAxiom(ontology4, objectPropertyAssertionAxiom6));
       OWLOntology assertion4 = manager.getOntology(IRI.create(base));
-      manager.removeOntology(ont4);
-      String expectedoutputassertion4 = "inconsistent";
+      manager.removeOntology(ontology4);
+      String expectedOutAssertion4 = "inconsistent";
 
-      LinkedHashMap<String, OWLOntology> hashinput = new LinkedHashMap();
-      hashinput.put("Assertion 1", assertion1);
-      hashinput.put("Assertion 2", assertion2);
-      hashinput.put("Assertion 3", assertion3);
-      hashinput.put("Assertion 4", assertion4);
+      LinkedHashMap<String, OWLOntology> hashInput = new LinkedHashMap();
+      hashInput.put("Assertion 1", assertion1);
+      hashInput.put("Assertion 2", assertion2);
+      hashInput.put("Assertion 3", assertion3);
+      hashInput.put("Assertion 4", assertion4);
 
 
-      LinkedHashMap<String, String> hashoutput = new LinkedHashMap();
-      hashoutput.put("Assertion 1",expectedoutputassertion1);
-      hashoutput.put("Assertion 2",expectedoutputassertion2);
-      hashoutput.put("Assertion 3",expectedoutputassertion3);
-      hashoutput.put("Assertion 4",expectedoutputassertion4);
+      LinkedHashMap<String, String> hashOutput = new LinkedHashMap();
+      hashOutput.put("Assertion 1",expectedOutAssertion1);
+      hashOutput.put("Assertion 2",expectedOutAssertion2);
+      hashOutput.put("Assertion 3",expectedOutAssertion3);
+      hashOutput.put("Assertion 4",expectedOutAssertion4);
 
       for (Map.Entry<String, String> entry : testCase.getAxiomExpectedResultAxioms().entrySet()) {
-         hashoutput.put(entry.getKey(), entry.getValue());
+         hashOutput.put(entry.getKey(), entry.getValue());
       }
 
-      testCase.setAxiomExpectedResultAxioms(hashoutput);
+      testCase.setAxiomExpectedResultAxioms(hashOutput);
 
       for (Map.Entry<String, OWLOntology> entry : testCase.getAssertionsAxioms().entrySet()) {
-         hashinput.put(entry.getKey(), entry.getValue());
+         hashInput.put(entry.getKey(), entry.getValue());
       }
-      testCase.setAssertionsAxioms(hashinput);
+      testCase.setAssertionsAxioms(hashInput);
       return testCase;
    }
 
@@ -3078,33 +3072,33 @@ public class Implementations {
       Matcher m = p.matcher(purpose);
       /*Generation of classes*/
       m.find();
-      String classA = m.group(1).toString();
+      String classA = m.group(1);
       String classAnoSymb = classA;
       String noClassA =  "No"+classAnoSymb.split("(#|\\/)")[classA.split("(#)").length-1];
       String classA1 =  classAnoSymb.split("(#|\\/)")[classA.split("(#)").length-1]+"1";
-      String classB = m.group(2).toString();
+      String classB = m.group(2);
       String noClassB =  "No"+classB.split("(#|\\/)")[classB.split("(#|\\/)").length-1];
-      String classC = m.group(3).toString();
+      String classC = m.group(3);
       String noClassC =  "No"+classC.split("(#|\\/)")[classC.split("(#|\\/)").length-1];
       if(classB.equals(m.group(4)) && classA.equals(m.group(5))) {
 
          /*Preconditions*/
-         ArrayList<String> precond = new ArrayList<>();
-         precond.add("Class(<" + classA + ">)");
-         precond.add("Class(<" + classC + ">)");
-         precond.add("Class(<" + classB + ">)");
-         testCase.getPrecondition().addAll(precond);
+         ArrayList<String> precondition = new ArrayList<>();
+         precondition.add("Class(<" + classA + ">)");
+         precondition.add("Class(<" + classC + ">)");
+         precondition.add("Class(<" + classB + ">)");
+         testCase.getPrecondition().addAll(precondition);
 
          /*Axioms to be added*/
 
          /*Preparation*/
          String base = "";
          OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
-         OWLOntology ont = null;
+         OWLOntology ontology = null;
          try {
-            ont = manager.createOntology(IRI.create(base));
+            ontology = manager.createOntology(IRI.create(base));
          } catch (OWLOntologyCreationException e) {
-            ont = null;
+            ontology = null;
          }
          OWLDataFactory dataFactory = manager.getOWLDataFactory();
 
@@ -3124,175 +3118,174 @@ public class Implementations {
          OWLEquivalentClassesAxiom equivalentClassesAxiom2 = dataFactory.getOWLEquivalentClassesAxiom(noClassOWLA, dataFactory.getOWLObjectComplementOf(classOWLA));
          OWLEquivalentClassesAxiom equivalentClassesAxiom3 = dataFactory.getOWLEquivalentClassesAxiom(noClassOWLC, dataFactory.getOWLObjectComplementOf(classOWLC));
          OWLClass classOWLA1 = dataFactory.getOWLClass(IRI.create(classA1));
-         OWLDeclarationAxiom axiomclass6 = dataFactory.getOWLDeclarationAxiom(classOWLA1);
-         OWLSubClassOfAxiom subClassOfAxiom = dataFactory.getOWLSubClassOfAxiom(classOWLA1, classOWLA);
-         manager.applyChanges(manager.addAxiom(ont, axiomClass));
-         manager.applyChanges(manager.addAxiom(ont, axiomClass1));
-         manager.applyChanges(manager.addAxiom(ont, axiomClass2));
-         manager.applyChanges(manager.addAxiom(ont, axiomClass3));
-         manager.applyChanges(manager.addAxiom(ont, axiomClass4));
-         manager.applyChanges(manager.addAxiom(ont, axiomClass5));
-         manager.applyChanges(manager.addAxiom(ont, equivalentClassesAxiom1));
-         manager.applyChanges(manager.addAxiom(ont, equivalentClassesAxiom2));
-         manager.applyChanges(manager.addAxiom(ont, equivalentClassesAxiom3));
-         manager.applyChanges(manager.addAxiom(ont, axiomclass6));
+         OWLDeclarationAxiom axiomClass6 = dataFactory.getOWLDeclarationAxiom(classOWLA1);
+         manager.applyChanges(manager.addAxiom(ontology, axiomClass));
+         manager.applyChanges(manager.addAxiom(ontology, axiomClass1));
+         manager.applyChanges(manager.addAxiom(ontology, axiomClass2));
+         manager.applyChanges(manager.addAxiom(ontology, axiomClass3));
+         manager.applyChanges(manager.addAxiom(ontology, axiomClass4));
+         manager.applyChanges(manager.addAxiom(ontology, axiomClass5));
+         manager.applyChanges(manager.addAxiom(ontology, equivalentClassesAxiom1));
+         manager.applyChanges(manager.addAxiom(ontology, equivalentClassesAxiom2));
+         manager.applyChanges(manager.addAxiom(ontology, equivalentClassesAxiom3));
+         manager.applyChanges(manager.addAxiom(ontology, axiomClass6));
          testCase.setPreparationaxioms(manager.getOntology(IRI.create(base)));
-         manager.removeOntology(ont);
+         manager.removeOntology(ontology);
 
-         OWLOntology ont1 = null;
+         OWLOntology ontology1 = null;
          try {
-            ont1 = manager.createOntology(IRI.create(base));
+            ontology1 = manager.createOntology(IRI.create(base));
          } catch (OWLOntologyCreationException e) {
-            ont1 = null;
+            ontology1 = null;
          }
          OWLSubClassOfAxiom subClassOfAxiom2 = dataFactory.getOWLSubClassOfAxiom(classOWLA1, dataFactory.getOWLObjectIntersectionOf(noClassOWLA, classOWLB));
-         manager.applyChanges(manager.addAxiom(ont1, axiomclass6));
-         manager.applyChanges(manager.addAxiom(ont1, subClassOfAxiom2));
+         manager.applyChanges(manager.addAxiom(ontology1, axiomClass6));
+         manager.applyChanges(manager.addAxiom(ontology1, subClassOfAxiom2));
          OWLOntology assertion1 = manager.getOntology(IRI.create(base));
-         String expectedoutputassertion1 = "";
-         expectedoutputassertion1 = "consistent";
-         manager.removeOntology(ont1);
+         String expectedOutAssertion1 = "";
+         expectedOutAssertion1 = "consistent";
+         manager.removeOntology(ontology1);
 
-         OWLOntology ont2 = null;
+         OWLOntology ontology2 = null;
          try {
-            ont2 = manager.createOntology(IRI.create(base));
+            ontology2 = manager.createOntology(IRI.create(base));
          } catch (OWLOntologyCreationException e) {
-            ont2 = null;
+            ontology2 = null;
          }
          OWLSubClassOfAxiom subClassOfAxiom3 = dataFactory.getOWLSubClassOfAxiom(classOWLA1, dataFactory.getOWLObjectIntersectionOf(classOWLA, noClassOWLB));
-         manager.applyChanges(manager.addAxiom(ont2, axiomclass6));
-         manager.applyChanges(manager.addAxiom(ont2, subClassOfAxiom3));
+         manager.applyChanges(manager.addAxiom(ontology2, axiomClass6));
+         manager.applyChanges(manager.addAxiom(ontology2, subClassOfAxiom3));
          OWLOntology assertion2 = manager.getOntology(IRI.create(base));
 
-         String expectedoutputassertion2 = "";
-         expectedoutputassertion2 = "unsatisfiable";
-         manager.removeOntology(ont2);
+         String expectedOutAssertion2 = "";
+         expectedOutAssertion2 = "unsatisfiable";
+         manager.removeOntology(ontology2);
 
-         OWLOntology ont3 = null;
+         OWLOntology ontology3 = null;
          try {
-            ont3 = manager.createOntology(IRI.create(base));
+            ontology3 = manager.createOntology(IRI.create(base));
          } catch (OWLOntologyCreationException e) {
-            ont3 = null;
+            ontology3 = null;
          }
          OWLSubClassOfAxiom subClassOfAxiom4 = dataFactory.getOWLSubClassOfAxiom(classOWLA1, dataFactory.getOWLObjectIntersectionOf(classOWLA, classOWLB));
-         manager.applyChanges(manager.addAxiom(ont3, axiomclass6));
-         manager.applyChanges(manager.addAxiom(ont3, subClassOfAxiom4));
+         manager.applyChanges(manager.addAxiom(ontology3, axiomClass6));
+         manager.applyChanges(manager.addAxiom(ontology3, subClassOfAxiom4));
          OWLOntology assertion3 = manager.getOntology(IRI.create(base));
-         String expectedoutputassertion3 = "consistent";
-         manager.removeOntology(ont3);
+         String expectedOutAssertion3 = "consistent";
+         manager.removeOntology(ontology3);
 
-         OWLOntology ont4 = null;
+         OWLOntology ontology4 = null;
          try {
-            ont4 = manager.createOntology(IRI.create(base));
+            ontology4 = manager.createOntology(IRI.create(base));
          } catch (OWLOntologyCreationException e) {
-            ont4 = null;
+            ontology4 = null;
          }
          OWLSubClassOfAxiom subClassOfAxiom5 = dataFactory.getOWLSubClassOfAxiom(classOWLA1, dataFactory.getOWLObjectIntersectionOf(noClassOWLC, classOWLB));
-         manager.applyChanges(manager.addAxiom(ont4, axiomclass6));
-         manager.applyChanges(manager.addAxiom(ont4, subClassOfAxiom5));
+         manager.applyChanges(manager.addAxiom(ontology4, axiomClass6));
+         manager.applyChanges(manager.addAxiom(ontology4, subClassOfAxiom5));
          OWLOntology assertion4 = manager.getOntology(IRI.create(base));
-         String expectedoutputassertion4 = "consistent";
-         manager.removeOntology(ont4);
+         String expectedOutAssertion4 = "consistent";
+         manager.removeOntology(ontology4);
 
-         OWLOntology ont5 = null;
+         OWLOntology ontology5 = null;
          try {
-            ont5 = manager.createOntology(IRI.create(base));
+            ontology5 = manager.createOntology(IRI.create(base));
          } catch (OWLOntologyCreationException e) {
-            ont5 = null;
+            ontology5 = null;
          }
          OWLSubClassOfAxiom subClassOfAxiom6 = dataFactory.getOWLSubClassOfAxiom(classOWLA1, dataFactory.getOWLObjectIntersectionOf(classOWLC, noClassOWLB));
-         manager.applyChanges(manager.addAxiom(ont5, axiomclass6));
-         manager.applyChanges(manager.addAxiom(ont5, subClassOfAxiom6));
+         manager.applyChanges(manager.addAxiom(ontology5, axiomClass6));
+         manager.applyChanges(manager.addAxiom(ontology5, subClassOfAxiom6));
          OWLOntology assertion5 = manager.getOntology(IRI.create(base));
-         String expectedoutputassertion5 = "unsatisfiable";
-         manager.removeOntology(ont5);
+         String expectedOutAssertion5 = "unsatisfiable";
+         manager.removeOntology(ontology5);
 
-         OWLOntology ont6 = null;
+         OWLOntology ontology6 = null;
          try {
-            ont6 = manager.createOntology(IRI.create(base));
+            ontology6 = manager.createOntology(IRI.create(base));
          } catch (OWLOntologyCreationException e) {
-            ont6 = null;
+            ontology6 = null;
          }
          OWLSubClassOfAxiom subClassOfAxiom7 = dataFactory.getOWLSubClassOfAxiom(classOWLA1, dataFactory.getOWLObjectIntersectionOf(classOWLC, classOWLB));
-         manager.applyChanges(manager.addAxiom(ont6, axiomclass6));
-         manager.applyChanges(manager.addAxiom(ont6, subClassOfAxiom7));
+         manager.applyChanges(manager.addAxiom(ontology6, axiomClass6));
+         manager.applyChanges(manager.addAxiom(ontology6, subClassOfAxiom7));
          OWLOntology assertion6 = manager.getOntology(IRI.create(base));
-         String expectedoutputassertion6 = "consistent";
-         manager.removeOntology(ont6);
+         String expectedOutAssertion6 = "consistent";
+         manager.removeOntology(ontology6);
 
-         OWLOntology ont7 = null;
+         OWLOntology ontology7 = null;
          try {
-            ont7 = manager.createOntology(IRI.create(base));
+            ontology7 = manager.createOntology(IRI.create(base));
          } catch (OWLOntologyCreationException e) {
-            ont7 = null;
+            ontology7 = null;
          }
          OWLSubClassOfAxiom subClassOfAxiom8 = dataFactory.getOWLSubClassOfAxiom(classOWLA1, dataFactory.getOWLObjectIntersectionOf(noClassOWLC, classOWLA));
-         manager.applyChanges(manager.addAxiom(ont7, axiomclass6));
-         manager.applyChanges(manager.addAxiom(ont7, subClassOfAxiom8));
+         manager.applyChanges(manager.addAxiom(ontology7, axiomClass6));
+         manager.applyChanges(manager.addAxiom(ontology7, subClassOfAxiom8));
          OWLOntology assertion7 = manager.getOntology(IRI.create(base));
-         String expectedoutputassertion7 = "consistent";
-         manager.removeOntology(ont7);
+         String expectedOutAssertion7 = "consistent";
+         manager.removeOntology(ontology7);
 
-         OWLOntology ont8 = null;
+         OWLOntology ontology8 = null;
          try {
-            ont8 = manager.createOntology(IRI.create(base));
+            ontology8 = manager.createOntology(IRI.create(base));
          } catch (OWLOntologyCreationException e) {
-            ont8 = null;
+            ontology8 = null;
          }
          OWLSubClassOfAxiom subClassOfAxiom9 = dataFactory.getOWLSubClassOfAxiom(classOWLA1, dataFactory.getOWLObjectIntersectionOf(classOWLC, noClassOWLA));
-         manager.applyChanges(manager.addAxiom(ont8, axiomclass6));
-         manager.applyChanges(manager.addAxiom(ont8, subClassOfAxiom9));
+         manager.applyChanges(manager.addAxiom(ontology8, axiomClass6));
+         manager.applyChanges(manager.addAxiom(ontology8, subClassOfAxiom9));
          OWLOntology assertion8 = manager.getOntology(IRI.create(base));
-         String expectedoutputassertion8 = "consistent";
-         manager.removeOntology(ont8);
+         String expectedOutAssertion8 = "consistent";
+         manager.removeOntology(ontology8);
 
-         OWLOntology ont9 = null;
+         OWLOntology ontology9 = null;
          try {
-            ont9 = manager.createOntology(IRI.create(base));
+            ontology9 = manager.createOntology(IRI.create(base));
          } catch (OWLOntologyCreationException e) {
-            ont9 = null;
+            ontology9 = null;
          }
          OWLSubClassOfAxiom subClassOfAxiom10 = dataFactory.getOWLSubClassOfAxiom(classOWLA1, dataFactory.getOWLObjectIntersectionOf(classOWLC, classOWLA));
-         manager.applyChanges(manager.addAxiom(ont9, axiomclass6));
-         manager.applyChanges(manager.addAxiom(ont9, subClassOfAxiom10));
+         manager.applyChanges(manager.addAxiom(ontology9, axiomClass6));
+         manager.applyChanges(manager.addAxiom(ontology9, subClassOfAxiom10));
          OWLOntology assertion9 = manager.getOntology(IRI.create(base));
 
-         String expectedoutputassertion9 = "unsatisfiable";
-         manager.removeOntology(ont9);
+         String expectedOutAssertion9 = "unsatisfiable";
+         manager.removeOntology(ontology9);
 
 
-         LinkedHashMap<String, OWLOntology> hashinput = new LinkedHashMap();
-         hashinput.put("Assertion 1", assertion1);
-         hashinput.put("Assertion 2", assertion2);
-         hashinput.put("Assertion 3", assertion3);
-         hashinput.put("Assertion 4", assertion4);
-         hashinput.put("Assertion 5", assertion5);
-         hashinput.put("Assertion 6", assertion6);
-         hashinput.put("Assertion 7", assertion7);
-         hashinput.put("Assertion 8", assertion8);
-         hashinput.put("Assertion 9", assertion9);
+         LinkedHashMap<String, OWLOntology> hashInput = new LinkedHashMap();
+         hashInput.put("Assertion 1", assertion1);
+         hashInput.put("Assertion 2", assertion2);
+         hashInput.put("Assertion 3", assertion3);
+         hashInput.put("Assertion 4", assertion4);
+         hashInput.put("Assertion 5", assertion5);
+         hashInput.put("Assertion 6", assertion6);
+         hashInput.put("Assertion 7", assertion7);
+         hashInput.put("Assertion 8", assertion8);
+         hashInput.put("Assertion 9", assertion9);
 
-         LinkedHashMap<String, String> hashoutput = new LinkedHashMap();
-         hashoutput.put("Assertion 1", expectedoutputassertion1);
-         hashoutput.put("Assertion 2", expectedoutputassertion2);
-         hashoutput.put("Assertion 3", expectedoutputassertion3);
-         hashoutput.put("Assertion 4", expectedoutputassertion4);
-         hashoutput.put("Assertion 5", expectedoutputassertion5);
-         hashoutput.put("Assertion 6", expectedoutputassertion6);
-         hashoutput.put("Assertion 7", expectedoutputassertion7);
-         hashoutput.put("Assertion 8", expectedoutputassertion8);
-         hashoutput.put("Assertion 9", expectedoutputassertion9);
+         LinkedHashMap<String, String> hashOutput = new LinkedHashMap();
+         hashOutput.put("Assertion 1", expectedOutAssertion1);
+         hashOutput.put("Assertion 2", expectedOutAssertion2);
+         hashOutput.put("Assertion 3", expectedOutAssertion3);
+         hashOutput.put("Assertion 4", expectedOutAssertion4);
+         hashOutput.put("Assertion 5", expectedOutAssertion5);
+         hashOutput.put("Assertion 6", expectedOutAssertion6);
+         hashOutput.put("Assertion 7", expectedOutAssertion7);
+         hashOutput.put("Assertion 8", expectedOutAssertion8);
+         hashOutput.put("Assertion 9", expectedOutAssertion9);
 
          for (Map.Entry<String, String> entry : testCase.getAxiomExpectedResultAxioms().entrySet()) {
-            hashoutput.put(entry.getKey(), entry.getValue());
+            hashOutput.put(entry.getKey(), entry.getValue());
          }
 
-         testCase.setAxiomExpectedResultAxioms(hashoutput);
+         testCase.setAxiomExpectedResultAxioms(hashOutput);
 
          for (Map.Entry<String, OWLOntology> entry : testCase.getAssertionsAxioms().entrySet()) {
-            hashinput.put(entry.getKey(), entry.getValue());
+            hashInput.put(entry.getKey(), entry.getValue());
          }
-         testCase.setAssertionsAxioms(hashinput);
+         testCase.setAssertionsAxioms(hashInput);
          return testCase;
       }else
          return null;
@@ -3305,30 +3298,31 @@ public class Implementations {
 
       /*Generation of classes*/
       m.find();
-      String classA = m.group(1).toString();
+      String classA = m.group(1);
       String classA1 = classA+"1";
-      String R = m.group(2).toString();
+      String R = m.group(2);
       String classB = "";
-      classB = m.group(3).toString();
+      classB = m.group(3);
       String noClassB =  "No"+classB.split("(#|\\/)")[classB.split("(#|\\/)").length-1];
       String noClassA =  "No"+classA.split("(#|\\/)")[classA.split("(#|\\/)").length-1];
       String classB1 = classB+"1";
+
       /*Preconditions*/
-      ArrayList<String> precond = new ArrayList<>();
-      precond.add("Class(<"+classA+">)");
-      precond.add("Property(<"+R+">)");
-      precond.add("Class(<"+classB+">)");
-      testCase.getPrecondition().addAll(precond);
+      ArrayList<String> precondition = new ArrayList<>();
+      precondition.add("Class(<"+classA+">)");
+      precondition.add("Property(<"+R+">)");
+      precondition.add("Class(<"+classB+">)");
+      testCase.getPrecondition().addAll(precondition);
 
       /*Axioms to be added */
       /*Preparation*/
       String base = "";
       OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
-      OWLOntology ont = null;
+      OWLOntology ontology = null;
       try {
-         ont = manager.createOntology(IRI.create(base));
+         ontology = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont = null;
+         ontology = null;
       }
       OWLDataFactory dataFactory = manager.getOWLDataFactory();
 
@@ -3341,87 +3335,90 @@ public class Implementations {
       OWLEquivalentClassesAxiom equivalentClassesAxiom = dataFactory.getOWLEquivalentClassesAxiom(noClassOWLB, dataFactory.getOWLObjectComplementOf(classOWLB));
       OWLClass classOWLA = dataFactory.getOWLClass(IRI.create(classA));
       OWLClass classOWLA1 = dataFactory.getOWLClass(IRI.create(classA1));
-      OWLDeclarationAxiom axiomclassA1 = dataFactory.getOWLDeclarationAxiom(classOWLA1);
+      OWLDeclarationAxiom axiomClassA1 = dataFactory.getOWLDeclarationAxiom(classOWLA1);
       OWLClass noClassOWLA = dataFactory.getOWLClass(IRI.create(noClassA));
       OWLDeclarationAxiom axiomClass3 = dataFactory.getOWLDeclarationAxiom(noClassOWLA);
       OWLEquivalentClassesAxiom equivalentClassesAxiom2 = dataFactory.getOWLEquivalentClassesAxiom(noClassOWLA, dataFactory.getOWLObjectComplementOf(classOWLA));
-      OWLNamedIndividual indOWLA1 = dataFactory.getOWLNamedIndividual(IRI.create("ind1"));
-      OWLDeclarationAxiom axiomInd1 = dataFactory.getOWLDeclarationAxiom(indOWLA1);
+      OWLNamedIndividual indOWLA1 = dataFactory.getOWLNamedIndividual(IRI.create("individual1"));
+      OWLDeclarationAxiom axiomIndividual1 = dataFactory.getOWLDeclarationAxiom(indOWLA1);
       OWLClassAssertionAxiom classAssertionAxiom = dataFactory.getOWLClassAssertionAxiom(classOWLA1, indOWLA1);
-      OWLNamedIndividual indOWLB = dataFactory.getOWLNamedIndividual(IRI.create("ind2"));
-      OWLDeclarationAxiom axiomInd2 = dataFactory.getOWLDeclarationAxiom(indOWLB);
-      OWLNamedIndividual indOWLnoA = dataFactory.getOWLNamedIndividual(IRI.create("ind4"));
-      OWLDeclarationAxiom axiomInd4 = dataFactory.getOWLDeclarationAxiom(indOWLnoA);
+      OWLNamedIndividual indOWLB = dataFactory.getOWLNamedIndividual(IRI.create("individual2"));
+      OWLDeclarationAxiom axiomIndividual2 = dataFactory.getOWLDeclarationAxiom(indOWLB);
+      OWLNamedIndividual indOWLnoA = dataFactory.getOWLNamedIndividual(IRI.create("individual4"));
+      OWLDeclarationAxiom axiomIndividual4 = dataFactory.getOWLDeclarationAxiom(indOWLnoA);
       OWLClassAssertionAxiom classAssertionAxiom2 = dataFactory.getOWLClassAssertionAxiom(noClassOWLB, indOWLB);
       OWLClassAssertionAxiom classAssertionAxiom3 = dataFactory.getOWLClassAssertionAxiom(noClassOWLA, indOWLnoA);
-      OWLNamedIndividual indOWLB1 = dataFactory.getOWLNamedIndividual(IRI.create("ind5"));
-      OWLDeclarationAxiom axiomInd5 = dataFactory.getOWLDeclarationAxiom(indOWLB1);
+      OWLNamedIndividual indOWLB1 = dataFactory.getOWLNamedIndividual(IRI.create("individual5"));
+      OWLDeclarationAxiom axiomIndividual5 = dataFactory.getOWLDeclarationAxiom(indOWLB1);
       OWLClassAssertionAxiom classAssertionAxiom4 = dataFactory.getOWLClassAssertionAxiom(classOWLB1, indOWLB1);
-      manager.applyChanges(manager.addAxiom(ont, axiomClass));
-      manager.applyChanges(manager.addAxiom(ont, axiomClass1));
-      manager.applyChanges(manager.addAxiom(ont, axiomClass2));
-      manager.applyChanges(manager.addAxiom(ont, axiomClass3));
-      manager.applyChanges(manager.addAxiom(ont, equivalentClassesAxiom));
-      manager.applyChanges(manager.addAxiom(ont, equivalentClassesAxiom2));
-      manager.applyChanges(manager.addAxiom(ont, axiomInd1));
-      manager.applyChanges(manager.addAxiom(ont, axiomclassA1));
-      manager.applyChanges(manager.addAxiom(ont, classAssertionAxiom));
-      manager.applyChanges(manager.addAxiom(ont, axiomInd2));
-      manager.applyChanges(manager.addAxiom(ont, classAssertionAxiom2));
-      manager.applyChanges(manager.addAxiom(ont, axiomInd4));
-      manager.applyChanges(manager.addAxiom(ont, classAssertionAxiom3));
-      manager.applyChanges(manager.addAxiom(ont, axiomInd5));
-      manager.applyChanges(manager.addAxiom(ont, classAssertionAxiom4));
+
+      manager.applyChanges(manager.addAxiom(ontology, axiomClass));
+      manager.applyChanges(manager.addAxiom(ontology, axiomClass1));
+      manager.applyChanges(manager.addAxiom(ontology, axiomClass2));
+      manager.applyChanges(manager.addAxiom(ontology, axiomClass3));
+      manager.applyChanges(manager.addAxiom(ontology, equivalentClassesAxiom));
+      manager.applyChanges(manager.addAxiom(ontology, equivalentClassesAxiom2));
+      manager.applyChanges(manager.addAxiom(ontology, axiomIndividual1));
+      manager.applyChanges(manager.addAxiom(ontology, axiomClassA1));
+      manager.applyChanges(manager.addAxiom(ontology, classAssertionAxiom));
+      manager.applyChanges(manager.addAxiom(ontology, axiomIndividual2));
+      manager.applyChanges(manager.addAxiom(ontology, classAssertionAxiom2));
+      manager.applyChanges(manager.addAxiom(ontology, axiomIndividual4));
+      manager.applyChanges(manager.addAxiom(ontology, classAssertionAxiom3));
+      manager.applyChanges(manager.addAxiom(ontology, axiomIndividual5));
+      manager.applyChanges(manager.addAxiom(ontology, classAssertionAxiom4));
       testCase.setPreparationaxioms(manager.getOntology(IRI.create(base)));
-      manager.removeOntology(ont);
+      manager.removeOntology(ontology);
 
       /*Assertions*/
-      OWLOntology ont1 = null;
+      OWLOntology ontology1 = null;
       try {
-         ont1 = manager.createOntology(IRI.create(base));
+         ontology1 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont1 = null;
+         ontology1 = null;
       }
-      OWLSubClassOfAxiom axiomsubclass1= dataFactory.getOWLSubClassOfAxiom(classOWLA1, classOWLA);
+      OWLSubClassOfAxiom axiomSubclass1= dataFactory.getOWLSubClassOfAxiom(classOWLA1, classOWLA);
       OWLObjectProperty prop = dataFactory.getOWLObjectProperty(IRI.create(R));
-      OWLSubClassOfAxiom axiomsubclass2 = dataFactory.getOWLSubClassOfAxiom( classOWLA1, dataFactory.getOWLObjectAllValuesFrom(prop,dataFactory.getOWLObjectOneOf(indOWLB)));
+      OWLSubClassOfAxiom axiomSubclass2 = dataFactory.getOWLSubClassOfAxiom( classOWLA1, dataFactory.getOWLObjectAllValuesFrom(prop,dataFactory.getOWLObjectOneOf(indOWLB)));
       OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiom = dataFactory.getOWLObjectPropertyAssertionAxiom(prop, indOWLA1, indOWLB);
-      manager.applyChanges(manager.addAxiom(ont1, axiomsubclass1));
-      manager.applyChanges(manager.addAxiom(ont1, axiomsubclass2));
-      manager.applyChanges(manager.addAxiom(ont1, objectPropertyAssertionAxiom));
-      OWLOntology assertion1 = manager.getOntology(IRI.create(base));
-      String expectedoutputassertion1 = "inconsistent";
-      manager.removeOntology(ont1);
 
-      OWLOntology ont2 = null;
+      manager.applyChanges(manager.addAxiom(ontology1, axiomSubclass1));
+      manager.applyChanges(manager.addAxiom(ontology1, axiomSubclass2));
+      manager.applyChanges(manager.addAxiom(ontology1, objectPropertyAssertionAxiom));
+      OWLOntology assertion1 = manager.getOntology(IRI.create(base));
+      String expectedOutAssertion1 = "inconsistent";
+      manager.removeOntology(ontology1);
+
+      OWLOntology ontology2 = null;
       try {
-         ont2 = manager.createOntology(IRI.create(base));
+         ontology2 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont2 = null;
+         ontology2 = null;
       }
-      OWLNamedIndividual indOWL3 = dataFactory.getOWLNamedIndividual(IRI.create("ind3"));
-      OWLDeclarationAxiom axiomInd3 = dataFactory.getOWLDeclarationAxiom(indOWL3);
-      OWLSubClassOfAxiom axiomsubclass3 = dataFactory.getOWLSubClassOfAxiom( classOWLA1, dataFactory.getOWLObjectAllValuesFrom(prop,dataFactory.getOWLObjectOneOf(indOWLB, indOWL3)));
+      OWLNamedIndividual indOWL3 = dataFactory.getOWLNamedIndividual(IRI.create("individual3"));
+      OWLDeclarationAxiom axiomIndividual3 = dataFactory.getOWLDeclarationAxiom(indOWL3);
+      OWLSubClassOfAxiom axiomSubclass3 = dataFactory.getOWLSubClassOfAxiom( classOWLA1, dataFactory.getOWLObjectAllValuesFrom(prop,dataFactory.getOWLObjectOneOf(indOWLB, indOWL3)));
       OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiom2 = dataFactory.getOWLObjectPropertyAssertionAxiom(prop, indOWLA1, indOWLB);
       OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiom3 = dataFactory.getOWLObjectPropertyAssertionAxiom(prop, indOWLA1, indOWL3);
-      manager.applyChanges(manager.addAxiom(ont2, axiomInd3));
-      manager.applyChanges(manager.addAxiom(ont2, axiomsubclass1));
-      manager.applyChanges(manager.addAxiom(ont2, axiomsubclass3));
-      manager.applyChanges(manager.addAxiom(ont2, classAssertionAxiom));
-      manager.applyChanges(manager.addAxiom(ont2, objectPropertyAssertionAxiom2));
-      manager.applyChanges(manager.addAxiom(ont2, classAssertionAxiom2));
-      manager.applyChanges(manager.addAxiom(ont2, objectPropertyAssertionAxiom3));
+
+      manager.applyChanges(manager.addAxiom(ontology2, axiomIndividual3));
+      manager.applyChanges(manager.addAxiom(ontology2, axiomSubclass1));
+      manager.applyChanges(manager.addAxiom(ontology2, axiomSubclass3));
+      manager.applyChanges(manager.addAxiom(ontology2, classAssertionAxiom));
+      manager.applyChanges(manager.addAxiom(ontology2, objectPropertyAssertionAxiom2));
+      manager.applyChanges(manager.addAxiom(ontology2, classAssertionAxiom2));
+      manager.applyChanges(manager.addAxiom(ontology2, objectPropertyAssertionAxiom3));
       OWLOntology assertion2 = manager.getOntology(IRI.create(base));
-      manager.removeOntology(ont2);
-      String expectedoutputassertion2 = "consistent";
+      manager.removeOntology(ontology2);
+      String expectedOutAssertion2 = "consistent";
 
 
       /*Assertions*/
-      OWLOntology ont3 = null;
+      OWLOntology ontology3 = null;
       try {
-         ont3 = manager.createOntology(IRI.create(base));
+         ontology3 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont3 = null;
+         ontology3 = null;
       }
       String inverse = "";
       if(R.toLowerCase().equals("isparticipantin"))
@@ -3439,63 +3436,65 @@ public class Implementations {
 
       //ind 4 --> no agent
       //class organization1 classOWLB1
-      OWLSubClassOfAxiom axiomsubclass4= dataFactory.getOWLSubClassOfAxiom(classOWLB1, classOWLB);
+      OWLSubClassOfAxiom axiomSubclass4= dataFactory.getOWLSubClassOfAxiom(classOWLB1, classOWLB);
 
       OWLObjectProperty propInverse = dataFactory.getOWLObjectProperty(IRI.create(inverse));
-      OWLSubClassOfAxiom axiomsubclass5 = dataFactory.getOWLSubClassOfAxiom( classOWLB1, dataFactory.getOWLObjectAllValuesFrom(propInverse,dataFactory.getOWLObjectOneOf(indOWLnoA)));
+      OWLSubClassOfAxiom axiomSubclass5 = dataFactory.getOWLSubClassOfAxiom( classOWLB1, dataFactory.getOWLObjectAllValuesFrom(propInverse,dataFactory.getOWLObjectOneOf(indOWLnoA)));
       OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiom4 = dataFactory.getOWLObjectPropertyAssertionAxiom(propInverse, indOWLB1, indOWLnoA);
-      manager.applyChanges(manager.addAxiom(ont3, axiomsubclass1));
-      manager.applyChanges(manager.addAxiom(ont3, axiomsubclass4));
-      manager.applyChanges(manager.addAxiom(ont3, axiomsubclass5));
-      manager.applyChanges(manager.addAxiom(ont3, objectPropertyAssertionAxiom4));
-      OWLOntology assertion3 = manager.getOntology(IRI.create(base));
-      String expectedoutputassertion3 = "inconsistent";
-      manager.removeOntology(ont1);
 
-      OWLOntology ont4 = null;
+      manager.applyChanges(manager.addAxiom(ontology3, axiomSubclass1));
+      manager.applyChanges(manager.addAxiom(ontology3, axiomSubclass4));
+      manager.applyChanges(manager.addAxiom(ontology3, axiomSubclass5));
+      manager.applyChanges(manager.addAxiom(ontology3, objectPropertyAssertionAxiom4));
+      OWLOntology assertion3 = manager.getOntology(IRI.create(base));
+      String expectedOutAssertion3 = "inconsistent";
+      manager.removeOntology(ontology1);
+
+      OWLOntology ontology4 = null;
       try {
-         ont4 = manager.createOntology(IRI.create(base));
+         ontology4 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont4 = null;
+         ontology4 = null;
       }
 
-      OWLSubClassOfAxiom axiomsubclass6 = dataFactory.getOWLSubClassOfAxiom( classOWLB, dataFactory.getOWLObjectAllValuesFrom(propInverse,dataFactory.getOWLObjectOneOf(indOWLnoA, indOWL3)));
+      OWLSubClassOfAxiom axiomSubclass6 = dataFactory.getOWLSubClassOfAxiom( classOWLB, dataFactory.getOWLObjectAllValuesFrom(propInverse,dataFactory.getOWLObjectOneOf(indOWLnoA, indOWL3)));
       OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiom5 = dataFactory.getOWLObjectPropertyAssertionAxiom(propInverse, indOWLB1, indOWLnoA);
       OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiom6 = dataFactory.getOWLObjectPropertyAssertionAxiom(propInverse, indOWLB1, indOWL3);
-      manager.applyChanges(manager.addAxiom(ont4, axiomInd3));
-      manager.applyChanges(manager.addAxiom(ont4, axiomsubclass1));
-      manager.applyChanges(manager.addAxiom(ont4, classAssertionAxiom));
-      manager.applyChanges(manager.addAxiom(ont4, objectPropertyAssertionAxiom5));
-      manager.applyChanges(manager.addAxiom(ont4, axiomsubclass6));
-      manager.applyChanges(manager.addAxiom(ont4, objectPropertyAssertionAxiom6));
-      manager.applyChanges(manager.addAxiom(ont4, axiomsubclass4));
+
+      manager.applyChanges(manager.addAxiom(ontology4, axiomIndividual3));
+      manager.applyChanges(manager.addAxiom(ontology4, axiomSubclass1));
+      manager.applyChanges(manager.addAxiom(ontology4, classAssertionAxiom));
+      manager.applyChanges(manager.addAxiom(ontology4, objectPropertyAssertionAxiom5));
+      manager.applyChanges(manager.addAxiom(ontology4, axiomSubclass6));
+      manager.applyChanges(manager.addAxiom(ontology4, objectPropertyAssertionAxiom6));
+      manager.applyChanges(manager.addAxiom(ontology4, axiomSubclass4));
       OWLOntology assertion4 = manager.getOntology(IRI.create(base));
-      manager.removeOntology(ont4);
-      String expectedoutputassertion4 = "consistent";
+      manager.removeOntology(ontology4);
+      String expectedOutAssertion4 = "consistent";
 
-      LinkedHashMap<String, OWLOntology> hashinput = new LinkedHashMap();
-      hashinput.put("Assertion 1", assertion1);
-      hashinput.put("Assertion 2", assertion2);
-      hashinput.put("Assertion 3", assertion3);
-      hashinput.put("Assertion 4", assertion4);
+      LinkedHashMap<String, OWLOntology> hashInput = new LinkedHashMap();
+      hashInput.put("Assertion 1", assertion1);
+      hashInput.put("Assertion 2", assertion2);
+      hashInput.put("Assertion 3", assertion3);
+      hashInput.put("Assertion 4", assertion4);
 
 
-      LinkedHashMap<String, String> hashoutput = new LinkedHashMap();
-      hashoutput.put("Assertion 1",expectedoutputassertion1);
-      hashoutput.put("Assertion 2",expectedoutputassertion2);
-      hashoutput.put("Assertion 3",expectedoutputassertion3);
-      hashoutput.put("Assertion 4",expectedoutputassertion4);
+      LinkedHashMap<String, String> hashOutput = new LinkedHashMap();
+      hashOutput.put("Assertion 1",expectedOutAssertion1);
+      hashOutput.put("Assertion 2",expectedOutAssertion2);
+      hashOutput.put("Assertion 3",expectedOutAssertion3);
+      hashOutput.put("Assertion 4",expectedOutAssertion4);
 
       for (Map.Entry<String, String> entry : testCase.getAxiomExpectedResultAxioms().entrySet()) {
-         hashoutput.put(entry.getKey(), entry.getValue());
+         hashOutput.put(entry.getKey(), entry.getValue());
       }
 
-      testCase.setAxiomExpectedResultAxioms(hashoutput);
+      testCase.setAxiomExpectedResultAxioms(hashOutput);
 
       for (Map.Entry<String, OWLOntology> entry : testCase.getAssertionsAxioms().entrySet()) {
-         hashinput.put(entry.getKey(), entry.getValue());
+         hashInput.put(entry.getKey(), entry.getValue());
       }
-      testCase.setAssertionsAxioms(hashinput);
+      testCase.setAssertionsAxioms(hashInput);
       return testCase;
    }
 
@@ -3506,31 +3505,31 @@ public class Implementations {
 
       /*Generation of classes*/
       m.find();
-      String classA = m.group(1).toString();
+      String classA = m.group(1);
       String classA1 = classA+"1";
-      String R = m.group(2).toString();
+      String R = m.group(2);
       String classB = "";
-      classB = m.group(3).toString();
+      classB = m.group(3);
       String noClassB =  "No"+classB.split("(#|\\/)")[classB.split("(#|\\/)").length-1];
       String noClassA =  "No"+classA.split("(#|\\/)")[classA.split("(#|\\/)").length-1];
       String classB1 = classB+"1";
 
       /*Preconditions*/
-      ArrayList<String> precond = new ArrayList<>();
-      precond.add("Class(<"+classA+">)");
-      precond.add("Property(<"+R+">)");
-      precond.add("Class(<"+classB+">)");
-      testCase.getPrecondition().addAll(precond);
+      ArrayList<String> precondition = new ArrayList<>();
+      precondition.add("Class(<"+classA+">)");
+      precondition.add("Property(<"+R+">)");
+      precondition.add("Class(<"+classB+">)");
+      testCase.getPrecondition().addAll(precondition);
 
       /*Axioms to be added*/
       /*Preparation*/
       String base = "";
       OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
-      OWLOntology ont = null;
+      OWLOntology ontology = null;
       try {
-         ont = manager.createOntology(IRI.create(base));
+         ontology = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont = null;
+         ontology = null;
       }
       OWLDataFactory dataFactory = manager.getOWLDataFactory();
 
@@ -3540,91 +3539,94 @@ public class Implementations {
       OWLDeclarationAxiom axiomClass = dataFactory.getOWLDeclarationAxiom(classOWLB);
       OWLDeclarationAxiom axiomClass1 = dataFactory.getOWLDeclarationAxiom(noClassOWLB);
       OWLDeclarationAxiom axiomClass2 = dataFactory.getOWLDeclarationAxiom(classOWLB1);
-      OWLEquivalentClassesAxiom equivalentClassesAxiom = dataFactory.getOWLEquivalentClassesAxiom(noClassOWLB, dataFactory.getOWLObjectComplementOf(classOWLB));
+      OWLEquivalentClassesAxiom equivalentClassesAxiom1 = dataFactory.getOWLEquivalentClassesAxiom(noClassOWLB, dataFactory.getOWLObjectComplementOf(classOWLB));
       OWLClass classOWLA = dataFactory.getOWLClass(IRI.create(classA));
       OWLClass classOWLA1 = dataFactory.getOWLClass(IRI.create(classA1));
       OWLDeclarationAxiom axiomclassA1 = dataFactory.getOWLDeclarationAxiom(classOWLA1);
       OWLClass noClassOWLA = dataFactory.getOWLClass(IRI.create(noClassA));
       OWLDeclarationAxiom axiomClass3 = dataFactory.getOWLDeclarationAxiom(noClassOWLA);
       OWLEquivalentClassesAxiom equivalentClassesAxiom2 = dataFactory.getOWLEquivalentClassesAxiom(noClassOWLA, dataFactory.getOWLObjectComplementOf(classOWLA));
-      OWLNamedIndividual indOWLA1 = dataFactory.getOWLNamedIndividual(IRI.create("ind1"));
-      OWLDeclarationAxiom axiomInd1 = dataFactory.getOWLDeclarationAxiom(indOWLA1);
-      OWLClassAssertionAxiom classAssertionAxiom = dataFactory.getOWLClassAssertionAxiom(classOWLA1, indOWLA1);
-      OWLNamedIndividual indOWLB = dataFactory.getOWLNamedIndividual(IRI.create("ind2"));
-      OWLDeclarationAxiom axiomInd2 = dataFactory.getOWLDeclarationAxiom(indOWLB);
-      OWLNamedIndividual indOWLnoA = dataFactory.getOWLNamedIndividual(IRI.create("ind4"));
-      OWLDeclarationAxiom axiomInd4 = dataFactory.getOWLDeclarationAxiom(indOWLnoA);
+      OWLNamedIndividual indOWLA1 = dataFactory.getOWLNamedIndividual(IRI.create("individual1"));
+      OWLDeclarationAxiom axiomIndividual1 = dataFactory.getOWLDeclarationAxiom(indOWLA1);
+      OWLClassAssertionAxiom classAssertionAxiom1 = dataFactory.getOWLClassAssertionAxiom(classOWLA1, indOWLA1);
+      OWLNamedIndividual indOWLB = dataFactory.getOWLNamedIndividual(IRI.create("individual2"));
+      OWLDeclarationAxiom axiomIndividual2 = dataFactory.getOWLDeclarationAxiom(indOWLB);
+      OWLNamedIndividual indOWLnoA = dataFactory.getOWLNamedIndividual(IRI.create("individual4"));
+      OWLDeclarationAxiom axiomIndividual4 = dataFactory.getOWLDeclarationAxiom(indOWLnoA);
       OWLClassAssertionAxiom classAssertionAxiom2 = dataFactory.getOWLClassAssertionAxiom(noClassOWLB, indOWLB);
       OWLClassAssertionAxiom classAssertionAxiom3 = dataFactory.getOWLClassAssertionAxiom(noClassOWLA, indOWLnoA);
-      OWLNamedIndividual indOWLB1 = dataFactory.getOWLNamedIndividual(IRI.create("ind5"));
-      OWLDeclarationAxiom axiomInd5 = dataFactory.getOWLDeclarationAxiom(indOWLB1);
+      OWLNamedIndividual indOWLB1 = dataFactory.getOWLNamedIndividual(IRI.create("individual5"));
+      OWLDeclarationAxiom axiomIndividual5 = dataFactory.getOWLDeclarationAxiom(indOWLB1);
       OWLClassAssertionAxiom classAssertionAxiom4 = dataFactory.getOWLClassAssertionAxiom(classOWLB1, indOWLB1);
-      manager.applyChanges(manager.addAxiom(ont, axiomClass));
-      manager.applyChanges(manager.addAxiom(ont, axiomClass1));
-      manager.applyChanges(manager.addAxiom(ont, axiomClass2));
-      manager.applyChanges(manager.addAxiom(ont, axiomClass3));
-      manager.applyChanges(manager.addAxiom(ont, equivalentClassesAxiom));
-      manager.applyChanges(manager.addAxiom(ont, equivalentClassesAxiom2));
-      manager.applyChanges(manager.addAxiom(ont, axiomInd1));
-      manager.applyChanges(manager.addAxiom(ont, axiomclassA1));
-      manager.applyChanges(manager.addAxiom(ont, classAssertionAxiom));
-      manager.applyChanges(manager.addAxiom(ont, axiomInd2));
-      manager.applyChanges(manager.addAxiom(ont, classAssertionAxiom2));
-      manager.applyChanges(manager.addAxiom(ont, axiomInd4));
-      manager.applyChanges(manager.addAxiom(ont, classAssertionAxiom3));
-      manager.applyChanges(manager.addAxiom(ont, axiomInd5));
-      manager.applyChanges(manager.addAxiom(ont, classAssertionAxiom4));
+
+      manager.applyChanges(manager.addAxiom(ontology, axiomClass));
+      manager.applyChanges(manager.addAxiom(ontology, axiomClass1));
+      manager.applyChanges(manager.addAxiom(ontology, axiomClass2));
+      manager.applyChanges(manager.addAxiom(ontology, axiomClass3));
+      manager.applyChanges(manager.addAxiom(ontology, equivalentClassesAxiom1));
+      manager.applyChanges(manager.addAxiom(ontology, equivalentClassesAxiom2));
+      manager.applyChanges(manager.addAxiom(ontology, axiomIndividual1));
+      manager.applyChanges(manager.addAxiom(ontology, axiomclassA1));
+      manager.applyChanges(manager.addAxiom(ontology, classAssertionAxiom1));
+      manager.applyChanges(manager.addAxiom(ontology, axiomIndividual2));
+      manager.applyChanges(manager.addAxiom(ontology, classAssertionAxiom2));
+      manager.applyChanges(manager.addAxiom(ontology, axiomIndividual4));
+      manager.applyChanges(manager.addAxiom(ontology, classAssertionAxiom3));
+      manager.applyChanges(manager.addAxiom(ontology, axiomIndividual5));
+      manager.applyChanges(manager.addAxiom(ontology, classAssertionAxiom4));
       testCase.setPreparationaxioms(manager.getOntology(IRI.create(base)));
-      manager.removeOntology(ont);
+      manager.removeOntology(ontology);
 
       /*Assertions*/
-      OWLOntology ont1 = null;
+      OWLOntology ontology1 = null;
       try {
-         ont1 = manager.createOntology(IRI.create(base));
+         ontology1 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont1 = null;
+         ontology1 = null;
       }
-      OWLSubClassOfAxiom axiomsubclass1= dataFactory.getOWLSubClassOfAxiom(classOWLA1, classOWLA);
+      OWLSubClassOfAxiom axiomSubclass1= dataFactory.getOWLSubClassOfAxiom(classOWLA1, classOWLA);
       OWLObjectProperty prop = dataFactory.getOWLObjectProperty(IRI.create(R));
-      OWLSubClassOfAxiom axiomsubclass2 = dataFactory.getOWLSubClassOfAxiom( classOWLA1, dataFactory.getOWLObjectSomeValuesFrom(prop,dataFactory.getOWLObjectOneOf(indOWLB)));
-      OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiom = dataFactory.getOWLObjectPropertyAssertionAxiom(prop, indOWLA1, indOWLB);
-      manager.applyChanges(manager.addAxiom(ont1, axiomsubclass1));
-      manager.applyChanges(manager.addAxiom(ont1, axiomsubclass2));
-      manager.applyChanges(manager.addAxiom(ont1, objectPropertyAssertionAxiom));
+      OWLSubClassOfAxiom axiomSubclass2 = dataFactory.getOWLSubClassOfAxiom( classOWLA1, dataFactory.getOWLObjectSomeValuesFrom(prop,dataFactory.getOWLObjectOneOf(indOWLB)));
+      OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiom1 = dataFactory.getOWLObjectPropertyAssertionAxiom(prop, indOWLA1, indOWLB);
+
+      manager.applyChanges(manager.addAxiom(ontology1, axiomSubclass1));
+      manager.applyChanges(manager.addAxiom(ontology1, axiomSubclass2));
+      manager.applyChanges(manager.addAxiom(ontology1, objectPropertyAssertionAxiom1));
       OWLOntology assertion1 = manager.getOntology(IRI.create(base));
-      String expectedoutputassertion1 = "inconsistent";
-      manager.removeOntology(ont1);
+      String expectedOutAssertion1 = "inconsistent";
+      manager.removeOntology(ontology1);
 
 
 
-      OWLOntology ont2 = null;
+      OWLOntology ontology2 = null;
       try {
-         ont2 = manager.createOntology(IRI.create(base));
+         ontology2 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont2 = null;
+         ontology2 = null;
       }
-      OWLNamedIndividual indOWL3 = dataFactory.getOWLNamedIndividual(IRI.create("ind3"));
-      OWLDeclarationAxiom axiomInd3 = dataFactory.getOWLDeclarationAxiom(indOWL3);
-      OWLSubClassOfAxiom axiomsubclass3 = dataFactory.getOWLSubClassOfAxiom( classOWLA1, dataFactory.getOWLObjectAllValuesFrom(prop,dataFactory.getOWLObjectOneOf(indOWLB, indOWL3)));
+      OWLNamedIndividual indOWL3 = dataFactory.getOWLNamedIndividual(IRI.create("individual3"));
+      OWLDeclarationAxiom axiomIndividual3 = dataFactory.getOWLDeclarationAxiom(indOWL3);
+      OWLSubClassOfAxiom axiomSubclass3 = dataFactory.getOWLSubClassOfAxiom( classOWLA1, dataFactory.getOWLObjectAllValuesFrom(prop,dataFactory.getOWLObjectOneOf(indOWLB, indOWL3)));
       OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiom2 = dataFactory.getOWLObjectPropertyAssertionAxiom(prop, indOWLA1, indOWLB);
       OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiom3 = dataFactory.getOWLObjectPropertyAssertionAxiom(prop, indOWLA1, indOWL3);
-      manager.applyChanges(manager.addAxiom(ont2, axiomInd3));
-      manager.applyChanges(manager.addAxiom(ont2, axiomsubclass1));
-      manager.applyChanges(manager.addAxiom(ont2, axiomsubclass3));
-      manager.applyChanges(manager.addAxiom(ont2, classAssertionAxiom));
-      manager.applyChanges(manager.addAxiom(ont2, objectPropertyAssertionAxiom2));
-      manager.applyChanges(manager.addAxiom(ont2, classAssertionAxiom2));
-      manager.applyChanges(manager.addAxiom(ont2, objectPropertyAssertionAxiom3));
+
+      manager.applyChanges(manager.addAxiom(ontology2, axiomIndividual3));
+      manager.applyChanges(manager.addAxiom(ontology2, axiomSubclass1));
+      manager.applyChanges(manager.addAxiom(ontology2, axiomSubclass3));
+      manager.applyChanges(manager.addAxiom(ontology2, classAssertionAxiom1));
+      manager.applyChanges(manager.addAxiom(ontology2, objectPropertyAssertionAxiom2));
+      manager.applyChanges(manager.addAxiom(ontology2, classAssertionAxiom2));
+      manager.applyChanges(manager.addAxiom(ontology2, objectPropertyAssertionAxiom3));
       OWLOntology assertion2 = manager.getOntology(IRI.create(base));
-      manager.removeOntology(ont2);
-      String expectedoutputassertion2 = "inconsistent";
+      manager.removeOntology(ontology2);
+      String expectedOutAssertion2 = "inconsistent";
 
       /*Assertions*/
-      OWLOntology ont3 = null;
+      OWLOntology ontology3 = null;
       try {
-         ont3 = manager.createOntology(IRI.create(base));
+         ontology3 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont3 = null;
+         ontology3 = null;
       }
       String inverse = "";
       if(R.equals("isparticipantin"))
@@ -3640,66 +3642,64 @@ public class Implementations {
       else
          inverse = "none";
 
-
-
-
-
       OWLObjectProperty propInverse = dataFactory.getOWLObjectProperty(IRI.create(inverse));
-      OWLSubClassOfAxiom axiomsubclass4= dataFactory.getOWLSubClassOfAxiom(classOWLB1, classOWLB);
-      OWLSubClassOfAxiom axiomsubclass5 = dataFactory.getOWLSubClassOfAxiom( classOWLB, dataFactory.getOWLObjectSomeValuesFrom(prop,dataFactory.getOWLObjectOneOf(indOWLnoA)));
+      OWLSubClassOfAxiom axiomSubclass4= dataFactory.getOWLSubClassOfAxiom(classOWLB1, classOWLB);
+      OWLSubClassOfAxiom axiomSubclass5 = dataFactory.getOWLSubClassOfAxiom( classOWLB, dataFactory.getOWLObjectSomeValuesFrom(prop,dataFactory.getOWLObjectOneOf(indOWLnoA)));
       OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiom4 = dataFactory.getOWLObjectPropertyAssertionAxiom(propInverse, indOWLB1, indOWLnoA);
-      manager.applyChanges(manager.addAxiom(ont3, axiomsubclass1));
-      manager.applyChanges(manager.addAxiom(ont3, axiomsubclass4));
-      manager.applyChanges(manager.addAxiom(ont3, axiomsubclass5));
-      manager.applyChanges(manager.addAxiom(ont3, objectPropertyAssertionAxiom4));
-      OWLOntology assertion3 = manager.getOntology(IRI.create(base));
-      String expectedoutputassertion3 = "inconsistent";
-      manager.removeOntology(ont1);
 
-      OWLOntology ont4 = null;
+      manager.applyChanges(manager.addAxiom(ontology3, axiomSubclass1));
+      manager.applyChanges(manager.addAxiom(ontology3, axiomSubclass4));
+      manager.applyChanges(manager.addAxiom(ontology3, axiomSubclass5));
+      manager.applyChanges(manager.addAxiom(ontology3, objectPropertyAssertionAxiom4));
+      OWLOntology assertion3 = manager.getOntology(IRI.create(base));
+      String expectedOutAssertion3 = "inconsistent";
+      manager.removeOntology(ontology1);
+
+      OWLOntology ontology4 = null;
       try {
-         ont4 = manager.createOntology(IRI.create(base));
+         ontology4 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont4 = null;
+         ontology4 = null;
       }
 
-      OWLSubClassOfAxiom axiomsubclass6 = dataFactory.getOWLSubClassOfAxiom( classOWLB, dataFactory.getOWLObjectAllValuesFrom(propInverse,dataFactory.getOWLObjectOneOf(indOWLnoA, indOWL3)));
+      OWLSubClassOfAxiom axiomSubclass6 = dataFactory.getOWLSubClassOfAxiom( classOWLB, dataFactory.getOWLObjectAllValuesFrom(propInverse,dataFactory.getOWLObjectOneOf(indOWLnoA, indOWL3)));
       OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiom5 = dataFactory.getOWLObjectPropertyAssertionAxiom(propInverse, indOWLB1, indOWLnoA);
       OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiom6 = dataFactory.getOWLObjectPropertyAssertionAxiom(propInverse, indOWLB1, indOWL3);
-      manager.applyChanges(manager.addAxiom(ont4, axiomInd3));
-      manager.applyChanges(manager.addAxiom(ont4, axiomsubclass1));
-      manager.applyChanges(manager.addAxiom(ont4, classAssertionAxiom));
-      manager.applyChanges(manager.addAxiom(ont4, objectPropertyAssertionAxiom5));
-      manager.applyChanges(manager.addAxiom(ont4, axiomsubclass6));
-      manager.applyChanges(manager.addAxiom(ont3, axiomsubclass4));
-      manager.applyChanges(manager.addAxiom(ont4, objectPropertyAssertionAxiom6));
       OWLOntology assertion4 = manager.getOntology(IRI.create(base));
-      manager.removeOntology(ont4);
-      String expectedoutputassertion4 = "inconsistent";
 
-      LinkedHashMap<String, OWLOntology> hashinput = new LinkedHashMap();
-      hashinput.put("Assertion 1", assertion1);
-      hashinput.put("Assertion 2", assertion2);
-      hashinput.put("Assertion 3", assertion3);
-      hashinput.put("Assertion 4", assertion4);
+      manager.applyChanges(manager.addAxiom(ontology4, axiomIndividual3));
+      manager.applyChanges(manager.addAxiom(ontology4, axiomSubclass1));
+      manager.applyChanges(manager.addAxiom(ontology4, classAssertionAxiom1));
+      manager.applyChanges(manager.addAxiom(ontology4, objectPropertyAssertionAxiom5));
+      manager.applyChanges(manager.addAxiom(ontology4, axiomSubclass6));
+      manager.applyChanges(manager.addAxiom(ontology3, axiomSubclass4));
+      manager.applyChanges(manager.addAxiom(ontology4, objectPropertyAssertionAxiom6));
+      manager.removeOntology(ontology4);
+      String expectedOutAssertion4 = "inconsistent";
+
+      LinkedHashMap<String, OWLOntology> hashInput = new LinkedHashMap();
+      hashInput.put("Assertion 1", assertion1);
+      hashInput.put("Assertion 2", assertion2);
+      hashInput.put("Assertion 3", assertion3);
+      hashInput.put("Assertion 4", assertion4);
 
 
-      LinkedHashMap<String, String> hashoutput = new LinkedHashMap();
-      hashoutput.put("Assertion 1",expectedoutputassertion1);
-      hashoutput.put("Assertion 2",expectedoutputassertion2);
-      hashoutput.put("Assertion 3",expectedoutputassertion3);
-      hashoutput.put("Assertion 4",expectedoutputassertion4);
+      LinkedHashMap<String, String> hashOutput = new LinkedHashMap();
+      hashOutput.put("Assertion 1",expectedOutAssertion1);
+      hashOutput.put("Assertion 2",expectedOutAssertion2);
+      hashOutput.put("Assertion 3",expectedOutAssertion3);
+      hashOutput.put("Assertion 4",expectedOutAssertion4);
 
       for (Map.Entry<String, String> entry : testCase.getAxiomExpectedResultAxioms().entrySet()) {
-         hashoutput.put(entry.getKey(), entry.getValue());
+         hashOutput.put(entry.getKey(), entry.getValue());
       }
 
-      testCase.setAxiomExpectedResultAxioms(hashoutput);
+      testCase.setAxiomExpectedResultAxioms(hashOutput);
 
       for (Map.Entry<String, OWLOntology> entry : testCase.getAssertionsAxioms().entrySet()) {
-         hashinput.put(entry.getKey(), entry.getValue());
+         hashInput.put(entry.getKey(), entry.getValue());
       }
-      testCase.setAssertionsAxioms(hashinput);
+      testCase.setAssertionsAxioms(hashInput);
       return testCase;
    }
 
@@ -3710,43 +3710,43 @@ public class Implementations {
 
       /*Generation of classes*/
       m.find();
-      String classA = m.group(1).toString();
+      String classA = m.group(1);
       String classAnoSymb = classA.replace(">","").replace("<","");
       String noClassA =  "No"+classAnoSymb.split("(#|\\/)")[classA.split("(#)").length-1];
       String classA1 =  classAnoSymb.split("(#|\\/)")[classA.split("(#)").length-1]+"1";
 
-      String classB = m.group(2).toString();
+      String classB = m.group(2);
       String classB1 =  classB.split("(#|\\/)")[classB.split("(#)").length-1]+"1";
       String noClassB =  "No"+classB.replace(">","").replace("<","").replace(">","").replace("<","").split("(#|\\/)")[classB.split("(#|\\/)").length-1];
-      String R = m.group(3).toString();
+      String relation = m.group(3);
       String classC = "";
-      classC = m.group(4).toString();
+      classC = m.group(4);
 
       /*Preconditions*/
-      ArrayList<String> precond = new ArrayList<>();
-      precond.add("Class(<"+classA+">)");
-      precond.add("Class(<"+classB+">)");
-      precond.add("Property(<"+R+">)");
-      precond.add("Class(<"+classC+">)");
-      testCase.getPrecondition().addAll(precond);
+      ArrayList<String> precondition = new ArrayList<>();
+      precondition.add("Class(<"+classA+">)");
+      precondition.add("Class(<"+classB+">)");
+      precondition.add("Property(<"+relation+">)");
+      precondition.add("Class(<"+classC+">)");
+      testCase.getPrecondition().addAll(precondition);
 
       /*Axioms to be added*/
       /*Preparation*/
       String base = "";
       OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
-      OWLOntology ont = null;
+      OWLOntology ontology = null;
       try {
-         ont = manager.createOntology(IRI.create(base));
+         ontology = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont = null;
+         ontology = null;
       }
       OWLDataFactory dataFactory = manager.getOWLDataFactory();
 
       OWLClass classOWLA = dataFactory.getOWLClass(IRI.create(classA));
       OWLClass noClassOWLA = dataFactory.getOWLClass(IRI.create(noClassA));
-      OWLDeclarationAxiom axiomClass = dataFactory.getOWLDeclarationAxiom(classOWLA);
+      OWLDeclarationAxiom axiomClass1 = dataFactory.getOWLDeclarationAxiom(classOWLA);
       OWLDeclarationAxiom axiomClass2 = dataFactory.getOWLDeclarationAxiom(noClassOWLA);
-      OWLEquivalentClassesAxiom equivalentClassesAxiom = dataFactory.getOWLEquivalentClassesAxiom(noClassOWLA, dataFactory.getOWLObjectComplementOf(classOWLA));
+      OWLEquivalentClassesAxiom equivalentClassesAxiom1 = dataFactory.getOWLEquivalentClassesAxiom(noClassOWLA, dataFactory.getOWLObjectComplementOf(classOWLA));
       OWLClass classOWLB = dataFactory.getOWLClass(IRI.create(classB));
       OWLClass noClassOWLB = dataFactory.getOWLClass(IRI.create(noClassB));
       OWLDeclarationAxiom axiomClass3 = dataFactory.getOWLDeclarationAxiom(classOWLB);
@@ -3755,138 +3755,139 @@ public class Implementations {
       OWLClass classOWLA1 = dataFactory.getOWLClass(IRI.create(classA1));
       OWLDeclarationAxiom axiomClass7 = dataFactory.getOWLDeclarationAxiom(classOWLA1);
 
-      manager.applyChanges(manager.addAxiom(ont, axiomClass));
-      manager.applyChanges(manager.addAxiom(ont, axiomClass2));
-      manager.applyChanges(manager.addAxiom(ont, axiomClass3));
-      manager.applyChanges(manager.addAxiom(ont, axiomClass4));
-      manager.applyChanges(manager.addAxiom(ont, equivalentClassesAxiom));
-      manager.applyChanges(manager.addAxiom(ont, equivalentClassesAxiom2));
-      manager.applyChanges(manager.addAxiom(ont, axiomClass7));
+      manager.applyChanges(manager.addAxiom(ontology, axiomClass1));
+      manager.applyChanges(manager.addAxiom(ontology, axiomClass2));
+      manager.applyChanges(manager.addAxiom(ontology, axiomClass3));
+      manager.applyChanges(manager.addAxiom(ontology, axiomClass4));
+      manager.applyChanges(manager.addAxiom(ontology, equivalentClassesAxiom1));
+      manager.applyChanges(manager.addAxiom(ontology, equivalentClassesAxiom2));
+      manager.applyChanges(manager.addAxiom(ontology, axiomClass7));
       testCase.setPreparationaxioms(manager.getOntology(IRI.create(base)));
-      manager.removeOntology(ont);
+      manager.removeOntology(ontology);
 
       /************SUBCLASS TEST***************/
-      OWLOntology ont1 = null;
+      OWLOntology ontology1 = null;
       try {
-         ont1 = manager.createOntology(IRI.create(base));
+         ontology1 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont1 = null;
+         ontology1 = null;
       }
       OWLSubClassOfAxiom subClassOfAxiom1 = dataFactory.getOWLSubClassOfAxiom(classOWLA1,
               dataFactory.getOWLObjectIntersectionOf(noClassOWLA, classOWLB));
-      manager.applyChanges(manager.addAxiom(ont1, subClassOfAxiom1));
+      manager.applyChanges(manager.addAxiom(ontology1, subClassOfAxiom1));
       OWLOntology assertion1 = manager.getOntology(IRI.create(base));
 
-      String expectedoutputassertion1  = "consistent";
-      manager.removeOntology(ont1);
+      String expectedOutAssertion1  = "consistent";
+      manager.removeOntology(ontology1);
 
-      OWLOntology ont2 = null;
+      OWLOntology ontology2 = null;
       try {
-         ont2 = manager.createOntology(IRI.create(base));
+         ontology2 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont2 = null;
+         ontology2 = null;
       }
       OWLSubClassOfAxiom subClassOfAxiom3 = dataFactory.getOWLSubClassOfAxiom(classOWLA1,
               dataFactory.getOWLObjectIntersectionOf(classOWLA, noClassOWLB));
-      manager.applyChanges(manager.addAxiom(ont2, subClassOfAxiom3));
+      manager.applyChanges(manager.addAxiom(ontology2, subClassOfAxiom3));
       OWLOntology assertion2 = manager.getOntology(IRI.create(base));
-      String expectedoutputassertion2  = "unsatisfiable";
-      manager.removeOntology(ont2);
+      String expectedOutAssertion2  = "unsatisfiable";
+      manager.removeOntology(ontology2);
 
-      OWLOntology ont3 = null;
+      OWLOntology ontology3 = null;
       try {
-         ont3 = manager.createOntology(IRI.create(base));
+         ontology3 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont3 = null;
+         ontology3 = null;
       }
       OWLSubClassOfAxiom subClassOfAxiom4 = dataFactory.getOWLSubClassOfAxiom(classOWLA1,
               dataFactory.getOWLObjectIntersectionOf(classOWLA, classOWLB));
-      manager.applyChanges(manager.addAxiom(ont3, subClassOfAxiom4));
+      manager.applyChanges(manager.addAxiom(ontology3, subClassOfAxiom4));
       OWLOntology assertion3 = manager.getOntology(IRI.create(base));
-      String expectedoutputassertion3  = "consistent";
-      manager.removeOntology(ont3);
+      String expectedOutAssertion3  = "consistent";
+      manager.removeOntology(ontology3);
       /************OP TEST***************/
       /*Axioms to be added*/
       /*Assertions*/
-      OWLOntology ont4 = null;
+      OWLOntology ontology4 = null;
       try {
-         ont4 = manager.createOntology(IRI.create(base));
+         ontology4 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont4 = null;
+         ontology4 = null;
       }
-      OWLObjectProperty prop = dataFactory.getOWLObjectProperty(IRI.create(R));
-      OWLNamedIndividual indOWLA1 = dataFactory.getOWLNamedIndividual(IRI.create("ind1"));
-      OWLNamedIndividual indOWLC = dataFactory.getOWLNamedIndividual(IRI.create("ind2"));
-      OWLDeclarationAxiom axiomInd2 = dataFactory.getOWLDeclarationAxiom(indOWLC);
+      OWLObjectProperty prop = dataFactory.getOWLObjectProperty(IRI.create(relation));
+      OWLNamedIndividual indOWLA1 = dataFactory.getOWLNamedIndividual(IRI.create("individual1"));
+      OWLNamedIndividual indOWLC = dataFactory.getOWLNamedIndividual(IRI.create("individual2"));
+      OWLDeclarationAxiom axiomIndividual2 = dataFactory.getOWLDeclarationAxiom(indOWLC);
       OWLClass classOWLC = dataFactory.getOWLClass(IRI.create(classC));
       OWLClass noClassOWLC = dataFactory.getOWLClass(IRI.create("no"+classC));
       OWLEquivalentClassesAxiom equivalentClassesAxiom3 = dataFactory.getOWLEquivalentClassesAxiom(noClassOWLC, dataFactory.getOWLObjectComplementOf(classOWLC));
       OWLClassAssertionAxiom classAssertionAxiom2 = dataFactory.getOWLClassAssertionAxiom(noClassOWLC, indOWLC);
-      OWLDeclarationAxiom axiomInd1 = dataFactory.getOWLDeclarationAxiom(indOWLA1);
-      OWLClassAssertionAxiom classAssertionAxiom = dataFactory.getOWLClassAssertionAxiom(classOWLA1, indOWLA1);
-      OWLSubClassOfAxiom axiomsubclass1= dataFactory.getOWLSubClassOfAxiom(classOWLA1, classOWLA);
-      OWLSubClassOfAxiom axiomsubclass2 = dataFactory.getOWLSubClassOfAxiom( classOWLA1, dataFactory.getOWLObjectAllValuesFrom(prop,dataFactory.getOWLObjectOneOf(indOWLC)));
+      OWLDeclarationAxiom axiomIndividual1 = dataFactory.getOWLDeclarationAxiom(indOWLA1);
+      OWLClassAssertionAxiom classAssertionAxiom1 = dataFactory.getOWLClassAssertionAxiom(classOWLA1, indOWLA1);
+      OWLSubClassOfAxiom axiomSubclass1= dataFactory.getOWLSubClassOfAxiom(classOWLA1, classOWLA);
+      OWLSubClassOfAxiom axiomSubclass2 = dataFactory.getOWLSubClassOfAxiom( classOWLA1, dataFactory.getOWLObjectAllValuesFrom(prop,dataFactory.getOWLObjectOneOf(indOWLC)));
       OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiom = dataFactory.getOWLObjectPropertyAssertionAxiom(prop, indOWLA1, indOWLC);
-      manager.applyChanges(manager.addAxiom(ont4, axiomsubclass1));
-      manager.applyChanges(manager.addAxiom(ont4, axiomsubclass2));
-      manager.applyChanges(manager.addAxiom(ont4, axiomInd2));
-      manager.applyChanges(manager.addAxiom(ont4, objectPropertyAssertionAxiom));
-      manager.applyChanges(manager.addAxiom(ont4, classAssertionAxiom));
-      manager.applyChanges(manager.addAxiom(ont4, classAssertionAxiom2));
-      manager.applyChanges(manager.addAxiom(ont4, equivalentClassesAxiom3));
-      OWLOntology assertion4 = manager.getOntology(IRI.create(base));
-      String expectedoutputassertion4 = "inconsistent";
-      manager.removeOntology(ont4);
 
-      OWLOntology ont5 = null;
+      manager.applyChanges(manager.addAxiom(ontology4, axiomSubclass1));
+      manager.applyChanges(manager.addAxiom(ontology4, axiomSubclass2));
+      manager.applyChanges(manager.addAxiom(ontology4, axiomIndividual2));
+      manager.applyChanges(manager.addAxiom(ontology4, objectPropertyAssertionAxiom));
+      manager.applyChanges(manager.addAxiom(ontology4, classAssertionAxiom1));
+      manager.applyChanges(manager.addAxiom(ontology4, classAssertionAxiom2));
+      manager.applyChanges(manager.addAxiom(ontology4, equivalentClassesAxiom3));
+      OWLOntology assertion4 = manager.getOntology(IRI.create(base));
+      String expectedOutAssertion4 = "inconsistent";
+      manager.removeOntology(ontology4);
+
+      OWLOntology ontology5 = null;
       try {
-         ont5 = manager.createOntology(IRI.create(base));
+         ontology5 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont5 = null;
+         ontology5 = null;
       }
-      OWLNamedIndividual indOWL3 = dataFactory.getOWLNamedIndividual(IRI.create("ind3"));
-      OWLDeclarationAxiom axiomInd3 = dataFactory.getOWLDeclarationAxiom(indOWL3);
-      OWLSubClassOfAxiom axiomsubclass3 = dataFactory.getOWLSubClassOfAxiom( classOWLA1, dataFactory.getOWLObjectAllValuesFrom(prop,dataFactory.getOWLObjectOneOf(indOWLC, indOWL3)));
+      OWLNamedIndividual indOWL3 = dataFactory.getOWLNamedIndividual(IRI.create("individual3"));
+      OWLDeclarationAxiom axiomIndividual3 = dataFactory.getOWLDeclarationAxiom(indOWL3);
+      OWLSubClassOfAxiom axiomSubclass3 = dataFactory.getOWLSubClassOfAxiom( classOWLA1, dataFactory.getOWLObjectAllValuesFrom(prop,dataFactory.getOWLObjectOneOf(indOWLC, indOWL3)));
       OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiom2 = dataFactory.getOWLObjectPropertyAssertionAxiom(prop, indOWLA1, indOWLC);
       OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiom3 = dataFactory.getOWLObjectPropertyAssertionAxiom(prop, indOWLA1, indOWL3);
-      manager.applyChanges(manager.addAxiom(ont5, axiomInd3));
-      manager.applyChanges(manager.addAxiom(ont5, axiomsubclass1));
-      manager.applyChanges(manager.addAxiom(ont5, axiomsubclass3));
-      manager.applyChanges(manager.addAxiom(ont5, classAssertionAxiom));
-      manager.applyChanges(manager.addAxiom(ont5, objectPropertyAssertionAxiom2));
-      manager.applyChanges(manager.addAxiom(ont5, classAssertionAxiom2));
-      manager.applyChanges(manager.addAxiom(ont5, objectPropertyAssertionAxiom3));
-      manager.applyChanges(manager.addAxiom(ont4, equivalentClassesAxiom3));
+      manager.applyChanges(manager.addAxiom(ontology5, axiomIndividual3));
+      manager.applyChanges(manager.addAxiom(ontology5, axiomSubclass1));
+      manager.applyChanges(manager.addAxiom(ontology5, axiomSubclass3));
+      manager.applyChanges(manager.addAxiom(ontology5, classAssertionAxiom1));
+      manager.applyChanges(manager.addAxiom(ontology5, objectPropertyAssertionAxiom2));
+      manager.applyChanges(manager.addAxiom(ontology5, classAssertionAxiom2));
+      manager.applyChanges(manager.addAxiom(ontology5, objectPropertyAssertionAxiom3));
+      manager.applyChanges(manager.addAxiom(ontology4, equivalentClassesAxiom3));
       OWLOntology assertion5 = manager.getOntology(IRI.create(base));
 
-      manager.removeOntology(ont5);
+      manager.removeOntology(ontology5);
 
-      String expectedoutputassertion5 = "consistent";
+      String expectedOutAssertion5 = "consistent";
 
-      LinkedHashMap<String, OWLOntology> hashinput = new LinkedHashMap();
-      hashinput.put("Assertion 1", assertion1);
-      hashinput.put("Assertion 2", assertion2);
-      hashinput.put("Assertion 3", assertion3);
-      hashinput.put("Assertion 4", assertion4);
-      hashinput.put("Assertion 5", assertion5);
+      LinkedHashMap<String, OWLOntology> hashInput = new LinkedHashMap();
+      hashInput.put("Assertion 1", assertion1);
+      hashInput.put("Assertion 2", assertion2);
+      hashInput.put("Assertion 3", assertion3);
+      hashInput.put("Assertion 4", assertion4);
+      hashInput.put("Assertion 5", assertion5);
 
-      LinkedHashMap<String, String> hashoutput = new LinkedHashMap();
-      hashoutput.put("Assertion 1",expectedoutputassertion1);
-      hashoutput.put("Assertion 2",expectedoutputassertion2);
-      hashoutput.put("Assertion 3",expectedoutputassertion3);
-      hashoutput.put("Assertion 4",expectedoutputassertion4);
-      hashoutput.put("Assertion 5",expectedoutputassertion5);
+      LinkedHashMap<String, String> hashOutput = new LinkedHashMap();
+      hashOutput.put("Assertion 1",expectedOutAssertion1);
+      hashOutput.put("Assertion 2",expectedOutAssertion2);
+      hashOutput.put("Assertion 3",expectedOutAssertion3);
+      hashOutput.put("Assertion 4",expectedOutAssertion4);
+      hashOutput.put("Assertion 5",expectedOutAssertion5);
 
       for (Map.Entry<String, String> entry : testCase.getAxiomExpectedResultAxioms().entrySet()) {
-         hashoutput.put(entry.getKey(), entry.getValue());
+         hashOutput.put(entry.getKey(), entry.getValue());
       }
 
-      testCase.setAxiomExpectedResultAxioms(hashoutput);
+      testCase.setAxiomExpectedResultAxioms(hashOutput);
 
       for (Map.Entry<String, OWLOntology> entry : testCase.getAssertionsAxioms().entrySet()) {
-         hashinput.put(entry.getKey(), entry.getValue());
+         hashInput.put(entry.getKey(), entry.getValue());
       }
-      testCase.setAssertionsAxioms(hashinput);
+      testCase.setAssertionsAxioms(hashInput);
       return testCase;
    }
 
@@ -3897,29 +3898,27 @@ public class Implementations {
 
       /*Generation of classes*/
       m.find();
-      String classA = m.group(1).toString();
+      String classA = m.group(1);
       String classA1 = classA.replace(">","").replace("<","")+"1";
-      String R1 = m.group(2).toString();
-      String classB = m.group(4).toString();
+      String R1 = m.group(2);
+      String classB = m.group(4);
       String classB1 = classB.replace(">","").replace("<","")+"1";
-      String R2 = m.group(6).toString();
-      String classC = m.group(7).toString();
+      String R2 = m.group(6);
+      String classC = m.group(7);
       String noClassC =  "No"+classC.replace(">","").replace("<","").replace(">","").replace("<","").split("(#|\\/)")[classC.split("(#|\\/)").length-1];
-      Integer num = Integer.parseInt(m.group(3).toString().replace(" ",""));
+      Integer num = Integer.parseInt(m.group(3).replace(" ",""));
 
 
-      String indB= "<individual001>";
-      String indNoC = "<individual002>";
       String ind3 = "<individual003>";
 
       /*Preconditions*/
-      ArrayList<String> precond = new ArrayList<>();
-      precond.add("Class(<"+classA+">)");
-      precond.add("Property(<"+R1+">)");
-      precond.add("Property(<"+R2+">)");
-      precond.add("Class(<"+classB+">)");
-      precond.add("Class(<"+classC+">)");
-      testCase.getPrecondition().addAll(precond);
+      ArrayList<String> precondition = new ArrayList<>();
+      precondition.add("Class(<"+classA+">)");
+      precondition.add("Property(<"+R1+">)");
+      precondition.add("Property(<"+R2+">)");
+      precondition.add("Class(<"+classB+">)");
+      precondition.add("Class(<"+classC+">)");
+      testCase.getPrecondition().addAll(precondition);
 
       /*Axioms to be added*/
 
@@ -3927,11 +3926,11 @@ public class Implementations {
       /*Preparation*/
       String base = "";
       OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
-      OWLOntology ont = null;
+      OWLOntology ontology = null;
       try {
-         ont = manager.createOntology(IRI.create(base));
+         ontology = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont = null;
+         ontology = null;
       }
       OWLDataFactory dataFactory = manager.getOWLDataFactory();
       OWLClass classOWLA = dataFactory.getOWLClass(IRI.create(classA));
@@ -3945,144 +3944,100 @@ public class Implementations {
       OWLEquivalentClassesAxiom equivalentClassesAxiom = dataFactory.getOWLEquivalentClassesAxiom(noClassOWLC,
               dataFactory.getOWLObjectComplementOf(classOWLC));
       OWLNamedIndividual indOWLB1 = dataFactory.getOWLNamedIndividual(IRI.create("indB1"));
-      OWLDeclarationAxiom axiomInd1 = dataFactory.getOWLDeclarationAxiom(indOWLB1);
+      OWLDeclarationAxiom axiomIndividual1 = dataFactory.getOWLDeclarationAxiom(indOWLB1);
       OWLClassAssertionAxiom classAssertionAxiom2 = dataFactory.getOWLClassAssertionAxiom(classOWLB1, indOWLB1);
       OWLNamedIndividual indOWLnoC = dataFactory.getOWLNamedIndividual(IRI.create("indC"));
-      OWLDeclarationAxiom axiomInd2 = dataFactory.getOWLDeclarationAxiom(indOWLnoC);
+      OWLDeclarationAxiom axiomIndividual2 = dataFactory.getOWLDeclarationAxiom(indOWLnoC);
       OWLClassAssertionAxiom classAssertionAxiom3 = dataFactory.getOWLClassAssertionAxiom(noClassOWLC, indOWLnoC);
-      manager.applyChanges(manager.addAxiom(ont, axiomInd1));
-      manager.applyChanges(manager.addAxiom(ont, axiomInd2));
-      manager.applyChanges(manager.addAxiom(ont, axiomClass));
-      manager.applyChanges(manager.addAxiom(ont, axiomClass1));
-      manager.applyChanges(manager.addAxiom(ont, axiomClass));
-      manager.applyChanges(manager.addAxiom(ont, equivalentClassesAxiom));
-      manager.applyChanges(manager.addAxiom(ont, classAssertionAxiom2));
-      manager.applyChanges(manager.addAxiom(ont, classAssertionAxiom3));
+      manager.applyChanges(manager.addAxiom(ontology, axiomIndividual1));
+      manager.applyChanges(manager.addAxiom(ontology, axiomIndividual2));
+      manager.applyChanges(manager.addAxiom(ontology, axiomClass));
+      manager.applyChanges(manager.addAxiom(ontology, axiomClass1));
+      manager.applyChanges(manager.addAxiom(ontology, axiomClass));
+      manager.applyChanges(manager.addAxiom(ontology, equivalentClassesAxiom));
+      manager.applyChanges(manager.addAxiom(ontology, classAssertionAxiom2));
+      manager.applyChanges(manager.addAxiom(ontology, classAssertionAxiom3));
       testCase.setPreparationaxioms(manager.getOntology(IRI.create(base)));
-      manager.removeOntology(ont);
-        /*String preparation =  "\n                       \t"+classA+" rdf:type owl:Class.\n "+
-                "                       \t"+classA1+" rdfs:subClassOf "+classA+".\n "+
-                "                       "+noClassC+" rdf:type owl:Class .\n" +
-                "                       "+noClassC+" owl:complementOf " + classC+" .\n"+
-                "                       "+indB+" rdf:type  owl:NamedIndividual, "+ classB1+".\n"+
-                "                       "+indNoC + " rdf:type owl:NamedIndividual, "+noClassC+".\n" ;
-
-        testCase.setPreparation(preparation);*/
+      manager.removeOntology(ontology);
 
       /*A1 R max [num-1] B
        * */
-      OWLOntology ont1 = null;
+      OWLOntology ontology1 = null;
       try {
-         ont1 = manager.createOntology(IRI.create(base));
+         ontology1 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont1 = null;
+         ontology1 = null;
       }
       OWLObjectProperty prop = dataFactory.getOWLObjectProperty(IRI.create(R1));
       OWLSubClassOfAxiom subClassOfAxiom1= dataFactory.getOWLSubClassOfAxiom(classOWLA1, classOWLA);
       OWLSubClassOfAxiom subClassOfAxiom2 = dataFactory.getOWLSubClassOfAxiom(classOWLA1,
               dataFactory.getOWLObjectMaxCardinality(num-1,prop, classOWLB));
-      manager.applyChanges(manager.addAxiom(ont1, subClassOfAxiom1));
-      manager.applyChanges(manager.addAxiom(ont1, subClassOfAxiom2));
-        /*String assertion1 =   "\n                       \t"+classA1+"    rdfs:subClassOf "+classA+" ,\n" +
-                "                                                                     "+"[ rdf:type owl:Restriction ;\n" +
-                "                                                                     "+ "  owl:onProperty "+R1+" ;\n" +
-                "                                                                     "+ "  owl:maxQualifiedCardinality \""+(num-1)+"\"^^xsd:nonNegativeInteger ;\n" +
-                "                                                                     "+ "  owl:onClass "+classB+"\n" +
-                "                                                                     "+ "] .\n"+
-                "                                                                     "+ R1+ " a owl:ObjectProperty.\n";*/
-      String expectedoutputassertion1 = "unsatisfiable";
+      manager.applyChanges(manager.addAxiom(ontology1, subClassOfAxiom1));
+      manager.applyChanges(manager.addAxiom(ontology1, subClassOfAxiom2));
+      String expectedOutAssertion1 = "unsatisfiable";
       OWLOntology assertion1 = manager.getOntology(IRI.create(base));
-      manager.removeOntology(ont1);
+      manager.removeOntology(ontology1);
 
       /*A1 R min [num+1] B
        * */
-      OWLOntology ont2 = null;
+      OWLOntology ontology2 = null;
       try {
-         ont2 = manager.createOntology(IRI.create(base));
+         ontology2 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont2 = null;
+         ontology2 = null;
       }
       OWLSubClassOfAxiom subClassOfAxiom3 = dataFactory.getOWLSubClassOfAxiom(classOWLA1,
               dataFactory.getOWLObjectMinCardinality(num+1,prop, classOWLB));
-      manager.applyChanges(manager.addAxiom(ont2, subClassOfAxiom1));
-      manager.applyChanges(manager.addAxiom(ont2, subClassOfAxiom3));
-       /* String assertion2 =  "\n                       \t"+classA1+" rdfs:subClassOf "+classA+" ,\n" +
-                "                                                                     "+ "[ rdf:type owl:Restriction ;\n" +
-                "                                                                     "+ "  owl:onProperty "+R1+" ;\n" +
-                "                                                                     "+ "  owl:minQualifiedCardinality \""+(num+1)+"\"^^xsd:nonNegativeInteger ;\n" +
-                "                                                                     "+"  owl:onClass "+classB+"\n" +
-                "                                                                     "+ "] .\n"+
-                "                                                                     "+ R1+ " a owl:ObjectProperty.\n";*/
-      String expectedoutputassertion2  = "consistent";
-      OWLOntology assertion2 = manager.getOntology(IRI.create(base));
-      manager.removeOntology(ont2);
+      manager.applyChanges(manager.addAxiom(ontology2, subClassOfAxiom1));
+      manager.applyChanges(manager.addAxiom(ontology2, subClassOfAxiom3));
 
-      OWLOntology ont3 = null;
+      String expectedOutAssertion2  = "consistent";
+      OWLOntology assertion2 = manager.getOntology(IRI.create(base));
+      manager.removeOntology(ontology2);
+
+      OWLOntology ontology3 = null;
       try {
-         ont3 = manager.createOntology(IRI.create(base));
+         ontology3 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont3 = null;
+         ontology3 = null;
       }
       OWLSubClassOfAxiom subClassOfAxiom4 = null;
       subClassOfAxiom4 = dataFactory.getOWLSubClassOfAxiom(classOWLA1,
               dataFactory.getOWLObjectMaxCardinality(num,prop, classOWLB));
-      manager.applyChanges(manager.addAxiom(ont3, subClassOfAxiom1));
-      manager.applyChanges(manager.addAxiom(ont3, subClassOfAxiom4));
-
-
-           /* assertion3 = "\n                       \t" + classA1 + " rdfs:subClassOf " + classA + " ,\n" +
-                    "                                                                     " + "[ rdf:type owl:Restriction ;\n" +
-                    "                                                                     " + "  owl:onProperty " + R1 + " ;\n" +
-                    "                                                                     " + "  owl:maxQualifiedCardinality \"" + (num) + "\"^^xsd:nonNegativeInteger ;\n" +
-                    "                                                                     " + "  owl:onClass " + classB + "\n" +
-                    "                                                                     " + "] .\n" +
-                    "                                                                     " + R1 + " a owl:ObjectProperty.\n";*/
-
-      String expectedoutputassertion3 = "consistent";
+      manager.applyChanges(manager.addAxiom(ontology3, subClassOfAxiom1));
+      manager.applyChanges(manager.addAxiom(ontology3, subClassOfAxiom4));
+      String expectedOutAssertion3 = "consistent";
       OWLOntology assertion3 = manager.getOntology(IRI.create(base));
-      manager.removeOntology(ont3);
+      manager.removeOntology(ontology3);
 
-
-
-      // String assertion4 =  "\n                       "+indB +" "+R2+ " "+indNoC+".\n";
-      // String expectedoutputassertion4 = "inconsistent";
-
-      OWLOntology ont4 = null;
+      OWLOntology ontology4 = null;
       try {
-         ont4 = manager.createOntology(IRI.create(base));
+         ontology4 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont4 = null;
+         ontology4 = null;
       }
       OWLObjectProperty prop2 = dataFactory.getOWLObjectProperty(IRI.create(R2));
 
       OWLSubClassOfAxiom subClassOfAxiom5 = dataFactory.getOWLSubClassOfAxiom(classOWLB1,classOWLB);
       OWLSubClassOfAxiom subClassOfAxiom6 = dataFactory.getOWLSubClassOfAxiom(classOWLB1,
               dataFactory.getOWLObjectAllValuesFrom(prop, dataFactory.getOWLObjectOneOf(indOWLnoC)));
-      OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiom = dataFactory.getOWLObjectPropertyAssertionAxiom(prop2,
+      OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiom1 = dataFactory.getOWLObjectPropertyAssertionAxiom(prop2,
               indOWLB1, indOWLnoC);
 
-      manager.applyChanges(manager.addAxiom(ont4, subClassOfAxiom1));
-      manager.applyChanges(manager.addAxiom(ont4, subClassOfAxiom5));
-      manager.applyChanges(manager.addAxiom(ont4, subClassOfAxiom6));
-      manager.applyChanges(manager.addAxiom(ont4, objectPropertyAssertionAxiom));
-        /*String assertion4 =                "                       "+classB1+" rdfs:subClassOf "+classB+",\n" +
-                "                       "+"                    [ rdf:type owl:Restriction ;\n" +
-                "                       "+"                      owl:onProperty "+R2+" ;\n" +
-                "                       "+"                      owl:allValuesFrom [ rdf:type owl:Class ;\n" +
-                "                       "+"                                          owl:oneOf ( "+indNoC+"\n" +
-                "                       "+"                                                    )\n" +
-                "                       "+"                                        ]\n" +
-                "                       "+"                    ] .\n"+
-                "                       "+indB +" "+R2+ " "+indNoC+".\n";*/
-      String expectedoutputassertion4  = "inconsistent";
-      OWLOntology assertion4 = manager.getOntology(IRI.create(base));
-      manager.removeOntology(ont4);
+      manager.applyChanges(manager.addAxiom(ontology4, subClassOfAxiom1));
+      manager.applyChanges(manager.addAxiom(ontology4, subClassOfAxiom5));
+      manager.applyChanges(manager.addAxiom(ontology4, subClassOfAxiom6));
+      manager.applyChanges(manager.addAxiom(ontology4, objectPropertyAssertionAxiom1));
 
-      OWLOntology ont5 = null;
+      String expectedOutAssertion4  = "inconsistent";
+      OWLOntology assertion4 = manager.getOntology(IRI.create(base));
+      manager.removeOntology(ontology4);
+
+      OWLOntology ontology5 = null;
       try {
-         ont5 = manager.createOntology(IRI.create(base));
+         ontology5 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont5 = null;
+         ontology5 = null;
       }
       OWLNamedIndividual indOWL3 = dataFactory.getOWLNamedIndividual(IRI.create(ind3));
       OWLSubClassOfAxiom subClassOfAxiom8 = dataFactory.getOWLSubClassOfAxiom(classOWLB1,
@@ -4092,58 +4047,46 @@ public class Implementations {
       OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiom3 = dataFactory.getOWLObjectPropertyAssertionAxiom(prop2,
               indOWLB1, indOWL3);
 
-      manager.applyChanges(manager.addAxiom(ont5, subClassOfAxiom5));
-      manager.applyChanges(manager.addAxiom(ont5, subClassOfAxiom8));
-      manager.applyChanges(manager.addAxiom(ont5, objectPropertyAssertionAxiom2));
-      manager.applyChanges(manager.addAxiom(ont5, objectPropertyAssertionAxiom3));
-        /*String assertion5 =                "                       "+classB1+" rdfs:subClassOf "+classB+",\n" +
-                "                       "+"                    [ rdf:type owl:Restriction ;\n" +
-                "                       "+"                      owl:onProperty "+R2+" ;\n" +
-                "                       "+"                      owl:allValuesFrom [ rdf:type owl:Class ;\n" +
-                "                       "+"                                          owl:oneOf ( "+indNoC+"\n" +
-                "                       "+"                                                      "+ind3+"\n" +
-                "                       "+"                                                    )\n" +
-                "                       "+"                                        ]\n" +
-                "                       "+"                    ] .\n"+
-                "                       "+indB +" "+R2+ " "+indNoC+".\n"+
-                "                       "+indB +" "+R2+ " "+ind3+".\n";*/
+      manager.applyChanges(manager.addAxiom(ontology5, subClassOfAxiom5));
+      manager.applyChanges(manager.addAxiom(ontology5, subClassOfAxiom8));
+      manager.applyChanges(manager.addAxiom(ontology5, objectPropertyAssertionAxiom2));
+      manager.applyChanges(manager.addAxiom(ontology5, objectPropertyAssertionAxiom3));
 
-
-      String expectedoutputassertion5 ="";
+      String expectedOutAssertion5 ="";
       if(purpose.contains("only"))
-         expectedoutputassertion5 = "inconsistent";
+         expectedOutAssertion5 = "inconsistent";
       else
-         expectedoutputassertion5 = "consistent";
+         expectedOutAssertion5 = "consistent";
       OWLOntology assertion5 = manager.getOntology(IRI.create(base));
 
-      manager.removeOntology(ont5);
+      manager.removeOntology(ontology5);
 
 
-      LinkedHashMap<String, OWLOntology> hashinput = new LinkedHashMap();
-      hashinput.put("Assertion 1", assertion1);
-      hashinput.put("Assertion 2", assertion2);
-      hashinput.put("Assertion 3", assertion3);
-      hashinput.put("Assertion 4", assertion4);
-      hashinput.put("Assertion 5", assertion5);
+      LinkedHashMap<String, OWLOntology> hashInput = new LinkedHashMap();
+      hashInput.put("Assertion 1", assertion1);
+      hashInput.put("Assertion 2", assertion2);
+      hashInput.put("Assertion 3", assertion3);
+      hashInput.put("Assertion 4", assertion4);
+      hashInput.put("Assertion 5", assertion5);
 
-      LinkedHashMap<String, String> hashoutput = new LinkedHashMap();
-      hashoutput.put("Assertion 1",expectedoutputassertion1);
-      hashoutput.put("Assertion 2",expectedoutputassertion2);
-      hashoutput.put("Assertion 3",expectedoutputassertion3);
-      hashoutput.put("Assertion 4",expectedoutputassertion4);
-      hashoutput.put("Assertion 5",expectedoutputassertion5);
+      LinkedHashMap<String, String> hashOutput = new LinkedHashMap();
+      hashOutput.put("Assertion 1",expectedOutAssertion1);
+      hashOutput.put("Assertion 2",expectedOutAssertion2);
+      hashOutput.put("Assertion 3",expectedOutAssertion3);
+      hashOutput.put("Assertion 4",expectedOutAssertion4);
+      hashOutput.put("Assertion 5",expectedOutAssertion5);
 
 
       for (Map.Entry<String, String> entry : testCase.getAxiomExpectedResultAxioms().entrySet()) {
-         hashoutput.put(entry.getKey(), entry.getValue());
+         hashOutput.put(entry.getKey(), entry.getValue());
       }
 
-      testCase.setAxiomExpectedResultAxioms(hashoutput);
+      testCase.setAxiomExpectedResultAxioms(hashOutput);
 
       for (Map.Entry<String, OWLOntology> entry : testCase.getAssertionsAxioms().entrySet()) {
-         hashinput.put(entry.getKey(), entry.getValue());
+         hashInput.put(entry.getKey(), entry.getValue());
       }
-      testCase.setAssertionsAxioms(hashinput);
+      testCase.setAssertionsAxioms(hashInput);
       return testCase;
 
    }
@@ -4156,27 +4099,27 @@ public class Implementations {
 
       /*Generation of classes*/
       m.find();
-      String classA = m.group(1).toString();
+      String classA = m.group(1);
 
 
       /*Preconditions*/
-      ArrayList<String> precond = new ArrayList<>();
-      precond.add("Class(<"+classA+">)");
-      testCase.getPrecondition().addAll(precond);
+      ArrayList<String> precondition = new ArrayList<>();
+      precondition.add("Class(<"+classA+">)");
+      testCase.getPrecondition().addAll(precondition);
       /*There are no axioms to be added*/
-      LinkedHashMap<String, OWLOntology> hashinput = new LinkedHashMap();
-      LinkedHashMap<String, String> hashoutput = new LinkedHashMap();
+      LinkedHashMap<String, OWLOntology> hashInput = new LinkedHashMap();
+      LinkedHashMap<String, String> hashOutput = new LinkedHashMap();
 
       for (Map.Entry<String, String> entry : testCase.getAxiomExpectedResultAxioms().entrySet()) {
-         hashoutput.put(entry.getKey(), entry.getValue());
+         hashOutput.put(entry.getKey(), entry.getValue());
       }
 
-      testCase.setAxiomExpectedResultAxioms(hashoutput);
+      testCase.setAxiomExpectedResultAxioms(hashOutput);
 
       for (Map.Entry<String, OWLOntology> entry : testCase.getAssertionsAxioms().entrySet()) {
-         hashinput.put(entry.getKey(), entry.getValue());
+         hashInput.put(entry.getKey(), entry.getValue());
       }
-      testCase.setAssertionsAxioms(hashinput);
+      testCase.setAssertionsAxioms(hashInput);
       String base = "";
       OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
       testCase.setPreparationaxioms(manager.createOntology(IRI.create(base)));
@@ -4191,26 +4134,26 @@ public class Implementations {
 
       /*Generation of classes*/
       m.find();
-      String propertyA = m.group(1).toString();
+      String propertyA = m.group(1);
 
       /*Preconditions*/
-      ArrayList<String> precond = new ArrayList<>();
-      precond.add("Property(<"+propertyA+">)");
-      testCase.getPrecondition().addAll(precond);
+      ArrayList<String> precondition = new ArrayList<>();
+      precondition.add("Property(<"+propertyA+">)");
+      testCase.getPrecondition().addAll(precondition);
       /*There are no axioms to be added*/
-      LinkedHashMap<String, OWLOntology> hashinput = new LinkedHashMap();
-      LinkedHashMap<String, String> hashoutput = new LinkedHashMap();
+      LinkedHashMap<String, OWLOntology> hashInput = new LinkedHashMap();
+      LinkedHashMap<String, String> hashOutput = new LinkedHashMap();
 
       for (Map.Entry<String, String> entry : testCase.getAxiomExpectedResultAxioms().entrySet()) {
-         hashoutput.put(entry.getKey(), entry.getValue());
+         hashOutput.put(entry.getKey(), entry.getValue());
       }
 
-      testCase.setAxiomExpectedResultAxioms(hashoutput);
+      testCase.setAxiomExpectedResultAxioms(hashOutput);
 
       for (Map.Entry<String, OWLOntology> entry : testCase.getAssertionsAxioms().entrySet()) {
-         hashinput.put(entry.getKey(), entry.getValue());
+         hashInput.put(entry.getKey(), entry.getValue());
       }
-      testCase.setAssertionsAxioms(hashinput);
+      testCase.setAssertionsAxioms(hashInput);
       String base = "";
       OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
       testCase.setPreparationaxioms(manager.createOntology(IRI.create(base)));
@@ -4225,32 +4168,32 @@ public class Implementations {
 
       /*Generation of classes*/
       m.find();
-      String classA = m.group(1).toString();
+      String classA = m.group(1);
       String classA1 = classA+"1";
-      String R = m.group(3).toString();
+      String relation = m.group(3);
       String classB = "";
-      classB = m.group(4).toString();
+      classB = m.group(4);
       String noClassB =  "No"+classB.split("(#|\\/)")[classB.split("(#|\\/)").length-1];
-      String classC = m.group(2).toString();
+      String classC = m.group(2);
       String classC1 = classC+"1";
 
       /*Preconditions*/
-      ArrayList<String> precond = new ArrayList<>();
-      precond.add("Class(<"+classA+">)");
-      precond.add("Property(<"+R+">)");
-      precond.add("Class(<"+classB+">)");
-      precond.add("Class(<"+classC+">)");
-      testCase.getPrecondition().addAll(precond);
+      ArrayList<String> precondition = new ArrayList<>();
+      precondition.add("Class(<"+classA+">)");
+      precondition.add("Property(<"+relation+">)");
+      precondition.add("Class(<"+classB+">)");
+      precondition.add("Class(<"+classC+">)");
+      testCase.getPrecondition().addAll(precondition);
 
       /*Axioms to be added */
       /*Preparation*/
       String base = "";
       OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
-      OWLOntology ont = null;
+      OWLOntology ontology = null;
       try {
-         ont = manager.createOntology(IRI.create(base));
+         ontology = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont = null;
+         ontology = null;
       }
       OWLDataFactory dataFactory = manager.getOWLDataFactory();
 
@@ -4261,230 +4204,235 @@ public class Implementations {
       OWLEquivalentClassesAxiom equivalentClassesAxiom = dataFactory.getOWLEquivalentClassesAxiom(noClassOWLB, dataFactory.getOWLObjectComplementOf(classOWLB));
       OWLClass classOWLA = dataFactory.getOWLClass(IRI.create(classA));
       OWLClass classOWLA1 = dataFactory.getOWLClass(IRI.create(classA1));
-      OWLDeclarationAxiom axiomclassA1 = dataFactory.getOWLDeclarationAxiom(classOWLA1);
-      OWLNamedIndividual indOWLA1 = dataFactory.getOWLNamedIndividual(IRI.create("ind1"));
-      OWLDeclarationAxiom axiomInd1 = dataFactory.getOWLDeclarationAxiom(indOWLA1);
+      OWLDeclarationAxiom axiomClassA1 = dataFactory.getOWLDeclarationAxiom(classOWLA1);
+      OWLNamedIndividual indOWLA1 = dataFactory.getOWLNamedIndividual(IRI.create("individual1"));
+      OWLDeclarationAxiom axiomIndividual1 = dataFactory.getOWLDeclarationAxiom(indOWLA1);
       OWLClassAssertionAxiom classAssertionAxiom = dataFactory.getOWLClassAssertionAxiom(classOWLA1, indOWLA1);
-      OWLNamedIndividual indOWLB = dataFactory.getOWLNamedIndividual(IRI.create("ind2"));
-      OWLDeclarationAxiom axiomInd2 = dataFactory.getOWLDeclarationAxiom(indOWLB);
+      OWLNamedIndividual indOWLB = dataFactory.getOWLNamedIndividual(IRI.create("individual2"));
+      OWLDeclarationAxiom axiomIndividual2 = dataFactory.getOWLDeclarationAxiom(indOWLB);
       OWLClassAssertionAxiom classAssertionAxiom2 = dataFactory.getOWLClassAssertionAxiom(noClassOWLB, indOWLB);
       OWLClass classOWLC = dataFactory.getOWLClass(IRI.create(classC));
       OWLClass classOWLC1 = dataFactory.getOWLClass(IRI.create(classC1));
-      OWLDeclarationAxiom axiomclassC1 = dataFactory.getOWLDeclarationAxiom(classOWLC1);
+      OWLDeclarationAxiom axiomClassC1 = dataFactory.getOWLDeclarationAxiom(classOWLC1);
       OWLNamedIndividual indOWLC1 = dataFactory.getOWLNamedIndividual(IRI.create("indC"));
-      OWLDeclarationAxiom axiomIndC1 = dataFactory.getOWLDeclarationAxiom(indOWLC1);
-      manager.applyChanges(manager.addAxiom(ont, axiomClass));
-      manager.applyChanges(manager.addAxiom(ont, axiomClass1));
-      manager.applyChanges(manager.addAxiom(ont, equivalentClassesAxiom));
-      manager.applyChanges(manager.addAxiom(ont, axiomInd1));
-      manager.applyChanges(manager.addAxiom(ont, axiomclassA1));
-      manager.applyChanges(manager.addAxiom(ont, axiomclassC1));
-      manager.applyChanges(manager.addAxiom(ont, axiomIndC1));
-      manager.applyChanges(manager.addAxiom(ont, classAssertionAxiom));
-      manager.applyChanges(manager.addAxiom(ont, axiomInd2));
-      manager.applyChanges(manager.addAxiom(ont, classAssertionAxiom2));
+      OWLDeclarationAxiom axiomIndividualC1 = dataFactory.getOWLDeclarationAxiom(indOWLC1);
+      manager.applyChanges(manager.addAxiom(ontology, axiomClass));
+      manager.applyChanges(manager.addAxiom(ontology, axiomClass1));
+      manager.applyChanges(manager.addAxiom(ontology, equivalentClassesAxiom));
+      manager.applyChanges(manager.addAxiom(ontology, axiomIndividual1));
+      manager.applyChanges(manager.addAxiom(ontology, axiomClassA1));
+      manager.applyChanges(manager.addAxiom(ontology, axiomClassC1));
+      manager.applyChanges(manager.addAxiom(ontology, axiomIndividualC1));
+      manager.applyChanges(manager.addAxiom(ontology, classAssertionAxiom));
+      manager.applyChanges(manager.addAxiom(ontology, axiomIndividual2));
+      manager.applyChanges(manager.addAxiom(ontology, classAssertionAxiom2));
       testCase.setPreparationaxioms(manager.getOntology(IRI.create(base)));
-      manager.removeOntology(ont);
+      manager.removeOntology(ontology);
 
       /*Assertions*/
       /*Participant 1*/
-      OWLOntology ont1 = null;
+      OWLOntology ontology1 = null;
       try {
-         ont1 = manager.createOntology(IRI.create(base));
+         ontology1 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont1 = null;
+         ontology1 = null;
       }
-      OWLSubClassOfAxiom axiomsubclass1= dataFactory.getOWLSubClassOfAxiom(classOWLA1, classOWLA);
-      OWLObjectProperty prop = dataFactory.getOWLObjectProperty(IRI.create(R));
-      OWLSubClassOfAxiom axiomsubclass2 = dataFactory.getOWLSubClassOfAxiom( classOWLA1, dataFactory.getOWLObjectAllValuesFrom(prop,dataFactory.getOWLObjectOneOf(indOWLB)));
+      OWLSubClassOfAxiom axiomSubclass1= dataFactory.getOWLSubClassOfAxiom(classOWLA1, classOWLA);
+      OWLObjectProperty prop = dataFactory.getOWLObjectProperty(IRI.create(relation));
+      OWLSubClassOfAxiom axiomSubclass2 = dataFactory.getOWLSubClassOfAxiom( classOWLA1, dataFactory.getOWLObjectAllValuesFrom(prop,dataFactory.getOWLObjectOneOf(indOWLB)));
       OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiom = dataFactory.getOWLObjectPropertyAssertionAxiom(prop, indOWLA1, indOWLB);
-      manager.applyChanges(manager.addAxiom(ont1, axiomsubclass1));
-      manager.applyChanges(manager.addAxiom(ont1, axiomsubclass2));
-      manager.applyChanges(manager.addAxiom(ont1, objectPropertyAssertionAxiom));
+      manager.applyChanges(manager.addAxiom(ontology1, axiomSubclass1));
+      manager.applyChanges(manager.addAxiom(ontology1, axiomSubclass2));
+      manager.applyChanges(manager.addAxiom(ontology1, objectPropertyAssertionAxiom));
       OWLOntology assertion1 = manager.getOntology(IRI.create(base));
-      String expectedoutputassertion1 = "inconsistent";
-      manager.removeOntology(ont1);
+      String expectedOutAssertion1 = "inconsistent";
+      manager.removeOntology(ontology1);
 
-      OWLOntology ont2 = null;
+      OWLOntology ontology2 = null;
       try {
-         ont2 = manager.createOntology(IRI.create(base));
+         ontology2 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont2 = null;
+         ontology2 = null;
       }
-      OWLNamedIndividual indOWL3 = dataFactory.getOWLNamedIndividual(IRI.create("ind3"));
-      OWLDeclarationAxiom axiomInd3 = dataFactory.getOWLDeclarationAxiom(indOWL3);
-      OWLSubClassOfAxiom axiomsubclass3 = dataFactory.getOWLSubClassOfAxiom( classOWLA1, dataFactory.getOWLObjectAllValuesFrom(prop,dataFactory.getOWLObjectOneOf(indOWLB, indOWL3)));
+      OWLNamedIndividual indOWL3 = dataFactory.getOWLNamedIndividual(IRI.create("individual3"));
+      OWLDeclarationAxiom axiomIndividual3 = dataFactory.getOWLDeclarationAxiom(indOWL3);
+      OWLSubClassOfAxiom axiomSubclass3 = dataFactory.getOWLSubClassOfAxiom( classOWLA1, dataFactory.getOWLObjectAllValuesFrom(prop,dataFactory.getOWLObjectOneOf(indOWLB, indOWL3)));
       OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiom2 = dataFactory.getOWLObjectPropertyAssertionAxiom(prop, indOWLA1, indOWLB);
       OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiom3 = dataFactory.getOWLObjectPropertyAssertionAxiom(prop, indOWLA1, indOWL3);
-      manager.applyChanges(manager.addAxiom(ont2, axiomInd3));
-      manager.applyChanges(manager.addAxiom(ont2, axiomsubclass1));
-      manager.applyChanges(manager.addAxiom(ont2, axiomsubclass3));
-      manager.applyChanges(manager.addAxiom(ont2, classAssertionAxiom));
-      manager.applyChanges(manager.addAxiom(ont2, objectPropertyAssertionAxiom2));
-      manager.applyChanges(manager.addAxiom(ont2, classAssertionAxiom2));
-      manager.applyChanges(manager.addAxiom(ont2, objectPropertyAssertionAxiom3));
+
+      manager.applyChanges(manager.addAxiom(ontology2, axiomIndividual3));
+      manager.applyChanges(manager.addAxiom(ontology2, axiomSubclass1));
+      manager.applyChanges(manager.addAxiom(ontology2, axiomSubclass3));
+      manager.applyChanges(manager.addAxiom(ontology2, classAssertionAxiom));
+      manager.applyChanges(manager.addAxiom(ontology2, objectPropertyAssertionAxiom2));
+      manager.applyChanges(manager.addAxiom(ontology2, classAssertionAxiom2));
+      manager.applyChanges(manager.addAxiom(ontology2, objectPropertyAssertionAxiom3));
       OWLOntology assertion2 = manager.getOntology(IRI.create(base));
-      manager.removeOntology(ont2);
-      String expectedoutputassertion2 = "consistent";
+      manager.removeOntology(ontology2);
+      String expectedOutAssertion2 = "consistent";
 
 
       /*Assertions*/
-      OWLOntology ont3 = null;
+      OWLOntology ontology3 = null;
       try {
-         ont3 = manager.createOntology(IRI.create(base));
+         ontology3 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont3 = null;
+         ontology3 = null;
       }
       String inverse = "";
-      if(R.equals("isparticipantin"))
+      if(relation.equals("isparticipantin"))
          inverse = "hasParticipant";
-      else if(R.equals("islocationof"))
+      else if(relation.equals("islocationof"))
          inverse = "hasLocation";
-      else if(R.equals("isroleof"))
+      else if(relation.equals("isroleof"))
          inverse = "hasRole";
-      else if(R.equals("haslocation"))
+      else if(relation.equals("haslocation"))
          inverse = "isLocationOf";
-      else if(R.equals("hasrole"))
+      else if(relation.equals("hasrole"))
          inverse = "isRoleOf";
       else
          inverse = "none";
 
       OWLObjectProperty propInverse = dataFactory.getOWLObjectProperty(IRI.create(inverse));
-      OWLSubClassOfAxiom axiomsubclass4 = dataFactory.getOWLSubClassOfAxiom( classOWLB, dataFactory.getOWLObjectAllValuesFrom(propInverse,dataFactory.getOWLObjectOneOf(indOWLA1)));
+      OWLSubClassOfAxiom axiomSubclass4 = dataFactory.getOWLSubClassOfAxiom( classOWLB, dataFactory.getOWLObjectAllValuesFrom(propInverse,dataFactory.getOWLObjectOneOf(indOWLA1)));
       OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiom4 = dataFactory.getOWLObjectPropertyAssertionAxiom(propInverse, indOWLB, indOWLA1);
-      manager.applyChanges(manager.addAxiom(ont3, axiomsubclass1));
-      manager.applyChanges(manager.addAxiom(ont3, axiomsubclass4));
-      manager.applyChanges(manager.addAxiom(ont3, objectPropertyAssertionAxiom4));
+      manager.applyChanges(manager.addAxiom(ontology3, axiomSubclass1));
+      manager.applyChanges(manager.addAxiom(ontology3, axiomSubclass4));
+      manager.applyChanges(manager.addAxiom(ontology3, objectPropertyAssertionAxiom4));
       OWLOntology assertion3 = manager.getOntology(IRI.create(base));
-      String expectedoutputassertion3 = "inconsistent";
-      manager.removeOntology(ont1);
+      String expectedOutAssertion3 = "inconsistent";
+      manager.removeOntology(ontology1);
 
-      OWLOntology ont4 = null;
+      OWLOntology ontology4 = null;
       try {
-         ont4 = manager.createOntology(IRI.create(base));
+         ontology4 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont4 = null;
+         ontology4 = null;
       }
 
-      OWLSubClassOfAxiom axiomsubclass5 = dataFactory.getOWLSubClassOfAxiom( classOWLB, dataFactory.getOWLObjectAllValuesFrom(propInverse,dataFactory.getOWLObjectOneOf(indOWLA1, indOWL3)));
+      OWLSubClassOfAxiom axiomSubclass5 = dataFactory.getOWLSubClassOfAxiom( classOWLB, dataFactory.getOWLObjectAllValuesFrom(propInverse,dataFactory.getOWLObjectOneOf(indOWLA1, indOWL3)));
       OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiom5 = dataFactory.getOWLObjectPropertyAssertionAxiom(propInverse, indOWLB, indOWLA1);
       OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiom6 = dataFactory.getOWLObjectPropertyAssertionAxiom(propInverse, indOWLB, indOWL3);
-      manager.applyChanges(manager.addAxiom(ont4, axiomInd3));
-      manager.applyChanges(manager.addAxiom(ont4, axiomsubclass1));
-      manager.applyChanges(manager.addAxiom(ont4, classAssertionAxiom));
-      manager.applyChanges(manager.addAxiom(ont4, objectPropertyAssertionAxiom5));
-      manager.applyChanges(manager.addAxiom(ont4, axiomsubclass5));
-      manager.applyChanges(manager.addAxiom(ont4, objectPropertyAssertionAxiom6));
+
+      manager.applyChanges(manager.addAxiom(ontology4, axiomIndividual3));
+      manager.applyChanges(manager.addAxiom(ontology4, axiomSubclass1));
+      manager.applyChanges(manager.addAxiom(ontology4, classAssertionAxiom));
+      manager.applyChanges(manager.addAxiom(ontology4, objectPropertyAssertionAxiom5));
+      manager.applyChanges(manager.addAxiom(ontology4, axiomSubclass5));
+      manager.applyChanges(manager.addAxiom(ontology4, objectPropertyAssertionAxiom6));
       OWLOntology assertion4 = manager.getOntology(IRI.create(base));
-      manager.removeOntology(ont4);
-      String expectedoutputassertion4 = "consistent";
+      manager.removeOntology(ontology4);
+      String expectedOutAssertion4 = "consistent";
 
       /*Participant 2*/
-      OWLOntology ont5 = null;
+      OWLOntology ontology5 = null;
       try {
-         ont5 = manager.createOntology(IRI.create(base));
+         ontology5 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont5 = null;
+         ontology5 = null;
       }
-      OWLSubClassOfAxiom axiomsubclassC1= dataFactory.getOWLSubClassOfAxiom(classOWLC1, classOWLC);
-      OWLSubClassOfAxiom axiomsubclassC12 = dataFactory.getOWLSubClassOfAxiom( classOWLC1, dataFactory.getOWLObjectAllValuesFrom(prop,dataFactory.getOWLObjectOneOf(indOWLB)));
+      OWLSubClassOfAxiom axiomSubclassC1= dataFactory.getOWLSubClassOfAxiom(classOWLC1, classOWLC);
+      OWLSubClassOfAxiom axiomSubclassC12 = dataFactory.getOWLSubClassOfAxiom( classOWLC1, dataFactory.getOWLObjectAllValuesFrom(prop,dataFactory.getOWLObjectOneOf(indOWLB)));
       OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiomC1 = dataFactory.getOWLObjectPropertyAssertionAxiom(prop, indOWLC1, indOWLB);
-      manager.applyChanges(manager.addAxiom(ont5, axiomsubclassC1));
-      manager.applyChanges(manager.addAxiom(ont5, axiomsubclassC12));
-      manager.applyChanges(manager.addAxiom(ont5, objectPropertyAssertionAxiomC1));
-      OWLOntology assertion5 = manager.getOntology(IRI.create(base));
-      String expectedoutputassertion5 = "inconsistent";
-      manager.removeOntology(ont5);
 
-      OWLOntology ont6 = null;
+      manager.applyChanges(manager.addAxiom(ontology5, axiomSubclassC1));
+      manager.applyChanges(manager.addAxiom(ontology5, axiomSubclassC12));
+      manager.applyChanges(manager.addAxiom(ontology5, objectPropertyAssertionAxiomC1));
+      OWLOntology assertion5 = manager.getOntology(IRI.create(base));
+      String expectedOutAssertion5 = "inconsistent";
+      manager.removeOntology(ontology5);
+
+      OWLOntology ontology6 = null;
       try {
-         ont6 = manager.createOntology(IRI.create(base));
+         ontology6 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont6 = null;
+         ontology6 = null;
       }
 
-      OWLSubClassOfAxiom axiomsubclassC13 = dataFactory.getOWLSubClassOfAxiom( classOWLA1, dataFactory.getOWLObjectAllValuesFrom(prop,dataFactory.getOWLObjectOneOf(indOWLB, indOWL3)));
+      OWLSubClassOfAxiom axiomSubclassC13 = dataFactory.getOWLSubClassOfAxiom( classOWLA1, dataFactory.getOWLObjectAllValuesFrom(prop,dataFactory.getOWLObjectOneOf(indOWLB, indOWL3)));
       OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiomC12 = dataFactory.getOWLObjectPropertyAssertionAxiom(prop, indOWLC1, indOWLB);
       OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiomC13 = dataFactory.getOWLObjectPropertyAssertionAxiom(prop, indOWLC1, indOWL3);
-      manager.applyChanges(manager.addAxiom(ont6, axiomInd3));
-      manager.applyChanges(manager.addAxiom(ont6, axiomsubclass1));
-      manager.applyChanges(manager.addAxiom(ont6, axiomsubclassC13));
-      manager.applyChanges(manager.addAxiom(ont6, classAssertionAxiom));
-      manager.applyChanges(manager.addAxiom(ont6, objectPropertyAssertionAxiomC12));
-      manager.applyChanges(manager.addAxiom(ont6, classAssertionAxiom2));
-      manager.applyChanges(manager.addAxiom(ont6, objectPropertyAssertionAxiomC13));
+
+      manager.applyChanges(manager.addAxiom(ontology6, axiomIndividual3));
+      manager.applyChanges(manager.addAxiom(ontology6, axiomSubclass1));
+      manager.applyChanges(manager.addAxiom(ontology6, axiomSubclassC13));
+      manager.applyChanges(manager.addAxiom(ontology6, classAssertionAxiom));
+      manager.applyChanges(manager.addAxiom(ontology6, objectPropertyAssertionAxiomC12));
+      manager.applyChanges(manager.addAxiom(ontology6, classAssertionAxiom2));
+      manager.applyChanges(manager.addAxiom(ontology6, objectPropertyAssertionAxiomC13));
       OWLOntology assertion6 = manager.getOntology(IRI.create(base));
-      manager.removeOntology(ont6);
-      String expectedoutputassertion6 = "consistent";
+      manager.removeOntology(ontology6);
+      String expectedOutAssertion6 = "consistent";
 
       /*Assertions*/
-      OWLOntology ont7 = null;
+      OWLOntology ontology7 = null;
       try {
-         ont7 = manager.createOntology(IRI.create(base));
+         ontology7 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont7 = null;
+         ontology7 = null;
       }
 
-      OWLSubClassOfAxiom axiomsubclassC14 = dataFactory.getOWLSubClassOfAxiom( classOWLB, dataFactory.getOWLObjectAllValuesFrom(propInverse,dataFactory.getOWLObjectOneOf(indOWLC1)));
+      OWLSubClassOfAxiom axiomSubclassC14 = dataFactory.getOWLSubClassOfAxiom( classOWLB, dataFactory.getOWLObjectAllValuesFrom(propInverse,dataFactory.getOWLObjectOneOf(indOWLC1)));
       OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiomC14 = dataFactory.getOWLObjectPropertyAssertionAxiom(propInverse, indOWLB, indOWLC1);
-      manager.applyChanges(manager.addAxiom(ont7, axiomsubclass1));
-      manager.applyChanges(manager.addAxiom(ont7, axiomsubclassC14));
-      manager.applyChanges(manager.addAxiom(ont7, objectPropertyAssertionAxiomC14));
-      OWLOntology assertion7 = manager.getOntology(IRI.create(base));
-      String expectedoutputassertion7 = "inconsistent";
-      manager.removeOntology(ont7);
 
-      OWLOntology ont8 = null;
+      manager.applyChanges(manager.addAxiom(ontology7, axiomSubclass1));
+      manager.applyChanges(manager.addAxiom(ontology7, axiomSubclassC14));
+      manager.applyChanges(manager.addAxiom(ontology7, objectPropertyAssertionAxiomC14));
+      OWLOntology assertion7 = manager.getOntology(IRI.create(base));
+      String expectedOutAssertion7 = "inconsistent";
+      manager.removeOntology(ontology7);
+
+      OWLOntology ontology8 = null;
       try {
-         ont8 = manager.createOntology(IRI.create(base));
+         ontology8 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont8 = null;
+         ontology8 = null;
       }
 
-      OWLSubClassOfAxiom axiomsubclassC15 = dataFactory.getOWLSubClassOfAxiom( classOWLB, dataFactory.getOWLObjectAllValuesFrom(propInverse,dataFactory.getOWLObjectOneOf(indOWLC1, indOWL3)));
+      OWLSubClassOfAxiom axiomSubclassC15 = dataFactory.getOWLSubClassOfAxiom( classOWLB, dataFactory.getOWLObjectAllValuesFrom(propInverse,dataFactory.getOWLObjectOneOf(indOWLC1, indOWL3)));
       OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiomC15 = dataFactory.getOWLObjectPropertyAssertionAxiom(propInverse, indOWLB, indOWLC1);
       OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiomC16 = dataFactory.getOWLObjectPropertyAssertionAxiom(propInverse, indOWLB, indOWL3);
-      manager.applyChanges(manager.addAxiom(ont8, axiomInd3));
-      manager.applyChanges(manager.addAxiom(ont8, axiomsubclass1));
-      manager.applyChanges(manager.addAxiom(ont8, classAssertionAxiom));
-      manager.applyChanges(manager.addAxiom(ont8, objectPropertyAssertionAxiomC15));
-      manager.applyChanges(manager.addAxiom(ont8, axiomsubclassC15));
-      manager.applyChanges(manager.addAxiom(ont8, objectPropertyAssertionAxiomC16));
+
+      manager.applyChanges(manager.addAxiom(ontology8, axiomIndividual3));
+      manager.applyChanges(manager.addAxiom(ontology8, axiomSubclass1));
+      manager.applyChanges(manager.addAxiom(ontology8, classAssertionAxiom));
+      manager.applyChanges(manager.addAxiom(ontology8, objectPropertyAssertionAxiomC15));
+      manager.applyChanges(manager.addAxiom(ontology8, axiomSubclassC15));
+      manager.applyChanges(manager.addAxiom(ontology8, objectPropertyAssertionAxiomC16));
       OWLOntology assertion8 = manager.getOntology(IRI.create(base));
-      manager.removeOntology(ont8);
-      String expectedoutputassertion8 = "consistent";
+      manager.removeOntology(ontology8);
+      String expectedOutAssertion8 = "consistent";
 
-      LinkedHashMap<String, OWLOntology> hashinput = new LinkedHashMap();
-      hashinput.put("Assertion 1", assertion1);
-      hashinput.put("Assertion 2", assertion2);
-      hashinput.put("Assertion 3", assertion3);
-      hashinput.put("Assertion 4", assertion4);
-      hashinput.put("Assertion 5", assertion5);
-      hashinput.put("Assertion 6", assertion6);
-      hashinput.put("Assertion 7", assertion7);
-      hashinput.put("Assertion 8", assertion8);
+      LinkedHashMap<String, OWLOntology> hashInput = new LinkedHashMap();
+      hashInput.put("Assertion 1", assertion1);
+      hashInput.put("Assertion 2", assertion2);
+      hashInput.put("Assertion 3", assertion3);
+      hashInput.put("Assertion 4", assertion4);
+      hashInput.put("Assertion 5", assertion5);
+      hashInput.put("Assertion 6", assertion6);
+      hashInput.put("Assertion 7", assertion7);
+      hashInput.put("Assertion 8", assertion8);
 
-
-      LinkedHashMap<String, String> hashoutput = new LinkedHashMap();
-      hashoutput.put("Assertion 1",expectedoutputassertion1);
-      hashoutput.put("Assertion 2",expectedoutputassertion2);
-      hashoutput.put("Assertion 3",expectedoutputassertion3);
-      hashoutput.put("Assertion 4",expectedoutputassertion4);
-      hashoutput.put("Assertion 5",expectedoutputassertion5);
-      hashoutput.put("Assertion 6",expectedoutputassertion6);
-      hashoutput.put("Assertion 7",expectedoutputassertion7);
-      hashoutput.put("Assertion 8",expectedoutputassertion8);
+      LinkedHashMap<String, String> hashOutput = new LinkedHashMap();
+      hashOutput.put("Assertion 1",expectedOutAssertion1);
+      hashOutput.put("Assertion 2",expectedOutAssertion2);
+      hashOutput.put("Assertion 3",expectedOutAssertion3);
+      hashOutput.put("Assertion 4",expectedOutAssertion4);
+      hashOutput.put("Assertion 5",expectedOutAssertion5);
+      hashOutput.put("Assertion 6",expectedOutAssertion6);
+      hashOutput.put("Assertion 7",expectedOutAssertion7);
+      hashOutput.put("Assertion 8",expectedOutAssertion8);
 
       for (Map.Entry<String, String> entry : testCase.getAxiomExpectedResultAxioms().entrySet()) {
-         hashoutput.put(entry.getKey(), entry.getValue());
+         hashOutput.put(entry.getKey(), entry.getValue());
       }
 
-      testCase.setAxiomExpectedResultAxioms(hashoutput);
+      testCase.setAxiomExpectedResultAxioms(hashOutput);
 
       for (Map.Entry<String, OWLOntology> entry : testCase.getAssertionsAxioms().entrySet()) {
-         hashinput.put(entry.getKey(), entry.getValue());
+         hashInput.put(entry.getKey(), entry.getValue());
       }
-      testCase.setAssertionsAxioms(hashinput);
+      testCase.setAssertionsAxioms(hashInput);
       return testCase;
    }
 
@@ -4494,33 +4442,32 @@ public class Implementations {
 
       /*Generation of classes*/
       m.find();
-      String classA = m.group(1).toString();
+      String classA = m.group(1);
       String classA1 = classA+"1";
-      String R = m.group(3).toString();
-      String classB = "";
-      classB = m.group(4).toString();
+      String relation = m.group(3);
+      String classB = m.group(4);
       String noClassB =  "No"+classB.split("(#|\\/)")[classB.split("(#|\\/)").length-1];
-      String classC = m.group(2).toString();
+      String classC = m.group(2);
       String classC1 = classC+"1";
 
       /*Preconditions*/
-      ArrayList<String> precond = new ArrayList<>();
-      precond.add("Class(<"+classA+">)");
-      precond.add("Property(<"+R+">)");
-      precond.add("Class(<"+classB+">)");
-      precond.add("Class(<"+classC+">)");
-      testCase.getPrecondition().addAll(precond);
+      ArrayList<String> precondition = new ArrayList<>();
+      precondition.add("Class(<"+classA+">)");
+      precondition.add("Property(<"+relation+">)");
+      precondition.add("Class(<"+classB+">)");
+      precondition.add("Class(<"+classC+">)");
+      testCase.getPrecondition().addAll(precondition);
 
 
       /*Axioms to be added*/
       /*Preparation*/
       String base = "";
       OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
-      OWLOntology ont = null;
+      OWLOntology ontology = null;
       try {
-         ont = manager.createOntology(IRI.create(base));
+         ontology = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont = null;
+         ontology = null;
       }
       OWLDataFactory dataFactory = manager.getOWLDataFactory();
 
@@ -4531,235 +4478,240 @@ public class Implementations {
       OWLEquivalentClassesAxiom equivalentClassesAxiom = dataFactory.getOWLEquivalentClassesAxiom(noClassOWLB, dataFactory.getOWLObjectComplementOf(classOWLB));
       OWLClass classOWLA = dataFactory.getOWLClass(IRI.create(classA));
       OWLClass classOWLA1 = dataFactory.getOWLClass(IRI.create(classA1));
-      OWLDeclarationAxiom axiomclassA1 = dataFactory.getOWLDeclarationAxiom(classOWLA1);
-      OWLNamedIndividual indOWLA1 = dataFactory.getOWLNamedIndividual(IRI.create("ind1"));
-      OWLDeclarationAxiom axiomInd1 = dataFactory.getOWLDeclarationAxiom(indOWLA1);
-      OWLClassAssertionAxiom classAssertionAxiom = dataFactory.getOWLClassAssertionAxiom(classOWLA1, indOWLA1);
-      OWLNamedIndividual indOWLB = dataFactory.getOWLNamedIndividual(IRI.create("ind2"));
-      OWLDeclarationAxiom axiomInd2 = dataFactory.getOWLDeclarationAxiom(indOWLB);
+      OWLDeclarationAxiom axiomClassA1 = dataFactory.getOWLDeclarationAxiom(classOWLA1);
+      OWLNamedIndividual indOWLA1 = dataFactory.getOWLNamedIndividual(IRI.create("individual1"));
+      OWLDeclarationAxiom axiomIndividual1 = dataFactory.getOWLDeclarationAxiom(indOWLA1);
+      OWLClassAssertionAxiom classAssertionAxiom1 = dataFactory.getOWLClassAssertionAxiom(classOWLA1, indOWLA1);
+      OWLNamedIndividual indOWLB = dataFactory.getOWLNamedIndividual(IRI.create("individual2"));
+      OWLDeclarationAxiom axiomIndividual2 = dataFactory.getOWLDeclarationAxiom(indOWLB);
       OWLClassAssertionAxiom classAssertionAxiom2 = dataFactory.getOWLClassAssertionAxiom(noClassOWLB, indOWLB);
       OWLClass classOWLC = dataFactory.getOWLClass(IRI.create(classC));
       OWLClass classOWLC1 = dataFactory.getOWLClass(IRI.create(classC1));
-      OWLDeclarationAxiom axiomclassC1 = dataFactory.getOWLDeclarationAxiom(classOWLC1);
+      OWLDeclarationAxiom axiomClassC1 = dataFactory.getOWLDeclarationAxiom(classOWLC1);
       OWLNamedIndividual indOWLC1 = dataFactory.getOWLNamedIndividual(IRI.create("indC"));
-      OWLDeclarationAxiom axiomIndC1 = dataFactory.getOWLDeclarationAxiom(indOWLC1);
-      manager.applyChanges(manager.addAxiom(ont, axiomClass));
-      manager.applyChanges(manager.addAxiom(ont, axiomClass1));
-      manager.applyChanges(manager.addAxiom(ont, equivalentClassesAxiom));
-      manager.applyChanges(manager.addAxiom(ont, axiomInd1));
-      manager.applyChanges(manager.addAxiom(ont, axiomclassA1));
-      manager.applyChanges(manager.addAxiom(ont, axiomclassC1));
-      manager.applyChanges(manager.addAxiom(ont, axiomIndC1));
-      manager.applyChanges(manager.addAxiom(ont, classAssertionAxiom));
-      manager.applyChanges(manager.addAxiom(ont, axiomInd2));
-      manager.applyChanges(manager.addAxiom(ont, classAssertionAxiom2));
+      OWLDeclarationAxiom axiomIndividualC1 = dataFactory.getOWLDeclarationAxiom(indOWLC1);
+
+      manager.applyChanges(manager.addAxiom(ontology, axiomClass));
+      manager.applyChanges(manager.addAxiom(ontology, axiomClass1));
+      manager.applyChanges(manager.addAxiom(ontology, equivalentClassesAxiom));
+      manager.applyChanges(manager.addAxiom(ontology, axiomIndividual1));
+      manager.applyChanges(manager.addAxiom(ontology, axiomClassA1));
+      manager.applyChanges(manager.addAxiom(ontology, axiomClassC1));
+      manager.applyChanges(manager.addAxiom(ontology, axiomIndividualC1));
+      manager.applyChanges(manager.addAxiom(ontology, classAssertionAxiom1));
+      manager.applyChanges(manager.addAxiom(ontology, axiomIndividual2));
+      manager.applyChanges(manager.addAxiom(ontology, classAssertionAxiom2));
       testCase.setPreparationaxioms(manager.getOntology(IRI.create(base)));
-      manager.removeOntology(ont);
+      manager.removeOntology(ontology);
 
       /*Assertions*/
       /*Participant 1*/
-      OWLOntology ont1 = null;
+      OWLOntology ontology1 = null;
       try {
-         ont1 = manager.createOntology(IRI.create(base));
+         ontology1 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont1 = null;
+         ontology1 = null;
       }
-      OWLSubClassOfAxiom axiomsubclass1= dataFactory.getOWLSubClassOfAxiom(classOWLA1, classOWLA);
-      OWLObjectProperty prop = dataFactory.getOWLObjectProperty(IRI.create(R));
-      OWLSubClassOfAxiom axiomsubclass2 = dataFactory.getOWLSubClassOfAxiom( classOWLA1, dataFactory.getOWLObjectSomeValuesFrom(prop,dataFactory.getOWLObjectOneOf(indOWLB)));
+      OWLSubClassOfAxiom axiomSubclass1= dataFactory.getOWLSubClassOfAxiom(classOWLA1, classOWLA);
+      OWLObjectProperty prop = dataFactory.getOWLObjectProperty(IRI.create(relation));
+      OWLSubClassOfAxiom axiomSubclass2 = dataFactory.getOWLSubClassOfAxiom( classOWLA1, dataFactory.getOWLObjectSomeValuesFrom(prop,dataFactory.getOWLObjectOneOf(indOWLB)));
       OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiom = dataFactory.getOWLObjectPropertyAssertionAxiom(prop, indOWLA1, indOWLB);
-      manager.applyChanges(manager.addAxiom(ont1, axiomsubclass1));
-      manager.applyChanges(manager.addAxiom(ont1, axiomsubclass2));
-      manager.applyChanges(manager.addAxiom(ont1, objectPropertyAssertionAxiom));
-      OWLOntology assertion1 = manager.getOntology(IRI.create(base));
-      String expectedoutputassertion1 = "inconsistent";
-      manager.removeOntology(ont1);
 
-      OWLOntology ont2 = null;
+      manager.applyChanges(manager.addAxiom(ontology1, axiomSubclass1));
+      manager.applyChanges(manager.addAxiom(ontology1, axiomSubclass2));
+      manager.applyChanges(manager.addAxiom(ontology1, objectPropertyAssertionAxiom));
+      OWLOntology assertion1 = manager.getOntology(IRI.create(base));
+      String expectedOutAssertion1 = "inconsistent";
+      manager.removeOntology(ontology1);
+
+      OWLOntology ontology2 = null;
       try {
-         ont2 = manager.createOntology(IRI.create(base));
+         ontology2 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont2 = null;
+         ontology2 = null;
       }
-      OWLNamedIndividual indOWL3 = dataFactory.getOWLNamedIndividual(IRI.create("ind3"));
-      OWLDeclarationAxiom axiomInd3 = dataFactory.getOWLDeclarationAxiom(indOWL3);
-      OWLSubClassOfAxiom axiomsubclass3 = dataFactory.getOWLSubClassOfAxiom( classOWLA1, dataFactory.getOWLObjectAllValuesFrom(prop,dataFactory.getOWLObjectOneOf(indOWLB, indOWL3)));
+      OWLNamedIndividual indOWL3 = dataFactory.getOWLNamedIndividual(IRI.create("individual3"));
+      OWLDeclarationAxiom axiomIndividual3 = dataFactory.getOWLDeclarationAxiom(indOWL3);
+      OWLSubClassOfAxiom axiomSubclass3 = dataFactory.getOWLSubClassOfAxiom( classOWLA1, dataFactory.getOWLObjectAllValuesFrom(prop,dataFactory.getOWLObjectOneOf(indOWLB, indOWL3)));
       OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiom2 = dataFactory.getOWLObjectPropertyAssertionAxiom(prop, indOWLA1, indOWLB);
       OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiom3 = dataFactory.getOWLObjectPropertyAssertionAxiom(prop, indOWLA1, indOWL3);
-      manager.applyChanges(manager.addAxiom(ont2, axiomInd3));
-      manager.applyChanges(manager.addAxiom(ont2, axiomsubclass1));
-      manager.applyChanges(manager.addAxiom(ont2, axiomsubclass3));
-      manager.applyChanges(manager.addAxiom(ont2, classAssertionAxiom));
-      manager.applyChanges(manager.addAxiom(ont2, objectPropertyAssertionAxiom2));
-      manager.applyChanges(manager.addAxiom(ont2, classAssertionAxiom2));
-      manager.applyChanges(manager.addAxiom(ont2, objectPropertyAssertionAxiom3));
+
+      manager.applyChanges(manager.addAxiom(ontology2, axiomIndividual3));
+      manager.applyChanges(manager.addAxiom(ontology2, axiomSubclass1));
+      manager.applyChanges(manager.addAxiom(ontology2, axiomSubclass3));
+      manager.applyChanges(manager.addAxiom(ontology2, classAssertionAxiom1));
+      manager.applyChanges(manager.addAxiom(ontology2, objectPropertyAssertionAxiom2));
+      manager.applyChanges(manager.addAxiom(ontology2, classAssertionAxiom2));
+      manager.applyChanges(manager.addAxiom(ontology2, objectPropertyAssertionAxiom3));
       OWLOntology assertion2 = manager.getOntology(IRI.create(base));
-      manager.removeOntology(ont2);
-      String expectedoutputassertion2 = "inconsistent";
+      manager.removeOntology(ontology2);
+      String expectedOutAssertion2 = "inconsistent";
 
       /*Assertions*/
-      OWLOntology ont3 = null;
+      OWLOntology ontology3 = null;
       try {
-         ont3 = manager.createOntology(IRI.create(base));
+         ontology3 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont3 = null;
+         ontology3 = null;
       }
       String inverse = "";
-      if(R.equals("isparticipantin"))
+      if(relation.equals("isparticipantin"))
          inverse = "hasParticipant";
-      else if(R.equals("islocationof"))
+      else if(relation.equals("islocationof"))
          inverse = "hasLocation";
-      else if(R.equals("isroleof"))
+      else if(relation.equals("isroleof"))
          inverse = "hasRole";
-      else if(R.equals("haslocation"))
+      else if(relation.equals("haslocation"))
          inverse = "isLocationOf";
-      else if(R.equals("hasrole"))
+      else if(relation.equals("hasrole"))
          inverse = "isRoleOf";
       else
          inverse = "none";
 
       OWLObjectProperty propInverse = dataFactory.getOWLObjectProperty(IRI.create(inverse));
 
-      OWLSubClassOfAxiom axiomsubclass4 = dataFactory.getOWLSubClassOfAxiom( classOWLB, dataFactory.getOWLObjectSomeValuesFrom(prop,dataFactory.getOWLObjectOneOf(indOWLA1)));
+      OWLSubClassOfAxiom axiomSubclass4 = dataFactory.getOWLSubClassOfAxiom( classOWLB, dataFactory.getOWLObjectSomeValuesFrom(prop,dataFactory.getOWLObjectOneOf(indOWLA1)));
       OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiom4 = dataFactory.getOWLObjectPropertyAssertionAxiom(propInverse, indOWLB, indOWLA1);
-      manager.applyChanges(manager.addAxiom(ont3, axiomsubclass1));
-      manager.applyChanges(manager.addAxiom(ont3, axiomsubclass4));
-      manager.applyChanges(manager.addAxiom(ont3, objectPropertyAssertionAxiom4));
-      OWLOntology assertion3 = manager.getOntology(IRI.create(base));
-      String expectedoutputassertion3 = "inconsistent";
-      manager.removeOntology(ont1);
 
-      OWLOntology ont4 = null;
+      manager.applyChanges(manager.addAxiom(ontology3, axiomSubclass1));
+      manager.applyChanges(manager.addAxiom(ontology3, axiomSubclass4));
+      manager.applyChanges(manager.addAxiom(ontology3, objectPropertyAssertionAxiom4));
+      OWLOntology assertion3 = manager.getOntology(IRI.create(base));
+      String expectedOutAssertion3 = "inconsistent";
+      manager.removeOntology(ontology1);
+
+      OWLOntology ontology4 = null;
       try {
-         ont4 = manager.createOntology(IRI.create(base));
+         ontology4 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont4 = null;
+         ontology4 = null;
       }
 
-      OWLSubClassOfAxiom axiomsubclass5 = dataFactory.getOWLSubClassOfAxiom( classOWLB, dataFactory.getOWLObjectAllValuesFrom(propInverse,dataFactory.getOWLObjectOneOf(indOWLA1, indOWL3)));
+      OWLSubClassOfAxiom axiomSubclass5 = dataFactory.getOWLSubClassOfAxiom( classOWLB, dataFactory.getOWLObjectAllValuesFrom(propInverse,dataFactory.getOWLObjectOneOf(indOWLA1, indOWL3)));
       OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiom5 = dataFactory.getOWLObjectPropertyAssertionAxiom(propInverse, indOWLB, indOWLA1);
       OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiom6 = dataFactory.getOWLObjectPropertyAssertionAxiom(propInverse, indOWLB, indOWL3);
-      manager.applyChanges(manager.addAxiom(ont4, axiomInd3));
-      manager.applyChanges(manager.addAxiom(ont4, axiomsubclass1));
-      manager.applyChanges(manager.addAxiom(ont4, classAssertionAxiom));
-      manager.applyChanges(manager.addAxiom(ont4, objectPropertyAssertionAxiom5));
-      manager.applyChanges(manager.addAxiom(ont4, axiomsubclass5));
-      manager.applyChanges(manager.addAxiom(ont4, objectPropertyAssertionAxiom6));
-      OWLOntology assertion4 = manager.getOntology(IRI.create(base));
-      manager.removeOntology(ont4);
-      String expectedoutputassertion4 = "inconsistent";
 
+      manager.applyChanges(manager.addAxiom(ontology4, axiomIndividual3));
+      manager.applyChanges(manager.addAxiom(ontology4, axiomSubclass1));
+      manager.applyChanges(manager.addAxiom(ontology4, classAssertionAxiom1));
+      manager.applyChanges(manager.addAxiom(ontology4, objectPropertyAssertionAxiom5));
+      manager.applyChanges(manager.addAxiom(ontology4, axiomSubclass5));
+      manager.applyChanges(manager.addAxiom(ontology4, objectPropertyAssertionAxiom6));
+      OWLOntology assertion4 = manager.getOntology(IRI.create(base));
+      manager.removeOntology(ontology4);
+      String expectedOutAssertion4 = "inconsistent";
 
       /*Participant 2*/
-      OWLOntology ont5 = null;
+      OWLOntology ontology5 = null;
       try {
-         ont5 = manager.createOntology(IRI.create(base));
+         ontology5 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont5 = null;
+         ontology5 = null;
       }
-      OWLSubClassOfAxiom axiomsubclassC1= dataFactory.getOWLSubClassOfAxiom(classOWLC1, classOWLC);
-      OWLSubClassOfAxiom axiomsubclassC12 = dataFactory.getOWLSubClassOfAxiom( classOWLC1, dataFactory.getOWLObjectSomeValuesFrom(prop,dataFactory.getOWLObjectOneOf(indOWLB)));
+      OWLSubClassOfAxiom axiomSubclassC1= dataFactory.getOWLSubClassOfAxiom(classOWLC1, classOWLC);
+      OWLSubClassOfAxiom axiomSubclassC12 = dataFactory.getOWLSubClassOfAxiom( classOWLC1, dataFactory.getOWLObjectSomeValuesFrom(prop,dataFactory.getOWLObjectOneOf(indOWLB)));
       OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiomC1 = dataFactory.getOWLObjectPropertyAssertionAxiom(prop, indOWLC1, indOWLB);
-      manager.applyChanges(manager.addAxiom(ont5, axiomsubclassC1));
-      manager.applyChanges(manager.addAxiom(ont5, axiomsubclassC12));
-      manager.applyChanges(manager.addAxiom(ont5, objectPropertyAssertionAxiomC1));
-      OWLOntology assertion5 = manager.getOntology(IRI.create(base));
-      String expectedoutputassertion5 = "inconsistent";
-      manager.removeOntology(ont5);
 
-      OWLOntology ont6 = null;
+      manager.applyChanges(manager.addAxiom(ontology5, axiomSubclassC1));
+      manager.applyChanges(manager.addAxiom(ontology5, axiomSubclassC12));
+      manager.applyChanges(manager.addAxiom(ontology5, objectPropertyAssertionAxiomC1));
+      OWLOntology assertion5 = manager.getOntology(IRI.create(base));
+      String expectedOutAssertion5 = "inconsistent";
+      manager.removeOntology(ontology5);
+
+      OWLOntology ontology6 = null;
       try {
-         ont6 = manager.createOntology(IRI.create(base));
+         ontology6 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont6 = null;
+         ontology6 = null;
       }
 
-      OWLSubClassOfAxiom axiomsubclassC13 = dataFactory.getOWLSubClassOfAxiom( classOWLA1, dataFactory.getOWLObjectAllValuesFrom(prop,dataFactory.getOWLObjectOneOf(indOWLB, indOWL3)));
+      OWLSubClassOfAxiom axiomSubclassC13 = dataFactory.getOWLSubClassOfAxiom( classOWLA1, dataFactory.getOWLObjectAllValuesFrom(prop,dataFactory.getOWLObjectOneOf(indOWLB, indOWL3)));
       OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiomC12 = dataFactory.getOWLObjectPropertyAssertionAxiom(prop, indOWLC1, indOWLB);
       OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiomC13 = dataFactory.getOWLObjectPropertyAssertionAxiom(prop, indOWLC1, indOWL3);
-      manager.applyChanges(manager.addAxiom(ont6, axiomInd3));
-      manager.applyChanges(manager.addAxiom(ont6, axiomsubclass1));
-      manager.applyChanges(manager.addAxiom(ont6, axiomsubclassC13));
-      manager.applyChanges(manager.addAxiom(ont6, classAssertionAxiom));
-      manager.applyChanges(manager.addAxiom(ont6, objectPropertyAssertionAxiomC12));
-      manager.applyChanges(manager.addAxiom(ont6, classAssertionAxiom2));
-      manager.applyChanges(manager.addAxiom(ont6, objectPropertyAssertionAxiomC13));
+
+      manager.applyChanges(manager.addAxiom(ontology6, axiomIndividual3));
+      manager.applyChanges(manager.addAxiom(ontology6, axiomSubclass1));
+      manager.applyChanges(manager.addAxiom(ontology6, axiomSubclassC13));
+      manager.applyChanges(manager.addAxiom(ontology6, classAssertionAxiom1));
+      manager.applyChanges(manager.addAxiom(ontology6, objectPropertyAssertionAxiomC12));
+      manager.applyChanges(manager.addAxiom(ontology6, classAssertionAxiom2));
+      manager.applyChanges(manager.addAxiom(ontology6, objectPropertyAssertionAxiomC13));
       OWLOntology assertion6 = manager.getOntology(IRI.create(base));
-      manager.removeOntology(ont6);
-      String expectedoutputassertion6 = "inconsistent";
+      manager.removeOntology(ontology6);
+      String expectedOutAssertion6 = "inconsistent";
 
       /*Assertions*/
-      OWLOntology ont7 = null;
+      OWLOntology ontology7 = null;
       try {
-         ont7 = manager.createOntology(IRI.create(base));
+         ontology7 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont7 = null;
+         ontology7 = null;
       }
 
-      OWLSubClassOfAxiom axiomsubclassC14 = dataFactory.getOWLSubClassOfAxiom( classOWLB, dataFactory.getOWLObjectSomeValuesFrom(propInverse,dataFactory.getOWLObjectOneOf(indOWLC1)));
+      OWLSubClassOfAxiom axiomSubclassC14 = dataFactory.getOWLSubClassOfAxiom( classOWLB, dataFactory.getOWLObjectSomeValuesFrom(propInverse,dataFactory.getOWLObjectOneOf(indOWLC1)));
       OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiomC14 = dataFactory.getOWLObjectPropertyAssertionAxiom(propInverse, indOWLB, indOWLC1);
-      manager.applyChanges(manager.addAxiom(ont7, axiomsubclass1));
-      manager.applyChanges(manager.addAxiom(ont7, axiomsubclassC14));
-      manager.applyChanges(manager.addAxiom(ont7, objectPropertyAssertionAxiomC14));
-      OWLOntology assertion7 = manager.getOntology(IRI.create(base));
-      String expectedoutputassertion7 = "inconsistent";
-      manager.removeOntology(ont7);
 
-      OWLOntology ont8 = null;
+      manager.applyChanges(manager.addAxiom(ontology7, axiomSubclass1));
+      manager.applyChanges(manager.addAxiom(ontology7, axiomSubclassC14));
+      manager.applyChanges(manager.addAxiom(ontology7, objectPropertyAssertionAxiomC14));
+      OWLOntology assertion7 = manager.getOntology(IRI.create(base));
+      String expectedOutAssertion7 = "inconsistent";
+      manager.removeOntology(ontology7);
+
+      OWLOntology ontology8 = null;
       try {
-         ont8 = manager.createOntology(IRI.create(base));
+         ontology8 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont8 = null;
+         ontology8 = null;
       }
 
-      OWLSubClassOfAxiom axiomsubclassC15 = dataFactory.getOWLSubClassOfAxiom( classOWLB, dataFactory.getOWLObjectAllValuesFrom(propInverse,dataFactory.getOWLObjectOneOf(indOWLC1, indOWL3)));
+      OWLSubClassOfAxiom axiomSubclassC15 = dataFactory.getOWLSubClassOfAxiom( classOWLB, dataFactory.getOWLObjectAllValuesFrom(propInverse,dataFactory.getOWLObjectOneOf(indOWLC1, indOWL3)));
       OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiomC15 = dataFactory.getOWLObjectPropertyAssertionAxiom(propInverse, indOWLB, indOWLC1);
       OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiomC16 = dataFactory.getOWLObjectPropertyAssertionAxiom(propInverse, indOWLB, indOWL3);
-      manager.applyChanges(manager.addAxiom(ont8, axiomInd3));
-      manager.applyChanges(manager.addAxiom(ont8, axiomsubclass1));
-      manager.applyChanges(manager.addAxiom(ont8, classAssertionAxiom));
-      manager.applyChanges(manager.addAxiom(ont8, objectPropertyAssertionAxiomC15));
-      manager.applyChanges(manager.addAxiom(ont8, axiomsubclassC15));
-      manager.applyChanges(manager.addAxiom(ont8, objectPropertyAssertionAxiomC16));
+
+      manager.applyChanges(manager.addAxiom(ontology8, axiomIndividual3));
+      manager.applyChanges(manager.addAxiom(ontology8, axiomSubclass1));
+      manager.applyChanges(manager.addAxiom(ontology8, classAssertionAxiom1));
+      manager.applyChanges(manager.addAxiom(ontology8, objectPropertyAssertionAxiomC15));
+      manager.applyChanges(manager.addAxiom(ontology8, axiomSubclassC15));
+      manager.applyChanges(manager.addAxiom(ontology8, objectPropertyAssertionAxiomC16));
       OWLOntology assertion8 = manager.getOntology(IRI.create(base));
-      manager.removeOntology(ont8);
-      String expectedoutputassertion8 = "inconsistent";
+      manager.removeOntology(ontology8);
+      String expectedOutAssertion8 = "inconsistent";
 
-      LinkedHashMap<String, OWLOntology> hashinput = new LinkedHashMap();
-      hashinput.put("Assertion 1", assertion1);
-      hashinput.put("Assertion 2", assertion2);
-      hashinput.put("Assertion 3", assertion3);
-      hashinput.put("Assertion 4", assertion4);
-      hashinput.put("Assertion 5", assertion5);
-      hashinput.put("Assertion 6", assertion6);
-      hashinput.put("Assertion 7", assertion7);
-      hashinput.put("Assertion 8", assertion8);
+      LinkedHashMap<String, OWLOntology> hashInput = new LinkedHashMap();
+      hashInput.put("Assertion 1", assertion1);
+      hashInput.put("Assertion 2", assertion2);
+      hashInput.put("Assertion 3", assertion3);
+      hashInput.put("Assertion 4", assertion4);
+      hashInput.put("Assertion 5", assertion5);
+      hashInput.put("Assertion 6", assertion6);
+      hashInput.put("Assertion 7", assertion7);
+      hashInput.put("Assertion 8", assertion8);
 
-
-      LinkedHashMap<String, String> hashoutput = new LinkedHashMap();
-      hashoutput.put("Assertion 1",expectedoutputassertion1);
-      hashoutput.put("Assertion 2",expectedoutputassertion2);
-      hashoutput.put("Assertion 3",expectedoutputassertion3);
-      hashoutput.put("Assertion 4",expectedoutputassertion4);
-      hashoutput.put("Assertion 5",expectedoutputassertion5);
-      hashoutput.put("Assertion 6",expectedoutputassertion6);
-      hashoutput.put("Assertion 7",expectedoutputassertion7);
-      hashoutput.put("Assertion 8",expectedoutputassertion8);
+      LinkedHashMap<String, String> hashOutput = new LinkedHashMap();
+      hashOutput.put("Assertion 1",expectedOutAssertion1);
+      hashOutput.put("Assertion 2",expectedOutAssertion2);
+      hashOutput.put("Assertion 3",expectedOutAssertion3);
+      hashOutput.put("Assertion 4",expectedOutAssertion4);
+      hashOutput.put("Assertion 5",expectedOutAssertion5);
+      hashOutput.put("Assertion 6",expectedOutAssertion6);
+      hashOutput.put("Assertion 7",expectedOutAssertion7);
+      hashOutput.put("Assertion 8",expectedOutAssertion8);
 
       for (Map.Entry<String, String> entry : testCase.getAxiomExpectedResultAxioms().entrySet()) {
-         hashoutput.put(entry.getKey(), entry.getValue());
+         hashOutput.put(entry.getKey(), entry.getValue());
       }
 
-      testCase.setAxiomExpectedResultAxioms(hashoutput);
+      testCase.setAxiomExpectedResultAxioms(hashOutput);
 
       for (Map.Entry<String, OWLOntology> entry : testCase.getAssertionsAxioms().entrySet()) {
-         hashinput.put(entry.getKey(), entry.getValue());
+         hashInput.put(entry.getKey(), entry.getValue());
       }
-      testCase.setAssertionsAxioms(hashinput);
+      testCase.setAssertionsAxioms(hashInput);
       return testCase;
    }
-
-
 
    /*****************************************************/
    /*Tests for instances*/
@@ -4770,93 +4722,91 @@ public class Implementations {
 
       /*Generation of classes*/
       m.find();
-      String classA = m.group(1).toString();
-      String propertyA = m.group(2).toString();
-      String classB = m.group(3).toString();
+      String classA = m.group(1);
+      String propertyA = m.group(2);
+      String classB = m.group(3);
 
       String classAnoSymb = classA.replace(">","").replace("<","");
       String noClassA =  "No"+classAnoSymb.split("(#|\\/)")[classA.split("(#)").length-1]+"";
 
       /*Preconditions*/
-      ArrayList<String> precond = new ArrayList<>();
-      precond.add("Class(<"+classA+">)");
-      precond.add("Property(<"+propertyA+">)");
-      precond.add("Class(<"+classB+">)");
+      ArrayList<String> precondition = new ArrayList<>();
+      precondition.add("Class(<"+classA+">)");
+      precondition.add("Property(<"+propertyA+">)");
+      precondition.add("Class(<"+classB+">)");
 
-      testCase.getPrecondition().addAll(precond);
+      testCase.getPrecondition().addAll(precondition);
 
       /*Axioms to be added*/
       String base = "";
       OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
-      OWLOntology ont = null;
+      OWLOntology ontology = null;
       try {
-         ont = manager.createOntology(IRI.create(base));
+         ontology = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont = null;
+         ontology = null;
       }
       OWLDataFactory dataFactory = manager.getOWLDataFactory();
       OWLClass classOWLA = dataFactory.getOWLClass(IRI.create(classA));
       OWLDeclarationAxiom axiomClass = dataFactory.getOWLDeclarationAxiom(classOWLA);
-
       OWLClass classOWLB = dataFactory.getOWLClass(IRI.create(classB));
       OWLDeclarationAxiom axiomClassB = dataFactory.getOWLDeclarationAxiom(classOWLB);
-      manager.applyChanges(manager.addAxiom(ont, axiomClass));
-      manager.applyChanges(manager.addAxiom(ont, axiomClassB));
-      testCase.setPreparationaxioms(manager.getOntology(IRI.create(base)));
-      manager.removeOntology(ont);
 
-      String classAwithouturi = noClassA.split("(#|\\/)")[classA.split("(#|\\/)").length-1];
+      manager.applyChanges(manager.addAxiom(ontology, axiomClass));
+      manager.applyChanges(manager.addAxiom(ontology, axiomClassB));
+      testCase.setPreparationaxioms(manager.getOntology(IRI.create(base)));
+      manager.removeOntology(ontology);
+
+      String classAwithoutURI = noClassA.split("(#|\\/)")[classA.split("(#|\\/)").length-1];
 
       /*Assertions*/
-      String ind1= classAwithouturi.toLowerCase().replace(">","").replace("<","")+"001";
-      String ind2 = classAwithouturi.toLowerCase().replace(">","").replace("<","")+"002";
-      OWLOntology ont1 = null;
+      String ind1= classAwithoutURI.toLowerCase().replace(">","").replace("<","")+"001";
+      String ind2 = classAwithoutURI.toLowerCase().replace(">","").replace("<","")+"002";
+      OWLOntology ontology1 = null;
       try {
-         ont1 = manager.createOntology(IRI.create(base));
+         ontology1 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont1 = null;
+         ontology1 = null;
       }
 
 
       OWLNamedIndividual indClassA = dataFactory.getOWLNamedIndividual(IRI.create(ind1));
-      OWLDeclarationAxiom axiomIndClassA = dataFactory.getOWLDeclarationAxiom(indClassA);
+      OWLDeclarationAxiom axiomIndividualClassA = dataFactory.getOWLDeclarationAxiom(indClassA);
       OWLClassAssertionAxiom indAClassAAssertionAxiom = dataFactory.getOWLClassAssertionAxiom(classOWLA, indClassA);
-
       OWLNamedIndividual indClassB = dataFactory.getOWLNamedIndividual(IRI.create(ind2));
-      OWLDeclarationAxiom axiomIndClassB = dataFactory.getOWLDeclarationAxiom(indClassB);
+      OWLDeclarationAxiom axiomIndividualClassB = dataFactory.getOWLDeclarationAxiom(indClassB);
       OWLClassAssertionAxiom indAClassBAssertionAxiom = dataFactory.getOWLClassAssertionAxiom(classOWLB, indClassB);
       OWLObjectProperty prop = dataFactory.getOWLObjectProperty(IRI.create(propertyA));
-
       OWLObjectPropertyAssertionAxiom objectPropertyAssertionAxiom2 = dataFactory.getOWLObjectPropertyAssertionAxiom(prop, indClassA, indClassB);
 
-      manager.applyChanges(manager.addAxiom(ont1, axiomIndClassA));
-      manager.applyChanges(manager.addAxiom(ont1, indAClassAAssertionAxiom));
-      manager.applyChanges(manager.addAxiom(ont1, axiomIndClassB));
-      manager.applyChanges(manager.addAxiom(ont1, indAClassBAssertionAxiom));
-      manager.applyChanges(manager.addAxiom(ont1, objectPropertyAssertionAxiom2));
+      manager.applyChanges(manager.addAxiom(ontology1, axiomIndividualClassA));
+      manager.applyChanges(manager.addAxiom(ontology1, indAClassAAssertionAxiom));
+      manager.applyChanges(manager.addAxiom(ontology1, axiomIndividualClassB));
+      manager.applyChanges(manager.addAxiom(ontology1, indAClassBAssertionAxiom));
+      manager.applyChanges(manager.addAxiom(ontology1, objectPropertyAssertionAxiom2));
 
       OWLOntology assertion = manager.getOntology(IRI.create(base));
-      manager.removeOntology(ont1);
+      manager.removeOntology(ontology1);
 
-      String expectedoutputassertion = "consistent";
+      String expectedOutAssertion = "consistent";
 
 
-      LinkedHashMap<String, OWLOntology> hashinput = new LinkedHashMap();
-      hashinput.put("Assertion 1", assertion);
+      LinkedHashMap<String, OWLOntology> hashInput = new LinkedHashMap();
+      hashInput.put("Assertion 1", assertion);
 
-      LinkedHashMap<String, String> hashoutput = new LinkedHashMap();
-      hashoutput.put("Assertion 1", expectedoutputassertion);
+      LinkedHashMap<String, String> hashOutput = new LinkedHashMap();
+      hashOutput.put("Assertion 1", expectedOutAssertion);
 
       for (Map.Entry<String, String> entry : testCase.getAxiomExpectedResultAxioms().entrySet()) {
-         hashoutput.put(entry.getKey(), entry.getValue());
+         hashOutput.put(entry.getKey(), entry.getValue());
       }
 
-      testCase.setAxiomExpectedResultAxioms(hashoutput);
+      testCase.setAxiomExpectedResultAxioms(hashOutput);
 
       for (Map.Entry<String, OWLOntology> entry : testCase.getAssertionsAxioms().entrySet()) {
-         hashinput.put(entry.getKey(), entry.getValue());
+         hashInput.put(entry.getKey(), entry.getValue());
       }
-      testCase.setAssertionsAxioms(hashinput);
+      testCase.setAssertionsAxioms(hashInput);
       testCase.setType("individuals");
       return testCase;
 
@@ -4868,51 +4818,50 @@ public class Implementations {
 
       /*Generation of classes*/
       m.find();
-      String classA = m.group(1).toString();
-      String propertyA = m.group(2).toString();
-      String datatypeB = m.group(3).toLowerCase().toString();
+      String classA = m.group(1);
+      String propertyA = m.group(2);
+      String datatypeB = m.group(3).toLowerCase();
       String classAnoSymb = classA.replace(">","").replace("<","");
       String noClassA =  "No"+classAnoSymb.split("(#|\\/)")[classA.split("(#)").length-1]+"";
 
       /*Preconditions*/
-      ArrayList<String> precond = new ArrayList<>();
-      precond.add("Class(<"+classA+">)");
-      precond.add("Property(<"+propertyA+">)");
+      ArrayList<String> precondition = new ArrayList<>();
+      precondition.add("Class(<"+classA+">)");
+      precondition.add("Property(<"+propertyA+">)");
 
-      testCase.getPrecondition().addAll(precond);
+      testCase.getPrecondition().addAll(precondition);
 
       /*Axioms to be added*/
       String base = "";
       OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
-      OWLOntology ont = null;
+      OWLOntology ontology = null;
       try {
-         ont = manager.createOntology(IRI.create(base));
+         ontology = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont = null;
+         ontology = null;
       }
       OWLDataFactory dataFactory = manager.getOWLDataFactory();
       OWLClass classOWLA = dataFactory.getOWLClass(IRI.create(classA));
       OWLDeclarationAxiom axiomClass = dataFactory.getOWLDeclarationAxiom(classOWLA);
 
-      //manager.applyChanges(manager.addAxiom(ont, axiomClass));
       testCase.setPreparationaxioms(manager.getOntology(IRI.create(base)));
-      manager.removeOntology(ont);
+      manager.removeOntology(ontology);
 
       String classAwithouturi = noClassA.split("(#|\\/)")[classA.split("(#|\\/)").length-1];
 
       /*Assertions*/
       String ind1= classAwithouturi.toLowerCase().replace(">","").replace("<","")+"001";
       String ind2 = classAwithouturi.toLowerCase().replace(">","").replace("<","")+"002";
-      OWLOntology ont1 = null;
+      OWLOntology ontology1 = null;
       try {
-         ont1 = manager.createOntology(IRI.create(base));
+         ontology1 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
-         ont1 = null;
+         ontology1 = null;
       }
 
 
       OWLNamedIndividual indClassA = dataFactory.getOWLNamedIndividual(IRI.create(ind1));
-      OWLDeclarationAxiom axiomIndClassA = dataFactory.getOWLDeclarationAxiom(indClassA);
+      OWLDeclarationAxiom axiomIndividualClassA = dataFactory.getOWLDeclarationAxiom(indClassA);
       OWLClassAssertionAxiom indAClassAAssertionAxiom = dataFactory.getOWLClassAssertionAxiom(classOWLA, indClassA);
 
       OWLNamedIndividual indClassB = dataFactory.getOWLNamedIndividual(IRI.create(ind2));
@@ -4954,33 +4903,31 @@ public class Implementations {
 
       }
 
-
-      manager.applyChanges(manager.addAxiom(ont1, axiomIndClassA));
-      manager.applyChanges(manager.addAxiom(ont1, indAClassAAssertionAxiom));
-      manager.applyChanges(manager.addAxiom(ont1, dataPropertyAssertionAxiom));
+      manager.applyChanges(manager.addAxiom(ontology1, axiomIndividualClassA));
+      manager.applyChanges(manager.addAxiom(ontology1, indAClassAAssertionAxiom));
+      manager.applyChanges(manager.addAxiom(ontology1, dataPropertyAssertionAxiom));
 
       OWLOntology assertion = manager.getOntology(IRI.create(base));
-      manager.removeOntology(ont1);
+      manager.removeOntology(ontology1);
 
-      String expectedoutputassertion = "consistent";
+      String expectedOutAssertion = "consistent";
 
+      LinkedHashMap<String, OWLOntology> hashInput = new LinkedHashMap();
+      hashInput.put("Assertion 1", assertion);
 
-      LinkedHashMap<String, OWLOntology> hashinput = new LinkedHashMap();
-      hashinput.put("Assertion 1", assertion);
-
-      LinkedHashMap<String, String> hashoutput = new LinkedHashMap();
-      hashoutput.put("Assertion 1", expectedoutputassertion);
+      LinkedHashMap<String, String> hashOutput = new LinkedHashMap();
+      hashOutput.put("Assertion 1", expectedOutAssertion);
 
       for (Map.Entry<String, String> entry : testCase.getAxiomExpectedResultAxioms().entrySet()) {
-         hashoutput.put(entry.getKey(), entry.getValue());
+         hashOutput.put(entry.getKey(), entry.getValue());
       }
 
-      testCase.setAxiomExpectedResultAxioms(hashoutput);
+      testCase.setAxiomExpectedResultAxioms(hashOutput);
 
       for (Map.Entry<String, OWLOntology> entry : testCase.getAssertionsAxioms().entrySet()) {
-         hashinput.put(entry.getKey(), entry.getValue());
+         hashInput.put(entry.getKey(), entry.getValue());
       }
-      testCase.setAssertionsAxioms(hashinput);
+      testCase.setAssertionsAxioms(hashInput);
       testCase.setType("individuals");
       return testCase;
 

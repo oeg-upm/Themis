@@ -1,19 +1,10 @@
 package oeg.albafernandez.tests.model;
 
-import com.google.common.base.Charsets;
-import com.google.common.io.ByteSource;
 import org.apache.log4j.Logger;
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.io.OWLOntologyDocumentSource;
 import org.semanticweb.owlapi.io.StringDocumentSource;
 import org.semanticweb.owlapi.model.*;
-
-import javax.validation.constraints.Null;
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -157,7 +148,7 @@ public class Ontology {
 
     }
 
-    public String loadOntologyURL(String prov) {
+    public String loadOntologyFromURL(String prov) {
         String response = " ";
         prov = prov.replace("\"", "");
         this.manager = OWLManager.createOWLOntologyManager();
@@ -181,11 +172,10 @@ public class Ontology {
     }
 
 
-    public String loadOntologyfile(String filename) {
+    public String loadOntologyFromfile(String filename) {
         String response = " ";
         this.manager = OWLManager.createOWLOntologyManager();
 
-        logger.info("Analysing ontology from file: " + prov);
         OWLOntologyDocumentSource docs = new StringDocumentSource(filename);
 
         try {

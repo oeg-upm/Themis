@@ -491,8 +491,7 @@ function rowEdit(but) {  //Inicia la edición de una fila
         $(this).html(input);
     });
 
-    $row.find('td:nth-child(3)').css("display","none");
-    $row.find('td:nth-child(4)').css("display","block");
+    $row.find('td:nth-child(5)').css("display","block");
 }
 
 function rowSave(but) {  //Inicia la edición de una fila
@@ -510,8 +509,6 @@ function rowSave(but) {  //Inicia la edición de una fila
 
     var $row = $(but).parents('tr');  //accede a la fila
     $row.find('td:nth-child(1)').attr("contentEditable","false");
-    $row.find('td:nth-child(3)').css("display","block");
-    $row.find('td:nth-child(4)').css("display","none");
 }
 
 function loadontologyFromURI() {

@@ -1,6 +1,5 @@
 package oeg.albafernandez.tests.controller;
 
-
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -17,11 +16,7 @@ import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyStorageException;
-import org.semarglproject.rdf.ParseException;
-import org.xml.sax.SAXException;
-
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -29,8 +24,6 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import java.io.*;
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /*This class  defines all the functions that are called by the webapp in order to load the ontology to be validated,
  * to executeTest the tests, export the tests or get the got*/
@@ -38,8 +31,8 @@ import java.util.regex.Pattern;
 @Path("/api")
 @Tag(name = "Themis evaluator")
 public class APIController {
-    final static Logger logger = Logger.getLogger(APIController.class);
-    ThemisSyntaxChecker syntaxChecker = new ThemisSyntaxChecker();
+    static final Logger logger = Logger.getLogger(APIController.class);
+    ThemisGuideGenerator syntaxChecker = new ThemisGuideGenerator();
 
 
     @POST
@@ -54,9 +47,9 @@ public class APIController {
         if (ontologyFile != null) {
             Ontology ontology = new Ontology();
             if (ontologyFile.contains("\\\"")) {
-                ontology.loadOntologyfile(ontologyFile.replaceAll("^\"", "").replaceAll("\"\\s*$", "").replace("\\\"", "\""));
+                ontology.loadOntologyFromfile(ontologyFile.replaceAll("^\"", "").replaceAll("\"\\s*$", "").replace("\\\"", "\""));
             } else {
-                ontology.loadOntologyfile(ontologyFile);
+                ontology.loadOntologyFromfile(ontologyFile);
             }
             ThemisExampleGenerator exampleGenerator = new ThemisExampleGenerator();
             ArrayList<String> tests = exampleGenerator.generateExampleFromOntology(ontology);
@@ -90,7 +83,7 @@ public class APIController {
     public Response removeOntology(@Context HttpServletRequest req, @QueryParam("uri") String ontologyURL) {
         if (ontologyURL != null) {
             Ontology ontology = new Ontology();
-            ontology.loadOntologyURL(ontologyURL.toString().replace("\"", ""));
+            ontology.loadOntologyFromURL(ontologyURL.replace("\"", ""));
             JSONObject obj = new JSONObject();
             try {
                 obj.put("url", ontology.getOntology().getOntologyID().getOntologyIRI().toString());
@@ -100,7 +93,7 @@ public class APIController {
             }
             HttpSession session = req.getSession(true);
             ArrayList<Ontology> ontologies = (ArrayList<Ontology>) session.getAttribute("ontologies");
-            session.setAttribute("ontologies", ontologies);
+            session.setAttribute("ontologies", ontologies.toString());
             return Response
                     .status(200)
                     .entity(obj.toString())
@@ -129,47 +122,28 @@ public class APIController {
         String testfile = results.getTestfile();
         String documentationHTML = results.getDocumentationFile();
         ThemisFileManager themisFileManagement = new ThemisFileManager();
+        logger.info("Getting results....");
+        if (tests == null) {
+            tests = new ArrayList<>();
+        }
 
         if (testfile != null && !testfile.isEmpty()) {
             try {
-                if (tests == null) {
-                    tests = new ArrayList<>();
-                }
                 tests.addAll(themisFileManagement.loadCodeTests(testfile));
-            } catch (OWLOntologyStorageException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (OWLOntologyCreationException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
-                e.printStackTrace();
+            } catch (Exception e) {
+                logger.error(e.getMessage());
             }
 
         }
 
         if (documentationHTML != null && !documentationHTML.isEmpty()) {
             try {
-                if (tests == null) {
-                    tests = new ArrayList<>();
-                }
                 tests.addAll(themisFileManagement.parseRDFa(documentationHTML));
-            } catch (SAXException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (ParseException e) {
-                e.printStackTrace();
-            } catch (OWLOntologyStorageException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            } catch (OWLOntologyCreationException e) {
-                e.printStackTrace();
+            } catch (Exception e) {
+                logger.error(e.getMessage());
             }
         }
         String got = results.getGot();
-        logger.info("New ontologies added from API: " + ontologies);
         logger.info("New ontologies added from API: " + ontologies);
         logger.info("New tests added from API: " + tests);
         ThemisResultsGenerator executionService = new ThemisResultsGenerator();
@@ -178,9 +152,10 @@ public class APIController {
         String output = "";
         try {
             result = executionService.getResults(got, tests, ontologies, ontologiesCode);
-            if (results.getFormat() != null && results.getFormat().equalsIgnoreCase("html")) {
+
+            if (results.getFormat().equalsIgnoreCase("html")) {
                 output = Converter.jsonToHtml(result);
-            } else if (results.getFormat() != null && results.getFormat().equalsIgnoreCase("junit")) {
+            } else if (results.getFormat().equalsIgnoreCase("junit")) {
                 output = Converter.jsonToJUnitXML(result);
             } else {
                 output = result.toString();
@@ -194,8 +169,10 @@ public class APIController {
 
         } catch (Exception e) {
             status = 500;
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
+
+
 
         return Response.status(status)
                 .entity(output)
@@ -207,8 +184,8 @@ public class APIController {
     @Path("/export")
     @Produces({MediaType.APPLICATION_JSON})
     @Hidden
-    /*MEthod to export the test suite in an TTL file*/
-    public Response downloadTestSuite(@QueryParam("test") final String tests) throws JSONException, OWLOntologyStorageException {
+    /*Method to export the test suite in an TTL file*/
+    public Response downloadTestSuite(@QueryParam("test") final String tests)  {
         if (tests != null) {
             String[] testsList = tests.replace("\"", "").replace("[", "").replace("]", "").split(",");
 
@@ -216,7 +193,7 @@ public class APIController {
 
             StreamingOutput fileStream = new StreamingOutput() {
                 @Override
-                public void write(java.io.OutputStream output) throws IOException, WebApplicationException {
+                public void write(java.io.OutputStream output) throws  WebApplicationException {
                     try {
                         OutputStream outputs = ThemisImplementer.storeTestCaseDesign(testsArrayList, output);
                         outputs.flush();
@@ -236,7 +213,7 @@ public class APIController {
 
 
     @GET
-    @Path("/autocomplete")
+    @Path("/autoComplete")
     @Operation(summary = "Autocomplete", description = "Autocomplete based on the syntax of the tests", method = "POST",
             responses = {
                     @ApiResponse(responseCode = "200", description = "Autocomplete successfully executed", content = @Content(mediaType = "application/json")),
@@ -245,14 +222,14 @@ public class APIController {
 
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    /*Method to autocomplete the test*/
+    /*Method to autoComplete the test*/
     public Response autocomplete(@QueryParam("test") @Parameter(description = "Test", example = "Sensor type ") String test,
                                  @QueryParam("lastTerm") @Parameter(description = "Last term of the test", example = " ") String lastTerm,
                                  @QueryParam("ontologyfile") @Parameter(description = "Ontology file", example = " ") String filename,
                                  @QueryParam("ontology") @Parameter(description = "URI of the ontology", example = "http://iot.linkeddata.es/def/core#") String ontologyURI) throws JSONException {
         if (lastTerm == null)
             lastTerm = " ";
-        String got = syntaxChecker.autocomplete(test, lastTerm, ontologyURI, filename);
+        String got = syntaxChecker.autoComplete(test, lastTerm, ontologyURI, filename);
 
         return Response
                 .status(200)
@@ -272,7 +249,7 @@ public class APIController {
 
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    /*Method to autocomplete the test*/
+    /*Method to autoComplete the test*/
     public Response autocompleteUriFile(AutocompleteResource autocompleteResource) throws JSONException {
         String lastTerm;
         if (autocompleteResource.getLastTerm() == null)
@@ -293,7 +270,7 @@ public class APIController {
         else
             ontologyFile = autocompleteResource.getCode().replace("</http:>", "").replace("</https:>", "");
 
-        String got = syntaxChecker.autocomplete(test, lastTerm, ontologyURI, ontologyFile);
+        String got = syntaxChecker.autoComplete(test, lastTerm, ontologyURI, ontologyFile);
 
 
         return Response
@@ -333,6 +310,8 @@ public class APIController {
                                               String filename) {
 
         String got = null;
+        logger.info("Ontology: "+ filename);
+
         try {
             got = syntaxChecker.getGoTFromFilename(filename);
             if (got != null) {
@@ -347,7 +326,7 @@ public class APIController {
                         .build();
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             return Response
                     .status(400)
                     .entity("The ontology could not be loaded. If this error persists please contact with albafernandez@fi.upm.es ")
@@ -371,6 +350,7 @@ public class APIController {
 
 
         String got = null;
+        logger.info("Ontology: "+ URI);
         try {
             got = syntaxChecker.getGoTFromURI(URI);
 
@@ -386,7 +366,7 @@ public class APIController {
                         .build();
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             return Response
                     .status(400)
                     .entity("The ontology could not be loaded. If this error persists please contact with albafernandez@fi.upm.es ")
@@ -431,6 +411,8 @@ public class APIController {
         ThemisFileManager themisFileManagement = new ThemisFileManager();
         String tests = null;
         try {
+            logger.info("Loading tests...");
+
             tests = themisFileManagement.loadTests(uri, "");
             if (tests == null || tests.equalsIgnoreCase("[]")) {
                 return Response
@@ -459,6 +441,7 @@ public class APIController {
         ThemisFileManager themisFileManagement = new ThemisFileManager();
         String tests = null;
         try {
+            logger.info("Loading tests...");
             tests = themisFileManagement.loadTests("", file);
             if (tests == null || tests.equalsIgnoreCase("[]")) {
                 return Response
@@ -466,6 +449,7 @@ public class APIController {
                         .entity("No tests found")
                         .build();
             }
+
         } catch (Exception e) {
             return Response
                     .status(400)
@@ -494,6 +478,7 @@ public class APIController {
 
             }
         NewCookie ontos = new NewCookie("ontos", null);
+        ontos.isHttpOnly();
         return Response.ok("OK").cookie(ontos).build();
 
 

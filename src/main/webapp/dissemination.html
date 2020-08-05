@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head >
     <meta charset="UTF-8">
     <title>Validate your ontology</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,7 +17,7 @@
 
     <!-- Le styles -->
     <link href="vocab/css/bootstrap.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="css/style-custom.css">
+    <link rel="stylesheet" type="text/css" href="vocab/css/style-custom.css">
 
     <style type="text/css">
 
@@ -31,12 +31,9 @@
 
     </style>
 
-
 </head>
 
-
-<body>
-
+<body data-spy="scroll" data-target="#myScrollspy" >
 
 <!-- Static navbar -->
 <nav class="navbar navbar-default ">
@@ -52,12 +49,12 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="index.html">Home</a></li>
+                <li ><a href="index.html">Home</a></li>
                 <li><a href="howto.html">How to use Themis</a></li>
                 <li><a href="swagger-ui/index.html">API REST</a></li>
                 <li><a href="catalogue.html">Catalogue</a></li>
                 <li><a href="https://github.com/oeg-upm/Themis">GitHub</a></li>
-                <li><a href="dissemination.html">Dissemination</a></li>
+                <li class="active"><a href="dissemination.html">Dissemination</a></li>
                 <!--<li><a href="tests-info.html">Supported tests</a></li>-->
             </ul>
         </div><!--/.nav-collapse -->
@@ -66,34 +63,44 @@
 </nav>
 
 
-<div class="container" >
-    <!-- Jumbotron -->
-    <div class="jumbotron" style="background-color:white;" >
-        <h2> Add Themis to your GitHub repository</h2>
-    </div>
-
-    <!--<form method="get" action="http://vicinity.iot.linkeddata.es/reqmanagerservice/rest/register/login"> -->
 
 
+<main role="main" >
 
-    <div class="container">
-        <p>You can also add Themis to your GitHub repo as a webhook by login using your GitHub account.</p>
+    <div class="container" >
+        <!--TESTING -->
+        <div class="row">
+            <div class="col-sm-9" >
 
-        <form method="get" action="http://themis.linkeddata.es/rest/register/login">
-            <div class="form-group">
-                <div class="col-md-9">
-                     <input type="text" class="form-control" id="uname" name="uname" placeholder="username/repo">
+
+                <div id="publications">
+                    <h3><i class="fa fa-file-pdf-o"></i>Publications</a> </h3>
+
+                    <ul>
+                        <li><strong>2019</strong>: Fernández-Izquierdo A., García-Castro R. (2019) Themis: a tool for validating ontologies through requirements. In: The 31st International Conference on Software Engineering and Knowledge Engineering (SEKE 2019) </a></li>
+                        <br/>
+                    </ul>
                 </div>
-                <div class="col-md-3">
-                    <button type="submit" class="btn btn-primary mb-2" >Add service</button>
+                <div id="demo">
+                    <h3><i class="fa fa-file-video-o"></i> Demo</a> </h3>
+
+                    <ul>
+                        <li><strong>2019</strong>: Fernández-Izquierdo, A., & García-Castro, R. (2019). How to Validate Ontologies with Themis. In European Semantic Web Conference (pp. 52-57). Springer, Cham.</li>
+                        <br/>
+                    </ul>
                 </div>
+                <!--<div id="publications">
+                      <h2><i class="fa fa-sticky-note"></i>Slides</a> </h2>
+
+                      <ul>
+                        <li><strong>2020</strong>: Cimmino, A., Fernández-Izquierdo, A., & García-Castro, R. (2020). Astrea: automatic generation of SHACL shapes from ontologies. In European Semantic Web Conference.</li>
+                        <br/>
+                      </ul>
+                </div>-->
             </div>
-        </form>
+        </div>
     </div>
-
-</div>
-
-
+</main>
 <footer class="footer container">
     <div class="row">
         <hr />
@@ -119,6 +126,6 @@
     </div>
 </footer>
 
+
 </body>
-</div> <!-- /container -->
 </html>

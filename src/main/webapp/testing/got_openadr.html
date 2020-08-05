@@ -1,0 +1,903 @@
+ <html lang="en">
+<head >
+    <meta charset="UTF-8">
+    <title>Validate your ontology</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="languaje" content="English">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <!-- Le styles -->
+    <link href="../vocab/css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../vocab/css/style-custom.css">
+
+    <style type="text/css">
+
+        .table-wrapper-scroll-y {
+            display: block;
+            max-height: 200px;
+            overflow-y: auto;
+            -ms-overflow-style: -ms-autohiding-scrollbar;
+        }
+
+
+    </style>
+
+
+    <script type="text/javascript" id="js">
+        $(document).ready(function()
+            {
+                $("#tablesorter-demo").tablesorter();
+                $("#tablesorter-demo").stickyTableHeaders();
+                $('[data-toggle="tooltip"]').tooltip();
+            }
+        );
+    </script>
+</head>
+
+<body data-spy="scroll" data-target="#myScrollspy">
+
+
+<nav class="navbar navbar-default "  id="catalogue">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#"> <img src="../images/themis.png" class="img-rounded" class="img-responsive" width="70%" ></a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../howto.html">How to use it</a></li>
+                <li><a href="../../../../target/swagger-ui/META-INF/resources/webjars/swagger-ui/3.17.0/index.html">API REST</a></li>
+                <li><a href="../catalogue.html">Catalogue</a></li>
+                <!--<li><a href="tests-info.html">Supported tests</a></li>-->
+            </ul>
+        </div><!--/.nav-collapse -->
+
+    </div>
+</nav>  <!-- Jumbotron -->
+    <div class="jumbotron" style="background-color:white;">
+        <h2> Glossary of terms</h2>
+        <p class="lead">Glossary of terms for the OpenADR ontology.</a></p>
+
+
+    </div><nav class="col-sm-3" id="myScrollspy">
+    <ul class="nav nav-pills nav-stacked">
+        <li class="active" class="nav nav-pills nav-stacked"><a href="#got">Glossary</a></li>
+        <li class="nav nav-pills nav-stacked"><a href="#catalogue"><span class="glyphicon glyphicon-chevron-up
+" aria-hidden="true"></span>
+            Go top</a></li>
+
+    </ul>
+</nav>   <div class="col-sm-9">
+    <div id="got">
+
+
+        <input id="filter" type="text" placeholder="Search..">
+
+        <table id="tablesorter-demo" class="tablesorter table table-hover table-responsive">
+
+            <thead>
+            <tr class="got">
+                <th class="col-md-3">Term</th>
+                <th class="col-md-4">URI</th>
+                <th class="col-md-3">Type</th>
+                <th class="col-md-2"></th>
+            </tr>
+            </thead>
+            <tbody>				<tr class = "got">
+					<td class="term got" class="tg-031e">BidEnergySignal</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#BidEnergySignal</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">BidLoadSignal</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#BidLoadSignal</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">BidPricesignal</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#BidPricesignal</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">ChargeStateSignal</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#ChargeStateSignal</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">DataReport</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#DataReport</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">DemandChargeSignal</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#DemandChargeSignal</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Duration</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#Duration</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">ElectricityPriceSignal</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#ElectricityPriceSignal</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">EnergyPriceSignal</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#EnergyPriceSignal</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Event</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#Event</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">EventDescriptor</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#EventDescriptor</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">EventStatus</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#EventStatus</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Feature</td>
+					<td class="uri got tg-031e ">http://www.opengis.net/ont/geosparql#Feature</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Geometry</td>
+					<td class="uri got tg-031e ">http://www.opengis.net/ont/geosparql#Geometry</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">GreenButtonReport</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#GreenButtonReport</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Group</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#Group</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">HistoryReport</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#HistoryReport</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">HistoryUsageReport</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#HistoryUsageReport</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Instant</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#Instant</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Interval</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#Interval</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Item</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#Item</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">LoadControlSignal</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#LoadControlSignal</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">LoadControlState</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#LoadControlState</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">LoadDispatchSignal</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#LoadDispatchSignal</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">MetadataReport</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#MetadataReport</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Node</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#Node</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Opt</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#Opt</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">OptIn</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#OptIn</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">OptOut</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#OptOut</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Point</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2003/01/geo/wgs84_pos#Point</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Report</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#Report</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">ReportDataDescriptor</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#ReportDataDescriptor</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">ReportDataPayload</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#ReportDataPayload</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">ReportDescriptor</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#ReportDescriptor</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">ReportPayload</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#ReportPayload</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">ReportStatusDescriptor</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#ReportStatusDescriptor</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">ReportStatusPayload</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#ReportStatusPayload</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Resource</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#Resource</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">SamplingRate</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#SamplingRate</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Schedule</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#Schedule</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">ServiceArea</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#ServiceArea</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Signal</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#Signal</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">SignalInterval</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#SignalInterval</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">SimpleSignal</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#SimpleSignal</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">SpatialObject</td>
+					<td class="uri got tg-031e ">http://www.opengis.net/ont/geosparql#SpatialObject</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">SpatialThing</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2003/01/geo/wgs84_pos#SpatialThing</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">TelemetryReport</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#TelemetryReport</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">TelemetryStatusReport</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#TelemetryStatusReport</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">TelemetryUsageReport</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#TelemetryUsageReport</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">TemporalEntity</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#TemporalEntity</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Unit_of_measure</td>
+					<td class="uri got tg-031e ">http://www.wurvoc.org/vocabularies/om-1.8/Unit_of_measure</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">VEN</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#VEN</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">VTN</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#VTN</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">appliesTo</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#appliesTo</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">belongsTo</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#belongsTo</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">cancels</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#cancels</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">contains</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#contains</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">containsAsset</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#containsAsset</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">containsResource</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#containsResource</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">containsVEN</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#containsVEN</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">eventDescriptor</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#eventDescriptor</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">expectedResponse</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#expectedResponse</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasAreaTarget</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#hasAreaTarget</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasDuration</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#hasDuration</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasEventStatus</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#hasEventStatus</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasGeometry</td>
+					<td class="uri got tg-031e ">http://www.opengis.net/ont/geosparql#hasGeometry</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasGranularity</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#hasGranularity</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasGroupTarget</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#hasGroupTarget</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasItemBase</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#hasItemBase</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasLoadControlState</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#hasLoadControlState</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasMaxPeriod</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#hasMaxPeriod</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasMinPeriod</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#hasMinPeriod</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasPayload</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#hasPayload</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasReportBackDuration</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#hasReportBackDuration</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasReportPayload</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#hasReportPayload</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasSamplingRate</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#hasSamplingRate</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasSignalIntervalDuration</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#hasSignalIntervalDuration</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasSignalPayload</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#hasSignalPayload</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasTarget</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#hasTarget</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasTypicalValue</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#hasTypicalValue</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">includesMeasurement</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#includesMeasurement</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">includesSignal</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#includesSignal</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">involvesSubject</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#involvesSubject</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isActiveDuringPeriod</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#isActiveDuringPeriod</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isAssociatedToItem</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#isAssociatedToItem</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isAvailableDuring</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#isAvailableDuring</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isDefinedIn</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#isDefinedIn</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isDescribedIn</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#isDescribedIn</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isManagedBy</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#isManagedBy</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isReportedDuringInterval</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#isReportedDuringInterval</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isScheduleOf</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#isScheduleOf</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isSpecifiedIn</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#isSpecifiedIn</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isUnavailableDuring</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#isUnavailableDuring</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">location</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2003/01/geo/wgs84_pos#location</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">manages</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#manages</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">plans</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#plans</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">ramp_up</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#ramp_up</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">receives</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#receives</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">recovery</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#recovery</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">refersToTarget</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#refersToTarget</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">reportDataSource</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#reportDataSource</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">reportDescriptor</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#reportDescriptor</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">reportSubject</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#reportSubject</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">requests</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#requests</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">requires</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#requires</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">sends</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#sends</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">sendsEvent</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#sendsEvent</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">sendsOpt</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#sendsOpt</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">sendsReport</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#sendsReport</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">sfContains</td>
+					<td class="uri got tg-031e ">http://www.opengis.net/ont/geosparql#sfContains</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">specifiesReport</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#specifiesReport</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">comment</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#comment</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasAccuracy</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#hasAccuracy</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasCapacity</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#hasCapacity</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasConfidence</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#hasConfidence</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasCreatedDateTime</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#hasCreatedDateTime</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasDataQuality</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#hasDataQuality</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasEventName</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#hasEventName</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasGroupName</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#hasGroupName</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasItemDescription</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#hasItemDescription</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasLevelOffset</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#hasLevelOffset</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasMarketContext</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#hasMarketContext</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasModificationDateTime</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#hasModificationDateTime</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasModificationNumber</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#hasModificationNumber</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasModificationReason</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#hasModificationReason</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasNodeName</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#hasNodeName</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasPercentageOffset</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#hasPercentageOffset</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasPriority</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#hasPriority</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasProfileName</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#hasProfileName</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasRandomization</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#hasRandomization</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasReadingType</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#hasReadingType</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasRegistrationNumber</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#hasRegistrationNumber</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasReportId</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#hasReportId</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasReportName</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#hasReportName</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasReportOnly</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#hasReportOnly</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasReportType</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#hasReportType</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasRequestId</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#hasRequestId</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasScaleCode</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#hasScaleCode</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasSetPoint</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#hasSetPoint</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasSignalName</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#hasSignalName</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasSignalType</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#hasSignalType</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasTransportName</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#hasTransportName</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasVersion</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#hasVersion</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasXMLsignature</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#hasXMLsignature</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isManualOverride</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#isManualOverride</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isOnChange</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#isOnChange</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isOnline</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#isOnline</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isResponseRequired</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#isResponseRequired</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isTestEvent</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#isTestEvent</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">starts</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#starts</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">topDataProperty</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2002/07/owl#topDataProperty</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Active</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#Active</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Canceled</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#Canceled</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Far</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#Far</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Near</td>
+					<td class="uri got tg-031e ">https://w3id.org/def/openadr#Near</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+      </tbody>
+
+    </table>
+      </div>
+   </div>
+
+    <hr><footer class="footer">
+        <div class="row">
+            <div class="col-md-10">
+                Contact email: albafernandez@fi.upm.es
+                <br>
+                Built with <a target="_blank" href="http://getbootstrap.com/">Bootstrap</a>
+                Icons from <a target="_blank" href="http://glyphicons.com/">Glyphicons</a>
+                <br>
+                Latest revision March, 2020
+                <br><p>&copy; Ontology Engineering Group</p>
+            </div>
+            <div class="col-md-2">
+                <a href="http://www.oeg-upm.net/" target="_blank"><img src="../images/logo.gif" alt="OEG logo" class="img-rounded" class="img-responsive" /></a>
+            </div>
+        </div>
+    </footer>
+</div> <!-- /container -->
+
+
+
+
+</body>
+</html>

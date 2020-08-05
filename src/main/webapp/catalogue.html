@@ -46,6 +46,8 @@
 <body>
 
 
+
+<!-- Static navbar -->
 <nav class="navbar navbar-default ">
     <div class="container">
         <div class="navbar-header">
@@ -64,7 +66,7 @@
                 <li><a href="swagger-ui/index.html">API REST</a></li>
                 <li  class="active"><a href="catalogue.html">Catalogue</a></li>
                 <li><a href="https://github.com/oeg-upm/Themis">GitHub</a></li>
-
+                <li><a href="dissemination.html">Dissemination</a></li>
                 <!--<li><a href="tests-info.html">Supported tests</a></li>-->
             </ul>
         </div><!--/.nav-collapse -->
@@ -98,6 +100,7 @@
                 <th class="col-md-2">Ontology</th>
                 <th class="col-md-1">Category</th>
                 <th class="col-md-1">Tests</th>
+                <th class="col-md-1">Glossary of terms</th>
                 <th class="col-md-2">Tests Results</th>
                 <th class="col-md-2">Conformance with other ontologies</th>
             </tr>
@@ -113,6 +116,9 @@
                 <td>
                     <a href = "http://vicinity.iot.linkeddata.es/vicinity/testing/testsuite-wot.ttl" target="_blank">Tests</a>
                 </td>
+                <td>
+                    <a href = "testing/got_wot.html" target="_blank">Glossary of terms</a>
+                </td>
                 <td> <a href = "testing/wot_results.html" target="_blank">Testing results</a></td>
                 <td></td>
             </tr>
@@ -123,6 +129,9 @@
                 </td>
                 <td>
                     <a href = "http://vicinity.iot.linkeddata.es/vicinity/testing/testsuite-core.ttl" target="_blank">Tests</a>
+                </td>
+                <td>
+                    <a href = "testing/got_core.html" target="_blank">Glossary of terms</a>
                 </td>
                 <td> <a href = "testing/core_results.html" target="_blank">Testing results</a></td>
                 <td></td>
@@ -135,6 +144,9 @@
                 </td>
                 <td>
                     <a href = "http://vicinity.iot.linkeddata.es/vicinity/testing/testsuite-saref.ttl" target="_blank">Tests</a>
+                </td>
+                <td>
+                    <a href = "testing/got_saref.html" target="_blank">Glossary of terms</a>
                 </td>
                 <td> <a href = "testing/saref_results.html" target="_blank">Testing results</a></td>
                 <td>
@@ -150,6 +162,9 @@
                 <td>
                     <a href = "http://vicinity.iot.linkeddata.es/vicinity/testing/testsuite-ssn.ttl" target="_blank">Tests</a>
                 </td>
+                <td>
+                    <a href = "testing/got_ssn.html" target="_blank">Glossary of terms</a>
+                </td>
                 <td> <a href = "testing/ssn_results.html" target="_blank">Testing results</a></td>
 
                 <td>
@@ -164,7 +179,11 @@
                 <td>
                     <a href = "http://vicinity.iot.linkeddata.es/vicinity/testing/testsuite-onem2m.ttl" target="_blank">Tests</a>
                 </td>
+                <td>
+                    <a href = "testing/got_onem2m.html" target="_blank">Glossary of terms</a>
+                </td>
                 <td> <a href = "testing/onem2m_results.html" target="_blank">Testing results</a></td>
+
                 <td>
                     <a href = "conformance/saref_onem2m.html" target="_blank">SAREF</a><br>
                     <a href = "conformance/ssn_onem2m.html" target="_blank">SSN</a>
@@ -178,7 +197,9 @@
                 <td>
                     <a href = "https://raw.githubusercontent.com/albaizq/OpenADRontology/master/tests/testsuite-openadr.ttl" target="_blank">Tests</a>
                 </td>
-
+                <td>
+                    <a href = "testing/got_openadr.html" target="_blank">Glossary of terms</a>
+                </td>
                 <td> <a href = "testing/oadr_results.html" target="_blank">Testing results</a></td>
 
                 <td></td>
@@ -194,19 +215,42 @@
         <thead>
         <tr>
             <th class="col-md-2">Domain</th>
-            <th class="col-md-2">Ontologies included in the analysis</th>
+            <th class="col-md-2">Ontologies and data models included in the analysis</th>
+            <th class="col-md-2">Shared glossary of terms</th>
+            <th class="col-md-2">Results</th>
         </tr>
         </thead>
         <tbody>
 
         <tr>
 
-            <td>  <a href = "conformance/iot.html" target="_blank">IoT</a></td>
+            <td><span class="label label-primary">IoT</span></td>
+
             <td>
                 <a href = "https://saref.etsi.org/saref/latest/saref.ttl" target="_blank">SAREF</a> <br>
                 <a href = "https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl" target="_blank">oneM2M ontology</a> <br>
                 <a href = "http://www.w3.org/ns/ssn" target="_blank">SSN ontology </a>
             </td>
+            <td> <a href = "conformance/got_iot.html" target="_blank">Glossary</a></td>
+
+            <td>  <a href = "conformance/iot001.html" target="_blank">Results</a></td>
+
+        </tr>
+        <tr>
+
+            <td><span class="label label-primary">IoT</span></td>
+
+            <td>
+                <a href = "https://saref.etsi.org/saref/latest/saref.ttl" target="_blank">SAREF</a> <br>
+                <a href = "https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl" target="_blank">oneM2M ontology</a> <br>
+                <a href = "http://www.w3.org/ns/ssn" target="_blank">SSN ontology </a><br>
+                <a href = "https://www.iso.org/standard/65695.html" target="_blank">ISO/IEC 30141 </a><br>
+                <a href = "https://openconnectivity.org/" target="_blank">OCF </a>
+            </td>
+            <td> <a href = "conformance/got_iso002.html" target="_blank">Glossary</a></td>
+
+            <td>  <a href = "conformance/iot002.html" target="_blank">Results</a></td>
+
         </tr>
 
         </tbody>
@@ -225,7 +269,7 @@
             Built with <a target="_blank" href="http://getbootstrap.com/">Bootstrap</a>
             Icons from <a target="_blank" href="http://glyphicons.com/">Glyphicons</a>
             <br>
-            Latest revision June, 2020
+            Latest revision July, 2020
             <br>
             Licensed under the <a target="_blank" href="http://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a>
         </div>

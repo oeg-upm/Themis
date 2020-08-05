@@ -1,0 +1,443 @@
+ <html lang="en">
+<head >
+    <meta charset="UTF-8">
+    <title>Validate your ontology</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="languaje" content="English">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <!-- Le styles -->
+    <link href="../vocab/css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../vocab/css/style-custom.css">
+
+    <style type="text/css">
+
+        .table-wrapper-scroll-y {
+            display: block;
+            max-height: 200px;
+            overflow-y: auto;
+            -ms-overflow-style: -ms-autohiding-scrollbar;
+        }
+
+
+    </style>
+
+
+    <script type="text/javascript" id="js">
+        $(document).ready(function()
+            {
+                $("#tablesorter-demo").tablesorter();
+                $("#tablesorter-demo").stickyTableHeaders();
+                $('[data-toggle="tooltip"]').tooltip();
+            }
+        );
+    </script>
+</head>
+
+<body data-spy="scroll" data-target="#myScrollspy">
+
+
+<nav class="navbar navbar-default "  id="catalogue">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#"> <img src="../images/themis.png" class="img-rounded" class="img-responsive" width="70%" ></a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../howto.html">How to use it</a></li>
+                <li><a href="../../../../target/swagger-ui/META-INF/resources/webjars/swagger-ui/3.17.0/index.html">API REST</a></li>
+                <li><a href="../catalogue.html">Catalogue</a></li>
+                <!--<li><a href="tests-info.html">Supported tests</a></li>-->
+            </ul>
+        </div><!--/.nav-collapse -->
+
+    </div>
+</nav>  <!-- Jumbotron -->
+    <div class="jumbotron" style="background-color:white;">
+        <h2> Glossary of terms</h2>
+        <p class="lead">Glossary of terms for the oneM2M ontology.</a></p>
+
+
+    </div><nav class="col-sm-3" id="myScrollspy">
+    <ul class="nav nav-pills nav-stacked">
+        <li class="active" class="nav nav-pills nav-stacked"><a href="#got">Glossary</a></li>
+        <li class="nav nav-pills nav-stacked"><a href="#catalogue"><span class="glyphicon glyphicon-chevron-up
+" aria-hidden="true"></span>
+            Go top</a></li>
+
+    </ul>
+</nav>   <div class="col-sm-9">
+    <div id="got">
+
+
+        <input id="filter" type="text" placeholder="Search..">
+
+        <table id="tablesorter-demo" class="tablesorter table table-hover table-responsive">
+
+            <thead>
+            <tr class="got">
+                <th class="col-md-3">Term</th>
+                <th class="col-md-4">URI</th>
+                <th class="col-md-3">Type</th>
+                <th class="col-md-2"></th>
+            </tr>
+            </thead>
+            <tbody>				<tr class = "got">
+					<td class="term got" class="tg-031e">AreaNetwork</td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#AreaNetwork</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Aspect</td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#Aspect</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Command</td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#Command</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">ControllingFunction</td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#ControllingFunction</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Device</td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#Device</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Function</td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#Function</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">GET_InputDataPoint</td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#GET_InputDataPoint</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">InputDataPoint</td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#InputDataPoint</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">InterworkedDevice</td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#InterworkedDevice</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">MeasuringFunction</td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#MeasuringFunction</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">MetaData</td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#MetaData</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Operation</td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#Operation</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">OperationInput</td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#OperationInput</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">OperationOutput</td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#OperationOutput</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">OutputDataPoint</td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#OutputDataPoint</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">SET_OutputDataPoint</td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#SET_OutputDataPoint</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Service</td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#Service</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">SimpleTypeVariable</td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#SimpleTypeVariable</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">StructuredTypeVariable</td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#StructuredTypeVariable</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Thing</td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#Thing</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">ThingProperty</td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#ThingProperty</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Variable</td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#Variable</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">VariableConversion</td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#VariableConversion</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">consistsOf</td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#consistsOf</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">convertsTo</td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#convertsTo</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">describes</td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#describes</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">exposesCommand</td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#exposesCommand</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">exposesFunction</td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#exposesFunction</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasCommand</td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#hasCommand</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasConversion</td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#hasConversion</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasFunction</td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#hasFunction</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasInput</td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#hasInput</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasInputDataPoint</td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#hasInputDataPoint</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasMetaData</td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#hasMetaData</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasOperation</td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#hasOperation</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasOutput</td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#hasOutput</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasOutputDataPoint</td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#hasOutputDataPoint</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasService</td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#hasService</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasSubService</td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#hasSubService</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasSubStructure</td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#hasSubStructure</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasThingProperty</td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#hasThingProperty</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasThingRelation</td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#hasThingRelation</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isPartOf</td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#isPartOf</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">refersTo</td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#refersTo</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasDataRestriction</td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#hasDataRestriction</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasDataRestriction_length</td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#hasDataRestriction_length</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasDataRestriction_maxExclusive</td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#hasDataRestriction_maxExclusive</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasDataRestriction_maxInclusive</td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#hasDataRestriction_maxInclusive</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasDataRestriction_maxLength</td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#hasDataRestriction_maxLength</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasDataRestriction_minExclusive</td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#hasDataRestriction_minExclusive</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasDataRestriction_minInclusive</td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#hasDataRestriction_minInclusive</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasDataRestriction_minLength</td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#hasDataRestriction_minLength</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasDataRestriction_pattern</td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#hasDataRestriction_pattern</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasDataType</td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#hasDataType</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasThingAnnotation</td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#hasThingAnnotation</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasValue</td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#hasValue</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isDataList</td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#isDataList</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">netTechnologyCommunicationProtocol</td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#netTechnologyCommunicationProtocol</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">netTechnologyPhysicalStandard</td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#netTechnologyPhysicalStandard</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">netTechnologyProfile</td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#netTechnologyProfile</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">oneM2MAttribute</td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#oneM2MAttribute</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">oneM2MMethod</td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#oneM2MMethod</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">oneM2MTargetURI</td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#oneM2MTargetURI</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+      </tbody>
+
+    </table>
+      </div>
+   </div>
+
+    <hr><footer class="footer">
+        <div class="row">
+            <div class="col-md-10">
+                Contact email: albafernandez@fi.upm.es
+                <br>
+                Built with <a target="_blank" href="http://getbootstrap.com/">Bootstrap</a>
+                Icons from <a target="_blank" href="http://glyphicons.com/">Glyphicons</a>
+                <br>
+                Latest revision March, 2020
+                <br><p>&copy; Ontology Engineering Group</p>
+            </div>
+            <div class="col-md-2">
+                <a href="http://www.oeg-upm.net/" target="_blank"><img src="../images/logo.gif" alt="OEG logo" class="img-rounded" class="img-responsive" /></a>
+            </div>
+        </div>
+    </footer>
+</div> <!-- /container -->
+
+
+
+
+</body>
+</html>

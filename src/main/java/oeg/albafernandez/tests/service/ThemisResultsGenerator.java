@@ -1,25 +1,26 @@
 package oeg.albafernandez.tests.service;
 
-import de.derivo.sparqldlapi.exceptions.QueryParserException;
 import oeg.albafernandez.tests.model.Ontology;
 import oeg.albafernandez.tests.model.TestCaseImpl;
 import oeg.albafernandez.tests.model.TestCaseResult;
+import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyStorageException;
-
-import java.io.IOException;
 import java.util.*;
 
 public class ThemisResultsGenerator {
-    ThemisSyntaxChecker syntaxChecker = new ThemisSyntaxChecker();
+    private static final String ONTOLOGY = "Ontology";
+    private static final String RESULT = "Result";
 
-    public JSONArray getResults(String table, List<String> tests, List<String> ontologies, List<String> ontologiesCode) throws JSONException, OWLOntologyStorageException, IOException, OWLOntologyCreationException, QueryParserException {
+    ThemisGuideGenerator syntaxChecker = new ThemisGuideGenerator();
+    static final Logger logger = Logger.getLogger(ThemisResultsGenerator.class);
 
-        JSONArray results = new JSONArray();
+    public List<Ontology> loadOntologies(List<String> ontologies, List<String> ontologiesCode){
+        ArrayList<Ontology> listOfOntologies = new ArrayList<>();
         //check nulls
         if (ontologies == null)
             ontologies = new ArrayList<>();
@@ -27,17 +28,23 @@ public class ThemisResultsGenerator {
             ontologiesCode = new ArrayList<>();
 
         //Load ontologies
-        ArrayList<Ontology> listOfOntologies = new ArrayList<Ontology>();
         for (String ontologyURI : ontologies) {
             Ontology ontology = new Ontology();
-            ontology.loadOntologyURL(ontologyURI);
+            ontology.loadOntologyFromURL(ontologyURI);
             listOfOntologies.add(ontology);
         }
         for (String ontologyCode : ontologiesCode) {
             Ontology ontology = new Ontology();
-            ontology.loadOntologyfile(ontologyCode);
+            ontology.loadOntologyFromfile(ontologyCode);
             listOfOntologies.add(ontology);
         }
+        return listOfOntologies;
+    }
+    public JSONArray getResults(String table, List<String> tests, List<String> ontologies, List<String> ontologiesCode) throws JSONException, OWLOntologyStorageException, OWLOntologyCreationException {
+
+        JSONArray results = new JSONArray();
+
+        ArrayList<Ontology> listOfOntologies  = (ArrayList<Ontology>) loadOntologies(ontologies, ontologiesCode);
 
         //execute each test in each ontology
         for (String test : tests) {
@@ -48,7 +55,7 @@ public class ThemisResultsGenerator {
             impl.processTestCaseDesign(test);
             // generate the implementation of the TestCaseDesign
             TestCaseImpl testsuiteImpl = impl.createTestImplementation();
-            if (!testsuiteImpl.getPrecondition().isEmpty() && test != "") {
+            if (!testsuiteImpl.getPrecondition().isEmpty() && !test.isEmpty()) {
                 JSONObject resultsAggregated = new JSONObject();
                 resultsAggregated.put("Test", test);
                 JSONArray resultsAsJson = new JSONArray();
@@ -58,24 +65,27 @@ public class ThemisResultsGenerator {
                     if (table == null || table.isEmpty()) {
                         got = (HashMap<String, IRI>) syntaxChecker.createGot(ontology);
                     } else
-                        got = getTermInGot(table, ontology);
+                        got = (HashMap<String, IRI>) getTermInGot(table, ontology);
                     /*Results of the test*/
                     ThemisExecuter exec = new ThemisExecuter();
                     TestCaseResult testsuiteResult = exec.executeTest(testsuiteImpl, ontology, got);
                     resultsAsJson = storeResults(testsuiteResult, ontology, resultsAsJson);
+
                 }
                 resultsAggregated.put("Results", resultsAsJson);
                 results.put(resultsAggregated);
+
+
             } else {
                 return results;
             }
-        }
 
+        }
         return results;
 
     }
 
-    public HashMap<String, IRI> getTermInGot(String table, Ontology ontology) throws JSONException {
+    public Map<String, IRI> getTermInGot(String table, Ontology ontology) throws JSONException {
         JSONObject jsonobj = new JSONObject(table);
         JSONArray key = new JSONArray(jsonobj.getString(ontology.getKeyName()));
         HashMap<String, IRI> got = new HashMap<>();
@@ -111,27 +121,27 @@ public class ThemisResultsGenerator {
         JSONObject testsResults = new JSONObject();
         if (testsuiteResult.getTestResult().equals("passed")) {
             // the ontology passed the test
-            testsResults.put("Ontology", ontology.getProv().toString());
-            testsResults.put("Result", "Passed");
+            testsResults.put(ONTOLOGY, ontology.getProv().toString());
+            testsResults.put(RESULT, "Passed");
             ontologyarray.put(testsResults);
         } else if (testsuiteResult.getTestResult().equals("undefined")) { // the terms needed to executeTest the tests are not defined inthe ontology
-            testsResults.put("Ontology", ontology.getProv().toString());
-            testsResults.put("Result", "Undefined");
+            testsResults.put(ONTOLOGY, ontology.getProv().toString());
+            testsResults.put(RESULT, "Undefined");
             testsResults.put("Undefined", testsuiteResult.getUndefinedTerms());
             ontologyarray.put(testsResults);
 
         } else if (testsuiteResult.getTestResult().equals("incorrect")) { // the terms needed to executeTest the tests are not defined inthe ontology
-            testsResults.put("Ontology", ontology.getProv().toString());
-            testsResults.put("Result", "Incorrect");
+            testsResults.put(ONTOLOGY, ontology.getProv().toString());
+            testsResults.put(RESULT, "Incorrect");
             testsResults.put("Incorrect", testsuiteResult.getIncorrectTerms());
             ontologyarray.put(testsResults);
         } else if (testsuiteResult.getTestResult().equals("absent")) { // the ontology does not pass the test
-            testsResults.put("Ontology", ontology.getProv().toString());
-            testsResults.put("Result", "Absent");
+            testsResults.put(ONTOLOGY, ontology.getProv().toString());
+            testsResults.put(RESULT, "Absent");
             ontologyarray.put(testsResults);
         } else { // the ontology does not pass the test
-            testsResults.put("Ontology", ontology.getProv().toString());
-            testsResults.put("Result", "Conflict");
+            testsResults.put(ONTOLOGY, ontology.getProv().toString());
+            testsResults.put(RESULT, "Conflict");
             ontologyarray.put(testsResults);
         }
         return ontologyarray;

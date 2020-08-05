@@ -1,0 +1,433 @@
+ <html lang="en">
+<head >
+    <meta charset="UTF-8">
+    <title>Validate your ontology</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="languaje" content="English">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <!-- Le styles -->
+    <link href="../vocab/css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../vocab/css/style-custom.css">
+
+    <style type="text/css">
+
+        .table-wrapper-scroll-y {
+            display: block;
+            max-height: 200px;
+            overflow-y: auto;
+            -ms-overflow-style: -ms-autohiding-scrollbar;
+        }
+
+
+    </style>
+
+
+    <script type="text/javascript" id="js">
+        $(document).ready(function()
+            {
+                $("#tablesorter-demo").tablesorter();
+                $("#tablesorter-demo").stickyTableHeaders();
+                $('[data-toggle="tooltip"]').tooltip();
+            }
+        );
+    </script>
+</head>
+
+<body data-spy="scroll" data-target="#myScrollspy">
+
+
+<nav class="navbar navbar-default "  id="catalogue">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#"> <img src="../images/themis.png" class="img-rounded" class="img-responsive" width="70%" ></a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../howto.html">How to use it</a></li>
+                <li><a href="../../../../target/swagger-ui/META-INF/resources/webjars/swagger-ui/3.17.0/index.html">API REST</a></li>
+                <li><a href="../catalogue.html">Catalogue</a></li>
+                <!--<li><a href="tests-info.html">Supported tests</a></li>-->
+            </ul>
+        </div><!--/.nav-collapse -->
+
+    </div>
+</nav>  <!-- Jumbotron -->
+    <div class="jumbotron" style="background-color:white;">
+        <h2> Glossary of terms</h2>
+        <p class="lead">Glossary of terms for the SSN ontology.</a></p>
+
+
+    </div><nav class="col-sm-3" id="myScrollspy">
+    <ul class="nav nav-pills nav-stacked">
+        <li class="active" class="nav nav-pills nav-stacked"><a href="#got">Glossary</a></li>
+        <li class="nav nav-pills nav-stacked"><a href="#catalogue"><span class="glyphicon glyphicon-chevron-up
+" aria-hidden="true"></span>
+            Go top</a></li>
+
+    </ul>
+</nav>   <div class="col-sm-9">
+    <div id="got">
+
+
+        <input id="filter" type="text" placeholder="Search..">
+
+        <table id="tablesorter-demo" class="tablesorter table table-hover table-responsive">
+
+            <thead>
+            <tr class="got">
+                <th class="col-md-3">Term</th>
+                <th class="col-md-4">URI</th>
+                <th class="col-md-3">Type</th>
+                <th class="col-md-2"></th>
+            </tr>
+            </thead>
+            <tbody>				<tr class = "got">
+					<td class="term got" class="tg-031e">ActuatableProperty</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/ActuatableProperty</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Actuation</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/Actuation</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Actuator</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/Actuator</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Agent</td>
+					<td class="uri got tg-031e ">http://xmlns.com/foaf/0.1/Agent</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Deployment</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/Deployment</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">FeatureOfInterest</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/FeatureOfInterest</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Input</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/Input</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">ObservableProperty</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/ObservableProperty</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Observation</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/Observation</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Output</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/Output</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Platform</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/Platform</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Procedure</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/Procedure</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Result</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/Result</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Sample</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/Sample</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Sampler</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/Sampler</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Sampling</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/Sampling</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Sensor</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/Sensor</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Stimulus</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/Stimulus</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">System</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/System</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">TemporalEntity</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#TemporalEntity</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Thing</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2002/07/owl#Thing</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Vocabulary</td>
+					<td class="uri got tg-031e ">http://purl.org/vocommons/voaf#Vocabulary</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">ssn:Property</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/Property</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">actsOnProperty</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/actsOnProperty</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">deployedOnPlatform</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/deployedOnPlatform</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">deployedSystem</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/deployedSystem</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">detects</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/detects</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">forProperty</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/forProperty</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasDeployment</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/hasDeployment</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasFeatureOfInterest</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/hasFeatureOfInterest</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasInput</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/hasInput</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasOutput</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/hasOutput</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasProperty</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/hasProperty</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasResult</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/hasResult</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasSample</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/hasSample</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasSubSystem</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/hasSubSystem</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hosts</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/hosts</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">implementedBy</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/implementedBy</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">implements</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/implements</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">inDeployment</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/inDeployment</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isActedOnBy</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/isActedOnBy</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isFeatureOfInterestOf</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/isFeatureOfInterestOf</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isHostedBy</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/isHostedBy</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isObservedBy</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/isObservedBy</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isPropertyOf</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/isPropertyOf</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isProxyFor</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/isProxyFor</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isResultOf</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/isResultOf</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isSampleOf</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/isSampleOf</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">madeActuation</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/madeActuation</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">madeByActuator</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/madeByActuator</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">madeBySampler</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/madeBySampler</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">madeBySensor</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/madeBySensor</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">madeObservation</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/madeObservation</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">madeSampling</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/madeSampling</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">observedProperty</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/observedProperty</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">observes</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/observes</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">phenomenonTime</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/phenomenonTime</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">usedProcedure</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/usedProcedure</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">wasOriginatedBy</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/wasOriginatedBy</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasSimpleResult</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/hasSimpleResult</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">resultTime</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/resultTime</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+      </tbody>
+
+    </table>
+      </div>
+   </div>
+
+    <hr><footer class="footer">
+        <div class="row">
+            <div class="col-md-10">
+                Contact email: albafernandez@fi.upm.es
+                <br>
+                Built with <a target="_blank" href="http://getbootstrap.com/">Bootstrap</a>
+                Icons from <a target="_blank" href="http://glyphicons.com/">Glyphicons</a>
+                <br>
+                Latest revision March, 2020
+                <br><p>&copy; Ontology Engineering Group</p>
+            </div>
+            <div class="col-md-2">
+                <a href="http://www.oeg-upm.net/" target="_blank"><img src="../images/logo.gif" alt="OEG logo" class="img-rounded" class="img-responsive" /></a>
+            </div>
+        </div>
+    </footer>
+</div> <!-- /container -->
+
+
+
+
+</body>
+</html>

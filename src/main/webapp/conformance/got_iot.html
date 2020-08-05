@@ -1,0 +1,2142 @@
+ <html lang="en">
+<head >
+    <meta charset="UTF-8">
+    <title>Validate your ontology</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="languaje" content="English">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <!-- Le styles -->
+    <link href="../vocab/css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../vocab/css/style-custom.css">
+
+    <style type="text/css">
+
+        .table-wrapper-scroll-x {
+            display: block;
+            max-width: 1200px;
+            max-height: 800px;
+            overflow-x: auto;
+            -ms-overflow-style: -ms-autohiding-scrollbar;
+        }
+
+
+    </style>
+
+
+    <script type="text/javascript" id="js">
+        $(document).ready(function()
+            {
+                $("#tablesorter-demo").tablesorter();
+                $("#tablesorter-demo").stickyTableHeaders();
+                $('[data-toggle="tooltip"]').tooltip();
+            }
+        );
+    </script>
+</head>
+
+<body data-spy="scroll" data-target="#myScrollspy">
+
+
+<nav class="navbar navbar-default ">
+	<div class="container">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="#"> <img src="../images/themis.png" class="img-rounded" class="img-responsive" width="35%" ></a>
+		</div>
+		<div id="navbar" class="navbar-collapse collapse">
+			<ul class="nav navbar-nav">
+				<li ><a href="/index.html">Home</a></li>
+				<li><a href="/howto.html">How to use Themis</a></li>
+				<li><a href="swagger-ui/index.html">API REST</a></li>
+				<li class="active"><a href="/catalogue.html">Catalogue</a></li>
+				<li><a href="https://github.com/oeg-upm/Themis">GitHub</a></li>
+				<li><a href="/dissemination.html">Dissemination</a></li>
+				<!--<li><a href="tests-info.html">Supported tests</a></li>-->
+			</ul>
+		</div><!--/.nav-collapse -->
+
+	</div>
+</nav>
+    <div class="jumbotron" style="background-color:white;">
+        <h2> Glossary of terms</h2>
+        <p class="lead">Shared glossary of terms for the SSN, oneM2M and SAREF ontologies.</a></p>
+
+
+    </div><nav class="col-sm-3" id="myScrollspy">
+    <ul class="nav nav-pills nav-stacked">
+        <li class="active" class="nav nav-pills nav-stacked"><a href="#got">Glossary</a></li>
+        <li class="nav nav-pills nav-stacked"><a href="#catalogue"><span class="glyphicon glyphicon-chevron-up
+" aria-hidden="true"></span>
+            Go top</a></li>
+
+    </ul>
+</nav>   <div class="col-sm-9">
+    <div id="got">
+
+
+        <input id="filter" type="text" placeholder="Search..">
+
+        <table id="tablesorter-demo" class="tablesorter table table-hover table-responsive table-wrapper-scroll-x">
+
+            <thead>
+            <tr class="got">
+                <th class="col-md-2">Term</th>
+                <th class="col-md-1">Type</th>
+                <th class="col-md-2">SSN</th>
+                <th class="col-md-2">oneM2M</th>
+                <th class="col-md-2">SAREF</th>
+            </tr>
+            </thead>
+            <tbody>				
+            	<tr class = "got">
+					<td class="term got" class="tg-031e">ActuatableProperty</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/ActuatableProperty</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">ActuatingFunction</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#ControllingFunction</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#ActuatingFunction</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Actuation</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/Actuation</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Actuator</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/Actuator</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Actuator</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Agent</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e ">http://xmlns.com/foaf/0.1/Agent</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Appliance</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Appliance</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">AreaNetwork</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#AreaNetwork</td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Aspect</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#Aspect</td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">BuildingRelated</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#BuildingRelated</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">CloseCommand</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#CloseCommand</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">CloseState</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#OpenCloseState</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Coal</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Coal</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Command</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#Command</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Command</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Command</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#exposesCommand</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#GetCurrentMeterValueCommand</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Commodity</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Commodity</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">ControllingFunction</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#ControllingFunction</td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Currency</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Currency</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Deployment</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/inDeployment</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Device</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#InterworkedDevice</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#isControlledByDevice</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Device</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#InterworkedDevice</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#isControlledByDevice</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">DoorSwitch</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#DoorSwitch</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Electricity</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Electricity</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Energy</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#EnergyEfficiency</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">EnergyMeter</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#EnergyMeter</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">EnergyRelated</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#EnergyRelated</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">EnergyUnit</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#EnergyUnit</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">EventFunction</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#EventFunction</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">FeatureOfInterest</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/hasFeatureOfInterest</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Function</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">tps://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#Function</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Function</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Function</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#ControllingFunction</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#EventFunction</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">FunctionRelated</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#FunctionRelated</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">GET_InputDataPoint</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#GET_InputDataPoint</td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Gas</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Gas</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Generator</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Generator</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">GetCommand</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#GetCommand</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">GetCurrentMeterValueCommand</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#GetCurrentMeterValueCommand</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">GetMeterDataCommand</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#GetMeterDataCommand</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">GetMeterHistoryCommand</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#GetMeterHistoryCommand</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">GetSensingDataCommand</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#GetSensingDataCommand</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">HVAC</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#HVAC</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Humidity</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Humidity</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">IlluminanceUnit</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#IlluminanceUnit</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Input</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/Input</td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#GET_InputDataPoint</td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">InputDataPoint</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#GET_InputDataPoint</td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">InterworkedDevice</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#InterworkedDevice</td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">LevelControlFunction</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#LevelControlFunction</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Light</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Lighting</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">LightSwitch</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#LightSwitch</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">LightingDevice</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#LightingDevice</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Load</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Load</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Measurement</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#hasThresholdMeasurement</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">MeasuringFunction</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#MeasuringFunction</td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">MetaData</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#MetaData</td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Meter</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#GetCurrentMeterValueCommand</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">MeteringFunction</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#MeteringFunction</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">MicroRenewable</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#MicroRenewable</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Motion</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Motion</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">MultiLevelState</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#MultiLevelState</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Multimedia</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Multimedia</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Network</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#AreaNetwork</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Network</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">NotifyCommand</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#NotifyCommand</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">ObservableProperty</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/ObservableProperty</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Observation</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/madeObservation</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Occupancy</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Occupancy</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">OffCommand</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#OffCommand</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">OffState</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#OnOffState</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">OnCommand</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#OnCommand</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">OnOffFunction</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#OnOffFunction</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">OnOffState</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#OnOffState</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">OnState</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#OnState</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">OpenCloseFunction</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#OpenCloseFunction</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">OpenCloseState</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#OpenCloseState</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">OpenCommand</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#OpenCommand</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">OpenState</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#OpenState</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Operation</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#OperationOutput</td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">OperationInput</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#OperationInput</td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">OperationOutput</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#OperationOutput</td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Output</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/hasOutput</td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#SET_OutputDataPoint</td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">OutputDataPoint</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#SET_OutputDataPoint</td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">PauseCommand</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#PauseCommand</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Platform</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/deployedOnPlatform</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Power</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Power</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">PowerUnit</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#PowerUnit</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Pressure</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Pressure</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">PressureUnit</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#PressureUnit</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Price</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#hasPrice</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Procedure</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/usedProcedure</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Profile</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#netTechnologyProfile</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Profile</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Result</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/isResultOf</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">SET_OutputDataPoint</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#SET_OutputDataPoint</td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Sample</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/isSampleOf</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Sampler</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/Sampler</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Sampling</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/madeSampling</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">SensingFunction</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#MeasuringFunction</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#SensingFunction</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Sensor</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/Sensor</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Sensor</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Service</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#Service</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Service</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">SetAbsoluteLevelCommand</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#SetAbsoluteLevelCommand</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">SetLevelCommand</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#SetLevelCommand</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">SetRelativeLevelCommand</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#SetRelativeLevelCommand</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">SimpleTypeVariable</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#SimpleTypeVariable</td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Smoke</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Smoke</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">SmokeSensor</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#SmokeSensor</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">StartCommand</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#StartCommand</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">StartState</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#StartState</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">StartStopFunction</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#StartStopFunction</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">StartStopState</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#StartStopState</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">State</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#OnOffState</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">StepDownCommand</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#StepDownCommand</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">StepUpCommand</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#StepUpCommand</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Stimulus</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/Stimulus</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">StopCommand</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#StopCommand</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">StopState</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#StopState</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Storage</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Storage</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">StructuredTypeVariable</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#StructuredTypeVariable</td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Switch</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#DoorSwitch</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">SwitchOnService</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#SwitchOnService</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">System</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/deployedSystem</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Task</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Task</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Temperature</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#TemperatureUnit</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">TemperatureSensor</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#TemperatureSensor</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">TemperatureUnit</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#TemperatureUnit</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">TemporalEntity</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#TemporalEntity</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">TemporalUnit</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#TemporalUnit</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Thing</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2002/07/owl#Thing</td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#Thing</td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Thing</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2002/07/owl#Thing</td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#ThingProperty</td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">ThingProperty</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#ThingProperty</td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Time</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/phenomenonTime</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#TemporalUnit</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">ToggleCommand</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#ToggleCommand</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">UnitOfMeasure</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#UnitOfMeasure</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Variable</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#SimpleTypeVariable</td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">VariableConversion</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#VariableConversion</td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Vocabulary</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e ">http://purl.org/vocommons/voaf#Vocabulary</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">WashingMachine</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#WashingMachine</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Water</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Water</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">saref#:Property</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">ssn:Property</td>
+					<td class="type got tg-031e ">Class</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">accomplishes</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#accomplishes</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">actsOnProperty</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/actsOnProperty</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">actsUpon</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#actsUpon</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">consistsOf</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#consistsOf</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#consistsOf</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">consistsOf</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#consistsOf</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#consistsOf</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">controlsProperty</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#controlsProperty</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">convertsTo</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#convertsTo</td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">deployedOnPlatform</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/deployedOnPlatform</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">deployedSystem</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/deployedSystem</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">describes</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#describes</td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">detects</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/detects</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">exposesCommand</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#exposesCommand</td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">exposesFunction</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#exposesFunction</td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">forProperty</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/forProperty</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasCommand</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#hasCommand</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#hasCommand</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasCommand</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#hasCommand</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#hasCommand</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasConversion</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#hasConversion</td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasDeployment</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/hasDeployment</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasFeatureOfInterest</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/hasFeatureOfInterest</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasFunction</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#hasFunction</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#hasFunction</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasFunction</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#hasFunction</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#hasFunction</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasInput</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/hasInput</td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#hasInputDataPoint</td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasInput</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/hasInput</td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#hasInputDataPoint</td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasInputDataPoint</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#hasInputDataPoint</td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasMetaData</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#hasMetaData</td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasMeterReading</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#hasMeterReadingType</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasMeterReadingType</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#hasMeterReadingType</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasOperation</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#hasOperation</td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasOutput</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/hasOutput</td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#hasOutput</td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasOutputDataPoint</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#hasOutputDataPoint</td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasPrice</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#hasPrice</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasProfile</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#hasProfile</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasProperty</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/hasProperty</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasResult</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/hasResult</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasSample</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/hasSample</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasSensingRange</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#hasSensingRange</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasSensorType</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#hasSensorType</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasService</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#hasService</td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasState</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#hasState</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasSubService</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#hasSubService</td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasSubStructure</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#hasSubStructure</td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasSubSystem</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/hasSubSystem</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasThingProperty</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#hasThingProperty</td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasThingRelation</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#hasThingRelation</td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasThresholdMeasurement</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#hasThresholdMeasurement</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasTime</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#hasTimestamp</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasTypicalConsumption</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#hasTypicalConsumption</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hosts</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/hosts</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">implementedBy</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/implementedBy</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">implements</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/implements</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">inDeployment</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/inDeployment</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isAbout</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#isAbout</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isAccomplishedBy</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#isAccomplishedBy</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isActedOnBy</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/isActedOnBy</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isCommandOf</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#isCommandOf</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isControlledByDevice</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#isControlledByDevice</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isHostedBy</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/isHostedBy</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isMeasuredByDevice</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#isMeasuredByDevice</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isMeasuredIn</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#isMeasuredIn</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isObservedBy</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/isObservedBy</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isOfferedBy</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#isOfferedBy</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isPartOf</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#isPartOf</td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isPropertyOf</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/isPropertyOf</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isProxyFor</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/isProxyFor</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isResultOf</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/isResultOf</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isSampleOf</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/isSampleOf</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isUsedFor</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#isUsedFor</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">madeActuation</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/madeActuation</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">madeByActuator</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/madeByActuator</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">madeBySampler</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/madeBySampler</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">madeBySensor</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/madeBySensor</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">madeObservation</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/madeObservation</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">madeSampling</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/madeSampling</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">makesMeasurement</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#makesMeasurement</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">measuresProperty</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#measuresProperty</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">observedProperty</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/observedProperty</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">observes</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/observes</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">offers</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#offers</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">phenomenonTime</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/phenomenonTime</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">refersTo</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#refersTo</td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">relatesToMeasurement</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#relatesToMeasurement</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">relatesToProperty</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#relatesToProperty</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">represents</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#exposesFunction</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#represents</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">usedProcedure</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/usedProcedure</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">wasOriginatedBy</td>
+					<td class="type got tg-031e ">Object property</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/ssn/wasOriginatedBy</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasDataRestriction</td>
+					<td class="type got tg-031e ">Datatype property</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#hasDataRestriction_minLength</td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasDataRestriction_length</td>
+					<td class="type got tg-031e ">Datatype property</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#hasDataRestriction_length</td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasDataRestriction_maxExclusive</td>
+					<td class="type got tg-031e ">Datatype property</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#hasDataRestriction_maxExclusive</td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasDataRestriction_maxInclusive</td>
+					<td class="type got tg-031e ">Datatype property</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#hasDataRestriction_maxInclusive</td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasDataRestriction_maxLength</td>
+					<td class="type got tg-031e ">Datatype property</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#hasDataRestriction_maxLength</td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasDataRestriction_minExclusive</td>
+					<td class="type got tg-031e ">Datatype property</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#hasDataRestriction_minExclusive</td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasDataRestriction_minInclusive</td>
+					<td class="type got tg-031e ">Datatype property</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#hasDataRestriction_minInclusive</td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasDataRestriction_minLength</td>
+					<td class="type got tg-031e ">Datatype property</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#hasDataRestriction_minLength</td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasDataRestriction_pattern</td>
+					<td class="type got tg-031e ">Datatype property</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#hasDataRestriction_pattern</td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasDataType</td>
+					<td class="type got tg-031e ">Datatype property</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#hasDataType</td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasDescription</td>
+					<td class="type got tg-031e ">Datatype property</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#hasDescription</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasManufacturer</td>
+					<td class="type got tg-031e ">Datatype property</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#hasManufacturer</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasModel</td>
+					<td class="type got tg-031e ">Datatype property</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#hasModel</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasName</td>
+					<td class="type got tg-031e ">Datatype property</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#hasName</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasThingAnnotation</td>
+					<td class="type got tg-031e ">Datatype property</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#hasThingAnnotation</td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasTimestamp</td>
+					<td class="type got tg-031e ">Datatype property</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#hasTimestamp</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasValue</td>
+					<td class="type got tg-031e ">Datatype property</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#hasValue</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#hasValue</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasValue</td>
+					<td class="type got tg-031e ">Datatype property</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#hasValue</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#hasValue</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isDataList</td>
+					<td class="type got tg-031e ">Datatype property</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#isDataList</td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">netTechnologyCommunicationProtocol</td>
+					<td class="type got tg-031e ">Datatype property</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#netTechnologyCommunicationProtocol</td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">netTechnologyPhysicalStandard</td>
+					<td class="type got tg-031e ">Datatype property</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#netTechnologyPhysicalStandard</td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">netTechnologyProfile</td>
+					<td class="type got tg-031e ">Datatype property</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#netTechnologyProfile</td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">oneM2MAttribute</td>
+					<td class="type got tg-031e ">Datatype property</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#oneM2MAttribute</td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">oneM2MMethod</td>
+					<td class="type got tg-031e ">Datatype property</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#oneM2MMethod</td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">oneM2MTargetURI</td>
+					<td class="type got tg-031e ">Datatype property</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#oneM2MTargetURI</td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">resultTime</td>
+					<td class="type got tg-031e ">Datatype property</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/resultTime</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Cleaning</td>
+					<td class="type got tg-031e ">Individual</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Cleaning</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Close</td>
+					<td class="type got tg-031e ">Individual</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#OpenCloseFunction</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Comfort</td>
+					<td class="type got tg-031e ">Individual</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Comfort</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Drying</td>
+					<td class="type got tg-031e ">Individual</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Drying</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">EnergyEfficiency</td>
+					<td class="type got tg-031e ">Individual</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#EnergyEfficiency</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Entertainment</td>
+					<td class="type got tg-031e ">Individual</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Entertainment</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">GetCurrentMeterValue</td>
+					<td class="type got tg-031e ">Individual</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#GetCurrentMeterValueCommand</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">GetMeterData</td>
+					<td class="type got tg-031e ">Individual</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#GetMeterDataCommand</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">GetMeterHistory</td>
+					<td class="type got tg-031e ">Individual</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#GetMeterHistoryCommand</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">GetSensingData</td>
+					<td class="type got tg-031e ">Individual</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#GetSensingDataCommand</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Lighting</td>
+					<td class="type got tg-031e ">Individual</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Lighting</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">MeterReading</td>
+					<td class="type got tg-031e ">Individual</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#hasMeterReadingType</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Notify</td>
+					<td class="type got tg-031e ">Individual</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#NotifyCommand</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Off</td>
+					<td class="type got tg-031e ">Individual</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#OnOffState</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">On</td>
+					<td class="type got tg-031e ">Individual</td>
+					<td class="uri got tg-031e ">http://www.w3.org/ns/sosa/Actuation</td>
+					<td class="uri got tg-031e ">https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl#hasDataRestriction_minLength</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#isControlledByDevice</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Open</td>
+					<td class="type got tg-031e ">Individual</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#OpenState</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Pause</td>
+					<td class="type got tg-031e ">Individual</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#PauseCommand</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Safety</td>
+					<td class="type got tg-031e ">Individual</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Safety</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">SetAbsoluteLevel</td>
+					<td class="type got tg-031e ">Individual</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#SetAbsoluteLevel</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">SetRelativeLevel</td>
+					<td class="type got tg-031e ">Individual</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#SetRelativeLevel</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Start</td>
+					<td class="type got tg-031e ">Individual</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#StartCommand</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">StepDown</td>
+					<td class="type got tg-031e ">Individual</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#StepDown</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">StepUp</td>
+					<td class="type got tg-031e ">Individual</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#StepUpCommand</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Stop</td>
+					<td class="type got tg-031e ">Individual</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Stop</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Toggle</td>
+					<td class="type got tg-031e ">Individual</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#ToggleCommand</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">United_States_dollar</td>
+					<td class="type got tg-031e ">Individual</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">http://www.wurvoc.org/vocabularies/om-1.8/United_States_dollar</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Washing</td>
+					<td class="type got tg-031e ">Individual</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Washing</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">WellBeing</td>
+					<td class="type got tg-031e ">Individual</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#WellBeing</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">bar</td>
+					<td class="type got tg-031e ">Individual</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">http://www.wurvoc.org/vocabularies/om-1.8/bar</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">degree_Celsius</td>
+					<td class="type got tg-031e ">Individual</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">http://www.wurvoc.org/vocabularies/om-1.8/degree_Celsius</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">degree_Fahrenheit</td>
+					<td class="type got tg-031e ">Individual</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">http://www.wurvoc.org/vocabularies/om-1.8/degree_Fahrenheit</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">euro</td>
+					<td class="type got tg-031e ">Individual</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">http://www.wurvoc.org/vocabularies/om-1.8/euro</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">kelvin</td>
+					<td class="type got tg-031e ">Individual</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">http://www.wurvoc.org/vocabularies/om-1.8/kelvin</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">kilowatt</td>
+					<td class="type got tg-031e ">Individual</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">http://www.wurvoc.org/vocabularies/om-1.8/kilowatt_hour</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">kilowatt_hour</td>
+					<td class="type got tg-031e ">Individual</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">http://www.wurvoc.org/vocabularies/om-1.8/kilowatt_hour</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">lux</td>
+					<td class="type got tg-031e ">Individual</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">http://www.wurvoc.org/vocabularies/om-1.8/lux</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">pascal</td>
+					<td class="type got tg-031e ">Individual</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">http://www.wurvoc.org/vocabularies/om-1.8/pascal</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">pound_sterling</td>
+					<td class="type got tg-031e ">Individual</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">http://www.wurvoc.org/vocabularies/om-1.8/pound_sterling</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">watt</td>
+					<td class="type got tg-031e ">Individual</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#watt_hour</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">watt_hour</td>
+					<td class="type got tg-031e ">Individual</td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e "></td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#watt_hour</td>
+				</tr>
+      </tbody>
+
+    </table>
+      </div>
+   </div>
+
+    <hr><footer class="footer">
+        <div class="row">
+            <div class="col-md-10">
+                Contact email: albafernandez@fi.upm.es
+                <br>
+                Built with <a target="_blank" href="http://getbootstrap.com/">Bootstrap</a>
+                Icons from <a target="_blank" href="http://glyphicons.com/">Glyphicons</a>
+                <br>
+                Latest revision March, 2020
+                <br><p>&copy; Ontology Engineering Group</p>
+            </div>
+            <div class="col-md-2">
+                <a href="http://www.oeg-upm.net/" target="_blank"><img src="../vocab/logo.gif" alt="OEG logo" class="img-rounded" class="img-responsive" /></a>
+            </div>
+        </div>
+    </footer>
+</div> <!-- /container -->
+
+
+
+
+</body>
+</html>

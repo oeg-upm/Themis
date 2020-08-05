@@ -1,0 +1,1433 @@
+ <html lang="en">
+<head >
+    <meta charset="UTF-8">
+    <title>Validate your ontology</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="languaje" content="English">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <!-- Le styles -->
+    <link href="../vocab/css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../vocab/css/style-custom.css">
+
+    <style type="text/css">
+
+        .table-wrapper-scroll-y {
+            display: block;
+            max-height: 200px;
+            overflow-y: auto;
+            -ms-overflow-style: -ms-autohiding-scrollbar;
+        }
+
+
+    </style>
+
+
+    <script type="text/javascript" id="js">
+        $(document).ready(function()
+            {
+                $("#tablesorter-demo").tablesorter();
+                $("#tablesorter-demo").stickyTableHeaders();
+                $('[data-toggle="tooltip"]').tooltip();
+            }
+        );
+    </script>
+</head>
+
+<body data-spy="scroll" data-target="#myScrollspy">
+
+
+<nav class="navbar navbar-default "  id="catalogue">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#"> <img src="../images/themis.png" class="img-rounded" class="img-responsive" width="70%" ></a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../howto.html">How to use it</a></li>
+                <li><a href="../../../../target/swagger-ui/META-INF/resources/webjars/swagger-ui/3.17.0/index.html">API REST</a></li>
+                <li><a href="../catalogue.html">Catalogue</a></li>
+                <!--<li><a href="tests-info.html">Supported tests</a></li>-->
+            </ul>
+        </div><!--/.nav-collapse -->
+
+    </div>
+</nav>  <!-- Jumbotron -->
+    <div class="jumbotron" style="background-color:white;">
+        <h2> Glossary of terms</h2>
+        <p class="lead">Glossary of terms for the SAREF ontology.</a></p>
+
+
+    </div><nav class="col-sm-3" id="myScrollspy">
+    <ul class="nav nav-pills nav-stacked">
+        <li class="active" class="nav nav-pills nav-stacked"><a href="#got">Glossary</a></li>
+        <li class="nav nav-pills nav-stacked"><a href="#catalogue"><span class="glyphicon glyphicon-chevron-up
+" aria-hidden="true"></span>
+            Go top</a></li>
+
+    </ul>
+</nav>   <div class="col-sm-9">
+    <div id="got">
+
+
+        <input id="filter" type="text" placeholder="Search..">
+
+        <table id="tablesorter-demo" class="tablesorter table table-hover table-responsive">
+
+            <thead>
+            <tr class="got">
+                <th class="col-md-3">Term</th>
+                <th class="col-md-4">URI</th>
+                <th class="col-md-3">Type</th>
+                <th class="col-md-2"></th>
+            </tr>
+            </thead>
+            <tbody>				<tr class = "got">
+					<td class="term got" class="tg-031e">ActuatingFunction</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#ActuatingFunction</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Actuator</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Actuator</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Appliance</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Appliance</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">BuildingRelated</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#BuildingRelated</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">CloseCommand</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#CloseCommand</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">CloseState</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#CloseState</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Coal</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Coal</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Command</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Command</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Commodity</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Commodity</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Currency</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Currency</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">DateTimeDescription</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#DateTimeDescription</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">DateTimeInterval</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#DateTimeInterval</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">DayOfWeek</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#DayOfWeek</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Device</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Device</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">DoorSwitch</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#DoorSwitch</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Duration</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#Duration</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">DurationDescription</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#DurationDescription</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Electricity</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Electricity</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Energy</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Energy</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">EnergyMeter</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#EnergyMeter</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">EnergyRelated</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#EnergyRelated</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">EnergyUnit</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#EnergyUnit</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">EventFunction</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#EventFunction</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Function</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Function</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">FunctionRelated</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#FunctionRelated</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Gas</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Gas</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">GeneralDateTimeDescription</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#GeneralDateTimeDescription</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">GeneralDurationDescription</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#GeneralDurationDescription</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Generator</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Generator</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">GetCommand</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#GetCommand</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">GetCurrentMeterValueCommand</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#GetCurrentMeterValueCommand</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">GetMeterDataCommand</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#GetMeterDataCommand</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">GetMeterHistoryCommand</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#GetMeterHistoryCommand</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">GetSensingDataCommand</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#GetSensingDataCommand</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">HVAC</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#HVAC</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Humidity</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Humidity</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">IlluminanceUnit</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#IlluminanceUnit</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Instant</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#Instant</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Interval</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#Interval</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">January</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#January</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">LevelControlFunction</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#LevelControlFunction</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Light</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Light</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">LightSwitch</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#LightSwitch</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">LightingDevice</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#LightingDevice</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Load</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Load</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Measurement</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Measurement</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Meter</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Meter</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">MeteringFunction</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#MeteringFunction</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">MicroRenewable</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#MicroRenewable</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">MonthOfYear</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#MonthOfYear</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Motion</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Motion</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">MultiLevelState</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#MultiLevelState</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Multimedia</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Multimedia</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Network</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Network</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">NotifyCommand</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#NotifyCommand</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Occupancy</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Occupancy</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">OffCommand</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#OffCommand</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">OffState</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#OffState</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">OnCommand</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#OnCommand</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">OnOffFunction</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#OnOffFunction</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">OnOffState</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#OnOffState</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">OnState</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#OnState</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">OpenCloseFunction</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#OpenCloseFunction</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">OpenCloseState</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#OpenCloseState</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">OpenCommand</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#OpenCommand</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">OpenState</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#OpenState</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">PauseCommand</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#PauseCommand</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Power</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Power</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">PowerUnit</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#PowerUnit</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Pressure</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Pressure</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">PressureUnit</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#PressureUnit</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Price</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Price</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Profile</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Profile</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">ProperInterval</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#ProperInterval</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">SensingFunction</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#SensingFunction</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Sensor</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Sensor</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Service</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Service</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">SetAbsoluteLevelCommand</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#SetAbsoluteLevelCommand</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">SetLevelCommand</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#SetLevelCommand</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">SetRelativeLevelCommand</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#SetRelativeLevelCommand</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Smoke</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Smoke</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">SmokeSensor</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#SmokeSensor</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">StartCommand</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#StartCommand</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">StartState</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#StartState</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">StartStopFunction</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#StartStopFunction</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">StartStopState</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#StartStopState</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">State</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#State</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">StepDownCommand</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#StepDownCommand</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">StepUpCommand</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#StepUpCommand</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">StopCommand</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#StopCommand</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">StopState</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#StopState</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Storage</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Storage</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Switch</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Switch</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">SwitchOnService</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#SwitchOnService</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">TRS</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#TRS</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Task</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Task</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Temperature</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Temperature</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">TemperatureSensor</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#TemperatureSensor</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">TemperatureUnit</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#TemperatureUnit</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">TemporalDuration</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#TemporalDuration</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">TemporalEntity</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#TemporalEntity</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">TemporalPosition</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#TemporalPosition</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">TemporalUnit</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#TemporalUnit</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Thing</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2002/07/owl#Thing</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Time</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Time</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">TimePosition</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#TimePosition</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">TimeZone</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#TimeZone</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">ToggleCommand</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#ToggleCommand</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">UnitOfMeasure</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#UnitOfMeasure</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">WashingMachine</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#WashingMachine</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Water</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Water</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Year</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#Year</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">saref#:Property</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Property</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">accomplishes</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#accomplishes</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">actsUpon</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#actsUpon</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">after</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#after</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">before</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#before</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">consistsOf</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#consistsOf</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">controlsProperty</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#controlsProperty</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">dayOfWeek</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#dayOfWeek</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasBeginning</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#hasBeginning</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasCommand</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#hasCommand</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasDateTimeDescription</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#hasDateTimeDescription</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasDuration</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#hasDuration</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasDurationDescription</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#hasDurationDescription</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasEnd</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#hasEnd</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasFunction</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#hasFunction</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasMeterReading</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#hasMeterReading</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasMeterReadingType</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#hasMeterReadingType</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasPrice</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#hasPrice</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasProfile</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#hasProfile</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasSensingRange</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#hasSensingRange</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasSensorType</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#hasSensorType</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasState</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#hasState</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasTRS</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#hasTRS</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasTemporalDuration</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#hasTemporalDuration</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasThresholdMeasurement</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#hasThresholdMeasurement</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasTime</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#hasTime</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasTypicalConsumption</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#hasTypicalConsumption</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">inDateTime</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#inDateTime</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">inTemporalPosition</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#inTemporalPosition</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">inTimePosition</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#inTimePosition</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">inside</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#inside</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">intervalAfter</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#intervalAfter</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">intervalBefore</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#intervalBefore</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">intervalContains</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#intervalContains</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">intervalDisjoint</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#intervalDisjoint</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">intervalDuring</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#intervalDuring</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">intervalEquals</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#intervalEquals</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">intervalFinishedBy</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#intervalFinishedBy</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">intervalFinishes</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#intervalFinishes</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">intervalIn</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#intervalIn</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">intervalMeets</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#intervalMeets</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">intervalMetBy</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#intervalMetBy</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">intervalOverlappedBy</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#intervalOverlappedBy</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">intervalOverlaps</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#intervalOverlaps</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">intervalStartedBy</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#intervalStartedBy</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">intervalStarts</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#intervalStarts</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isAbout</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#isAbout</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isAccomplishedBy</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#isAccomplishedBy</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isCommandOf</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#isCommandOf</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isControlledByDevice</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#isControlledByDevice</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isMeasuredByDevice</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#isMeasuredByDevice</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isMeasuredIn</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#isMeasuredIn</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isOfferedBy</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#isOfferedBy</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">isUsedFor</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#isUsedFor</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">makesMeasurement</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#makesMeasurement</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">measuresProperty</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#measuresProperty</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">monthOfYear</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#monthOfYear</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">offers</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#offers</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">relatesToMeasurement</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#relatesToMeasurement</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">relatesToProperty</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#relatesToProperty</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">represents</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#represents</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">timeZone</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#timeZone</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">unitType</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#unitType</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">day</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#day</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">dayOfYear</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#dayOfYear</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">days</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#days</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasDescription</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#hasDescription</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasManufacturer</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#hasManufacturer</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasModel</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#hasModel</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasName</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#hasName</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasTimestamp</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#hasTimestamp</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasValue</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#hasValue</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hasXSDDuration</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#hasXSDDuration</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hour</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#hour</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">hours</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#hours</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">inXSDDate</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#inXSDDate</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">inXSDDateTime</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#inXSDDateTime</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">inXSDDateTimeStamp</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#inXSDDateTimeStamp</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">inXSDgYear</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#inXSDgYear</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">inXSDgYearMonth</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#inXSDgYearMonth</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">minute</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#minute</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">minutes</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#minutes</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">month</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#month</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">months</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#months</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">nominalPosition</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#nominalPosition</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">numericDuration</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#numericDuration</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">numericPosition</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#numericPosition</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">second</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#second</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">seconds</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#seconds</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">week</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#week</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">weeks</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#weeks</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">xsdDateTime</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#xsdDateTime</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">year</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#year</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">years</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#years</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Cleaning</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Cleaning</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Close</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Close</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Comfort</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Comfort</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Drying</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Drying</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">EnergyEfficiency</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#EnergyEfficiency</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Entertainment</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Entertainment</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Friday</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#Friday</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">GetCurrentMeterValue</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#GetCurrentMeterValue</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">GetMeterData</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#GetMeterData</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">GetMeterHistory</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#GetMeterHistory</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">GetSensingData</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#GetSensingData</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Gregorian</td>
+					<td class="uri got tg-031e ">http://www.opengis.net/def/uom/ISO-8601/0/Gregorian</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Lighting</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Lighting</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">MeterReading</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#MeterReading</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Monday</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#Monday</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Notify</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Notify</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Off</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Off</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">On</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#On</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Open</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Open</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Pause</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Pause</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Safety</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Safety</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Saturday</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#Saturday</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">SetAbsoluteLevel</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#SetAbsoluteLevel</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">SetRelativeLevel</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#SetRelativeLevel</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Start</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Start</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">StepDown</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#StepDown</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">StepUp</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#StepUp</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Stop</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Stop</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Sunday</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#Sunday</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Thursday</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#Thursday</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Toggle</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Toggle</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Tuesday</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#Tuesday</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">United_States_dollar</td>
+					<td class="uri got tg-031e ">http://www.wurvoc.org/vocabularies/om-1.8/United_States_dollar</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Washing</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#Washing</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Wednesday</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#Wednesday</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">WellBeing</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#WellBeing</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">bar</td>
+					<td class="uri got tg-031e ">http://www.wurvoc.org/vocabularies/om-1.8/bar</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">degree_Celsius</td>
+					<td class="uri got tg-031e ">http://www.wurvoc.org/vocabularies/om-1.8/degree_Celsius</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">degree_Fahrenheit</td>
+					<td class="uri got tg-031e ">http://www.wurvoc.org/vocabularies/om-1.8/degree_Fahrenheit</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">euro</td>
+					<td class="uri got tg-031e ">http://www.wurvoc.org/vocabularies/om-1.8/euro</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">kelvin</td>
+					<td class="uri got tg-031e ">http://www.wurvoc.org/vocabularies/om-1.8/kelvin</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">kilowatt</td>
+					<td class="uri got tg-031e ">http://www.wurvoc.org/vocabularies/om-1.8/kilowatt</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">kilowatt_hour</td>
+					<td class="uri got tg-031e ">http://www.wurvoc.org/vocabularies/om-1.8/kilowatt_hour</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">lux</td>
+					<td class="uri got tg-031e ">http://www.wurvoc.org/vocabularies/om-1.8/lux</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">pascal</td>
+					<td class="uri got tg-031e ">http://www.wurvoc.org/vocabularies/om-1.8/pascal</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">pound_sterling</td>
+					<td class="uri got tg-031e ">http://www.wurvoc.org/vocabularies/om-1.8/pound_sterling</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">unitDay</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#unitDay</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">unitHour</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#unitHour</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">unitMinute</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#unitMinute</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">unitMonth</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#unitMonth</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">unitSecond</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#unitSecond</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">unitWeek</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#unitWeek</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">unitYear</td>
+					<td class="uri got tg-031e ">http://www.w3.org/2006/time#unitYear</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">watt</td>
+					<td class="uri got tg-031e ">http://www.wurvoc.org/vocabularies/om-1.8/watt</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">watt_hour</td>
+					<td class="uri got tg-031e ">https://w3id.org/saref#watt_hour</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+      </tbody>
+
+    </table>
+      </div>
+   </div>
+
+    <hr><footer class="footer">
+        <div class="row">
+            <div class="col-md-10">
+                Contact email: albafernandez@fi.upm.es
+                <br>
+                Built with <a target="_blank" href="http://getbootstrap.com/">Bootstrap</a>
+                Icons from <a target="_blank" href="http://glyphicons.com/">Glyphicons</a>
+                <br>
+                Latest revision March, 2020
+                <br><p>&copy; Ontology Engineering Group</p>
+            </div>
+            <div class="col-md-2">
+                <a href="http://www.oeg-upm.net/" target="_blank"><img src="../images/logo.gif" alt="OEG logo" class="img-rounded" class="img-responsive" /></a>
+            </div>
+        </div>
+    </footer>
+</div> <!-- /container -->
+
+
+
+
+</body>
+</html>

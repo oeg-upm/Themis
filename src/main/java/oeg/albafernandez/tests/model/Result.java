@@ -18,7 +18,7 @@ public class Result {
     @Schema(description = "List of tests to be executed", example = "[\"Sensor type Class\", \"Sensor subclassOf Device\"]")
     private List<String> tests;
     @Schema(description = "Format of the results. Supported formats: JSON, HTML and JUnit ", defaultValue = "json", example="json")
-    private String format;
+    private String format = "json";
 
 
     public String getDocumentationFile() {

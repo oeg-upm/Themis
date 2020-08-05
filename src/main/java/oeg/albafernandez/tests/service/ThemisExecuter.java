@@ -4,7 +4,7 @@ import com.clarkparsia.pellet.owlapiv3.PelletReasoner;
 import de.derivo.sparqldlapi.Query;
 import de.derivo.sparqldlapi.QueryEngine;
 import de.derivo.sparqldlapi.QueryResult;
-import oeg.albafernandez.tests.utils.Utils;
+import oeg.albafernandez.tests.utils.Mapper;
 import org.apache.log4j.Logger;
 import org.semanticweb.HermiT.Configuration;
 import org.semanticweb.owlapi.model.*;
@@ -49,7 +49,6 @@ public class ThemisExecuter {
         }
         try {
             // check result
-
             if (result.ask()) {
                 return "true";
             } else {
@@ -166,56 +165,62 @@ public class ThemisExecuter {
         ArrayList<String> undefinedTerms = new ArrayList<>();
         ArrayList<String> incorrectTerms = new ArrayList<>();
         String realResult;
+        int absentCandidate = 0;
         TestCaseResult tr = new TestCaseResult();
-        ArrayList<String> resultsForAbsence = new ArrayList<>();
+        ArrayList<String> absentCandidateResults = new ArrayList<>();
+
         tr.setRelatedTestImpl(tc.getUri());
         tr.setOntologyURI(ontology.getOntology().getOntologyID().getOntologyIRI());
 
-        int absent = 0;
         //map the test terms with ontology terms and add the axioms to the ontology. If the addition results in a consistent ontology the preconditions are passed
         for (String prec : tc.getPreconditionQuery()) { // execute precondition query
-            String precondWithURI = Utils.mapImplementationTerms(prec, (HashMap<String, IRI>) got); // all  mappings received by the webapp
+            String precondWithURI = Mapper.mapImplementationTerms(prec, (HashMap<String, IRI>) got); // all  mappings received by the webapp
             realResult = tboxTest(precondWithURI, tc.getUri(), ontology.getManager(), ontology.getOntology());
-            if (realResult.equals("false")) { // si los  terminos no existen hay dos opciones: 1) que no exista, 2) que sea de otro tipo
-                if (Utils.termsInOntology(precondWithURI, ontology.getOntology()).equals("false")) {
-                    undefinedTerms.add(Utils.getPrecTerm(prec).replace(">", "").replace("<", ""));
+            if (realResult.equals("false")) { //  if terms do not exist there are two possibilities: 1) the term does not exist (undefined), 2) the term is not defined as expected (incorrect)
+                if (Mapper.termsInOntology(precondWithURI, ontology.getOntology()).equals("false")) {
+                    undefinedTerms.add(Mapper.getPrecTerm(prec).replace(">", "").replace("<", ""));
                 } else {
-                    incorrectTerms.add(Utils.getPrecTerm(prec).replace(">", "").replace("<", ""));
+                    incorrectTerms.add(Mapper.getPrecTerm(prec).replace(">", "").replace("<", ""));
                 }
-                tr.setUndefinedTerms(undefinedTerms);
+                tr.setUndefinedTerms(undefinedTerms); //store errors for users
                 tr.setIncorrectTerms(incorrectTerms);
             }
         }
 
-
         if (undefinedTerms.isEmpty() && incorrectTerms.isEmpty()) {
-            // test preparation
-            Set<OWLAxiom> prepWithURI = Utils.mapImplementationTerms(tc.getPreparationaxioms(), (HashMap<String, IRI>) got);
+            // test preparation. creation of the temporal entities to be used in the assertions. The ontology must remain consistent.
+            Set<OWLAxiom> prepWithURI = Mapper.mapImplementationTerms(tc.getPreparationaxioms(), (HashMap<String, IRI>) got);
             realResult = aboxTest(prepWithURI, ontology, "preparation");
             if (!realResult.equalsIgnoreCase("consistent")) {
-                resultsForAbsence.add("inconsistent");
+                //absentCandidateResults.add("inconsistent");
                 tr.setTestResult("not passed");
-                removePreparationAxioms(prepWithURI, ontology);
+                //removePreparationAxioms(prepWithURI, ontology);
+                return tr;
             } else {
                 //add assertions to the ontology, after mapping the test terms with ontology terms. Check if the real result is the same as the expected result
                 for (Map.Entry<String, OWLOntology> entry : tc.getAssertionsAxioms().entrySet()) {
-                    Set<OWLAxiom> assertionWithURI = Utils.mapImplementationTerms(entry.getValue(), (HashMap<String, IRI>) got);
+                    Set<OWLAxiom> assertionWithURI = Mapper.mapImplementationTerms(entry.getValue(), (HashMap<String, IRI>) got);
                     realResult = aboxTest(assertionWithURI, ontology, "assertion");
-                    if (realResult.equalsIgnoreCase("consistent")) {
-                        resultsForAbsence.add("consistent");
-                    } else {
-                        resultsForAbsence.add("inconsistent");
-                    }
-                    if (tc.getType().equals("existential") && entry.getKey().equals("Assertion 2") && realResult.equals("inconsistent")) {
-                        absent = 1; // caso excepcional
-                    } else if ((tc.getType().equals("individuals")) && realResult.equalsIgnoreCase(tc.getAxiomExpectedResultAxioms().get(entry.getKey()))) {
-                        resultsForAbsence.clear();
-                    } else if ((tc.getType().equals("literal")) && realResult.equalsIgnoreCase(tc.getAxiomExpectedResultAxioms().get(entry.getKey()))) {
-                        resultsForAbsence.clear();
-                    } else if (!realResult.equalsIgnoreCase("consistent") && !realResult.equalsIgnoreCase(tc.getAxiomExpectedResultAxioms().get(entry.getKey()))) {
-                        tr.setTestResult("not passed");
-                    } else if (realResult.equalsIgnoreCase("consistent") && !realResult.equalsIgnoreCase(tc.getAxiomExpectedResultAxioms().get(entry.getKey()))) {
-                        absent = 1;
+                    if(!realResult.equalsIgnoreCase(tc.getAxiomExpectedResultAxioms().get(entry.getKey()))) {
+                        if (realResult.equalsIgnoreCase("consistent")) {
+                            absentCandidateResults.add("consistent");
+                        } else {
+                            tr.setTestResult("not passed");
+                            return tr;
+                        }
+                        //special cases
+                        if (tc.getType().equals("existential") && entry.getKey().equals("Assertion 2") && realResult.equals("inconsistent")) {
+                            absentCandidate = 1;
+                        } else if ((tc.getType().equals("individuals")) && realResult.equalsIgnoreCase(tc.getAxiomExpectedResultAxioms().get(entry.getKey()))) {
+                            absentCandidateResults.clear();
+                        } else if ((tc.getType().equals("literal")) && realResult.equalsIgnoreCase(tc.getAxiomExpectedResultAxioms().get(entry.getKey()))) {
+                            absentCandidateResults.clear();
+                        } else if (!realResult.equalsIgnoreCase("consistent") && !realResult.equalsIgnoreCase(tc.getAxiomExpectedResultAxioms().get(entry.getKey()))) {
+                            tr.setTestResult("not passed");
+                            return tr;
+                        } else if (realResult.equalsIgnoreCase("consistent") && !realResult.equalsIgnoreCase(tc.getAxiomExpectedResultAxioms().get(entry.getKey()))) {
+                            absentCandidate = 1;
+                        }
                     }
                 }
 
@@ -223,36 +228,34 @@ public class ThemisExecuter {
                 removePreparationAxioms(prepWithURI, ontology);
 
             }
+            tr = checkIfAbsent(absentCandidateResults, absentCandidate, tr); //check whether the problem is that there is an absent relation (no conflict)
 
         } else if (!undefinedTerms.isEmpty()) {
-            resultsForAbsence.add("undefined");
+            absentCandidateResults.add("undefined");
             tr.setTestResult("undefined");
         } else {
             tr.setTestResult("incorrect");
         }
 
 
-        tr = checkAbsence(resultsForAbsence, absent, tr);
         return tr;
     }
 
     // check if the result is an absence
-    public TestCaseResult checkAbsence(List<String> resultsforabsence, int absent, TestCaseResult tr) {
+    public TestCaseResult checkIfAbsent(List<String> absentCandidateResults, int absentCandidate, TestCaseResult tr) {
         int flag = 0;
-        for (String result : resultsforabsence) {
+        for (String result : absentCandidateResults) {
             if (!result.equals("consistent")) {
                 flag++;
             }
         }
-        if (flag == 0 && !resultsforabsence.isEmpty() || !tr.getTestResult().equals("not passed") && absent == 1) {
+        if (flag == 0 && !absentCandidateResults.isEmpty() ||  absentCandidate == 1) {
             tr.setTestResult("absent");
+        }else{
+            tr.setTestResult("passed");
         }
 
-        if (tr.getTestResult() == "")
-            tr.setTestResult("passed");
-
         return tr;
-
     }
 
     /*Method to remove the preparation axioms after each test case has been executed*/

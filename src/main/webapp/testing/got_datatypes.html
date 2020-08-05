@@ -1,0 +1,263 @@
+ <html lang="en">
+<head >
+    <meta charset="UTF-8">
+    <title>Validate your ontology</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="languaje" content="English">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <!-- Le styles -->
+    <link href="../vocab/css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../vocab/css/style-custom.css">
+
+    <style type="text/css">
+
+        .table-wrapper-scroll-y {
+            display: block;
+            max-height: 200px;
+            overflow-y: auto;
+            -ms-overflow-style: -ms-autohiding-scrollbar;
+        }
+
+
+    </style>
+
+
+    <script type="text/javascript" id="js">
+        $(document).ready(function()
+            {
+                $("#tablesorter-demo").tablesorter();
+                $("#tablesorter-demo").stickyTableHeaders();
+                $('[data-toggle="tooltip"]').tooltip();
+            }
+        );
+    </script>
+</head>
+
+<body data-spy="scroll" data-target="#myScrollspy">
+
+
+<nav class="navbar navbar-default "  id="catalogue">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#"> <img src="../images/themis.png" class="img-rounded" class="img-responsive" width="70%" ></a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../howto.html">How to use it</a></li>
+                <li><a href="../../../../target/swagger-ui/META-INF/resources/webjars/swagger-ui/3.17.0/index.html">API REST</a></li>
+                <li><a href="../catalogue.html">Catalogue</a></li>
+                <!--<li><a href="tests-info.html">Supported tests</a></li>-->
+            </ul>
+        </div><!--/.nav-collapse -->
+
+    </div>
+</nav>  <!-- Jumbotron -->
+    <div class="jumbotron" style="background-color:white;">
+        <h2> Glossary of terms</h2>
+        <p class="lead">Glossary of terms for the VICINITY Ontology model for datatypes.</a></p>
+
+
+    </div><nav class="col-sm-3" id="myScrollspy">
+    <ul class="nav nav-pills nav-stacked">
+        <li class="active" class="nav nav-pills nav-stacked"><a href="#got">Glossary</a></li>
+        <li class="nav nav-pills nav-stacked"><a href="#catalogue"><span class="glyphicon glyphicon-chevron-up
+" aria-hidden="true"></span>
+            Go top</a></li>
+
+    </ul>
+</nav>   <div class="col-sm-9">
+    <div id="got">
+
+
+        <input id="filter" type="text" placeholder="Search..">
+
+        <table id="tablesorter-demo" class="tablesorter table table-hover table-responsive">
+
+            <thead>
+            <tr class="got">
+                <th class="col-md-3">Term</th>
+                <th class="col-md-4">URI</th>
+                <th class="col-md-3">Type</th>
+                <th class="col-md-2"></th>
+            </tr>
+            </thead>
+            <tbody>				<tr class = "got">
+					<td class="term got" class="tg-031e">Array</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/datatypes#Array</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Boolean</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/datatypes#Boolean</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">DataSchema</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/wot#DataSchema</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">JSONSchema</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/datatypes#JSONSchema</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Number</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/datatypes#Number</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">Object</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/datatypes#Object</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">ObjectField</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/datatypes#ObjectField</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">String</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/datatypes#String</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">XSDDatatype</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/datatypes#XSDDatatype</td>
+					<td class="type got tg-031e ">Class</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">allOf</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/datatypes#allOf</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">anyOf</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/datatypes#anyOf</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">field</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/datatypes#field</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">firstArraryItem</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/datatypes#firstArraryItem</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">nextArrayItem</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/datatypes#nextArrayItem</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">oneOf</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/datatypes#oneOf</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">value</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/datatypes#value</td>
+					<td class="type got tg-031e ">Object property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">maxItems</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/datatypes#maxItems</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">minItems</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/datatypes#minItems</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">required</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/datatypes#required</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">string</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/datatypes#string</td>
+					<td class="type got tg-031e ">Datatype property</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">false</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/datatypes#false</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">null</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/datatypes#null</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">number</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/datatypes#number</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">string</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/datatypes#string</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">true</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/datatypes#true</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">xsd_float</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/datatypes#xsd_float</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+				<tr class = "got">
+					<td class="term got" class="tg-031e">xsd_integer</td>
+					<td class="uri got tg-031e ">http://iot.linkeddata.es/def/datatypes#xsd_integer</td>
+					<td class="type got tg-031e ">Individual</td>
+				</tr>
+      </tbody>
+
+    </table>
+      </div>
+   </div>
+
+    <hr><footer class="footer">
+        <div class="row">
+            <div class="col-md-10">
+                Contact email: albafernandez@fi.upm.es
+                <br>
+                Built with <a target="_blank" href="http://getbootstrap.com/">Bootstrap</a>
+                Icons from <a target="_blank" href="http://glyphicons.com/">Glyphicons</a>
+                <br>
+                Latest revision March, 2020
+                <br><p>&copy; Ontology Engineering Group</p>
+            </div>
+            <div class="col-md-2">
+                <a href="http://www.oeg-upm.net/" target="_blank"><img src="../images/logo.gif" alt="OEG logo" class="img-rounded" class="img-responsive" /></a>
+            </div>
+        </div>
+    </footer>
+</div> <!-- /container -->
+
+
+
+
+</body>
+</html>

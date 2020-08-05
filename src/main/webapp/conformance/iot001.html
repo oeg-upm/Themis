@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head >
+    <meta charset="UTF-8">
+    <title>Validate your ontology</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="languaje" content="English">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <!-- Le styles -->
+    <link href="../vocab/css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../css/style-custom.css">
+
+    <style type="text/css">
+
+        .table-wrapper-scroll-y {
+            display: block;
+            max-height: 200px;
+            overflow-y: auto;
+            -ms-overflow-style: -ms-autohiding-scrollbar;
+        }
+
+        ul.nav-pills {
+            top: 250px;
+            position: fixed;
+        }
+        .tg-sort-header::-moz-selection{background:0 0}.tg-sort-header::selection{background:0 0}.tg-sort-header{cursor:pointer}.tg-sort-header:after{content:'';float:right;margin-top:7px;border-width:0 5px 5px;border-style:solid;border-color:#404040 transparent;visibility:hidden}.tg-sort-header:hover:after{visibility:visible}.tg-sort-asc:after,.tg-sort-asc:hover:after,.tg-sort-desc:after{visibility:visible;opacity:.4}.tg-sort-desc:after{border-bottom:none;border-width:5px 5px 0}
+        tg  {border-collapse:collapse;border-spacing:0;}
+        .tg2 td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
+        .tg2 th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
+        .tg2 .tg-lboi{border-color:inherit;text-align:left;vertical-align:middle}
+        .tg2 .tg-p170{background-color:#efefef;border-color:inherit;text-align:left;vertical-align:middle}
+        .tg2 .tg-uzvj{font-weight:bold;border-color:inherit;text-align:center;vertical-align:middle}
+        .tg2 .tg-7btt{font-weight:bold;border-color:inherit;text-align:center;vertical-align:top}
+        .tg2 .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
+        .tg2 .tg-y698{background-color:#efefef;border-color:inherit;text-align:left;vertical-align:top}
+    </style>
+
+    <script type="text/javascript" id="js">
+        $(document).ready(function(){
+            $("#filter").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#tg-rNe4Q tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+
+
+
+    </script>
+</head>
+
+<body data-spy="scroll" data-target="#myScrollspy">
+
+
+<nav class="navbar navbar-default ">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#"> <img src="../images/themis.png" class="img-rounded" class="img-responsive" width="35%" ></a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li ><a href="/index.html">Home</a></li>
+                <li><a href="/howto.html">How to use Themis</a></li>
+                <li><a href="swagger-ui/index.html">API REST</a></li>
+                <li class="active"><a href="/catalogue.html">Catalogue</a></li>
+                <li><a href="https://github.com/oeg-upm/Themis">GitHub</a></li>
+                <li><a href="/dissemination.html">Dissemination</a></li>
+                <!--<li><a href="tests-info.html">Supported tests</a></li>-->
+            </ul>
+        </div><!--/.nav-collapse -->
+
+    </div>
+</nav>
+<div class="container" >
+
+    <!-- Jumbotron -->
+    <div class="jumbotron" style="background-color:white;">
+        <h2> Ontology conformance</h2>
+        <p class="lead">Conformance analysis for standard ontologies in the IoT domain. The ontologies included in this analysis
+            are the SAREF ontology, the SSN ontology and the oneM2M ontology</a></p>
+    </div>
+    <hr>
+
+    <nav class="col-sm-3" id="myScrollspy" >
+        <ul class="nav nav-pills nav-stacked">
+            <li class="active" class="nav nav-pills nav-stacked"><a href="#reqs">Shared requirements</a></li>
+            <li class="nav nav-pills nav-stacked"><a href="#terms">Shared terms</a></li>
+            <li class="nav nav-pills nav-stacked"><a href="#comparative">Comparative</a></li>
+            <li class="nav nav-pills nav-stacked"><a href="#conflicts">Conflicts</a></li>
+            <li class="nav nav-pills nav-stacked"><a href="#catalogue"><span class="glyphicon glyphicon-chevron-up
+" aria-hidden="true"></span>
+                Go top</a></li>
+
+        </ul>
+    </nav>
+
+
+    <div class = "col-sm-9">
+        <div id="reqs">
+            <h3>Shared requirements between the ontologies</h3>
+
+            </p>
+            <input id="filter" type="text" placeholder="Search..">
+
+            <table id="tg-rNe4Q" class="tg tablesorter table table-hover table-responsive">
+               <thead>
+                    <tr>
+                        <th class="col-md-2">Ontology </th>
+                        <th class="tcol-md-3">Requirement</th>
+                        <th class="col-md-3">Domain</th>
+                        <th class="col-md-4">Ontologies that satisfy the requirement</th>
+                    </tr>
+               </thead>
+                <tbody>
+                <tr>
+                    <td class="tg-lboi">SAREF</td>
+                    <td class="tg-lboi">A device shall have a model property</td>
+                    <td class="tg-0pky"><span class="label label-primary">Device</span> <span class="label label-primary">Property</span></td>
+                    <td class="tg-0pky">SAREF, oneM2M</td>
+                </tr>
+                <tr>
+                    <td class="tg-lboi">SAREF</td>
+                    <td class="tg-lboi">What is a device?</td>
+                    <td class="tg-0pky"><span class="label label-primary">Device</span></td>
+                    <td class="tg-0pky">SAREF, oneM2M</td>
+                </tr>
+                <tr>
+                    <td class="tg-0pky">SAREF</td>
+                    <td class="tg-0pky">A device can optionally have a description</td>
+                    <td class="tg-0pky"><span class="label label-primary">Device</span></td>
+                    <td class="tg-0pky">SAREF, oneM2M</td>
+                </tr>
+                <tr>
+                    <td class="tg-0pky">SAREF</td>
+                    <td class="tg-0pky">A function represents the functionality necessary to&nbsp;&nbsp;accomplish the task for which a device is designed</td>
+                    <td class="tg-0pky"><span class="label label-primary">Device</span>, <span class="label label-primary">Function</span></td>
+                    <td class="tg-0pky">SAREF, oneM2M/td>
+                </tr>
+                <tr>
+                    <td class="tg-0pky">SAREF</td>
+                    <td class="tg-0pky">A device may consists of other devices</td>
+                    <td class="tg-0pky"><span class="label label-primary">Device</span></td>
+                    <td class="tg-0pky">SAREF, oneM2M</td>
+                </tr>
+                <tr>
+                    <td class="tg-0pky">SAREF</td>
+                    <td class="tg-0pky">A service is a representation of a function to a network that makes this function discoverable</td>
+                    <td class="tg-0pky"><span class="label label-primary">Device</span></td>
+                    <td class="tg-0pky">SAREF, oneM2M</td>
+                </tr>
+                <tr>
+                    <td class="tg-0pky">SAREF</td>
+                    <td class="tg-0pky">A device can be used for the purpose of sensing</td>
+                    <td class="tg-0pky"><span class="label label-primary">Device</span></td>
+                    <td class="tg-0pky">SAREF, oneM2M</td>
+                </tr>
+                <tr>
+                    <td class="tg-0pky">SAREF</td>
+                    <td class="tg-0pky">A device can be used for measuring a property</td>
+                    <td class="tg-0pky"><span class="label label-primary">Device</span></td>
+                    <td class="tg-0pky">SAREF, oneM2M</td>
+                </tr>
+                <tr>
+                    <td class="tg-0pky">SAREF</td>
+                    <td class="tg-0pky">A command can act upon a state to represent that the consequence of a command can be a change state of the device</td>
+                    <td class="tg-0pky"><span class="label label-primary">Command</span></td>
+                    <td class="tg-0pky">SAREF, oneM2M</td>
+                </tr>
+                <tr>
+                    <td class="tg-0pky">SAREF</td>
+                    <td class="tg-0pky">A device offers a service</td>
+                    <td class="tg-0pky"><span class="label label-primary">Device, Service</span></td>
+                    <td class="tg-0pky">SAREF, oneM2M</td>
+                </tr>
+                <tr>
+                    <td class="tg-0pky">SSN</td>
+                    <td class="tg-0pky">What is a sensor?</td>
+                    <td class="tg-0pky"><span class="label label-primary">Sensor</span></td>
+                    <td class="tg-0pky">SAREF, SSN</td>
+                </tr>
+                <tr>
+                    <td class="tg-0pky">SSN</td>
+                    <td class="tg-0pky">What is an actuator?</td>
+                    <td class="tg-0pky"><span class="label label-primary">Actuator</span></td>
+                    <td class="tg-0pky">SAREF, SSN</td>
+                </tr>
+                <tr>
+                    <td class="tg-0pky">SSN</td>
+                    <td class="tg-0pky">What is a property?</td>
+                    <td class="tg-0pky"><span class="label label-primary">Property</span></td>
+                    <td class="tg-0pky">SAREF, SSN</td>
+                </tr>
+                <tr>
+                    <td class="tg-0pky">oneM2M</td>
+                    <td class="tg-0pky">A controlling functionality represents a functionality that has impacts on the real world, but does not gather data</td>
+                    <td class="tg-0pky"><span class="label label-primary">Function</span></td>
+                    <td class="tg-0pky">SAREF, oneM2M</td>
+                </tr>
+                <tr>
+                    <td class="tg-0pky">oneM2M</td>
+                    <td class="tg-0pky">A measuring functionality represents a functionality that has no impacts on the real world, but only gathers data</td>
+                    <td class="tg-0pky"><span class="label label-primary">Function</span></td>
+                    <td class="tg-0pky">SAREF, oneM2M</td>
+                </tr>
+                <tr>
+                    <td class="tg-0pky">oneM2M</td>
+                    <td class="tg-0pky">A device can be composed of several (sub-)services</td>
+                    <td class="tg-0pky"><span class="label label-primary">Device</span></td>
+                    <td class="tg-0pky">SAREF, oneM2M</td>
+                </tr>
+                <tr>
+                    <td class="tg-0pky">oneM2M</td>
+                    <td class="tg-0pky">A thing is an entity that can be identified in the oneM2M system</td>
+                    <td class="tg-0pky"><span class="label label-primary">Thing</span></td>
+                    <td class="tg-0pky">SAREF, oneM2M</td>
+                </tr>
+                <tbody>
+
+            </table>
+
+        </div>
+        <hr>
+        <div  id="terms">
+            <h3>Shared terms</h3>
+            <p>The following table lists the terms that are defined in the oneM2M and in the SAREF ontology.</p>
+            <table id="tablesorter2" class="tablesorter table table-hover table-responsive">
+                <thead>
+                <tr >
+                    <th class="col-md-6">Term in SAREF</th>
+                    <th class="col-md-6">Term in SSN</th>
+                    <th class="col-md-6">Term in oneM2M</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td class="tg-cly1">saref:Device</td>
+                    <td class="tg-cly1"></td>
+                    <td class="tg-cly1">onem2m:Device</td>
+
+                </tr>
+                <tr>
+                    <td class="tg-cly1">saref:Property</td>
+                    <td class="tg-cly1">ssn:Property</td>
+                    <td class="tg-cly1">onem2m:Property</td>
+                </tr>
+                <tr>
+                    <td class="tg-cly1">saref:Service</td>
+                    <td class="tg-cly1">ssn:Service</td>
+                    <td class="tg-cly1">onem2m:Service</td>
+                </tr>
+
+                <tr>
+                    <td class="tg-cly1">saref:Thing</td>
+                    <td class="tg-cly1"></td>
+                    <td class="tg-cly1">onem2m:Thing</td>
+                </tr>
+                <tr>
+                    <td class="tg-0lax">saref:Actuator</td>
+                    <td class="tg-0lax">ssn:Actuator</td>
+                    <td class="tg-0lax">onem2m:Actuator</td>
+                </tr>
+                <tr>
+                    <td class="tg-0lax">saref:Sensor</td>
+                    <td class="tg-0lax">ssn:Sensor</td>
+                    <td class="tg-0lax">onem2m:Sensor</td>
+                </tr>
+                <tr>
+                    <td class="tg-0lax">saref:represents</td>
+                    <td class="tg-0lax"></td>
+                    <td class="tg-0lax">onem2m:represents</td>
+                </tr>
+                <tr>
+                    <td class="tg-0lax">saref:consistsOf</td>
+                    <td class="tg-0lax"></td>
+                    <td class="tg-0lax">onem2m:consistsOf</td>
+                </tr>
+
+                <tr>
+                    <td class="tg-0lax"></td>
+                    <td class="tg-0lax">ssn:hosts</td>
+                    <td class="tg-0lax"></td>
+                </tr>
+
+                <tr>
+                    <td class="tg-0lax"></td>
+                    <td class="tg-0lax">ssn:hasManufacturer</td>
+                    <td class="tg-0lax"></td>
+                </tr>
+                <tr>
+                    <td class="tg-0lax">saref:hasOutput</td>
+                    <td class="tg-0lax"></td>
+                    <td class="tg-0lax">onem2m:hasOutput</td>
+                </tr>
+                <tr>
+                    <td class="tg-0lax">saref:hasInput</td>
+                    <td class="tg-0lax"></td>
+                    <td class="tg-0lax">onem2m:hasInput</td>
+                </tr>
+                <tr>
+                    <td class="tg-0lax">saref:Function</td>
+                    <td class="tg-0lax"></td>
+                    <td class="tg-0lax">onem2m:Function</td>
+                </tr>
+                <tr>
+                    <td class="tg-0lax">saref:Command</td>
+                    <td class="tg-0lax"></td>
+                    <td class="tg-0lax">onem2m:Command</td>
+                </tr>
+                <tr>
+                    <td class="tg-0lax">saref:ActuatingFunction</td>
+                    <td class="tg-0lax"></td>
+                    <td class="tg-0lax">onem2m:ControllingFunction</td>
+                </tr>
+                <tr>
+                    <td class="tg-0lax">saref:hasCommand</td>
+                    <td class="tg-0lax"></td>
+                    <td class="tg-0lax">onem2m:hasCommand</td>
+                </tr>
+                <tr>
+                    <td class="tg-0lax">saref:hasValue</td>
+                    <td class="tg-0lax"></td>
+                    <td class="tg-0lax">onem2m:hasValue</td>
+                </tr>
+                <tr>
+                    <td class="tg-0lax">saref:hasFunction</td>
+                    <td class="tg-0lax"></td>
+                    <td class="tg-0lax">onem2m:hasFunction</td>
+                </tr>
+                <tr>
+                    <td class="tg-0lax">saref:offers</td>
+                    <td class="tg-0lax"></td>
+                    <td class="tg-0lax">onem2m:offers</td>
+                </tr>
+                <tr>
+                    <td class="tg-0lax">saref:SensingFunction</td>
+                    <td class="tg-0lax"></td>
+                    <td class="tg-0lax">onem2m:MeasuringFunction</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <hr>
+        <div  id="comparative">
+            <h3>Comparative</h3>
+
+            <p>The following table summarises the concepts shared between the requirements for each ontology and the ontolgies</p>
+
+            </p>
+            <table  class="tg2 table table-bordered">
+                <tr>
+                    <td class="tg-uzvj"></td>
+                    <td class="tg-uzvj">SAREF</td>
+                    <td class="tg-uzvj">SSN </td>
+                    <td class="tg-7btt">oneM2M</td>
+                </tr>
+                <tr>
+                    <td class="tg-uzvj">SAREF</td>
+                    <td class="tg-p170"></td>
+                    <td class="tg-lboi">Actuator<br>Property<br>Sensor</td>
+                    <td class="tg-0pky">Device<br>Property<br>Service<br>Function<br>ActuatingFunction<br>SensingFunction<br>Command</td>
+                </tr>
+                <tr>
+                    <td class="tg-uzvj">SSN </td>
+                    <td class="tg-lboi">Actuator<br>Property<br>Sensor</td>
+                    <td class="tg-p170"></td>
+                    <td class="tg-0pky">Property<br>Thing</td>
+                </tr>
+                <tr>
+                    <td class="tg-7btt">oneM2M</td>
+                    <td class="tg-lboi">Device<br>Property<br>Service<br>Function<br>Command<br>ActuatingFunction<br>SensingFunction</td>
+                    <td class="tg-lboi">Property<br>Thing</td>
+                    <td class="tg-y698"></td>
+                </tr>
+            </table>
+
+
+
+
+        </div>
+        <div  id="conflicts">
+            <h3>Conflicts</h3>
+            <p>No conflicts between the ontologies have been detected.</p>
+        </div>
+    </div>
+
+    <hr>
+    <footer class="footer">
+        <div class="row">
+            <div class="col-md-10">
+                Alba Fernández Izquierdo
+                <br>
+                Contact email: albafernandez@fi.upm.es
+                <br>
+                Built with <a target="_blank" href="http://getbootstrap.com/">Bootstrap</a>
+                Icons from <a target="_blank" href="http://glyphicons.com/">Glyphicons</a>
+                <br>
+                Latest revision March, 2020
+                <br><p>&copy; Ontology Engineering Group</p>
+            </div>
+            <div class="col-md-2">
+                <a href="http://www.oeg-upm.net/" target="_blank"><img src="../vocab/logo.gif" alt="OEG logo" class="img-rounded" class="img-responsive" /></a>
+            </div>
+        </div>
+    </footer>
+</div> <!-- /container -->
+
+
+<script type="text/javascript" src="../js/tests-js.js"></script>
+<script charset="utf-8">var TGSort=window.TGSort||function(n){"use strict";function r(n){return n?n.length:0}function t(n,t,e,o=0){for(e=r(n);o<e;++o)t(n[o],o)}function e(n){return n.split("").reverse().join("")}function o(n){var e=n[0];return t(n,function(n){for(;!n.startsWith(e);)e=e.substring(0,r(e)-1)}),r(e)}function u(n,r,e=[]){return t(n,function(n){r(n)&&e.push(n)}),e}var a=parseFloat;function i(n,r){return function(t){var e="";return t.replace(n,function(n,t,o){return e=t.replace(r,"")+"."+(o||"").substring(1)}),a(e)}}var s=i(/^(?:\s*)([+-]?(?:\d+)(?:,\d{3})*)(\.\d*)?$/g,/,/g),c=i(/^(?:\s*)([+-]?(?:\d+)(?:\.\d{3})*)(,\d*)?$/g,/\./g);function f(n){var t=a(n);return!isNaN(t)&&r(""+t)+1>=r(n)?t:NaN}function d(n){var e=[],o=n;return t([f,s,c],function(u){var a=[],i=[];t(n,function(n,r){r=u(n),a.push(r),r||i.push(n)}),r(i)<r(o)&&(o=i,e=a)}),r(u(o,function(n){return n==o[0]}))==r(o)?e:[]}function v(n){if("TABLE"==n.nodeName){for(var a=function(r){var e,o,u=[],a=[];return function n(r,e){e(r),t(r.childNodes,function(r){n(r,e)})}(n,function(n){"TR"==(o=n.nodeName)?(e=[],u.push(e),a.push(n)):"TD"!=o&&"TH"!=o||e.push(n)}),[u,a]}(),i=a[0],s=a[1],c=r(i),f=c>1&&r(i[0])<r(i[1])?1:0,v=f+1,p=i[f],h=r(p),l=[],g=[],N=[],m=v;m<c;++m){for(var T=0;T<h;++T){r(g)<h&&g.push([]);var C=i[m][T],L=C.textContent||C.innerText||"";g[T].push(L.trim())}N.push(m-v)}t(p,function(n,t){l[t]=0;var a=n.classList;a.add("tg-sort-header"),n.addEventListener("click",function(){var n=l[t];!function(){for(var n=0;n<h;++n){var r=p[n].classList;r.remove("tg-sort-asc"),r.remove("tg-sort-desc"),l[n]=0}}(),(n=1==n?-1:+!n)&&a.add(n>0?"tg-sort-asc":"tg-sort-desc"),l[t]=n;var i,f=g[t],m=function(r,t){return n*f[r].localeCompare(f[t])||n*(r-t)},T=function(n){var t=d(n);if(!r(t)){var u=o(n),a=o(n.map(e));t=d(n.map(function(n){return n.substring(u,r(n)-a)}))}return t}(f);(r(T)||r(T=r(u(i=f.map(Date.parse),isNaN))?[]:i))&&(m=function(r,t){var e=T[r],o=T[t],u=isNaN(e),a=isNaN(o);return u&&a?0:u?-n:a?n:e>o?n:e<o?-n:n*(r-t)});var C,L=N.slice();L.sort(m);for(var E=v;E<c;++E)(C=s[E].parentNode).removeChild(s[E]);for(E=v;E<c;++E)C.appendChild(s[v+L[E-v]])})})}}n.addEventListener("DOMContentLoaded",function(){for(var t=n.getElementsByClassName("tg"),e=0;e<r(t);++e)try{v(t[e])}catch(n){}})}(document)</script>
+
+
+</body>
+</html>
