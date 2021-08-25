@@ -147,7 +147,7 @@ public class Implementations {
 
       manager.addAxiom(ontology,axiomClass);
       manager.applyChanges(manager.addAxiom(ontology, axiomSubclass1));
-      testCase.setPreparation(manager.getOntology(IRI.create(base)).getAxioms().toString());
+      testCase.setPreparationaxioms(manager.getOntology(IRI.create(base)));
       manager.removeOntology(ontology);
 
       /*Assertions*/
@@ -192,7 +192,8 @@ public class Implementations {
 
       manager.removeOntology(ontology2);
 
-      OWLOntology ontology3 = null;
+      /*Assertion 3 Problema de memoria con Pellet*/
+     /* OWLOntology ontology3 = null;
       try {
          ontology3 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
@@ -209,16 +210,17 @@ public class Implementations {
       manager.applyChanges(manager.addAxiom(ontology3, axiomSubclass6));
       OWLOntology assertion3 = manager.getOntology(IRI.create(base));
       String expectedOutputAssertion3 = "consistent";
+      */
 
       LinkedHashMap<String, OWLOntology> hashInput = new LinkedHashMap();
       hashInput.put("Assertion 1", assertion1);
       hashInput.put("Assertion 2", assertion2);
-      hashInput.put("Assertion 3", assertion3);
+     // hashInput.put("Assertion 3", assertion3);
 
       LinkedHashMap<String, String> hashOutput = new LinkedHashMap();
       hashOutput.put("Assertion 1",expectedOutputAssertion1);
       hashOutput.put("Assertion 2",expectedOutputAssertion2);
-      hashOutput.put("Assertion 3",expectedOutputAssertion3);
+    //  hashOutput.put("Assertion 3",expectedOutputAssertion3);
 
       for (Map.Entry<String, String> entry : testCase.getAxiomExpectedResultAxioms().entrySet()) {
          hashOutput.put(entry.getKey(), entry.getValue());
@@ -2136,8 +2138,9 @@ public class Implementations {
       else
          expectedOutAssertion2 = "consistent";
       manager.removeOntology(ontology4);
-      /*Assertions 3 */
-      OWLOntology ontology3 = null;
+
+      /*Assertions 3 */ //The Pellet reasoner consumes too much memory with cardinalities
+      /*OWLOntology ontology3 = null;
       try {
          ontology3 = manager.createOntology(IRI.create(base));
       } catch (OWLOntologyCreationException e) {
@@ -2155,19 +2158,15 @@ public class Implementations {
       manager.applyChanges(manager.addAxiom(ontology3,axiomClass2));
       OWLOntology assertion3 = manager.getOntology(IRI.create(base));
 
-      String expectedOutAssertion3 = "consistent";
+      String expectedOutAssertion3 = "consistent";*/
+       LinkedHashMap<String, OWLOntology> hashInput = new LinkedHashMap();
+       LinkedHashMap<String, String> hashOutput = new LinkedHashMap();
 
-      LinkedHashMap<String, OWLOntology> hashInput = new LinkedHashMap();
-      hashInput.put("Assertion 1", assertion1);
-      hashInput.put("Assertion 2", assertion2);
-      hashInput.put("Assertion 3", assertion3);
+       hashInput.put("Assertion 1", assertion1);
+       hashInput.put("Assertion 2", assertion2);
 
-
-      LinkedHashMap<String, String> hashOutput = new LinkedHashMap();
-      hashOutput.put("Assertion 1",expectedOutAssertion1);
-      hashOutput.put("Assertion 2",expectedOutAssertion2);
-      hashOutput.put("Assertion 3",expectedOutAssertion3);
-
+       hashOutput.put("Assertion 1",expectedOutAssertion1);
+       hashOutput.put("Assertion 2",expectedOutAssertion2);
       for (Map.Entry<String, String> entry : testCase.getAxiomExpectedResultAxioms().entrySet()) {
          hashOutput.put(entry.getKey(), entry.getValue());
       }

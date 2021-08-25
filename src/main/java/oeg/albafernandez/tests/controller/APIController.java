@@ -150,6 +150,7 @@ public class APIController {
         int status;
         JSONArray result = new JSONArray();
         String output = "";
+
         try {
             result = executionService.getResults(got, tests, ontologies, ontologiesCode);
 
@@ -351,6 +352,7 @@ public class APIController {
 
         String got = null;
         logger.info("Ontology: "+ URI);
+        System.out.println(URI);
         try {
             got = syntaxChecker.getGoTFromURI(URI);
 

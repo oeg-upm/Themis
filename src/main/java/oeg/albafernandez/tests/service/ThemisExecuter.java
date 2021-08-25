@@ -140,21 +140,26 @@ public class ThemisExecuter {
             classesintest.addAll(axiom.getClassesInSignature());
         }
         String result = "";
-        if (!reasoner.isConsistent()) {
-            result = "inconsistent";
-        } else if (reasoner.getUnsatisfiableClasses().getSize() > 1) {
-            int flag = 0;
-            // check if the unsatisfiable classes are because of the test
-            for (OWLClass classintest : classesintest) {
-                if (reasoner.getUnsatisfiableClasses().contains(classintest)) {
-                    result = "unsatisfiable";
-                    flag++;
+        try {
+            if (!reasoner.isConsistent()) { //Prblema memoria?
+                result = "inconsistent";
+                //  } else if (reasoner.getUnsatisfiableClasses().getSize() > 1) {
+            } else if (reasoner.isConsistent()) {
+                int flag = 0;
+                // check if the unsatisfiable classes are because of the test
+                for (OWLClass classintest : classesintest) {
+                    if (reasoner.getUnsatisfiableClasses().contains(classintest)) {
+                        result = "unsatisfiable";
+                        flag++;
+                    }
                 }
-            }
-            if (flag == 0)
+                if (flag == 0)
+                    result = "consistent";
+            } else {
                 result = "consistent";
-        } else {
-            result = "consistent";
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
 
         return result;
@@ -224,6 +229,7 @@ public class ThemisExecuter {
                         absentCandidate++;
                     }
                 }
+
             }
 
 
@@ -280,5 +286,30 @@ public class ThemisExecuter {
         }
     }
 
+    /*Method to remove the preparation axioms after each test case has been executed*/
+    public void removeAssertionAxioms(Set<OWLAxiom> textAxioms, Ontology ontology) {
+        OWLDataFactory dataFactory = ontology.getManager().getOWLDataFactory();
+        Configuration configuration = new Configuration();
+        configuration.throwInconsistentOntologyException = false;
+        configuration.ignoreUnsupportedDatatypes = true;
 
+        for (OWLAxiom axiom : textAxioms) {
+            if (axiom.isAnnotationAxiom()) {
+                OWLAnnotationAssertionAxiom annotationAssertionAxiom = (OWLAnnotationAssertionAxiom) axiom;
+                OWLNamedIndividual ind1 = dataFactory.getOWLNamedIndividual(IRI.create(annotationAssertionAxiom.getSubject().toString()));
+                OWLNamedIndividual ind2 = dataFactory.getOWLNamedIndividual(IRI.create(annotationAssertionAxiom.getValue().toString()));
+                OWLObjectProperty prop = dataFactory.getOWLObjectProperty(IRI.create(annotationAssertionAxiom.getProperty().toString().replace(">", "").replace("<", "")));
+                OWLObjectPropertyAssertionAxiom owlObjectPropertyAssertionAxiom = dataFactory.getOWLObjectPropertyAssertionAxiom(
+                        prop, ind1, ind2);
+                if (ontology.getOntology().getAxioms().contains(owlObjectPropertyAssertionAxiom)) {
+                    ontology.getManager().removeAxiom(ontology.getOntology(), owlObjectPropertyAssertionAxiom);
+                }
+
+            } else {
+                if (ontology.getOntology().getAxioms().contains(axiom)) {
+                    ontology.getManager().removeAxiom(ontology.getOntology(), axiom);
+                }
+            }
+        }
+    }
 }
