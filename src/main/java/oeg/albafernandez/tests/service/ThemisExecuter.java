@@ -288,30 +288,7 @@ public class ThemisExecuter {
         }
     }
 
-    /*Method to remove the preparation axioms after each test case has been executed*/
     public void removeAssertionAxioms(Set<OWLAxiom> textAxioms, Ontology ontology) {
-        OWLDataFactory dataFactory = ontology.getManager().getOWLDataFactory();
-        Configuration configuration = new Configuration();
-        configuration.throwInconsistentOntologyException = false;
-        configuration.ignoreUnsupportedDatatypes = true;
-
-        for (OWLAxiom axiom : textAxioms) {
-            if (axiom.isAnnotationAxiom()) {
-                OWLAnnotationAssertionAxiom annotationAssertionAxiom = (OWLAnnotationAssertionAxiom) axiom;
-                OWLNamedIndividual ind1 = dataFactory.getOWLNamedIndividual(IRI.create(annotationAssertionAxiom.getSubject().toString()));
-                OWLNamedIndividual ind2 = dataFactory.getOWLNamedIndividual(IRI.create(annotationAssertionAxiom.getValue().toString()));
-                OWLObjectProperty prop = dataFactory.getOWLObjectProperty(IRI.create(annotationAssertionAxiom.getProperty().toString().replace(">", "").replace("<", "")));
-                OWLObjectPropertyAssertionAxiom owlObjectPropertyAssertionAxiom = dataFactory.getOWLObjectPropertyAssertionAxiom(
-                        prop, ind1, ind2);
-                if (ontology.getOntology().getAxioms().contains(owlObjectPropertyAssertionAxiom)) {
-                    ontology.getManager().removeAxiom(ontology.getOntology(), owlObjectPropertyAssertionAxiom);
-                }
-
-            } else {
-                if (ontology.getOntology().getAxioms().contains(axiom)) {
-                    ontology.getManager().removeAxiom(ontology.getOntology(), axiom);
-                }
-            }
-        }
+        removePreparationAxioms(textAxioms, ontology);
     }
 }
