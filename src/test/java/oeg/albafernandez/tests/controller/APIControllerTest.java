@@ -41,4 +41,19 @@ public class APIControllerTest {
         assertEquals(200, response.getStatus());
         assertEquals("no uri", response.getEntity());
     }
+
+    @Test
+    @DisplayName("getPlainGoT should handle null URI gracefully without throwing NullPointerException")
+    public void testGetPlainGoTNullUri() throws Exception {
+        String ttlContent = "@prefix : <http://example.org/test#> .\n" +
+                "@prefix owl: <http://www.w3.org/2002/07/owl#> .\n" +
+                "@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .\n" +
+                "<http://example.org/test> rdf:type owl:Ontology .\n" +
+                ":Person rdf:type owl:Class .\n";
+
+        Response response = controller.getPlainGoT(null, ttlContent);
+        assertNotNull(response);
+        assertEquals(200, response.getStatus());
+        assertNotNull(response.getEntity());
+    }
 }

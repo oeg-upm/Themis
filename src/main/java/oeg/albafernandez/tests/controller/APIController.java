@@ -392,7 +392,7 @@ public class APIController {
                                 @QueryParam("filename") @Parameter(description = "Ontology file", example = "") String filename
     ) throws JSONException, OWLOntologyStorageException {
         String got;
-        if (URI != null || !URI.isEmpty())
+        if (URI != null && !URI.isEmpty())
             got = syntaxChecker.getPlainGoTFromURI(URI);
         else
             got = syntaxChecker.getGoTFromFilename(filename);
