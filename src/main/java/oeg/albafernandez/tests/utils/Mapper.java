@@ -20,13 +20,15 @@ public class Mapper {
     }
 
     public static String getPrecTerm(String query) {
-
+        if (query == null) {
+            return null;
+        }
         Pattern p = Pattern.compile(PATTERN);
         Matcher m = p.matcher(query);
-        while (m.find()) {
+        if (m.find()) {
             return m.group();
         }
-        return m.group();
+        return null;
     }
 
     public static String termsInOntology(String query, OWLOntology ontology) {

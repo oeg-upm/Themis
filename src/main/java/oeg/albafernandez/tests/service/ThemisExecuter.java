@@ -183,10 +183,12 @@ public class ThemisExecuter {
             String precondWithURI = Mapper.mapImplementationTerms(prec, (HashMap<String, IRI>) got); // all  mappings received by the webapp
             realResult = tboxTest(precondWithURI, tc.getUri(), ontology.getManager(), ontology.getOntology());
             if (realResult.equals("false")) { //  if terms do not exist there are two possibilities: 1) the term does not exist (undefined), 2) the term is not defined as expected (incorrect)
+                String precTerm = Mapper.getPrecTerm(prec);
+                String cleanTerm = precTerm != null ? precTerm.replace(">", "").replace("<", "") : prec;
                 if (Mapper.termsInOntology(precondWithURI, ontology.getOntology()).equals("false")) {
-                    undefinedTerms.add(Mapper.getPrecTerm(prec).replace(">", "").replace("<", ""));
+                    undefinedTerms.add(cleanTerm);
                 } else {
-                    incorrectTerms.add(Mapper.getPrecTerm(prec).replace(">", "").replace("<", ""));
+                    incorrectTerms.add(cleanTerm);
                 }
                 tr.setUndefinedTerms(undefinedTerms); //store errors for users
                 tr.setIncorrectTerms(incorrectTerms);
