@@ -132,31 +132,32 @@ public class ThemisResultsGenerator {
     public JSONArray storeResults(TestCaseResult testsuiteResult, Ontology ontology, JSONArray ontologyarray)
             throws JSONException {
         JSONObject testsResults = new JSONObject();
-        if (testsuiteResult.getTestResult().equals("passed")) {
+        oeg.albafernandez.tests.model.TestResult resEnum = testsuiteResult.getTestResultEnum();
+        if (resEnum == oeg.albafernandez.tests.model.TestResult.PASSED) {
             // the ontology passed the test
             testsResults.put(ONTOLOGY, ontology.getProv().toString());
-            testsResults.put(RESULT, "Passed");
+            testsResults.put(RESULT, oeg.albafernandez.tests.model.TestResult.PASSED.getLabel());
             ontologyarray.put(testsResults);
-        } else if (testsuiteResult.getTestResult().equals("undefined")) { // the terms needed to executeTest the tests
-                                                                          // are not defined inthe ontology
+        } else if (resEnum == oeg.albafernandez.tests.model.TestResult.UNDEFINED) { // the terms needed to executeTest the tests
+                                                                          // are not defined in the ontology
             testsResults.put(ONTOLOGY, ontology.getProv().toString());
-            testsResults.put(RESULT, "Undefined");
+            testsResults.put(RESULT, oeg.albafernandez.tests.model.TestResult.UNDEFINED.getLabel());
             testsResults.put("Undefined", testsuiteResult.getUndefinedTerms());
             ontologyarray.put(testsResults);
 
-        } else if (testsuiteResult.getTestResult().equals("incorrect")) { // the terms needed to executeTest the tests
-                                                                          // are not defined inthe ontology
+        } else if (resEnum == oeg.albafernandez.tests.model.TestResult.INCORRECT) { // the terms needed to executeTest the tests
+                                                                          // are not defined in the ontology
             testsResults.put(ONTOLOGY, ontology.getProv().toString());
-            testsResults.put(RESULT, "Incorrect");
+            testsResults.put(RESULT, oeg.albafernandez.tests.model.TestResult.INCORRECT.getLabel());
             testsResults.put("Incorrect", testsuiteResult.getIncorrectTerms());
             ontologyarray.put(testsResults);
-        } else if (testsuiteResult.getTestResult().equals("absent")) { // the ontology does not pass the test
+        } else if (resEnum == oeg.albafernandez.tests.model.TestResult.ABSENT) { // the ontology does not pass the test
             testsResults.put(ONTOLOGY, ontology.getProv().toString());
-            testsResults.put(RESULT, "Absent");
+            testsResults.put(RESULT, oeg.albafernandez.tests.model.TestResult.ABSENT.getLabel());
             ontologyarray.put(testsResults);
         } else { // the ontology does not pass the test
             testsResults.put(ONTOLOGY, ontology.getProv().toString());
-            testsResults.put(RESULT, "Conflict");
+            testsResults.put(RESULT, oeg.albafernandez.tests.model.TestResult.CONFLICT.getLabel());
             ontologyarray.put(testsResults);
         }
         return ontologyarray;

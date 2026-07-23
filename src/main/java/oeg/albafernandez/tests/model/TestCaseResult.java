@@ -32,8 +32,16 @@ public class TestCaseResult {
         return testResult;
     }
 
+    public TestResult getTestResultEnum() {
+        return TestResult.fromString(testResult);
+    }
+
     public void setTestResult(String testResult) {
         this.testResult = testResult;
+    }
+
+    public void setTestResult(TestResult testResult) {
+        this.testResult = testResult != null ? testResult.getLabel() : "";
     }
 
     public IRI getOntologyURI() {

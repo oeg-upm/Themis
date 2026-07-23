@@ -139,30 +139,28 @@ public class ThemisExecuter {
         for (OWLAxiom axiom : axioms) {
             classesintest.addAll(axiom.getClassesInSignature());
         }
-        String result = "";
+        oeg.albafernandez.tests.model.ReasonerResult result = oeg.albafernandez.tests.model.ReasonerResult.CONSISTENT;
         try {
-            if (!reasoner.isConsistent()) { //Prblema memoria?
-                result = "inconsistent";
-                //  } else if (reasoner.getUnsatisfiableClasses().getSize() > 1) {
+            if (!reasoner.isConsistent()) {
+                result = oeg.albafernandez.tests.model.ReasonerResult.INCONSISTENT;
             } else if (reasoner.isConsistent()) {
                 int flag = 0;
-                // check if the unsatisfiable classes are because of the test
                 for (OWLClass classintest : classesintest) {
                     if (reasoner.getUnsatisfiableClasses().contains(classintest)) {
-                        result = "unsatisfiable";
+                        result = oeg.albafernandez.tests.model.ReasonerResult.UNSATISFIABLE;
                         flag++;
                     }
                 }
                 if (flag == 0)
-                    result = "consistent";
+                    result = oeg.albafernandez.tests.model.ReasonerResult.CONSISTENT;
             } else {
-                result = "consistent";
+                result = oeg.albafernandez.tests.model.ReasonerResult.CONSISTENT;
             }
-        }catch (Exception e){
-            e.printStackTrace();
+        } catch (Exception e) {
+            logger.error("Error in reasoner execution: " + e.getMessage());
         }
 
-        return result;
+        return result.getValue();
     }
 
     /*This method executeTest the ABox and Tbox tests. The errors are printed in a report*/
@@ -240,9 +238,9 @@ public class ThemisExecuter {
 
         } else if (!undefinedTerms.isEmpty()) {
             absentCandidateResults.add("undefined");
-            tr.setTestResult("undefined");
+            tr.setTestResult(oeg.albafernandez.tests.model.TestResult.UNDEFINED);
         } else {
-            tr.setTestResult("incorrect");
+            tr.setTestResult(oeg.albafernandez.tests.model.TestResult.INCORRECT);
         }
 
 
@@ -253,9 +251,9 @@ public class ThemisExecuter {
     public TestCaseResult checkIfAbsent( int absentCandidate, TestCaseResult tr) {
 
         if (absentCandidate>0) {
-            tr.setTestResult("absent");
+            tr.setTestResult(oeg.albafernandez.tests.model.TestResult.ABSENT);
         }else{
-            tr.setTestResult("passed");
+            tr.setTestResult(oeg.albafernandez.tests.model.TestResult.PASSED);
         }
 
         return tr;
