@@ -1,0 +1,27 @@
+@prefix : <http://example.org/test#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://example.org/test> rdf:type owl:Ontology .
+
+:Person rdf:type owl:Class ;
+        rdfs:label "Person" .
+
+:Agent rdf:type owl:Class ;
+       rdfs:label "Agent" .
+
+:Customer rdf:type owl:Class ;
+          rdfs:subClassOf :Person .
+
+:knows rdf:type owl:ObjectProperty ;
+       rdfs:domain :Person ;
+       rdfs:range :Person .
+
+:hasAge rdf:type owl:DatatypeProperty ;
+        rdfs:domain :Person ;
+        rdfs:range xsd:integer .
+
+:John rdf:type :Person ;
+           rdfs:label "John" .
