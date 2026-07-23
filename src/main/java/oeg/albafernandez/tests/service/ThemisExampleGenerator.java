@@ -1,9 +1,6 @@
 package oeg.albafernandez.tests.service;
 
-import com.hp.hpl.jena.ontology.AnnotationProperty;
 import oeg.albafernandez.tests.model.Ontology;
-import oeg.albafernandez.tests.model.TestCaseDesign;
-import org.json.Test;
 import org.semanticweb.owlapi.model.*;
 
 import java.util.ArrayList;
@@ -15,14 +12,22 @@ public class ThemisExampleGenerator {
     public ArrayList<String> generateExampleFromOntology(Ontology ontology){
         ArrayList<String> testCaseDesigns = new ArrayList<>();
 
-        if(!generateTypeExampleFromOntology(ontology).isEmpty())
-            testCaseDesigns.add(generateTypeExampleFromOntology(ontology));
-        if(!generateDomainExampleFromOntology(ontology).isEmpty())
-            testCaseDesigns.add(generateDomainExampleFromOntology(ontology));
-        if(!generateRangeExampleFromOntology(ontology).isEmpty())
-            testCaseDesigns.add(generateRangeExampleFromOntology(ontology));
-        if(!generateSubClassExampleFromOntology(ontology).isEmpty())
-            testCaseDesigns.add(generateSubClassExampleFromOntology(ontology));
+        String typeExample = generateTypeExampleFromOntology(ontology);
+        if (typeExample != null && !typeExample.isEmpty()) {
+            testCaseDesigns.add(typeExample);
+        }
+        String domainExample = generateDomainExampleFromOntology(ontology);
+        if (domainExample != null && !domainExample.isEmpty()) {
+            testCaseDesigns.add(domainExample);
+        }
+        String rangeExample = generateRangeExampleFromOntology(ontology);
+        if (rangeExample != null && !rangeExample.isEmpty()) {
+            testCaseDesigns.add(rangeExample);
+        }
+        String subClassExample = generateSubClassExampleFromOntology(ontology);
+        if (subClassExample != null && !subClassExample.isEmpty()) {
+            testCaseDesigns.add(subClassExample);
+        }
 
         return testCaseDesigns;
 
