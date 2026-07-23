@@ -19,7 +19,6 @@ public class Converter {
                 "      </thead>";
         String endTable = "</table>\n";
 
-
         String startBody = "<tbody>\n";
         for (int i = 0; i < jsonArray.length(); i++) {
             String test = "";
@@ -42,8 +41,11 @@ public class Converter {
                     }
                 }
                 startBody += " <tr vocab=\"https://w3id.org/def/vtc#\" typeof=\"TestCaseResult\">\n" +
-                        "              <td> <span property=\"hasExecution\" typeof=\"Execution\"><a property=\"isExecutedOn\" href=\"" + ontology + "\">" + ontology + "</a><span property=\"hasTestResult\" content=\"" + result + "\"></span> </span></td>\n" +
-                        "               <td property=\"isRelatedToDesign\" typeof=\"TestCaseDesign\"><span property=\"desiredBehaviour\">" + test + "</span></td>               \n" +
+                        "              <td> <span property=\"hasExecution\" typeof=\"Execution\"><a property=\"isExecutedOn\" href=\""
+                        + ontology + "\">" + ontology + "</a><span property=\"hasTestResult\" content=\"" + result
+                        + "\"></span> </span></td>\n" +
+                        "               <td property=\"isRelatedToDesign\" typeof=\"TestCaseDesign\"><span property=\"desiredBehaviour\">"
+                        + test + "</span></td>               \n" +
                         "              <td> " + result + " </td>\n" +
                         "          </tr>";
             } catch (JSONException e) {
@@ -60,7 +62,6 @@ public class Converter {
     public static String jsonToJUnitXML(JSONArray jsonArray) {
 
         Integer failures = 0;
-
 
         String testcases = "";
 
@@ -86,20 +87,27 @@ public class Converter {
                             String msg = "";
                             failures++;
                             msg = "There is an inconsistency between the ontology and the requirement associated to the test\n";
-                            testcases += "\t\t\t<failure message=c" + msg + " with URI " + ontology + "\">" +
+                            testcases += "\t\t\t<failure message=" + msg + " with URI " + ontology + "\">" +
                                     "</failure>\n";
-                        } else if (result.equalsIgnoreCase("Absent") || result.equalsIgnoreCase("Incorrect") || result.equalsIgnoreCase("Undefined")) {
+                        } else if (result.equalsIgnoreCase("Absent") || result.equalsIgnoreCase("Incorrect")
+                                || result.equalsIgnoreCase("Undefined")) {
                             String msg = "";
                             if (result.equalsIgnoreCase("Absent")) {
                                 msg = "A restriction included in the test may be missing in the ontology";
                             } else if (result.equalsIgnoreCase("Undefined")) {
                                 if (obj.getJSONObject(0).has("Undefined")) {
-                                    msg = "The terms " + obj.getJSONObject(0).get("Undefined").toString().replace("\"", "").replace("[", "").replace("]", "") + " are undefined in the ontology";
+                                    msg = "The terms "
+                                            + obj.getJSONObject(0).get("Undefined").toString().replace("\"", "")
+                                                    .replace("[", "").replace("]", "")
+                                            + " are undefined in the ontology";
                                 } else
                                     msg = "There are undefined terms in the ontology";
                             } else if (result.equalsIgnoreCase("Incorrect")) {
                                 if (obj.getJSONObject(0).has("Incorrect")) {
-                                    msg = "The terms " + obj.getJSONObject(0).get("Incorrect").toString().replace("\"", "").replace("[", "").replace("]", "") + " are not equally defined in the test and  in the ontology";
+                                    msg = "The terms "
+                                            + obj.getJSONObject(0).get("Incorrect").toString().replace("\"", "")
+                                                    .replace("[", "").replace("]", "")
+                                            + " are not equally defined in the test and  in the ontology";
                                 } else
                                     msg = "There are tests in the test that are not defined as in the ontology";
                             }
@@ -107,7 +115,6 @@ public class Converter {
                                     "</error>\n";
 
                         }
-
 
                         testcases += "\t\t</testcase>\n";
                     }
@@ -117,7 +124,6 @@ public class Converter {
                 e.printStackTrace();
             }
         }
-
 
         String headerTable = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?> \n" +
                 "<testsuites  name=\"\" tests=\"" + jsonArray.length() + "\">\n" +
