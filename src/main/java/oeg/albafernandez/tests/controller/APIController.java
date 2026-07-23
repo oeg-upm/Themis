@@ -47,9 +47,9 @@ public class APIController {
         if (ontologyFile != null) {
             Ontology ontology = new Ontology();
             if (ontologyFile.contains("\\\"")) {
-                ontology.loadOntologyFromfile(ontologyFile.replaceAll("^\"", "").replaceAll("\"\\s*$", "").replace("\\\"", "\""));
+                ontology.loadOntologyFromFile(ontologyFile.replaceAll("^\"", "").replaceAll("\"\\s*$", "").replace("\\\"", "\""));
             } else {
-                ontology.loadOntologyFromfile(ontologyFile);
+                ontology.loadOntologyFromFile(ontologyFile);
             }
             ThemisExampleGenerator exampleGenerator = new ThemisExampleGenerator();
             ArrayList<String> tests = exampleGenerator.generateExampleFromOntology(ontology);
@@ -352,7 +352,6 @@ public class APIController {
 
         String got = null;
         logger.info("Ontology: "+ URI);
-        System.out.println(URI);
         try {
             got = syntaxChecker.getGoTFromURI(URI);
 

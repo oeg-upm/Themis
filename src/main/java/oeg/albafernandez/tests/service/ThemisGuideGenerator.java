@@ -265,7 +265,7 @@ public class ThemisGuideGenerator {
         if (!ontology.equals(""))
             owlOntology.loadOntologyFromURL(ontology);
         else
-            owlOntology.loadOntologyFromfile(filename);
+            owlOntology.loadOntologyFromFile(filename);
 
         if (matchers.get(7).matches() || matchers.get(20).matches()) {
 
@@ -389,7 +389,7 @@ public class ThemisGuideGenerator {
 
     public String getGoTFromFilename(String ontologycode) throws JSONException {
         Ontology onto = new Ontology();
-        onto.loadOntologyFromfile(ontologycode);
+        onto.loadOntologyFromFile(ontologycode);
         return getGoT(onto);
     }
 
@@ -421,7 +421,7 @@ public class ThemisGuideGenerator {
 
     public String getPlainGoTFromFile(String filename) throws JSONException {
         Ontology onto = new Ontology();
-        onto.loadOntologyFromfile(filename);
+        onto.loadOntologyFromFile(filename);
         return getPlainGoT(onto);
 
 

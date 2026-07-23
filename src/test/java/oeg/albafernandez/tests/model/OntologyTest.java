@@ -19,7 +19,7 @@ public class OntologyTest {
     }
 
     @Test
-    @DisplayName("loadOntologyFromfile should load valid Turtle ontology code and populate signature maps")
+    @DisplayName("loadOntologyFromFile should load valid Turtle ontology code and populate signature maps")
     public void testLoadOntologyFromFile() {
         String ttlContent = "@prefix : <http://example.org/test#> .\n" +
                 "@prefix owl: <http://www.w3.org/2002/07/owl#> .\n" +
@@ -33,8 +33,8 @@ public class OntologyTest {
                 ":hasAge rdf:type owl:DatatypeProperty .\n" +
                 ":John rdf:type :Person .\n";
 
-        String result = ontology.loadOntologyFromfile(ttlContent);
-        assertNotNull(result, "loadOntologyFromfile should return non-null result indicator");
+        String result = ontology.loadOntologyFromFile(ttlContent);
+        assertNotNull(result, "loadOntologyFromFile should return non-null result indicator");
         assertNotNull(ontology.getOntology(), "OWLOntology object should be loaded");
 
         Map<String, IRI> classes = ontology.getClasses();

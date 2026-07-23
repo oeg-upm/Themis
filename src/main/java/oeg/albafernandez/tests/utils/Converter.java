@@ -1,10 +1,12 @@
 package oeg.albafernandez.tests.utils;
 
+import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Converter {
+    private static final Logger logger = Logger.getLogger(Converter.class);
 
     public static String jsonToHtml(JSONArray jsonArray) {
 
@@ -48,7 +50,7 @@ public class Converter {
                         "              <td> " + result + " </td>\n" +
                         "          </tr>";
             } catch (JSONException e) {
-                e.printStackTrace();
+                logger.error("Error parsing JSON in jsonToHtml: " + e.getMessage());
             }
         }
         String endBody = "</tbody>\n";
@@ -120,7 +122,7 @@ public class Converter {
 
                 }
             } catch (JSONException e) {
-                e.printStackTrace();
+                logger.error("Error parsing JSON in jsonToJUnitXML: " + e.getMessage());
             }
         }
 

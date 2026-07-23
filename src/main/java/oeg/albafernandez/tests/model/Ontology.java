@@ -172,7 +172,7 @@ public class Ontology {
     }
 
 
-    public String loadOntologyFromfile(String filename) {
+    public String loadOntologyFromFile(String filename) {
         String response = " ";
         this.manager = OWLManager.createOWLOntologyManager();
 

@@ -35,7 +35,7 @@ public class ThemisResultsGenerator {
         }
         for (String ontologyCode : ontologiesCode) {
             Ontology ontology = new Ontology();
-            ontology.loadOntologyFromfile(ontologyCode);
+            ontology.loadOntologyFromFile(ontologyCode);
             listOfOntologies.add(ontology);
         }
         return listOfOntologies;
