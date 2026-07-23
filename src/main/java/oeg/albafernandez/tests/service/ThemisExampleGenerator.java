@@ -34,74 +34,57 @@ public class ThemisExampleGenerator {
     }
 
     public String generateTypeExampleFromOntology(Ontology ontology){
-        String testCaseDesign = "";
-        Iterator it = ontology.getOntology().getClassesInSignature().iterator();
-        OWLClass owlClass=null;
+        Iterator<OWLClass> it = ontology.getOntology().getClassesInSignature().iterator();
         while(it.hasNext()) {
-            owlClass = (OWLClass) it.next();
-            testCaseDesign = owlClass.getIRI().getFragment()+" type Class";
-            return testCaseDesign;
+            OWLClass owlClass = it.next();
+            return owlClass.getIRI().getFragment() + " type Class";
         }
-
-        return testCaseDesign;
+        return "";
     }
 
     public String generateSubClassExampleFromOntology(Ontology ontology){
-        String testCaseDesign = "";
-        Iterator it = ontology.getOntology().getClassesInSignature().iterator();
-        OWLClass owlClass=null;
+        Iterator<OWLClass> it = ontology.getOntology().getClassesInSignature().iterator();
 
         while(it.hasNext()) {
-            Iterator<OWLSubClassOfAxiom>  it2 = ontology.getOntology().getSubClassAxiomsForSubClass((OWLClass) it.next()).iterator();
+            Iterator<OWLSubClassOfAxiom> it2 = ontology.getOntology().getSubClassAxiomsForSubClass(it.next()).iterator();
 
             while(it2.hasNext()) {
-                OWLSubClassOfAxiom OWLSubClassOf = it2.next();
-                testCaseDesign = OWLSubClassOf.getSubClass().asOWLClass().getIRI().getFragment() +" subClassOf " + OWLSubClassOf.getSuperClass().asOWLClass().getIRI().getFragment();
-                return testCaseDesign;
+                OWLSubClassOfAxiom owlSubClassOf = it2.next();
+                return owlSubClassOf.getSubClass().asOWLClass().getIRI().getFragment() + " subClassOf " + owlSubClassOf.getSuperClass().asOWLClass().getIRI().getFragment();
             }
         }
 
-
-        return testCaseDesign;
+        return "";
     }
 
     public String generateRangeExampleFromOntology(Ontology ontology){
-        String testCaseDesign = "" ;
-        Iterator it = ontology.getOntology().getObjectPropertiesInSignature().iterator();
-        OWLObjectProperty owlProperty=null;
-        OWLObjectPropertyRangeAxiom OWLRange=null;
+        Iterator<OWLObjectProperty> it = ontology.getOntology().getObjectPropertiesInSignature().iterator();
         while(it.hasNext()) {
-            OWLObjectProperty obj = (OWLObjectProperty) it.next();
-            Iterator it2 = ontology.getOntology().getObjectPropertyRangeAxioms(obj).iterator();
+            OWLObjectProperty obj = it.next();
+            Iterator<OWLObjectPropertyRangeAxiom> it2 = ontology.getOntology().getObjectPropertyRangeAxioms(obj).iterator();
 
             while(it2.hasNext()) {
-                OWLRange = (OWLObjectPropertyRangeAxiom) it2.next();
-                testCaseDesign =  obj.getIRI().getFragment()+" range "+ OWLRange.getRange().asOWLClass().getIRI().getFragment();
-                return testCaseDesign;
+                OWLObjectPropertyRangeAxiom owlRange = it2.next();
+                return obj.getIRI().getFragment() + " range " + owlRange.getRange().asOWLClass().getIRI().getFragment();
             }
-
         }
 
-        return testCaseDesign;
+        return "";
     }
 
     public String generateDomainExampleFromOntology(Ontology ontology){
-        String testCaseDesign = "" ;
-        Iterator it = ontology.getOntology().getObjectPropertiesInSignature().iterator();
-        OWLObjectProperty owlProperty=null;
-        OWLObjectPropertyDomainAxiom OWLdomain=null;
+        Iterator<OWLObjectProperty> it = ontology.getOntology().getObjectPropertiesInSignature().iterator();
         while(it.hasNext()) {
-            OWLObjectProperty obj = (OWLObjectProperty) it.next();
-            Iterator it2 = ontology.getOntology().getObjectPropertyDomainAxioms(obj).iterator();
+            OWLObjectProperty obj = it.next();
+            Iterator<OWLObjectPropertyDomainAxiom> it2 = ontology.getOntology().getObjectPropertyDomainAxioms(obj).iterator();
 
             while(it2.hasNext()) {
-                OWLdomain = (OWLObjectPropertyDomainAxiom) it2.next();
-                testCaseDesign =  obj.getIRI().getFragment()+" domain "+ OWLdomain.getDomain().asOWLClass().getIRI().getFragment();
-                return testCaseDesign;
+                OWLObjectPropertyDomainAxiom owlDomain = it2.next();
+                return obj.getIRI().getFragment() + " domain " + owlDomain.getDomain().asOWLClass().getIRI().getFragment();
             }
 
         }
 
-        return testCaseDesign;
+        return "";
     }
 }
