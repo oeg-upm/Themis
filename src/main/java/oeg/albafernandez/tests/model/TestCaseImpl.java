@@ -30,7 +30,7 @@ public class TestCaseImpl {
         this.assertionsAxioms = new LinkedHashMap<>();
         this.axiomExpectedResultAxioms = new LinkedHashMap<>();
         this.axiomExpectedResult = new LinkedHashMap<>();
-        this.axiomExpectedResult = new LinkedHashMap<>();
+        this.preconditionQuery = new ArrayList<>();
         this.assertions = new LinkedHashMap<>();
         this.precondition = new ArrayList<>();
         this.preparation ="";
