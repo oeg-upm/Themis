@@ -2,7 +2,7 @@ package oeg.albafernandez.tests.service;
 
 import com.google.gson.Gson;
 import oeg.albafernandez.tests.model.Ontology;
-import oeg.albafernandez.tests.utils.GoT;
+import oeg.albafernandez.tests.utils.Got;
 import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -232,9 +232,9 @@ public class ThemisSyntaxChecker {
         HashMap<String, IRI> got = new HashMap<>();
         Ontology owlOntology = new Ontology();
         if (!ontology.equals(""))
-            owlOntology.loadOntologyURL(ontology);
+            owlOntology.loadOntologyFromURL(ontology);
         else
-            owlOntology.loadOntologyfile(filename);
+            owlOntology.loadOntologyFromfile(filename);
 
         if (matchers.get(7).matches() || matchers.get(20).matches()) {
 
@@ -358,7 +358,7 @@ public class ThemisSyntaxChecker {
         elements.putAll(onto.getIndividuals());
 
         if (!elements.isEmpty()) {
-            GoT report = new GoT();
+            Got report = new Got();
             String reportText = report.generateReport(onto.getKeyName(), (HashMap<String, IRI>) onto.getClasses(), onto.getObjectProperties(), onto.getDatatypeProperties(), onto.getIndividuals());
             JSONObject linkToReportGoT = new JSONObject();
             linkToReportGoT.put("got", reportText);
@@ -374,14 +374,14 @@ public class ThemisSyntaxChecker {
 
     public String getGoTFromURI(String uri) throws JSONException, NullPointerException {
         Ontology onto = new Ontology();
-        onto.loadOntologyURL(uri.replace("\"", "").trim());
+        onto.loadOntologyFromURL(uri.replace("\"", "").trim());
         return getGoT(onto);
 
     }
 
     public String getGoTFromFilename(String ontologycode) throws JSONException, NullPointerException {
         Ontology onto = new Ontology();
-        onto.loadOntologyfile(ontologycode);
+        onto.loadOntologyFromfile(ontologycode);
         return getGoT(onto);
     }
 
@@ -407,13 +407,13 @@ public class ThemisSyntaxChecker {
     public String getPlainGoTFromURI(String uri) throws JSONException, OWLOntologyStorageException {
 
         Ontology onto = new Ontology();
-        onto.loadOntologyURL(uri.replace("\"", "").trim());
+        onto.loadOntologyFromURL(uri.replace("\"", "").trim());
         return getPlainGoT(onto);
     }
 
     public String getPlainGoTFromFile(String filename) throws JSONException, OWLOntologyStorageException {
         Ontology onto = new Ontology();
-        onto.loadOntologyfile(filename);
+        onto.loadOntologyFromfile(filename);
         return getPlainGoT(onto);
 
 
