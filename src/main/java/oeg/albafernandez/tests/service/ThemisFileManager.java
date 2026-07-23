@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ThemisFileManager {
-    static final Logger logger = Logger.getLogger(ThemisExecuter.class);
+    static final Logger logger = Logger.getLogger(ThemisFileManager.class);
 
     public String loadTests(String testuri, String testfile) throws  OWLOntologyCreationException, JSONException {
         if(testuri!=null) {

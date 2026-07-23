@@ -1,19 +1,12 @@
 package oeg.albafernandez.tests.utils;
 
-import com.clarkparsia.owlapiv3.XSD;
-import oeg.albafernandez.tests.model.TestCaseDesign;
 import oeg.albafernandez.tests.model.TestCaseImpl;
-import org.apache.log4j.Logger;
-import org.coode.owlapi.turtle.TurtleOntologyFormat;
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.*;
 import org.semanticweb.owlapi.vocab.OWL2Datatype;
 
-import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

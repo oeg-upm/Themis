@@ -1,6 +1,5 @@
 package oeg.albafernandez.tests.utils;
 
-import com.google.gson.JsonObject;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
