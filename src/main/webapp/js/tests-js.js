@@ -1,3 +1,18 @@
+function escapeHTML(str) {
+    if (str === null || str === undefined) return '';
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
+function escapeRegExp(str) {
+    if (!str) return '';
+    return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
 $(document).ready( function () {
 
     $.ajax({
@@ -278,15 +293,16 @@ function check() {
                             var cell4 = row.insertCell(3);
                             cell4.innerHTML = "<button type=\"button\" class=\"btn btn-default\" onclick=\"removeOntology(this)\" title=\"Remove test\"> <span class=\"submit glyphicon glyphicon-trash\" \"></span> </button>";
                             if (result.Result == 'Passed') {
-                                cell1.innerHTML = "<p name=\"testintable\">" + item.Test + "</p>";
+                                cell1.innerHTML = "<p name=\"testintable\">" + escapeHTML(item.Test) + "</p>";
                                 cell2.innerHTML = "<span class=\"label label-success\" data-toggle=\"tooltip\" title=\"The ontology passed the test\">Passed</span>";
                                 cell3.innerHTML = "<p>None</p>";
                             } else if (result.Result == 'Undefined') {
-                                var test = item.Test;
+                                var test = escapeHTML(item.Test);
 
-                                $.each(result.Undefined, function (j, undefined) {
-                                    let re = new RegExp(`\\b${undefined}\\b`, 'gi');
-                                    test = test.replace(re, "<span style=\"color:red;\">"+""+undefined+"</span>");
+                                $.each(result.Undefined, function (j, undefinedTerm) {
+                                    let safeTerm = escapeHTML(undefinedTerm);
+                                    let re = new RegExp(`\\b${escapeRegExp(safeTerm)}\\b`, 'gi');
+                                    test = test.replace(re, "<span style=\"color:red;\">"+safeTerm+"</span>");
                                 });
 
                                 cell1.innerHTML = "<p name=\"testintable\">" + test + "</p>";
@@ -295,23 +311,24 @@ function check() {
                                 cell3.innerHTML = "<p>The terms in the test are not defined in the ontology</p>";
 
                             }else if(result.Result == 'Incorrect'){
-                                var test = item.Test;
-                                $.each(result.Incorrect, function (j, incorrect) {
-                                    let re = new RegExp(`\\b${incorrect}\\b`, 'gi');
+                                var test = escapeHTML(item.Test);
+                                $.each(result.Incorrect, function (j, incorrectTerm) {
+                                    let safeTerm = escapeHTML(incorrectTerm);
+                                    let re = new RegExp(`\\b${escapeRegExp(safeTerm)}\\b`, 'gi');
 
-                                    test = test.replace(re, "<span style=\"color:#ff7f50;\">" + " "+incorrect + "</span>");
+                                    test = test.replace(re, "<span style=\"color:#ff7f50;\"> " + safeTerm + "</span>");
                                 });
                                 cell1.innerHTML = "<p name=\"testintable\">" + test + "</p>";
 
                                 cell2.innerHTML = "<span class=\"label label-default \" data-toggle=\"tooltip\" title=\"The ontology did not pass the test\">Undefined terms</span>";
                                 cell3.innerHTML = "<p>The terms in the test are not correctly defined in the ontology</p>";
                             } else if (result.Result == 'Absent') {
-                                cell1.innerHTML = "<p name=\"testintable\">" + item.Test + "</p>";
+                                cell1.innerHTML = "<p name=\"testintable\">" + escapeHTML(item.Test) + "</p>";
 
                                 cell2.innerHTML = "<span class=\"label label-warning\" data-toggle=\"tooltip\" title=\"The ontology did not pass the test\">Absent relation</span>";
                                 cell3.innerHTML = "<p>The ontology does not implement the requirement associated to the test</p>";
                             } else {
-                                cell1.innerHTML = "<p name=\"testintable\">" + item.Test + "</p>";
+                                cell1.innerHTML = "<p name=\"testintable\">" + escapeHTML(item.Test) + "</p>";
 
                                 cell2.innerHTML = "<span class=\"label label-danger\" data-toggle=\"tooltip\" title=\"The ontology did not pass the test\">Conflict</span>";
                                 cell3.innerHTML = "<p>The ontology has a relation which causes a conflict with the one define in the test</p>";
@@ -320,11 +337,8 @@ function check() {
                     }else if(item.Results.length <= 1 && table == null) {
 
                         var table = document.getElementById("tablemultiple");
-                        //  var table = document.getElementsByName("tableresults")[0].setAttribute("id","tablemultiple");
                         document.getElementsByName("tableresults")[0].setAttribute("id","table");
                         var table = document.getElementById("table");
-                        //document.getElementsByTagName("table")[0].setAttribute("id","table");
-                        //var table = document.getElementById("table");
 
                         $("#table").html("");
 
@@ -346,33 +360,29 @@ function check() {
                             var cell2 = row.insertCell(1);
                             var cell3 = row.insertCell(2);
                             var cell4 = row.insertCell(3);
-                            cell1.innerHTML = "<p name=\"testintable\">" + item.Test + "</p>";
-                            cell4.innerHTML = "<button type=\"button\" class=\"btn btn-default\" onclick=\"removeOntology(this)\" title=\"Remove test\"> <span class=\"submit glyphicon glyphicon-trash\"    \"></span> </button>";
+                            cell1.innerHTML = "<p name=\"testintable\">" + escapeHTML(item.Test) + "</p>";
+                            cell4.innerHTML = "<button type=\"button\" class=\"btn btn-default\" onclick=\"removeOntology(this)\" title=\"Remove test\"> <span class=\"submit glyphicon glyphicon-trash\"></span> </button>";
                             if (result.Result == 'Passed') {
                                 cell2.innerHTML = "<span class=\"label label-success\" data-toggle=\"tooltip\" title=\"The ontology passed the test\">Passed</span>";
                                 cell3.innerHTML = "<p>None</p>";
                             } else if (result.Result == 'Undefined') {
-                                var test = item.Test;
-                                $.each(result.Undefined, function (j, undefined) {
-                                    let re = new RegExp(`\\b${undefined}\\b`, 'gi');
-                                    test = test.replace(re, "<span style=\"color:red;\">"+undefined+"</span>");
+                                var test = escapeHTML(item.Test);
+                                $.each(result.Undefined, function (j, undefinedTerm) {
+                                    let safeTerm = escapeHTML(undefinedTerm);
+                                    let re = new RegExp(`\\b${escapeRegExp(safeTerm)}\\b`, 'gi');
+                                    test = test.replace(re, "<span style=\"color:red;\">"+safeTerm+"</span>");
                                 });
                                 cell1.innerHTML = "<p name=\"testintable\">" + test + "</p>";
-                                cell2.innerHTML = "<span class=\"label label-default \" data-toggle=\"tooltip\" title=\"The ontology did not pass the test\">Undefined terms</span>";
-                                cell3.innerHTML = "<p>The terms in the test are not defined in the ontology</p>";
-
                                 cell2.innerHTML = "<span class=\"label label-default \" data-toggle=\"tooltip\" title=\"The ontology did not pass the test\">Undefined terms</span>";
                                 cell3.innerHTML = "<p>The terms in the test are not defined in the ontology</p>";
                             } else if (result.Result == 'Incorrect') {
-                                var test = item.Test;
-                                $.each(result.Incorrect, function (j, incorrect) {
-                                    let re = new RegExp(`\\b${incorrect}\\b`, 'gi');
-                                    test = test.replace(re, "<span style=\"color:red;\">"+incorrect+"</span>");
+                                var test = escapeHTML(item.Test);
+                                $.each(result.Incorrect, function (j, incorrectTerm) {
+                                    let safeTerm = escapeHTML(incorrectTerm);
+                                    let re = new RegExp(`\\b${escapeRegExp(safeTerm)}\\b`, 'gi');
+                                    test = test.replace(re, "<span style=\"color:red;\">"+safeTerm+"</span>");
                                 });
                                 cell1.innerHTML = "<p name=\"testintable\">" + test + "</p>";
-                                cell2.innerHTML = "<span class=\"label label-default \" data-toggle=\"tooltip\" title=\"The ontology did not pass the test\">Undefined terms</span>";
-                                cell3.innerHTML = "<p>The terms in the test are not correctly defined in the ontology</p>";
-
                                 cell2.innerHTML = "<span class=\"label label-default \" data-toggle=\"tooltip\" title=\"The ontology did not pass the test\">Undefined terms</span>";
                                 cell3.innerHTML = "<p>The terms in the test are not correctly defined in the ontology</p>";
                             } else if (result.Result == 'Absent') {
@@ -386,7 +396,6 @@ function check() {
 
                     }else if(item.Results.length > 1 && table != null){
 
-                        // document.getElementsByTagName("table")[0].setAttribute("id","tablemultiple"); //cambiar esto?
                         document.getElementById("table").setAttribute("id","tablemultiple");
                         var table = document.getElementById("tablemultiple");
                         $("#tablemultiple").html("");
@@ -396,7 +405,7 @@ function check() {
                             "\t\t<th>Test</th>\n";
 
                         item.Results.forEach(function (ontology) {
-                            header+="<th>"+ontology.Ontology+"</th>\n";
+                            header+="<th>"+escapeHTML(ontology.Ontology)+"</th>\n";
                         });
                         header+="<th></th>\n";
                         header+="\t</tr>\n"+
@@ -405,43 +414,43 @@ function check() {
                         $("#tablemultiple").append(header);
 
 
-                        var table = "<tbody>";
-                        table +="<td  class=\"col\">"+item.Test+"</td>";
+                        var tableStr = "<tbody>";
+                        tableStr +="<td class=\"col\">"+escapeHTML(item.Test)+"</td>";
                         item.Results.forEach(function (result) {
                             if (result.Result == 'Passed') {
-                                table +="<td  class=\"col\"><span class=\"label label-success\" data-toggle=\"tooltip\" title=\"The ontology passed the test\">Passed</span></td>";
+                                tableStr +="<td class=\"col\"><span class=\"label label-success\" data-toggle=\"tooltip\" title=\"The ontology passed the test\">Passed</span></td>";
                             } else if (result.Result == 'Undefined') {
-                                table += "<td  class=\"col\"><span class=\"label label-default \" data-toggle=\"tooltip\" title=\""+result.Undefined+" not defined in the ontology\">Undefined terms</span></td>";
+                                tableStr += "<td class=\"col\"><span class=\"label label-default \" data-toggle=\"tooltip\" title=\""+escapeHTML(result.Undefined)+" not defined in the ontology\">Undefined terms</span></td>";
                             }else if (result.Result == 'Incorrect') {
-                                table += "<td  class=\"col\"><span class=\"label label-default \" data-toggle=\"tooltip\" title=\""+result.Incorrect+" not correctly defined in the ontology \">Incorrect terms</span></td>";
+                                tableStr += "<td class=\"col\"><span class=\"label label-default \" data-toggle=\"tooltip\" title=\""+escapeHTML(result.Incorrect)+" not correctly defined in the ontology \">Incorrect terms</span></td>";
                             } else if (result.Result == 'Absent') {
-                                table += "<td  class=\"col\"><span class=\"label label-warning\" data-toggle=\"tooltip\" title=\"The ontology did not pass the test\">Absent relation</span></td>";
+                                tableStr += "<td class=\"col\"><span class=\"label label-warning\" data-toggle=\"tooltip\" title=\"The ontology did not pass the test\">Absent relation</span></td>";
                             } else {
-                                table += "<td  class=\"col\"><span class=\"label label-danger\" data-toggle=\"tooltip\" title=\"The ontology did not pass the test\">Conflict</span></td>";
+                                tableStr += "<td class=\"col\"><span class=\"label label-danger\" data-toggle=\"tooltip\" title=\"The ontology did not pass the test\">Conflict</span></td>";
                             }
                         });
-                        table +="<td  class=\"col\"><button type=\"button\" class=\"btn btn-default\" onclick=\"removeOntology(this)\" title=\"Remove test\"> <span class=\"submit glyphicon glyphicon-trash\"    \"></span> </button></td></tbody>";
-                        $("#tablemultiple").append(table);
+                        tableStr +="<td class=\"col\"><button type=\"button\" class=\"btn btn-default\" onclick=\"removeOntology(this)\" title=\"Remove test\"> <span class=\"submit glyphicon glyphicon-trash\"></span> </button></td></tbody>";
+                        $("#tablemultiple").append(tableStr);
                     }else{
 
                         var table = document.getElementById("tablemultiple");
 
                         var row = table.insertRow(1);
                         var cell2 = row.insertCell(0);
-                        cell2.innerHTML = "<td  class=\"col\">"+item.Test+"</td>";
+                        cell2.innerHTML = "<td class=\"col\">"+escapeHTML(item.Test)+"</td>";
                         var index=1;
                         $.each(item.Results, function (i, result) {
                             var cell1 = row.insertCell(i+1);
                             if (result.Result == 'Passed') {
-                                cell1.innerHTML ="<td  class=\"col\"><span class=\"label label-success\" data-toggle=\"tooltip\" title=\"The ontology passed the test\">Passed</span></td>";
+                                cell1.innerHTML ="<td class=\"col\"><span class=\"label label-success\" data-toggle=\"tooltip\" title=\"The ontology passed the test\">Passed</span></td>";
                             } else if (result.Result == 'Undefined') {
-                                cell1.innerHTML ="<td  class=\"col\"><span class=\"label label-default \" data-toggle=\"tooltip\" title=\""+result.Undefined+"  not defined in the ontology\">Undefined terms</span></td>";
+                                cell1.innerHTML ="<td class=\"col\"><span class=\"label label-default \" data-toggle=\"tooltip\" title=\""+escapeHTML(result.Undefined)+" not defined in the ontology\">Undefined terms</span></td>";
                             }else if (result.Result == 'Incorrect') {
-                                cell1.innerHTML ="<td  class=\"col\"><span class=\"label label-default \" data-toggle=\"tooltip\" title=\""+result.Incorrect+" not correctly defined in the ontology \">Incorrect terms</span></td>";
+                                cell1.innerHTML ="<td class=\"col\"><span class=\"label label-default \" data-toggle=\"tooltip\" title=\""+escapeHTML(result.Incorrect)+" not correctly defined in the ontology \">Incorrect terms</span></td>";
                             } else if (result.Result == 'Absent') {
-                                cell1.innerHTML ="<td  class=\"col\"><span class=\"label label-warning\" data-toggle=\"tooltip\" title=\"The ontology did not pass the test\">Absent relation</span></td>";
+                                cell1.innerHTML ="<td class=\"col\"><span class=\"label label-warning\" data-toggle=\"tooltip\" title=\"The ontology did not pass the test\">Absent relation</span></td>";
                             } else {
-                                cell1.innerHTML = "<td  class=\"col\"><span class=\"label label-danger\" data-toggle=\"tooltip\" title=\"The ontology did not pass the test\">Conflict</span></td>";
+                                cell1.innerHTML = "<td class=\"col\"><span class=\"label label-danger\" data-toggle=\"tooltip\" title=\"The ontology did not pass the test\">Conflict</span></td>";
                             }
                             index++;
 
@@ -540,14 +549,17 @@ function loadontologyFromURI() {
                     //  var text = "<p   name=\"" + uri + "\"><a href=\"" + uri + "\"><button  type=\"button\" class=\"btn btn-link\" ><small><span class=\"glyphicon glyphicon-ok align-middle\" aria-hidden=\"true\"></span></small></button></a></p>";
                     // $("#loadcheck").append(text);
 
-                    var text = "<p   name=\"" + uri + "\"><a href=\"" + uri + "\"><button  data-toggle=\"collapse\" name=\"ontology\" type=\"button\" class=\"btn btn-link\" value='" + uri + "'><small><span class=\"glyphicon glyphicon-ok align-middle\" aria-hidden=\"true\"></span> " + uri + "</small></button></a></p>";
+                    var safeUri = escapeHTML(uri);
+                    var safeKey = escapeHTML(data.key);
+
+                    var text = "<p name=\"" + safeUri + "\"><a href=\"" + safeUri + "\" target=\"_blank\" rel=\"noopener noreferrer\"><button data-toggle=\"collapse\" name=\"ontology\" type=\"button\" class=\"btn btn-link\" value='" + safeUri + "'><small><span class=\"glyphicon glyphicon-ok align-middle\" aria-hidden=\"true\"></span> " + safeUri + "</small></button></a></p>";
                     $("#loadonto").append(text);
 
 
-                    var text = "<p   class= \"collapse-title\" name=\"" + uri + "\"><a><button data-toggle=\"collapse\" type=\"button\" data-target=\"#" + data.key + "collapse\" aria-expanded=\"false\"  aria-controls=\"" + data.key + "collapse\" class=\"btn btn-link\" id=\"" + uri + "\" onclick='hover(this)' '><span title=\"See got \" class=\"glyphicon glyphicon-chevron-down align-middle\" aria-hidden=\"true\"></span><small> See the glossary of terms</small> </button></a></p>";
+                    var text = "<p class=\"collapse-title\" name=\"" + safeUri + "\"><a><button data-toggle=\"collapse\" type=\"button\" data-target=\"#" + safeKey + "collapse\" aria-expanded=\"false\" aria-controls=\"" + safeKey + "collapse\" class=\"btn btn-link\" id=\"" + safeUri + "\" onclick='hover(this)'><span title=\"See got \" class=\"glyphicon glyphicon-chevron-down align-middle\" aria-hidden=\"true\"></span><small> See the glossary of terms</small> </button></a></p>";
                     $("#loadgot").append(text);
 
-                    var text2 = "           <div  name=\"" + uri + "\" style = \"background-color: gainsboro\" class=\"collapse col-md-12\" id=\"" + data.key + "collapse\">\n" +
+                    var text2 = "           <div name=\"" + safeUri + "\" style=\"background-color: gainsboro\" class=\"collapse col-md-12\" id=\"" + safeKey + "collapse\">\n" +
                         "                            <div class=\"card card-body\">\n" + data.got +
 
                         "                            </div>\n" +
@@ -556,7 +568,7 @@ function loadontologyFromURI() {
 
                     $("#aux").append(text2);
 
-                    var text = "<p   name=\"" + uri + "\"><a><button type=\"button\" class=\"btn btn-link\" onclick=\"removeGot('" + uri + "')\" ><small><span title=\"Remove ontology\" class=\"glyphicon glyphicon-trash align-middle\" aria-hidden=\"true\"></span> Remove</small> </button></a></p>";
+                    var text = "<p name=\"" + safeUri + "\"><a><button type=\"button\" class=\"btn btn-link\" onclick=\"removeGot('" + safeUri.replace(/'/g, "\\'") + "')\"><small><span title=\"Remove ontology\" class=\"glyphicon glyphicon-trash align-middle\" aria-hidden=\"true\"></span> Remove</small> </button></a></p>";
                     $("#deleteonto").append(text);
 
 
@@ -632,17 +644,20 @@ function loadontologyFromFile(){
 
                     //  var text = "<p   name=\"" + uri + "\"><a href=\"" + uri + "\"><button  type=\"button\" class=\"btn btn-link\" ><small><span class=\"glyphicon glyphicon-ok align-middle\" aria-hidden=\"true\"></span></small></button></a></p>";
                     // $("#loadcheck").append(text);
-                    var text = "<p   name=\"" + data.uri + "\"><button  data-toggle=\"collapse\" name=\"ontologyfile\" type=\"button\" class=\"btn btn-link\" value='" + data.uri + "'><small><span class=\"glyphicon glyphicon-ok align-middle\" aria-hidden=\"true\"></span> " + data.uri + "</small></button></p>";
+                    var safeUri = escapeHTML(data.uri);
+                    var safeKey = escapeHTML(data.key);
+                    var safeCode = escapeHTML(ontologyfile);
 
+                    var text = "<p name=\"" + safeUri + "\"><button data-toggle=\"collapse\" name=\"ontologyfile\" type=\"button\" class=\"btn btn-link\" value='" + safeUri + "'><small><span class=\"glyphicon glyphicon-ok align-middle\" aria-hidden=\"true\"></span> " + safeUri + "</small></button></p>";
 
-                    text+="<div  name=\"" + data.uri + "\" ><textarea  style=\"display:none;\" name = \"ontologycode\" id=\""+data.key+"\">"+ontologyfile.replace("/><\/https:>/g",'\/>')+"</textarea></div>";
+                    text+="<div name=\"" + safeUri + "\"><textarea style=\"display:none;\" name=\"ontologycode\" id=\""+safeKey+"\">"+safeCode+"</textarea></div>";
 
                     $("#loadonto").append(text);
 
-                    var text = "<p   class= \"collapse-title\" name=\"" + data.uri + "\"><a><button data-toggle=\"collapse\" type=\"button\" data-target=\"#" + data.key + "collapse\" aria-expanded=\"false\"  aria-controls=\"" + data.key + "collapse\" class=\"btn btn-link\" id=\"" + data.uri + "\" onclick='hover(this)' '><span title=\"See got \" class=\"glyphicon glyphicon-chevron-down align-middle\" aria-hidden=\"true\"></span><small> See the glossary of terms</small> </button></a></p>";
+                    var text = "<p class=\"collapse-title\" name=\"" + safeUri + "\"><a><button data-toggle=\"collapse\" type=\"button\" data-target=\"#" + safeKey + "collapse\" aria-expanded=\"false\" aria-controls=\"" + safeKey + "collapse\" class=\"btn btn-link\" id=\"" + safeUri + "\" onclick='hover(this)'><span title=\"See got \" class=\"glyphicon glyphicon-chevron-down align-middle\" aria-hidden=\"true\"></span><small> See the glossary of terms</small> </button></a></p>";
                     $("#loadgot").append(text);
 
-                    var text2 = "           <div  name=\"" + data.uri + "\" style = \"background-color: gainsboro\" class=\"collapse col-md-12\" id=\"" + data.key + "collapse\">\n" +
+                    var text2 = "           <div name=\"" + safeUri + "\" style=\"background-color: gainsboro\" class=\"collapse col-md-12\" id=\"" + safeKey + "collapse\">\n" +
                         "                            <div class=\"card card-body\">\n" + data.got +
 
                         "                            </div>\n" +
@@ -651,7 +666,7 @@ function loadontologyFromFile(){
 
                     $("#aux").append(text2);
 
-                    var text = "<p   name=\"" + data.uri + "\"><a><button type=\"button\" class=\"btn btn-link\" onclick=\"removeGot('" + data.uri + "')\" ><small><span title=\"Remove ontology\" class=\"glyphicon glyphicon-trash align-middle\" aria-hidden=\"true\"></span> Remove</small> </button></a></p>";
+                    var text = "<p name=\"" + safeUri + "\"><a><button type=\"button\" class=\"btn btn-link\" onclick=\"removeGot('" + safeUri.replace(/'/g, "\\'") + "')\"><small><span title=\"Remove ontology\" class=\"glyphicon glyphicon-trash align-middle\" aria-hidden=\"true\"></span> Remove</small> </button></a></p>";
                     $("#deleteonto").append(text);
 
 
