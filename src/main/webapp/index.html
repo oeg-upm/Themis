@@ -5,6 +5,9 @@
     <title>Validate your ontology</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="language" content="English">
+    <meta name="description" content="Themis is a web application for validating OWL/RDF ontology models by executing test suites derived from requirements.">
+    <link rel="icon" type="image/png" href="images/themis.png">
+
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
@@ -18,17 +21,6 @@
     <link href="vocab/css/bootstrap.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="vocab/css/style-custom.css">
 
-    <style type="text/css">
-
-        .table-wrapper-scroll-y {
-            display: block;
-            max-height: 200px;
-            overflow-y: auto;
-            -ms-overflow-style: -ms-autohiding-scrollbar;
-        }
-
-
-    </style>
 
 
 </head>
@@ -37,31 +29,7 @@
 
 
 <!-- Static navbar -->
-<nav class="navbar navbar-default ">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#"> <img src="images/themis.png" class="img-rounded img-responsive" width="35%" ></a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li class="active"><a href="index.html">Home</a></li>
-                <li><a href="howto.html">How to use Themis</a></li>
-                <li><a href="swagger-ui/index.html">API REST</a></li>
-                <li><a href="catalogue.html">Catalogue</a></li>
-                <li><a href="https://github.com/oeg-upm/Themis">GitHub</a></li>
-                <li><a href="dissemination.html">Dissemination</a></li>
-                <!--<li><a href="tests-info.html">Supported tests</a></li>-->
-            </ul>
-        </div><!--/.nav-collapse -->
-
-    </div>
-</nav>
+<div id="header-placeholder"></div>
 
 
 
@@ -84,7 +52,7 @@
                         <h4 class="checkout-step-title"> <a role="button" data-parent="#accordion" > Load the ontology</a></h4>
                     </div>
                     <div class="checkout-step-body">
-                        <p class="text-left"><label> Add the URI of the ontology to be validated: </label></p>
+                        <p class="text-left"><label for="ontology"> Add the URI of the ontology to be validated: </label></p>
 
 
                         <div >
@@ -98,13 +66,13 @@
                             </div>
 
                             <br>
-                            <p class="text-left"><label> Add the code of the ontology to be validated: </label></p>
+                            <p class="text-left"><label for="ontologyfile"> Add the code of the ontology to be validated: </label></p>
 
                             <div class="col-md-9"  >
                                 <textarea  id="ontologyfile" name = "ontologyfile" rows="4" cols="116"> </textarea>
                             </div>
                             <div class="col-md-2 text-right" >
-                                <button id="loadfile" name="loadfile"  class="btn btn-primary mb-3 btn-custom" onclick="loadontologyFromFile()" >Load  from file </button>
+                                <button id="loadfile" name="loadfile"  class="btn btn-primary mb-3 btn-custom" onclick="loadontologyFromFile()" >Load from code </button>
                             </div>
                         </div>
 
@@ -132,7 +100,7 @@
                     </div>
 
                     <div class="checkout-step-body">
-                        <p class="text-left"><label> You can load a test suite from a URL, adding an RDF file that uses the <a href="https://w3id.org/def/vtc#">VTC</a> ontology. </label></p>
+                        <p class="text-left"><label for="testuri"> You can load a test suite from a URL, adding an RDF file that uses the <a href="https://w3id.org/def/vtc#">VTC</a> ontology. </label></p>
 
                         <div class="col-md-9" >
                             <input   class="form-control testuri" name="testuri" id="testuri" >
@@ -143,20 +111,20 @@
                                 <!--<button id="addtests"  disabled="true" class="btn btn-primary mb-2"  onclick="add()">Add to test suite</button> -->
                             </div>
                         </div>
-                        <p class="text-left"><label> Or you can copy the test suite code, if the test suite uses the <a href="https://w3id.org/def/vtc#">VTC</a> ontology. </label></p>
+                        <p class="text-left"><label for="testfile"> Or you can copy the test suite code, if the test suite uses the <a href="https://w3id.org/def/vtc#">VTC</a> ontology. </label></p>
 
                         <div class="col-md-9"  >
                             <textarea  id="testfile" name = "testfile" rows="4" cols="116"> </textarea>
                         </div>
                         <div class="col-md-2 text-right" >
-                            <button id="loadtestfile" name="loadtestfile"  class="btn btn-primary mb-3 btn-custom" onclick="loadTestsFromFile()" >Load from file </button>
+                            <button id="loadtestfile" name="loadtestfile"  class="btn btn-primary mb-3 btn-custom" onclick="loadTestsFromFile()" >Load from code </button>
                         </div>
                     </div>
                     <br>
                     <br>
                     <br>
                     <div class="checkout-step-body">
-                        <p class="text-left"><label> Or you can add the tests directly. To add more than one test separate them by using ";".</label></p>
+                        <p class="text-left"><label for="test"> Or you can add the tests directly. To add more than one test separate them by using ";".</label></p>
                         <p>  <label> The <a href="tests-info.html">following link</a> shows all the supported tests.</label> In <a href="examples.html">this other link</a> you can also find some examples that can be useful to propose tests.</p>
 
                         <div class="col-md-9" >
@@ -226,30 +194,7 @@
 </div> <!-- /container -->
 
 
-    <footer class="footer container">
-        <div class="row">
-            <hr />
-            <div class="col-md-7">
-                Alba Fernández Izquierdo
-                <br>
-                Contact email: albafernandez@fi.upm.es
-                <br>
-                Built with <a target="_blank" href="https://getbootstrap.com/">Bootstrap</a>
-                Icons from <a target="_blank" href="https://glyphicons.com/">Glyphicons</a>
-                <br>
-                Latest revision July, 2020
-                <br>
-                Licensed under the <a target="_blank" href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a>
-            </div>
-            <div class="col-md-5" align="right">
-                <a href="https://www.oeg-upm.net/" target="_blank"><img src="images/logo.gif" alt="OEG logo" class="img-rounded img-responsive" width="20%"/></a>
-
-                <a href="https://www.fi.upm.es/" target="_blank"><img src="images/fiLogo.png" alt="FI logo" class="img-rounded img-responsive" width="20%"/></a>
-
-                <a href="https://www.upm.es/" target="_blank"><img src="images/upmlogo.png" alt="UPM logo" class="img-rounded img-responsive" width="20%"/></a>
-            </div>
-        </div>
-    </footer>
+    <div id="footer-placeholder"></div>
 
 
 <script type="text/javascript" src="js/tests-js.js"></script>

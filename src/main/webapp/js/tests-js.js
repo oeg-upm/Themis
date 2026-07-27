@@ -57,6 +57,51 @@ function showNotification(message, type) {
 
 $(document).ready( function () {
 
+    if ($('#header-placeholder').length) {
+        var isSubfolder = window.location.pathname.includes('/conformance/') || window.location.pathname.includes('/testing/');
+        var navbarPath = isSubfolder ? '../components/navbar.html' : 'components/navbar.html';
+        $('#header-placeholder').load(navbarPath, function() {
+            var page = window.location.pathname.split('/').pop() || 'index.html';
+            $('#navbar .nav a').each(function() {
+                var href = $(this).attr('href');
+                if (href === page || (page === '' && href === 'index.html')) {
+                    $(this).parent().addClass('active');
+                } else {
+                    $(this).parent().removeClass('active');
+                }
+            });
+            if (isSubfolder) {
+                $('#navbar a[href]').each(function() {
+                    var href = $(this).attr('href');
+                    if (!href.startsWith('http')) {
+                        $(this).attr('href', '../' + href);
+                    }
+                });
+                $('#navbar img[src]').each(function() {
+                    var src = $(this).attr('src');
+                    if (!src.startsWith('http')) {
+                        $(this).attr('src', '../' + src);
+                    }
+                });
+            }
+        });
+    }
+
+    if ($('#footer-placeholder').length) {
+        var isSubfolder = window.location.pathname.includes('/conformance/') || window.location.pathname.includes('/testing/');
+        var footerPath = isSubfolder ? '../components/footer.html' : 'components/footer.html';
+        $('#footer-placeholder').load(footerPath, function() {
+            if (isSubfolder) {
+                $('#footer-placeholder img[src]').each(function() {
+                    var src = $(this).attr('src');
+                    if (!src.startsWith('http')) {
+                        $(this).attr('src', '../' + src);
+                    }
+                });
+            }
+        });
+    }
+
     $.ajax({
         type: 'GET',
         dataType: "json",
@@ -320,7 +365,7 @@ function check() {
                             var cell2 = row.insertCell(1);
                             var cell3 = row.insertCell(2);
                             var cell4 = row.insertCell(3);
-                            cell4.innerHTML = "<button type=\"button\" class=\"btn btn-default\" onclick=\"removeOntology(this)\" title=\"Remove test\"> <span class=\"submit glyphicon glyphicon-trash\" \"></span> </button>";
+                            cell4.innerHTML = "<button type=\"button\" class=\"btn btn-default\" onclick=\"removeOntology(this)\" title=\"Remove test\" aria-label=\"Remove test\"> <span class=\"submit glyphicon glyphicon-trash\"></span> </button>";
                             if (result.Result == 'Passed') {
                                 cell1.innerHTML = "<p name=\"testintable\">" + escapeHTML(item.Test) + "</p>";
                                 cell2.innerHTML = "<span class=\"label label-success\" data-toggle=\"tooltip\" title=\"The ontology passed the test\">Passed</span>";
@@ -390,7 +435,7 @@ function check() {
                             var cell3 = row.insertCell(2);
                             var cell4 = row.insertCell(3);
                             cell1.innerHTML = "<p name=\"testintable\">" + escapeHTML(item.Test) + "</p>";
-                            cell4.innerHTML = "<button type=\"button\" class=\"btn btn-default\" onclick=\"removeOntology(this)\" title=\"Remove test\"> <span class=\"submit glyphicon glyphicon-trash\"></span> </button>";
+                            cell4.innerHTML = "<button type=\"button\" class=\"btn btn-default\" onclick=\"removeOntology(this)\" title=\"Remove test\" aria-label=\"Remove test\"> <span class=\"submit glyphicon glyphicon-trash\"></span> </button>";
                             if (result.Result == 'Passed') {
                                 cell2.innerHTML = "<span class=\"label label-success\" data-toggle=\"tooltip\" title=\"The ontology passed the test\">Passed</span>";
                                 cell3.innerHTML = "<p>None</p>";
@@ -458,7 +503,7 @@ function check() {
                                 tableStr += "<td class=\"col\"><span class=\"label label-danger\" data-toggle=\"tooltip\" title=\"The ontology did not pass the test\">Conflict</span></td>";
                             }
                         });
-                        tableStr +="<td class=\"col\"><button type=\"button\" class=\"btn btn-default\" onclick=\"removeOntology(this)\" title=\"Remove test\"> <span class=\"submit glyphicon glyphicon-trash\"></span> </button></td></tbody>";
+                        tableStr +="<td class=\"col\"><button type=\"button\" class=\"btn btn-default\" onclick=\"removeOntology(this)\" title=\"Remove test\" aria-label=\"Remove test\"> <span class=\"submit glyphicon glyphicon-trash\"></span> </button></td></tbody>";
                         $("#tablemultiple").append(tableStr);
                     }else{
 
@@ -486,7 +531,7 @@ function check() {
 
                         });
                         var cell3 = row.insertCell(index);
-                        cell3.innerHTML = "<td class=\"col\"></td><button type=\"button\" class=\"btn btn-default\" onclick=\"removeOntology(this)\" title=\"Remove test\"> <span class=\"submit glyphicon glyphicon-trash\"   \"></span> </button></td>";
+                        cell3.innerHTML = "<td class=\"col\"></td><button type=\"button\" class=\"btn btn-default\" onclick=\"removeOntology(this)\" title=\"Remove test\" aria-label=\"Remove test\"> <span class=\"submit glyphicon glyphicon-trash\"></span> </button></td>";
 
 
                     }
@@ -589,7 +634,7 @@ function loadontologyFromURI() {
 
                     $("#aux").append(text2);
 
-                    var text = "<p name=\"" + safeUri + "\"><a><button type=\"button\" class=\"btn btn-link\" onclick=\"removeGot('" + safeUri.replace(/'/g, "\\'") + "')\"><small><span title=\"Remove ontology\" class=\"glyphicon glyphicon-trash align-middle\" aria-hidden=\"true\"></span> Remove</small> </button></a></p>";
+                    var text = "<p name=\"" + safeUri + "\"><a><button type=\"button\" class=\"btn btn-link\" onclick=\"removeGot('" + safeUri.replace(/'/g, "\\'") + "')\" aria-label=\"Remove ontology\"><small><span title=\"Remove ontology\" class=\"glyphicon glyphicon-trash align-middle\" aria-hidden=\"true\"></span> Remove</small> </button></a></p>";
                     $("#deleteonto").append(text);
 
 
@@ -674,12 +719,12 @@ function loadontologyFromFile(){
 
                     $("#aux").append(text2);
 
-                    var text = "<p name=\"" + safeUri + "\"><a><button type=\"button\" class=\"btn btn-link\" onclick=\"removeGot('" + safeUri.replace(/'/g, "\\'") + "')\"><small><span title=\"Remove ontology\" class=\"glyphicon glyphicon-trash align-middle\" aria-hidden=\"true\"></span> Remove</small> </button></a></p>";
+                    var text = "<p name=\"" + safeUri + "\"><a><button type=\"button\" class=\"btn btn-link\" onclick=\"removeGot('" + safeUri.replace(/'/g, "\\'") + "')\" aria-label=\"Remove ontology\"><small><span title=\"Remove ontology\" class=\"glyphicon glyphicon-trash align-middle\" aria-hidden=\"true\"></span> Remove</small> </button></a></p>";
                     $("#deleteonto").append(text);
 
 
                     document.getElementById("ontologyfile").value ="";
-                    hideLoader('#loadfile', 'Load from file');
+                    hideLoader('#loadfile', 'Load from code');
                     setActionButtonsEnabled(true);
                     var testsch = document.getElementById("checkout-tests");
                     testsch.style.opacity=1;
@@ -689,7 +734,7 @@ function loadontologyFromFile(){
                 error: function (xhr) {
                     showNotification(xhr.responseText, 'danger');
                     document.getElementById("ontologyfile").value ="";
-                    hideLoader('#loadfile', 'Load from file');
+                    hideLoader('#loadfile', 'Load from code');
                     setActionButtonsEnabled(true);
                     var testsch = document.getElementById("checkout-tests");
                     testsch.style.opacity=1;
@@ -785,7 +830,7 @@ function loadTestsFromFile() {
                         $('#test').val('');
                         $('#test').val(tests);
 
-                        hideLoader('#loadtestfile', 'Load from file');
+                        hideLoader('#loadtestfile', 'Load from code');
                         setActionButtonsEnabled(true);
                     } else {
 
@@ -794,14 +839,14 @@ function loadTestsFromFile() {
                     }
                 }else{
                     showNotification("No tests found", 'warning');
-                    hideLoader('#loadtestfile', 'Load from file');
+                    hideLoader('#loadtestfile', 'Load from code');
                     setActionButtonsEnabled(true);
                 }
 
             },
             error: function (xhr) {
                 showNotification(xhr.responseText, 'danger');
-                hideLoader('#loadtestfile', 'Load from file');
+                hideLoader('#loadtestfile', 'Load from code');
                 setActionButtonsEnabled(true);
 
             }
