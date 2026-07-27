@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>REST Service for GitHub</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="languaje" content="English">
+    <meta name="language" content="English">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
@@ -14,7 +14,7 @@
 
     <!-- Le styles -->
     <link href="vocab/css/bootstrap.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="css/style-custom.css">
+    <link rel="stylesheet" type="text/css" href="vocab/css/style-custom.css">
 
 </head>
 
@@ -33,7 +33,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#"> <img src="images/themis.png" class="img-rounded" class="img-responsive" width="35%" ></a>
+            <a class="navbar-brand" href="#"> <img src="images/themis.png" class="img-rounded img-responsive" width="35%" ></a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
@@ -48,20 +48,17 @@
         </div><!--/.nav-collapse -->
 
     </div>
-</nav>s="container" >
+</nav>
+<div class="container" >
     <!-- Jumbotron -->
     <div class="jumbotron " >
         <h2> Add Themis to your GitHub repository</h2>
     </div>
 
 
-    <!--<form method="get" action="http://vicinity.iot.linkeddata.es/reqmanagerservice/rest/register/login"> -->
-
-
-
     <div class="container">
         <p>You can also add Themis to your GitHub repo by login using your GitHub account.</p>
-        <form method="get" action="http://localhost:8080/rest/register/login">
+        <form method="get" action="rest/register/login">
             <div class="form-group">
                 <div class="col-md-9">
                     <input type="text" class="form-control" id="uname" name="uname" placeholder="username/repo">
@@ -90,19 +87,18 @@
     <footer class="footer">
         <div class="row">
             <div class="col-md-10">
-                Developed by 	        <a href = "http://oeg-upm.net" target="_blank">Ontology Engineering Group</a>
+                Developed by 	        <a href = "https://www.oeg-upm.net" target="_blank">Ontology Engineering Group</a>
                 <br>
-                Built with <a target="_blank" href="http://getbootstrap.com/">Bootstrap</a>
-                Icons from <a target="_blank" href="http://glyphicons.com/">Glyphicons</a>
+                Built with <a target="_blank" href="https://getbootstrap.com/">Bootstrap</a>
+                Icons from <a target="_blank" href="https://glyphicons.com/">Glyphicons</a>
                 <br>
                 Latest revision August, 2018
             </div>
             <div class="col-md-2">
-                <a href="http://www.oeg-upm.net/" target="_blank"><img src="vocab/logo.gif" alt="OEG logo" class="img-rounded" class="img-responsive" /></a>
+                <a href="https://www.oeg-upm.net/" target="_blank"><img src="vocab/logo.gif" alt="OEG logo" class="img-rounded img-responsive" /></a>
             </div>
         </div>
     </footer>
 </div>
 </body>
-</div> <!-- /container -->
 </html>
