@@ -3,6 +3,18 @@ cacheTTL: 0
 openAPI:
   info:
     version: '1.0.0'
-    title: 'Themis'
+    title: 'Themis REST API'
+    description: 'RESTful API for Themis, a web-based tool for validating OWL/RDF ontology models created by Alba Fernández Izquierdo.'
+    contact:
+      name: 'Raúl García-Castro'
+      email: 'r.garcia@upm.es'
+      url: 'https://www.oeg-upm.net/'
+    license:
+      name: 'Apache License 2.0'
+      url: 'https://www.apache.org/licenses/LICENSE-2.0'
   servers:
-    - url: '/rest'
+    - url: '/themis/rest'
+      description: 'Themis Server REST API Endpoint'
+  tags:
+    - name: 'Themis evaluator'
+      description: 'Endpoints for ontology validation, test execution, glossary of terms (GoT) extraction, syntax checking, and test suite generation.'

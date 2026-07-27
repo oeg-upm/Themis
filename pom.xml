@@ -221,6 +221,10 @@
           <file>${project.build.directory}/swagger-ui/META-INF/resources/webjars/swagger-ui/${swagger-ui.version}/index.html</file>
           <replacements>
             <replacement>
+              <token>https://petstore.swagger.io/v2/swagger.json</token>
+              <value>../rest/openapi.json</value>
+            </replacement>
+            <replacement>
               <token>http://petstore.swagger.io/v2/swagger.json</token>
               <value>../rest/openapi.json</value>
             </replacement>
