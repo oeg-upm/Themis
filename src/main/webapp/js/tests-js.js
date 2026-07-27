@@ -27,6 +27,34 @@ function setActionButtonsEnabled(enabled) {
     $('#checktests, #export, #clean, #loadtest, #loadtestfile').prop('disabled', !enabled);
 }
 
+function showNotification(message, type) {
+    type = type || 'danger';
+
+    var cleanMsg = message;
+    if (typeof message === 'string' && message.trim().toLowerCase().startsWith('<!doctype')) {
+        cleanMsg = 'Server error. Please check the provided data or URL.';
+    } else {
+        cleanMsg = escapeHTML(message);
+    }
+
+    var $alert = $('#app-notification');
+    if (!$alert.length) {
+        $alert = $('<div id="app-notification" class="alert alert-dismissible" role="alert" style="position: fixed; top: 70px; right: 20px; z-index: 9999; max-width: 450px; box-shadow: 0 4px 10px rgba(0,0,0,0.15); display: none;">' +
+            '<button type="button" class="close" onclick="$(\'#app-notification\').fadeOut();" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
+            '<span class="notification-body"></span>' +
+            '</div>');
+        $('body').append($alert);
+    }
+
+    $alert.removeClass('alert-danger alert-warning alert-info alert-success').addClass('alert-' + type);
+    $alert.find('.notification-body').html(cleanMsg);
+    $alert.stop(true, true).fadeIn();
+
+    setTimeout(function() {
+        $alert.fadeOut();
+    }, 5000);
+}
+
 $(document).ready( function () {
 
     $.ajax({
@@ -575,7 +603,7 @@ function loadontologyFromURI() {
 
                 },
                 error: function (xhr) {
-                    alert(xhr.responseText);
+                    showNotification(xhr.responseText, 'danger');
                     document.getElementById("ontology").value ="";
                     hideLoader('#load', 'Load from URI');
                     setActionButtonsEnabled(true);
@@ -659,7 +687,7 @@ function loadontologyFromFile(){
 
                 },
                 error: function (xhr) {
-                    alert(xhr.responseText);
+                    showNotification(xhr.responseText, 'danger');
                     document.getElementById("ontologyfile").value ="";
                     hideLoader('#loadfile', 'Load from file');
                     setActionButtonsEnabled(true);
@@ -719,14 +747,14 @@ function loadTests() {
 
                     }
                 }else{
-                    alert("No test found. Check the URI and the syntax of the RDF file");
+                    showNotification("No test found. Check the URI and the syntax of the RDF file", 'warning');
                     hideLoader('#loadtest', 'Load from URI');
                     setActionButtonsEnabled(true);
                 }
 
             },
             error: function (xhr) {
-                alert("No test found. Check the syntax of the RDF file");
+                showNotification("No test found. Check the syntax of the RDF file", 'danger');
                 hideLoader('#loadtest', 'Load from URI');
                 setActionButtonsEnabled(true);
             }
@@ -765,14 +793,14 @@ function loadTestsFromFile() {
 
                     }
                 }else{
-                    alert("No tests found");
+                    showNotification("No tests found", 'warning');
                     hideLoader('#loadtestfile', 'Load from file');
                     setActionButtonsEnabled(true);
                 }
 
             },
             error: function (xhr) {
-                alert(xhr.responseText);
+                showNotification(xhr.responseText, 'danger');
                 hideLoader('#loadtestfile', 'Load from file');
                 setActionButtonsEnabled(true);
 
