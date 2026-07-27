@@ -323,14 +323,14 @@ public class APIController {
             } else {
                 return Response
                         .status(400)
-                        .entity("The ontology could not be loaded. Please check that the ontology syntax is correct. If this error persists please contact with albafernandez@fi.upm.es ")
+                        .entity("The ontology could not be loaded. Please check that the ontology syntax is correct. If this error persists please contact with r.garcia@upm.es ")
                         .build();
             }
         } catch (Exception e) {
             logger.error(e.getMessage());
             return Response
                     .status(400)
-                    .entity("The ontology could not be loaded. If this error persists please contact with albafernandez@fi.upm.es ")
+                    .entity("The ontology could not be loaded. If this error persists please contact with r.garcia@upm.es ")
                     .build();
         }
 
@@ -363,14 +363,14 @@ public class APIController {
             } else {
                 return Response
                         .status(400)
-                        .entity("The ontology could not be loaded. Please check that the ontology URI is correct. If this error persists please contact with albafernandez@fi.upm.es ")
+                        .entity("The ontology could not be loaded. Please check that the ontology URI is correct. If this error persists please contact with r.garcia@upm.es ")
                         .build();
             }
         } catch (Exception e) {
             logger.error(e.getMessage());
             return Response
                     .status(400)
-                    .entity("The ontology could not be loaded. If this error persists please contact with albafernandez@fi.upm.es ")
+                    .entity("The ontology could not be loaded. If this error persists please contact with r.garcia@upm.es ")
                     .build();
         }
 
@@ -424,7 +424,7 @@ public class APIController {
         } catch (Exception e) {
             return Response
                     .status(400)
-                    .entity("The tests cannot be loaded. Please check the URI.  If this error persists please contact with albafernandez@fi.upm.es")
+                    .entity("The tests cannot be loaded. Please check the URI.  If this error persists please contact with r.garcia@upm.es")
                     .build();
         }
         return Response
@@ -454,7 +454,7 @@ public class APIController {
         } catch (Exception e) {
             return Response
                     .status(400)
-                    .entity("The tests cannot be loaded. Please check the URI.  If this error persists please contact with albafernandez@fi.upm.es")
+                    .entity("The tests cannot be loaded. Please check the URI.  If this error persists please contact with r.garcia@upm.es")
                     .build();
         }
         return Response
