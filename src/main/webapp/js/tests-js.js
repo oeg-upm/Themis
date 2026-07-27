@@ -3,7 +3,7 @@ $(document).ready( function () {
     $.ajax({
         type: 'GET',
         dataType: "json",
-        url: '/rest/api/renewsession',
+        url: 'rest/api/renewsession',
         success: function (data, textStatus, jqXHR) {
         },
         error: function (ts) {
@@ -78,7 +78,7 @@ $( function() {
                 });
                 $.ajax({
                     type: "POST",
-                    url:"/rest/api/autocompleteFromUriFile",
+                    url:"rest/api/autocompleteFromUriFile",
                     contentType: "application/json",
                     data: JSON.stringify({
                         test: request.term,
@@ -119,7 +119,7 @@ function syntaxChecker(){
         type: 'GET',
         dataType: "json",
         data: { test: test},
-        url: '/rest/api/syntaxChecker',
+        url: 'rest/api/syntaxChecker',
         success: function (data, textStatus, jqXHR) {
             var result = data;
 
@@ -262,7 +262,7 @@ function check() {
         type: 'POST',
         data: JSON.stringify(data),
         dataType: "json",
-        url: '/rest/api/results',
+        url: 'rest/api/results',
         contentType: "application/json",
         success: function (data, textStatus, jqXHR) {
             if (data.length > 0) {
@@ -535,7 +535,7 @@ function loadontologyFromURI() {
                 type: 'POST',
                 dataType: "json",
                 data: JSON.stringify(uri),
-                url: '/rest/api/gotAsTableFromURI',
+                url: 'rest/api/gotAsTableFromURI',
                 success: function (data, textStatus, jqXHR) {
                     //  var text = "<p   name=\"" + uri + "\"><a href=\"" + uri + "\"><button  type=\"button\" class=\"btn btn-link\" ><small><span class=\"glyphicon glyphicon-ok align-middle\" aria-hidden=\"true\"></span></small></button></a></p>";
                     // $("#loadcheck").append(text);
@@ -627,7 +627,7 @@ function loadontologyFromFile(){
                 type: 'POST',
                 dataType: "json",
                 data: ontologyCode,
-                url: '/rest/api/gotAsTableFromFile',
+                url: 'rest/api/gotAsTableFromFile',
                 success: function (data, textStatus, jqXHR) {
 
                     //  var text = "<p   name=\"" + uri + "\"><a href=\"" + uri + "\"><button  type=\"button\" class=\"btn btn-link\" ><small><span class=\"glyphicon glyphicon-ok align-middle\" aria-hidden=\"true\"></span></small></button></a></p>";
@@ -721,7 +721,7 @@ function loadTests() {
             type: 'POST',
             data: JSON.stringify(id.value),
             dataType: "json",
-            url: '/rest/api/loadTests',
+            url: 'rest/api/loadTests',
             success: function (data, textStatus, jqXHR) {
 
                 if(jqXHR.status == 200){
@@ -783,7 +783,7 @@ function loadTestsFromFile() {
             type: 'POST',
             data: ontologyCode.replace('/#/g',''),
             dataType: "json",
-            url: '/rest/api/loadTestsFromFile',
+            url: 'rest/api/loadTestsFromFile',
             success: function (data, textStatus, jqXHR) {
                 if(jqXHR.status == 200) {
                     if (data.length > 0) {
@@ -856,7 +856,7 @@ function exportfile(){
         }
     });
 
-    window.location="/rest/api/export?test="+array;
+    window.location="rest/api/export?test="+array;
 
 }
 
