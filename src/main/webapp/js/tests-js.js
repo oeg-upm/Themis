@@ -13,6 +13,20 @@ function escapeRegExp(str) {
     return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
+var LOADER_HTML = '<div class="loader"><span></span><span></span><span></span></div>';
+
+function showLoader(selector) {
+    $(selector).html(LOADER_HTML).prop('disabled', true);
+}
+
+function hideLoader(selector, text) {
+    $(selector).html(text).prop('disabled', false);
+}
+
+function setActionButtonsEnabled(enabled) {
+    $('#checktests, #export, #clean, #loadtest, #loadtestfile').prop('disabled', !enabled);
+}
+
 $(document).ready( function () {
 
     $.ajax({
@@ -193,7 +207,7 @@ function removeAll(id) {
     });
 
     var len = labels.length;
-    parentNode = labels[0].parentNode;
+    var parentNode = labels[0].parentNode;
     for(var i=0; i<len; i++)
     {
         parentNode.removeChild(labels[0]);
@@ -206,20 +220,7 @@ function removeAll(id) {
 }
 
 function check() {
-    $('#checktests').html("<div class=\"loader\">\n" +
-        "                        <span></span>\n" +
-        "                        <span></span>\n" +
-        "                        <span></span>\n" +
-        "                    </div>");
-    $('#checktests').attr("disabled", true);
-
-
-    $('#checktests').html("<div class=\"loader\">\n" +
-        "                        <span></span>\n" +
-        "                        <span></span>\n" +
-        "                        <span></span>\n" +
-        "                    </div>");
-    $('#checktests').attr("disabled", true);
+    showLoader('#checktests');
     $('#notmatch').html('');
 
     var tables =document.getElementsByName('tablegot');
@@ -232,7 +233,7 @@ function check() {
         var myRows = [];
         var $headers = $(table).find("th");
         var $rows = $(table).find("tbody tr").each(function (index) {
-            $cells = $(this).find("td.got");
+            var $cells = $(this).find("td.got");
 
             myRows[index] = {};
             $cells.each(function (cellIndex) {
@@ -467,15 +468,12 @@ function check() {
                 $('#notmatch').html("<font color=\"red\">This is not a test expression supported by Themis</font>");
 
             }
-            $('#checktests').html('Check');
-            $('#checktests').removeAttr("disabled");
+            hideLoader('#checktests', 'Check');
         },
         error: function (data, textStatus, jqXHR) {
-            $('#checktests').html('Check');
-            $('#checktests').removeAttr("disabled");
+            hideLoader('#checktests', 'Check');
 
             $('#notmatch').html("<font color=\"red\">Something went wrong. Check that the ontology doesn't have any inconsistencies or unsatisfiable classes</font>");
-            $('#' + idrandom).remove();
 
         }
     });
@@ -532,12 +530,7 @@ function loadontologyFromURI() {
     });
 
     array.forEach(function (uri) {
-        $('#load').html("<div class=\"loader\">\n" +
-            "                        <span></span>\n" +
-            "                        <span></span>\n" +
-            "                        <span></span>\n" +
-            "                    </div>");
-        $('#load').attr("disabled", true);
+        showLoader('#load');
         var exists = document.getElementsByName(uri);
         if(uri!="" && exists.length ==0) {
             $.ajax({
@@ -574,12 +567,8 @@ function loadontologyFromURI() {
 
 
                     document.getElementById("ontology").value ="";
-                    $('#load').html('Load from URI');
-                    $('#load').removeAttr("disabled");
-                    $('#checktests').removeAttr("disabled");
-                    $('#export').removeAttr("disabled");
-                    $('#clean').removeAttr("disabled");
-                    $('#loadtest').removeAttr("disabled");
+                    hideLoader('#load', 'Load from URI');
+                    setActionButtonsEnabled(true);
                     var testsch = document.getElementById("checkout-tests");
                     testsch.style.opacity=1;
 
@@ -588,12 +577,8 @@ function loadontologyFromURI() {
                 error: function (xhr) {
                     alert(xhr.responseText);
                     document.getElementById("ontology").value ="";
-                    $('#load').html('Load from URI');
-                    $('#load').removeAttr("disabled");
-                    $('#checktests').removeAttr("disabled");
-                    $('#export').removeAttr("disabled");
-                    $('#clean').removeAttr("disabled");
-                    $('#loadtest').removeAttr("disabled");
+                    hideLoader('#load', 'Load from URI');
+                    setActionButtonsEnabled(true);
                     var testsch = document.getElementById("checkout-tests");
                     testsch.style.opacity=1;
                 }
@@ -626,12 +611,7 @@ function loadontologyFromFile(){
 
 
     array.forEach(function (ontologyfile) {
-        $('#loadfile').html("<div class=\"loader\">\n" +
-            "                        <span></span>\n" +
-            "                        <span></span>\n" +
-            "                        <span></span>\n" +
-            "                    </div>");
-        $('#loadfile').attr("disabled", true);
+        showLoader('#loadfile');
         var exists = document.getElementsByName(ontologyfile);
         var ontologyCode = ontologyfile.replace(/><\/http.*:>/g,'\/>');
         if(ontologyfile!="" && exists.length ==0) {
@@ -671,12 +651,8 @@ function loadontologyFromFile(){
 
 
                     document.getElementById("ontologyfile").value ="";
-                    $('#loadfile').html('Load from file');
-                    $('#loadfile').removeAttr("disabled");
-                    $('#checktests').removeAttr("disabled");
-                    $('#export').removeAttr("disabled");
-                    $('#clean').removeAttr("disabled");
-                    $('#loadtest').removeAttr("disabled");
+                    hideLoader('#loadfile', 'Load from file');
+                    setActionButtonsEnabled(true);
                     var testsch = document.getElementById("checkout-tests");
                     testsch.style.opacity=1;
 
@@ -685,12 +661,8 @@ function loadontologyFromFile(){
                 error: function (xhr) {
                     alert(xhr.responseText);
                     document.getElementById("ontologyfile").value ="";
-                    $('#loadfile').html('Load from file');
-                    $('#loadfile').removeAttr("disabled");
-                    $('#checktests').removeAttr("disabled");
-                    $('#export').removeAttr("disabled");
-                    $('#clean').removeAttr("disabled");
-                    $('#loadtest').removeAttr("disabled");
+                    hideLoader('#loadfile', 'Load from file');
+                    setActionButtonsEnabled(true);
                     var testsch = document.getElementById("checkout-tests");
                     testsch.style.opacity=1;
                 }
@@ -722,16 +694,8 @@ function loadTests() {
 
     var id = document.getElementById("testuri");
     if(id.value!= null && id.value!="") {
-        $('#loadtest').html("<div class=\"loader\">\n" +
-            "                        <span></span>\n" +
-            "                        <span></span>\n" +
-            "                        <span></span>\n" +
-            "                    </div>");
-
-        $('#loadtest').attr("disabled", true);
-        $('#checktests').attr("disabled", true);
-        $('#export').attr("disabled", true);
-        $('#clean').attr("disabled", true);
+        showLoader('#loadtest');
+        setActionButtonsEnabled(false);
         $.ajax({
             type: 'POST',
             data: JSON.stringify(id.value),
@@ -747,11 +711,8 @@ function loadTests() {
                         });
                         $('#test').val('');
                         $('#test').val(tests);
-                        $('#loadtest').html('Load from URI');
-                        $('#loadtest').removeAttr("disabled");
-                        $('#checktests').removeAttr("disabled");
-                        $('#export').removeAttr("disabled");
-                        $('#clean').removeAttr("disabled");
+                        hideLoader('#loadtest', 'Load from URI');
+                        setActionButtonsEnabled(true);
                     } else {
 
                         $('#notmatch').html("This is not a test expression");
@@ -759,21 +720,15 @@ function loadTests() {
                     }
                 }else{
                     alert("No test found. Check the URI and the syntax of the RDF file");
-                    $('#loadtest').html('Load from URI');
-                    $('#loadtest').removeAttr("disabled");
-                    $('#checktests').removeAttr("disabled");
-                    $('#export').removeAttr("disabled");
-                    $('#clean').removeAttr("disabled");
+                    hideLoader('#loadtest', 'Load from URI');
+                    setActionButtonsEnabled(true);
                 }
 
             },
             error: function (xhr) {
                 alert("No test found. Check the syntax of the RDF file");
-                $('#loadtest').html('Load from URI');
-                $('#loadtest').removeAttr("disabled");
-                $('#checktests').removeAttr("disabled");
-                $('#export').removeAttr("disabled");
-                $('#clean').removeAttr("disabled");
+                hideLoader('#loadtest', 'Load from URI');
+                setActionButtonsEnabled(true);
             }
         });
     }
@@ -783,16 +738,8 @@ function loadTestsFromFile() {
 
     var id = document.getElementById("testfile");
     if(id.value!= null && id.value!="") {
-        $('#loadtestfile').html("<div class=\"loader\">\n" +
-            "                        <span></span>\n" +
-            "                        <span></span>\n" +
-            "                        <span></span>\n" +
-            "                    </div>");
-
-        $('#loadtestfile').attr("disabled", true);
-        $('#checktests').attr("disabled", true);
-        $('#export').attr("disabled", true);
-        $('#clean').attr("disabled", true);
+        showLoader('#loadtestfile');
+        setActionButtonsEnabled(false);
         var ontologyCode = id.value.replace(/><\/http.*:>/g,'\/>');
         $.ajax({
             type: 'POST',
@@ -810,11 +757,8 @@ function loadTestsFromFile() {
                         $('#test').val('');
                         $('#test').val(tests);
 
-                        $('#loadtestfile').html('Load from file');
-                        $('#loadtestfile').removeAttr("disabled");
-                        $('#checktests').removeAttr("disabled");
-                        $('#export').removeAttr("disabled");
-                        $('#clean').removeAttr("disabled");
+                        hideLoader('#loadtestfile', 'Load from file');
+                        setActionButtonsEnabled(true);
                     } else {
 
                         $('#notmatch').html("This is not a test expression");
@@ -822,21 +766,15 @@ function loadTestsFromFile() {
                     }
                 }else{
                     alert("No tests found");
-                    $('#loadtestfile').html('Load from file');
-                    $('#loadtestfile').removeAttr("disabled");
-                    $('#checktests').removeAttr("disabled");
-                    $('#export').removeAttr("disabled");
-                    $('#clean').removeAttr("disabled");
+                    hideLoader('#loadtestfile', 'Load from file');
+                    setActionButtonsEnabled(true);
                 }
 
             },
             error: function (xhr) {
                 alert(xhr.responseText);
-                $('#loadtestfile').html('Load from file');
-                $('#loadtestfile').removeAttr("disabled");
-                $('#checktests').removeAttr("disabled");
-                $('#export').removeAttr("disabled");
-                $('#clean').removeAttr("disabled");
+                hideLoader('#loadtestfile', 'Load from file');
+                setActionButtonsEnabled(true);
 
             }
         });
@@ -867,7 +805,7 @@ function exportfile(){
 
     id.forEach(function (item) {
         if(item.value!="") {
-            array.push(item.innerText.replace(/<span style.\"color:red;>\"/g,"").replace(/<\/span>/g,"").replace(/\^\^xsd:string/g,""));
+            array.push(item.innerText.replace(/<span style="color:red;">/g,"").replace(/<\/span>/g,"").replace(/\^\^xsd:string/g,""));
         }
     });
 
